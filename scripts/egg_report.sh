@@ -91,6 +91,16 @@ else
   arrow7="➡️"
 fi
 
+# Calculate total eggs for all records (trays*30 + eggs)
+total_eggs_all=0
+for record in "${records[@]}"; do
+  trays=$(echo "$record" | jq -r '.numbertrays')
+  eggs=$(echo "$record" | jq -r '.numbereggs')
+  total_eggs_all=$((total_eggs_all + trays * 30 + eggs))
+done
+total_trays_calc=$(( total_eggs_all / 30 ))
+total_eggs_mod=$(( total_eggs_all % 30 ))
+
 cat <<EOF
 *🐣 Egg Report Summary*
 
@@ -98,7 +108,7 @@ cat <<EOF
 Reporting for: \`$today\`
 
 
-*📅 Survey Date:\`$latest_date\`*
+*📅 Survey Date: \`$latest_date\`*
 
 
 🧺 Trays: \`$latest_trays\`
@@ -108,10 +118,8 @@ Reporting for: \`$today\`
 
 *Totals (All Records):*
 
-
-🧺 Total Trays: \`$total_trays\`
-
-🥚 Total Eggs: \`$total_eggs\`
+🥚 Total Eggs: \`$total_eggs_all\`
+   (🧺 Trays: \`$total_trays_calc\`, 🥚 Remaining Eggs: \`$total_eggs_mod\`)
 
 
 *📅 Rolling Averages for eggs (trays counted as 30 eggs each)*
