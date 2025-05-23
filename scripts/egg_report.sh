@@ -51,6 +51,7 @@ avg7=$(( count_7 > 0 ? seven_day_eggs / count_7 : 0 ))
 cat <<EOF
 *🐣 Egg Report Summary*
 
+
 *Latest Record:*
 🧺 Trays: \`$latest_trays\`
 
@@ -58,7 +59,6 @@ cat <<EOF
 
 📅 Survey Date: \`$latest_date\`
 
-⏱️ Submission Time: \`$latest_time\`
 
 *Totals:*
 🧺 Total Trays: \`$total_trays\`
@@ -69,4 +69,6 @@ cat <<EOF
 ⏱️ 3-Day total Eggs: \`$avg3\`
 
 ⏱️ 7-Day total Eggs: \`$avg7\`
+
+⏱️ Submission Time: \`$latest_time\`
 EOF
