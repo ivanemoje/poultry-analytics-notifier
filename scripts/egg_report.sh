@@ -2,10 +2,11 @@
 
 set -e
 
-# Required environment variable
+# Required environment variables
 : "${ONA_API_TOKEN:?Missing ONA_API_TOKEN}"
+: "${ONA_FORM_ID:?Missing ONA_FORM_ID}"
 
-URL="https://api.ona.io/api/v1/data/848851"
+URL="https://api.ona.io/api/v1/data/$ONA_FORM_ID"
 response=$(curl -s -H "Authorization: Token $ONA_API_TOKEN" "$URL")
 
 latest=$(echo "$response" | jq 'sort_by(._submission_time) | last')
