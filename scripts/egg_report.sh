@@ -142,10 +142,11 @@ done
 
 day_before_yesterday_avg_eggs=$(( day_before_yesterday_count > 0 ? day_before_yesterday_total_eggs / day_before_yesterday_count : 0 ))
 
+# FIXED LOGIC: ✅ for improvement, ❌ for worse, 🔵 for equal
 if (( yesterday_avg_eggs > day_before_yesterday_avg_eggs )); then
-  arrow_yesterday="❌"
-elif (( yesterday_avg_eggs < day_before_yesterday_avg_eggs )); then
   arrow_yesterday="✅"
+elif (( yesterday_avg_eggs < day_before_yesterday_avg_eggs )); then
+  arrow_yesterday="❌"
 else
   arrow_yesterday="🔵"
 fi
