@@ -61,7 +61,7 @@ for record in "${records[@]}"; do
   date=$(echo "$record" | jq -r '.surveydate')
   record_total_eggs=$((trays * 30 + eggs))
 
-    if [[ "$date" > "$prev_three_days_start" && ( "$date" < "$prev_three_days_end" || "$date" == "$prev_three_days_end" ) ]]; then
+  if [[ "$date" > "$prev_three_days_start" && ( "$date" < "$prev_three_days_end" || "$date" == "$prev_three_days_end" ) ]]; then
     prev_three_day_total_eggs=$((prev_three_day_total_eggs + record_total_eggs))
     prev_count_3=$((prev_count_3 + 1))
   fi
@@ -103,7 +103,7 @@ cat <<EOF
 🥚 Eggs: \`$latest_eggs\`
 
 
-*Totals:*
+*Totals (All Records):*
 
 
 🧺 Total Trays: \`$total_trays\`
