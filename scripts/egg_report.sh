@@ -85,7 +85,7 @@ else
 fi
 
 if (( avg7_eggs > prev_avg7_eggs )); then
-  arrow7="⬆✅"
+  arrow7="✅"
 elif (( avg7_eggs < prev_avg7_eggs )); then
   arrow7="❌"
 else
