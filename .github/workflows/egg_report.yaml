@@ -21,6 +21,7 @@ jobs:
       - name: Run Egg Report Script
         env:
           ONA_API_TOKEN: ${{ secrets.ONA_API_TOKEN }}
+          ONA_FORM_ID: ${{ secrets.ONA_FORM_ID }}
         run: |
           bash ./scripts/egg_report.sh > egg_report.txt
           echo "EGG_REPORT<<EOF" >> $GITHUB_ENV
