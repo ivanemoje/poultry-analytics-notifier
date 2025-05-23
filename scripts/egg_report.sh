@@ -111,7 +111,7 @@ cat <<EOF
 🥚 Total Eggs: \`$total_eggs\`
 
 
-*📅 Rolling Averages (eggs, trays counted as 30 eggs each)*
+*📅 Rolling Averages for eggs (trays counted as 30 eggs each)*
 
 
 ⏱️ 3-Day average eggs: \`$avg3_eggs\` $arrow3
