@@ -1,0 +1,39 @@
+name: Egg Report to Slack
+
+on:
+  schedule:
+    - cron: '0 22,5 * * *'  # Runs daily at 05:00 and 22:00 UTC
+  workflow_dispatch:
+
+jobs:
+  egg-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Run Egg Report Script
+        env:
+          ONA_API_TOKEN: ${{ secrets.ONA_API_TOKEN }}
+        run: |
+          REPORT=$(bash ./scripts/egg_report.sh)
+          echo "EGG_REPORT<<EOF" >> $GITHUB_ENV
+          echo "$REPORT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Send to Slack
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            text: "Daily Egg Collection Report"
+            blocks:
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "${{ env.EGG_REPORT }}"
