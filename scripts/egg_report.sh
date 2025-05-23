@@ -98,7 +98,7 @@ prev_avg3_eggs=$(( prev_count_3 > 0 ? prev_three_day_total_eggs / prev_count_3 :
 prev_avg7_eggs=$(( prev_count_7 > 0 ? prev_seven_day_total_eggs / prev_count_7 : 0 ))
 prev_avg30_eggs=$(( prev_count_30 > 0 ? prev_thirty_day_total_eggs / prev_count_30 : 0 ))
 
-# Determine arrows
+# Determine arrows for rolling averages
 if (( avg3_eggs > prev_avg3_eggs )); then
   arrow3="✅"
 elif (( avg3_eggs < prev_avg3_eggs )); then
@@ -121,6 +121,33 @@ elif (( avg30_eggs < prev_avg30_eggs )); then
   arrow30="❌"
 else
   arrow30="🔵"
+fi
+
+# Calculate yesterday vs day before yesterday
+day_before_yesterday=$(date -u -d "2 days ago" +"%Y-%m-%d")
+day_before_yesterday_total_eggs=0
+day_before_yesterday_count=0
+
+for record in "${records[@]}"; do
+  trays=$(echo "$record" | jq -r '.numbertrays')
+  eggs=$(echo "$record" | jq -r '.numbereggs')
+  date=$(echo "$record" | jq -r '.surveydate')
+  record_total_eggs=$((trays * 30 + eggs))
+
+  if [[ "$date" == "$day_before_yesterday" ]]; then
+    day_before_yesterday_total_eggs=$((day_before_yesterday_total_eggs + record_total_eggs))
+    day_before_yesterday_count=$((day_before_yesterday_count + 1))
+  fi
+done
+
+day_before_yesterday_avg_eggs=$(( day_before_yesterday_count > 0 ? day_before_yesterday_total_eggs / day_before_yesterday_count : 0 ))
+
+if (( yesterday_avg_eggs > day_before_yesterday_avg_eggs )); then
+  arrow_yesterday="✅"
+elif (( yesterday_avg_eggs < day_before_yesterday_avg_eggs )); then
+  arrow_yesterday="❌"
+else
+  arrow_yesterday="🔵"
 fi
 
 # Calculate total eggs for all records (trays*30 + eggs)
@@ -157,7 +184,7 @@ cat <<EOF
 
 *📅 Rolling Averages for eggs (trays counted as 30 eggs each)*
 
-🗓️ Yesterday's average eggs: \`$yesterday_avg_eggs\`
+🗓️ Yesterday's average eggs: \`$yesterday_avg_eggs\` $arrow_yesterday
 
 ⏱️ 3-Day average eggs: \`$avg3_eggs\` $arrow3
 
