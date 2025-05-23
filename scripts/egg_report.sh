@@ -105,15 +105,14 @@ cat <<EOF
 *🐣 Egg Report Summary*
 
 
-Reporting for: \`$today\`
+*Reporting for: \`$today\`*
 
 
-*📅 Survey Date: \`$latest_date\`*
-
+*📅 Survey Date:* \`$latest_date\`
 
 🧺 Trays: \`$latest_trays\`
-
 🥚 Eggs: \`$latest_eggs\`
+🔢 Total Eggs (this entry): \`$((latest_trays * 30 + latest_eggs))\`
 
 
 *Totals (All Records):*
