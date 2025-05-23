@@ -180,7 +180,8 @@ cat <<EOF
 
 
 🥚 Total Eggs: \`$total_eggs_all\`
-   (🧺 Trays: \`$total_trays_calc\`, 🥚 Remaining Eggs: \`$total_eggs_mod\`)
+
+🧺 Trays: \`$total_trays_calc\`, 🥚 Remaining Eggs: \`$total_eggs_mod\`
 
 
 *📅 Rolling Averages for eggs (trays counted as 30 eggs each)*
