@@ -18,11 +18,13 @@ latest_time=$(echo "$latest" | jq -r '._submission_time' | xargs -I{} date -d "{
 today=$(date -u +"%Y-%m-%d")
 three_days_ago=$(date -u -d "-3 days" +"%Y-%m-%d")
 seven_days_ago=$(date -u -d "-7 days" +"%Y-%m-%d")
+thirty_days_ago=$(date -u -d "-30 days" +"%Y-%m-%d")
 
 total_trays=0
 total_eggs=0
 three_day_total_eggs=0
 seven_day_total_eggs=0
+thirty_day_total_eggs=0
 
 mapfile -t records < <(echo "$response" | jq -c '.[]')
 for record in "${records[@]}"; do
@@ -37,24 +39,31 @@ for record in "${records[@]}"; do
 
   [[ "$date" > "$three_days_ago" ]] && three_day_total_eggs=$((three_day_total_eggs + record_total_eggs))
   [[ "$date" > "$seven_days_ago" ]] && seven_day_total_eggs=$((seven_day_total_eggs + record_total_eggs))
+  [[ "$date" > "$thirty_days_ago" ]] && thirty_day_total_eggs=$((thirty_day_total_eggs + record_total_eggs))
 done
 
 count_3=$(echo "$response" | jq "[.[] | select(.surveydate > \"$three_days_ago\")] | length")
 count_7=$(echo "$response" | jq "[.[] | select(.surveydate > \"$seven_days_ago\")] | length")
+count_30=$(echo "$response" | jq "[.[] | select(.surveydate > \"$thirty_days_ago\")] | length")
 
 avg3_eggs=$(( count_3 > 0 ? three_day_total_eggs / count_3 : 0 ))
 avg7_eggs=$(( count_7 > 0 ? seven_day_total_eggs / count_7 : 0 ))
+avg30_eggs=$(( count_30 > 0 ? thirty_day_total_eggs / count_30 : 0 ))
 
-# Calculate previous 3-day and 7-day periods
+# Calculate previous 3-day, 7-day, and 30-day periods
 prev_three_days_start=$(date -u -d "-6 days" +"%Y-%m-%d")
 prev_three_days_end=$(date -u -d "-3 days" +"%Y-%m-%d")
 prev_seven_days_start=$(date -u -d "-14 days" +"%Y-%m-%d")
 prev_seven_days_end=$(date -u -d "-7 days" +"%Y-%m-%d")
+prev_thirty_days_start=$(date -u -d "-60 days" +"%Y-%m-%d")
+prev_thirty_days_end=$(date -u -d "-30 days" +"%Y-%m-%d")
 
 prev_three_day_total_eggs=0
 prev_seven_day_total_eggs=0
+prev_thirty_day_total_eggs=0
 prev_count_3=0
 prev_count_7=0
+prev_count_30=0
 
 for record in "${records[@]}"; do
   trays=$(echo "$record" | jq -r '.numbertrays')
@@ -70,10 +79,15 @@ for record in "${records[@]}"; do
     prev_seven_day_total_eggs=$((prev_seven_day_total_eggs + record_total_eggs))
     prev_count_7=$((prev_count_7 + 1))
   fi
+  if [[ "$date" > "$prev_thirty_days_start" && ( "$date" < "$prev_thirty_days_end" || "$date" == "$prev_thirty_days_end" ) ]]; then
+    prev_thirty_day_total_eggs=$((prev_thirty_day_total_eggs + record_total_eggs))
+    prev_count_30=$((prev_count_30 + 1))
+  fi
 done
 
 prev_avg3_eggs=$(( prev_count_3 > 0 ? prev_three_day_total_eggs / prev_count_3 : 0 ))
 prev_avg7_eggs=$(( prev_count_7 > 0 ? prev_seven_day_total_eggs / prev_count_7 : 0 ))
+prev_avg30_eggs=$(( prev_count_30 > 0 ? prev_thirty_day_total_eggs / prev_count_30 : 0 ))
 
 # Determine arrows
 if (( avg3_eggs > prev_avg3_eggs )); then
@@ -90,6 +104,14 @@ elif (( avg7_eggs < prev_avg7_eggs )); then
   arrow7="❌"
 else
   arrow7="🔵"
+fi
+
+if (( avg30_eggs > prev_avg30_eggs )); then
+  arrow30="✅"
+elif (( avg30_eggs < prev_avg30_eggs )); then
+  arrow30="❌"
+else
+  arrow30="🔵"
 fi
 
 # Calculate total eggs for all records (trays*30 + eggs)
@@ -130,6 +152,8 @@ cat <<EOF
 ⏱️ 3-Day average eggs: \`$avg3_eggs\` $arrow3
 
 ⏱️ 7-Day average eggs: \`$avg7_eggs\` $arrow7
+
+⏱️ 30-Day average eggs: \`$avg30_eggs\` $arrow30
 
 
 📅  Data submitted at: \`$latest_time\`
