@@ -77,19 +77,19 @@ prev_avg7_eggs=$(( prev_count_7 > 0 ? prev_seven_day_total_eggs / prev_count_7 :
 
 # Determine arrows
 if (( avg3_eggs > prev_avg3_eggs )); then
-  arrow3="⬆️"
+  arrow3="✅"
 elif (( avg3_eggs < prev_avg3_eggs )); then
-  arrow3="⬇️"
+  arrow3="❌"
 else
-  arrow3="➡️"
+  arrow3="🔵"
 fi
 
 if (( avg7_eggs > prev_avg7_eggs )); then
-  arrow7="⬆️"
+  arrow7="⬆✅"
 elif (( avg7_eggs < prev_avg7_eggs )); then
-  arrow7="⬇️"
+  arrow7="❌"
 else
-  arrow7="➡️"
+  arrow7="🔵"
 fi
 
 # Calculate total eggs for all records (trays*30 + eggs)
@@ -109,7 +109,8 @@ cat <<EOF
 *Reporting for: \`$today\`*
 
 
-*📅 Survey Date:* \`$latest_date\`
+📅 Survey Date: \`$latest_date\`
+
 
 🧺 Trays: \`$latest_trays\`
 🥚 Eggs: \`$latest_eggs\`
@@ -117,6 +118,7 @@ cat <<EOF
 
 
 *Totals (All Records):*
+
 
 🥚 Total Eggs: \`$total_eggs_all\`
    (🧺 Trays: \`$total_trays_calc\`, 🥚 Remaining Eggs: \`$total_eggs_mod\`)
