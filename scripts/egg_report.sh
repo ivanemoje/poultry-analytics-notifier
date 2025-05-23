@@ -12,7 +12,7 @@ latest=$(echo "$response" | jq 'sort_by(._submission_time) | last')
 latest_trays=$(echo "$latest" | jq -r '.numbertrays')
 latest_eggs=$(echo "$latest" | jq -r '.numbereggs')
 latest_date=$(echo "$latest" | jq -r '.surveydate')
-latest_time=$(echo "$latest" | jq -r '._submission_time')
+latest_time=$(echo "$latest" | jq -r '._submission_time' | xargs -I{} date -d "{} +3 hours" +"%Y-%m-%d %H:%M")
 
 today=$(date -u +"%Y-%m-%d")
 three_days_ago=$(date -u -d "-3 days" +"%Y-%m-%d")
@@ -44,6 +44,53 @@ count_7=$(echo "$response" | jq "[.[] | select(.surveydate > \"$seven_days_ago\"
 avg3_eggs=$(( count_3 > 0 ? three_day_total_eggs / count_3 : 0 ))
 avg7_eggs=$(( count_7 > 0 ? seven_day_total_eggs / count_7 : 0 ))
 
+# Calculate previous 3-day and 7-day periods
+prev_three_days_start=$(date -u -d "-6 days" +"%Y-%m-%d")
+prev_three_days_end=$(date -u -d "-3 days" +"%Y-%m-%d")
+prev_seven_days_start=$(date -u -d "-14 days" +"%Y-%m-%d")
+prev_seven_days_end=$(date -u -d "-7 days" +"%Y-%m-%d")
+
+prev_three_day_total_eggs=0
+prev_seven_day_total_eggs=0
+prev_count_3=0
+prev_count_7=0
+
+for record in "${records[@]}"; do
+  trays=$(echo "$record" | jq -r '.numbertrays')
+  eggs=$(echo "$record" | jq -r '.numbereggs')
+  date=$(echo "$record" | jq -r '.surveydate')
+  record_total_eggs=$((trays * 30 + eggs))
+
+  if [[ "$date" > "$prev_three_days_start" && "$date" <= "$prev_three_days_end" ]]; then
+    prev_three_day_total_eggs=$((prev_three_day_total_eggs + record_total_eggs))
+    prev_count_3=$((prev_count_3 + 1))
+  fi
+  if [[ "$date" > "$prev_seven_days_start" && "$date" <= "$prev_seven_days_end" ]]; then
+    prev_seven_day_total_eggs=$((prev_seven_day_total_eggs + record_total_eggs))
+    prev_count_7=$((prev_count_7 + 1))
+  fi
+done
+
+prev_avg3_eggs=$(( prev_count_3 > 0 ? prev_three_day_total_eggs / prev_count_3 : 0 ))
+prev_avg7_eggs=$(( prev_count_7 > 0 ? prev_seven_day_total_eggs / prev_count_7 : 0 ))
+
+# Determine arrows
+if (( avg3_eggs > prev_avg3_eggs )); then
+  arrow3="⬆️"
+elif (( avg3_eggs < prev_avg3_eggs )); then
+  arrow3="⬇️"
+else
+  arrow3="➡️"
+fi
+
+if (( avg7_eggs > prev_avg7_eggs )); then
+  arrow7="⬆️"
+elif (( avg7_eggs < prev_avg7_eggs )); then
+  arrow7="⬇️"
+else
+  arrow7="➡️"
+fi
+
 cat <<EOF
 *🐣 Egg Report Summary*
 
@@ -67,9 +114,10 @@ cat <<EOF
 *📅 Rolling Averages (eggs, trays counted as 30 eggs each)*
 
 
-⏱️ 3-Day average eggs: \`$avg3_eggs\`
+⏱️ 3-Day average eggs: \`$avg3_eggs\` $arrow3
 
-⏱️ 7-Day average eggs: \`$avg7_eggs\`
+⏱️ 7-Day average eggs: \`$avg7_eggs\` $arrow7
+
 
 📅  Data submitted at: \`$latest_time\`
 EOF
