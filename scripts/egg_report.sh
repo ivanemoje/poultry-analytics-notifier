@@ -20,8 +20,8 @@ seven_days_ago=$(date -u -d "-7 days" +"%Y-%m-%d")
 
 total_trays=0
 total_eggs=0
-three_day_eggs=0
-seven_day_eggs=0
+three_day_total_eggs=0
+seven_day_total_eggs=0
 
 mapfile -t records < <(echo "$response" | jq -c '.[]')
 for record in "${records[@]}"; do
@@ -32,25 +32,20 @@ for record in "${records[@]}"; do
   total_trays=$((total_trays + trays))
   total_eggs=$((total_eggs + eggs))
 
-  [[ "$date" > "$three_days_ago" ]] && three_day_eggs=$((three_day_eggs + eggs))
-  [[ "$date" > "$seven_days_ago" ]] && seven_day_eggs=$((seven_day_eggs + eggs))
-done
+  record_total_eggs=$((trays * 30 + eggs))
 
-# Adjust tray count if total eggs exceed 30
-if (( total_eggs > 30 )); then
-  extra_trays=$(( (total_eggs + 29) / 30 - total_trays ))
-  (( extra_trays > 0 )) && total_trays=$(( total_trays + extra_trays ))
-fi
+  [[ "$date" > "$three_days_ago" ]] && three_day_total_eggs=$((three_day_total_eggs + record_total_eggs))
+  [[ "$date" > "$seven_days_ago" ]] && seven_day_total_eggs=$((seven_day_total_eggs + record_total_eggs))
+done
 
 count_3=$(echo "$response" | jq "[.[] | select(.surveydate > \"$three_days_ago\")] | length")
 count_7=$(echo "$response" | jq "[.[] | select(.surveydate > \"$seven_days_ago\")] | length")
 
-avg3=$(( count_3 > 0 ? three_day_eggs / count_3 : 0 ))
-avg7=$(( count_7 > 0 ? seven_day_eggs / count_7 : 0 ))
+avg3_eggs=$(( count_3 > 0 ? three_day_total_eggs / count_3 : 0 ))
+avg7_eggs=$(( count_7 > 0 ? seven_day_total_eggs / count_7 : 0 ))
 
 cat <<EOF
 *🐣 Egg Report Summary*
-
 
 *Latest Record:*
 🧺 Trays: \`$latest_trays\`
@@ -59,16 +54,17 @@ cat <<EOF
 
 📅 Survey Date: \`$latest_date\`
 
-
 *Totals:*
+
 🧺 Total Trays: \`$total_trays\`
 
 🥚 Total Eggs: \`$total_eggs\`
 
-*📊 Averages:*
-⏱️ 3-Day total Eggs: \`$avg3\`
+*📅 Rolling Averages (eggs, trays counted as 30 eggs each)*
 
-⏱️ 7-Day total Eggs: \`$avg7\`
+⏱️ 3-Day average eggs: \`$avg3_eggs\`
 
-⏱️ Submission Time: \`$latest_time\`
+⏱️ 7-Day average eggs: \`$avg7_eggs\`
+
+📅  Data submitted at: \`$latest_time\`
 EOF
