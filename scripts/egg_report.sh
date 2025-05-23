@@ -95,7 +95,10 @@ cat <<EOF
 *🐣 Egg Report Summary*
 
 
-*Latest Record, 📅 Survey Date:\`$latest_date\`*
+Reporting for: \`$today\`
+
+
+*📅 Survey Date:\`$latest_date\`*
 
 
 🧺 Trays: \`$latest_trays\`
