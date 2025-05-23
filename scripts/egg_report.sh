@@ -36,6 +36,12 @@ for record in "${records[@]}"; do
   [[ "$date" > "$seven_days_ago" ]] && seven_day_eggs=$((seven_day_eggs + eggs))
 done
 
+# Adjust tray count if total eggs exceed 30
+if (( total_eggs > 30 )); then
+  extra_trays=$(( (total_eggs + 29) / 30 - total_trays ))
+  (( extra_trays > 0 )) && total_trays=$(( total_trays + extra_trays ))
+fi
+
 count_3=$(echo "$response" | jq "[.[] | select(.surveydate > \"$three_days_ago\")] | length")
 count_7=$(echo "$response" | jq "[.[] | select(.surveydate > \"$seven_days_ago\")] | length")
 
@@ -46,16 +52,16 @@ cat <<EOF
 *🐣 Egg Report Summary*
 
 *Latest Record:*
-- Trays: \`$latest_trays\`
-- Eggs: \`$latest_eggs\`
-- Survey Date: \`$latest_date\`
-- Submission Time: \`$latest_time\`
+- 🧺 Trays: \`$latest_trays\`
+- 🥚 Eggs: \`$latest_eggs\`
+- 📅 Survey Date: \`$latest_date\`
+- ⏱️ Submission Time: \`$latest_time\`
 
 *Totals:*
-- Total Trays: \`$total_trays\`
-- Total Eggs: \`$total_eggs\`
+🧺 Total Trays: \`$total_trays\`
+🥚 Total Eggs: \`$total_eggs\`
 
-*Averages:*
-- 3-Day Avg Eggs: \`$avg3\`
-- 7-Day Avg Eggs: \`$avg7\`
+*📊 Averages:*
+📊 3-Day Avg Eggs: \`$avg3\`
+📊 7-Day Avg Eggs: \`$avg7\`
 EOF
