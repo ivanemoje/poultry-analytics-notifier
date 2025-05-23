@@ -19,12 +19,15 @@ today=$(date -u +"%Y-%m-%d")
 three_days_ago=$(date -u -d "-3 days" +"%Y-%m-%d")
 seven_days_ago=$(date -u -d "-7 days" +"%Y-%m-%d")
 thirty_days_ago=$(date -u -d "-30 days" +"%Y-%m-%d")
+yesterday=$(date -u -d "yesterday" +"%Y-%m-%d")
 
 total_trays=0
 total_eggs=0
 three_day_total_eggs=0
 seven_day_total_eggs=0
 thirty_day_total_eggs=0
+yesterday_total_eggs=0
+yesterday_count=0
 
 mapfile -t records < <(echo "$response" | jq -c '.[]')
 for record in "${records[@]}"; do
@@ -40,6 +43,11 @@ for record in "${records[@]}"; do
   [[ "$date" > "$three_days_ago" ]] && three_day_total_eggs=$((three_day_total_eggs + record_total_eggs))
   [[ "$date" > "$seven_days_ago" ]] && seven_day_total_eggs=$((seven_day_total_eggs + record_total_eggs))
   [[ "$date" > "$thirty_days_ago" ]] && thirty_day_total_eggs=$((thirty_day_total_eggs + record_total_eggs))
+
+  if [[ "$date" == "$yesterday" ]]; then
+    yesterday_total_eggs=$((yesterday_total_eggs + record_total_eggs))
+    yesterday_count=$((yesterday_count + 1))
+  fi
 done
 
 count_3=$(echo "$response" | jq "[.[] | select(.surveydate > \"$three_days_ago\")] | length")
@@ -49,6 +57,7 @@ count_30=$(echo "$response" | jq "[.[] | select(.surveydate > \"$thirty_days_ago
 avg3_eggs=$(( count_3 > 0 ? three_day_total_eggs / count_3 : 0 ))
 avg7_eggs=$(( count_7 > 0 ? seven_day_total_eggs / count_7 : 0 ))
 avg30_eggs=$(( count_30 > 0 ? thirty_day_total_eggs / count_30 : 0 ))
+yesterday_avg_eggs=$(( yesterday_count > 0 ? yesterday_total_eggs / yesterday_count : 0 ))
 
 # Calculate previous 3-day, 7-day, and 30-day periods
 prev_three_days_start=$(date -u -d "-6 days" +"%Y-%m-%d")
@@ -148,6 +157,7 @@ cat <<EOF
 
 *📅 Rolling Averages for eggs (trays counted as 30 eggs each)*
 
+🗓️ Yesterday's average eggs: \`$yesterday_avg_eggs\`
 
 ⏱️ 3-Day average eggs: \`$avg3_eggs\` $arrow3
 
