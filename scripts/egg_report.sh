@@ -53,15 +53,20 @@ cat <<EOF
 
 *Latest Record:*
 🧺 Trays: \`$latest_trays\`
+
 🥚 Eggs: \`$latest_eggs\`
+
 📅 Survey Date: \`$latest_date\`
+
 ⏱️ Submission Time: \`$latest_time\`
 
 *Totals:*
 🧺 Total Trays: \`$total_trays\`
+
 🥚 Total Eggs: \`$total_eggs\`
 
 *📊 Averages:*
 ⏱️ 3-Day total Eggs: \`$avg3\`
+
 ⏱️ 7-Day total Eggs: \`$avg7\`
 EOF
