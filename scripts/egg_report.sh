@@ -99,16 +99,20 @@ if (( today_avg_eggs > avg7_eggs )); then
   arrow7="✅"
 elif (( today_avg_eggs < avg7_eggs )); then
   arrow7="❌"
-else
+elif (( today_avg_eggs == avg7_eggs )); then
   arrow7="🔵"
+else
+  arrow7="❌"
 fi
 
 if (( today_avg_eggs > avg30_eggs )); then
   arrow30="✅"
 elif (( today_avg_eggs < avg30_eggs )); then
   arrow30="❌"
-else
+elif (( today_avg_eggs == avg30_eggs )); then
   arrow30="🔵"
+else
+  arrow30="❌"
 fi
 
 # Calculate total eggs for all records (trays*30 + eggs)
