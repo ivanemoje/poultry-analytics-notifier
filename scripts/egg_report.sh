@@ -79,7 +79,7 @@ if (( today_avg_eggs > yesterday_avg_eggs )); then
   arrow_yesterday="✅"
 elif (( today_avg_eggs < yesterday_avg_eggs )); then
   arrow_yesterday="❌"
-elif (( today_avg_eggs < yesterday_avg_eggs )); then
+elif (( today_avg_eggs == yesterday_avg_eggs )); then
   arrow_yesterday="🔵"
 else
   arrow_yesterday="❌"
