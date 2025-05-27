@@ -79,18 +79,20 @@ if (( today_avg_eggs > yesterday_avg_eggs )); then
   arrow_yesterday="✅"
 elif (( today_avg_eggs < yesterday_avg_eggs )); then
   arrow_yesterday="❌"
-else
+elif (( today_avg_eggs < yesterday_avg_eggs )); then
   arrow_yesterday="🔵"
+else
+  arrow_yesterday="❌"
 fi
 
 if (( today_avg_eggs > avg3_eggs )); then
   arrow3="✅"
 elif (( today_avg_eggs < avg3_eggs )); then
   arrow3="❌"
-elif (( today_avg_eggs = avg3_eggs )); then
+elif (( today_avg_eggs == avg3_eggs )); then
   arrow3="🔵"
 else
-  arrow3="🔵"
+  arrow3="❌"
 fi
 
 if (( today_avg_eggs > avg7_eggs )); then
