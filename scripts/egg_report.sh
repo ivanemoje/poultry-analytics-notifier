@@ -87,6 +87,8 @@ if (( today_avg_eggs > avg3_eggs )); then
   arrow3="✅"
 elif (( today_avg_eggs < avg3_eggs )); then
   arrow3="❌"
+elif (( today_avg_eggs = avg3_eggs )); then
+  arrow3="🔵"
 else
   arrow3="🔵"
 fi
