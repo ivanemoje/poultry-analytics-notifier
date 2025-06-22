@@ -12,6 +12,7 @@ response=$(curl -s -H "Authorization: Token $ONA_API_TOKEN" "$URL")
 latest=$(echo "$response" | jq 'sort_by(._submission_time) | last')
 latest_trays=$(echo "$latest" | jq -r '.numbertrays')
 latest_eggs=$(echo "$latest" | jq -r '.numbereggs')
+latest_eggs_broken=$(echo "$latest" | jq -r '.numbereggsbroken')
 latest_date=$(echo "$latest" | jq -r '.surveydate')
 latest_time=$(echo "$latest" | jq -r '._submission_time' | xargs -I{} date -d "{} +3 hours" +"%Y-%m-%d %H:%M")
 
@@ -23,6 +24,7 @@ yesterday=$(date -u -d "yesterday" +"%Y-%m-%d")
 
 total_trays=0
 total_eggs=0
+total_eggs_broken=0
 three_day_total_eggs=0
 seven_day_total_eggs=0
 thirty_day_total_eggs=0
@@ -33,10 +35,12 @@ mapfile -t records < <(echo "$response" | jq -c '.[]')
 for record in "${records[@]}"; do
   trays=$(echo "$record" | jq -r '.numbertrays')
   eggs=$(echo "$record" | jq -r '.numbereggs')
+  eggsbroken=$(echo "$record" | jq -r '.numbereggsbroken')
   date=$(echo "$record" | jq -r '.surveydate')
 
   total_trays=$((total_trays + trays))
   total_eggs=$((total_eggs + eggs))
+  total_eggs_broken=$((total_eggs + eggsbroken))
 
   record_total_eggs=$((trays * 30 + eggs))
 
@@ -137,6 +141,7 @@ cat <<EOF
 
 🧺 Trays: \`$latest_trays\`
 🥚 Eggs: \`$latest_eggs\`
+❌ Broken eggs: \`$latest_eggs_broken\`
 
 🥚 Total Eggs (this entry): \`$((latest_trays * 30 + latest_eggs))\`
 
