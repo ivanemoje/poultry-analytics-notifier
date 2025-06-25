@@ -140,7 +140,11 @@ cat <<EOF
 
 
 🧺 Trays: \`$latest_trays\`
+
+
 🥚 Eggs: \`$latest_eggs\`
+
+
 🥚 Broken: \`$latest_eggs_broken\`
 
 🥚 Total Eggs (this entry): \`$((latest_trays * 30 + latest_eggs))\`
