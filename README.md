@@ -1,7 +1,7 @@
-# Egg Report Project
+# Poultry Analytics Notifier
 
 ## Overview
-The Egg Report project is designed to automate the collection and reporting of egg production data. It fetches data from an API, processes it to calculate totals and averages, and formats the results for easy sharing via Slack. This project utilizes a Bash script for data processing and a GitHub Actions workflow to schedule the report generation and delivery.
+The Poultry Analytics Notifier is designed to automate the collection and reporting of egg production data. It fetches data from an API, processes it to calculate totals and averages, and formats the results for easy sharing via Slack. This project utilizes a Bash script for data processing and a GitHub Actions workflow to schedule the report generation and delivery.
 
 ## Setup Instructions
 
@@ -20,16 +20,10 @@ The Egg Report project is designed to automate the collection and reporting of e
 
    You can set these variables in your GitHub repository secrets for the GitHub Actions workflow to access them securely.
 
-3. **Install Dependencies**
-   The project requires `jq` for processing JSON data. If you are running the script locally, install `jq` using:
-   ```
-   sudo apt-get install -y jq
-   ```
-
 ## Usage Details
 
 ### Running the Script Manually
-To run the egg report script manually, execute the following command in your terminal:
+To run the Poultry Analytics Notifier script manually, execute the following command in your terminal:
 ```
 bash ./scripts/egg_report.sh
 ```

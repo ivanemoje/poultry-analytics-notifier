@@ -251,4 +251,4 @@ JSON_DATA=$(jq -n \
       "trend": $arrow30
     }
   }
-}' | tee "$OUTPUT_FILE") # <-- MISSING CLOSING PARENTHESIS
+}' | tee "$OUTPUT_FILE")
