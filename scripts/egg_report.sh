@@ -192,3 +192,63 @@ cat <<EOF
 
 📅  Data submitted at: \`$latest_time\`
 EOF
+
+# 1. Define the output file path
+OUTPUT_FILE="egg_report_data.json"
+
+# 2. Construct the JSON data (only including the variables you want to display)
+JSON_DATA=$(jq -n \
+  --arg today "$today" \
+  --arg latest_date "$latest_date" \
+  --arg latest_trays "$latest_trays" \
+  --arg latest_eggs "$latest_eggs" \
+  --arg latest_broken "$latest_eggs_broken" \
+  --arg latest_total "$((latest_trays * 30 + latest_eggs))" \
+  --arg daily_perc "$laying_percentage_daily" \
+  --arg total_eggs_all "$total_eggs_all" \
+  --arg total_trays_calc "$total_trays_calc" \
+  --arg total_eggs_mod "$total_eggs_mod" \
+  --arg yesterday_avg "$yesterday_avg_eggs" \
+  --arg arrow_yesterday "$arrow_yesterday" \
+  --arg avg3 "$avg3_eggs" \
+  --arg arrow3 "$arrow3" \
+  --arg avg7 "$avg7_eggs" \
+  --arg arrow7 "$arrow7" \
+  --arg avg30 "$avg30_eggs" \
+  --arg arrow30 "$arrow30" \
+  --arg latest_time "$latest_time" \
+'{
+  "reportDate": $today,
+  "latestEntry": {
+    "surveyDate": $latest_date,
+    "trays": ($latest_trays | tonumber),
+    "eggs": ($latest_eggs | tonumber),
+    "broken": ($latest_broken | tonumber),
+    "totalEggsEntry": ($latest_total | tonumber),
+    "layingPercentageDaily": $daily_perc,
+    "submittedAt": $latest_time
+  },
+  "overallTotals": {
+    "totalEggsAllRecords": ($total_eggs_all | tonumber),
+    "totalTraysCalculated": ($total_trays_calc | tonumber),
+    "remainingEggs": ($total_eggs_mod | tonumber)
+  },
+  "rollingAverages": {
+    "yesterday": {
+      "average": ($yesterday_avg | tonumber),
+      "trend": $arrow_yesterday
+    },
+    "threeDay": {
+      "average": ($avg3 | tonumber),
+      "trend": $arrow3
+    },
+    "sevenDay": {
+      "average": ($avg7 | tonumber),
+      "trend": $arrow7
+    },
+    "thirtyDay": {
+      "average": ($avg30 | tonumber),
+      "trend": $arrow30
+    }
+  }
+}' | tee "$OUTPUT_FILE" # Use tee to print to stdout (optional) and save to file
