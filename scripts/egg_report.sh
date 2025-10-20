@@ -136,13 +136,16 @@ total_eggs_mod=$(( total_eggs_all % 30 ))
 
 # --- DEBUG LINES START ---
 echo "DEBUG: Total Birds: $total_birds" >&2 # Sends output to stderr
-echo "DEBUG: Today Total Eggs: $latest_trays" >&2
+echo "DEBUG: Today Total Eggs: $today_total_eggs" >&2
 # --- DEBUG LINES END ---
 
 
 # laying_percentage=$(( today_total_eggs * 100 / (total_birds) ))
 total_daily_eggs=$((latest_trays * 30 + latest_eggs))
-laying_percentage=$(echo "scale=2; ($total_daily_eggs) / $total_birds" | bc)
+laying_percentage_daily=$(echo "scale=1; (($total_daily_eggs) / $total_birds) * 100" | bc)
+echo "$laying_percentage%"
+laying_percentage_7day=$(echo "scale=1; (($seven_day_total_eggs) / ($total_birds * 7) * 100" | bc)
+echo "$laying_percentage_7day%"
 # laying_percentage_7day=$(( seven_day_total_eggs * 100 / (total_birds * 7) ))
 
 # total_eggs=$((latest_trays * 30 + latest_eggs))
@@ -163,10 +166,9 @@ cat <<EOF
 
 🔴 Broken: \`$latest_eggs_broken\`
 
-📊 Laying Percentage (today): \`$laying_percentage%\`
-
-
 🥚 Total Eggs (this entry): \`$((latest_trays * 30 + latest_eggs))\`
+
+📊 Laying Percentage (today): \`$laying_percentage_daily%\`
 
 
 *Totals (All Records):*
