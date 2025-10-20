@@ -31,6 +31,9 @@ thirty_day_total_eggs=0
 yesterday_total_eggs=0
 yesterday_count=0
 
+# Number of birds
+total_birds=576
+
 mapfile -t records < <(echo "$response" | jq -c '.[]')
 for record in "${records[@]}"; do
   trays=$(echo "$record" | jq -r '.numbertrays')
@@ -129,6 +132,10 @@ done
 total_trays_calc=$(( total_eggs_all / 30 ))
 total_eggs_mod=$(( total_eggs_all % 30 ))
 
+# Calculate laying percentage
+laying_percentage=$(( today_total_eggs * 100 / (total_birds) ))
+laying_percentage_7day=$(( seven_day_total_eggs * 100 / (total_birds * 7) ))
+
 cat <<EOF
 *🐣 Egg Report Summary*
 
@@ -144,6 +151,8 @@ cat <<EOF
 🥚 Eggs: \`$latest_eggs\`
 
 🔴 Broken: \`$latest_eggs_broken\`
+
+📊 Laying Percentage (today): \`$laying_percentage%\`
 
 🥚 Total Eggs (this entry): \`$((latest_trays * 30 + latest_eggs))\`
 
