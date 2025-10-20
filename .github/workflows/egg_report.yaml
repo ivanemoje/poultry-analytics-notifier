@@ -41,3 +41,10 @@ jobs:
                 text:
                   type: "mrkdwn"
                   text: "${{ env.EGG_REPORT }}"
+
+      - name: Save Data File and Commit
+              # This step is critical for your website to access the latest data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Automated: Update egg report data for website"
+          file_pattern: egg_report_data.json
