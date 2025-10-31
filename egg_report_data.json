@@ -1,31 +1,31 @@
 {
-  "reportDate": "2025-10-30",
+  "reportDate": "2025-10-31",
   "latestEntry": {
-    "surveyDate": "2025-10-30",
+    "surveyDate": "2025-10-31",
     "trays": 16,
-    "eggs": 20,
+    "eggs": 18,
     "broken": 0,
-    "totalEggsEntry": 500,
+    "totalEggsEntry": 498,
     "layingPercentageDaily": "86.00",
-    "submittedAt": "2025-10-30 22:19"
+    "submittedAt": "2025-10-31 23:10"
   },
   "overallTotals": {
-    "totalEggsAllRecords": 81924,
-    "totalTraysCalculated": 2730,
-    "remainingEggs": 24
+    "totalEggsAllRecords": 82422,
+    "totalTraysCalculated": 2747,
+    "remainingEggs": 12
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 498,
-      "trend": "✅"
+      "average": 500,
+      "trend": "❌"
     },
     "threeDay": {
-      "average": 499,
-      "trend": "✅"
+      "average": 498,
+      "trend": "🔵"
     },
     "sevenDay": {
-      "average": 500,
-      "trend": "🔵"
+      "average": 499,
+      "trend": "❌"
     },
     "thirtyDay": {
       "average": 501,
