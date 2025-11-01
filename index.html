@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Egg Report Summary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for metrics boxes */
+        .metric-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .trend-icon {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-6 sm:p-10">
+
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-bold text-green-700 mb-6 border-b pb-2">📋 Live Egg Report Summary</h1>
+        
+        <div id="loading-message" class="text-center text-xl text-blue-600 font-semibold my-10 p-4 bg-white rounded-lg shadow-md">
+            Fetching and calculating report data...
+        </div>
+
+        <div id="summary-dashboard" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" style="display: none;">
+
+            <div class="metric-card bg-white">
+                <div class="text-sm font-medium text-gray-500">Latest Eggs Collected (Entry)</div>
+                <div class="text-3xl font-extrabold text-gray-900 mt-1" id="latest-total">--</div>
+                <div class="text-xs text-gray-400 mt-2" id="latest-date">Survey Date: --</div>
+            </div>
+
+            <div class="metric-card bg-white">
+                <div class="text-sm font-medium text-gray-500">Laying Percentage (Daily)</div>
+                <div class="text-3xl font-extrabold text-green-600 mt-1" id="laying-percentage">--</div>
+                <div class="text-xs text-gray-400 mt-2">Based on 576 birds</div>
+            </div>
+
+            <div class="metric-card bg-white">
+                <div class="text-sm font-medium text-gray-500">Total Eggs (All Records)</div>
+                <div class="text-3xl font-extrabold text-indigo-600 mt-1" id="total-eggs-all">--</div>
+                <div class="text-xs text-gray-400 mt-2" id="total-trays-calc">--</div>
+            </div>
+
+            <div class="metric-card bg-white">
+                <div class="text-sm font-medium text-gray-500">Broken Eggs (Latest Entry)</div>
+                <div class="text-3xl font-extrabold text-red-600 mt-1" id="latest-broken">--</div>
+                <div class="text-xs text-gray-400 mt-2">Check for trend alerts</div>
+            </div>
+            
+            <div class="lg:col-span-4 grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="metric-card bg-white border-t-4 border-yellow-500">
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm font-medium text-gray-500">Yesterday's Avg</div>
+                        <span class="trend-icon" id="trend-yesterday"></span>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-900 mt-1" id="avg-yesterday">--</div>
+                </div>
+
+                <div class="metric-card bg-white border-t-4 border-blue-500">
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm font-medium text-gray-500">3-Day Avg Eggs</div>
+                        <span class="trend-icon" id="trend-3day"></span>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-900 mt-1" id="avg-3day">--</div>
+                </div>
+
+                <div class="metric-card bg-white border-t-4 border-green-500">
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm font-medium text-gray-500">7-Day Avg Eggs</div>
+                        <span class="trend-icon" id="trend-7day"></span>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-900 mt-1" id="avg-7day">--</div>
+                </div>
+
+                <div class="metric-card bg-white border-t-4 border-indigo-500">
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm font-medium text-gray-500">30-Day Avg Eggs</div>
+                        <span class="trend-icon" id="trend-30day"></span>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-900 mt-1" id="avg-30day">--</div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        // Raw URL for the JSON data
+        const JSON_URL = 'https://raw.githubusercontent.com/ivanemoje/poultry-analytics-notifier/main/egg_report_data.json';
+        const TOTAL_BIRDS = 576; 
+        const dashboard = document.getElementById('summary-dashboard');
+        const loadingMessage = document.getElementById('loading-message');
+
+        /**
+         * Utility function to get the date part in 'YYYY-MM-DD' format.
+         * Note: The report_date is already in this format, but we'll use this for safety
+         * and comparing dates in the calculation logic.
+         */
+        function getYYYYMMDD(date) {
+            return date.toISOString().split('T')[0];
+        }
+
+        /**
+         * Fetches and processes the data to populate the dashboard metrics.
+         */
+        async function loadSummaryData() {
+            try {
+                // 1. Fetch Data
+                const response = await fetch(JSON_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Check if data is empty or malformed
+                if (!data || typeof data !== 'object') {
+                    throw new Error("Data file is empty or malformed.");
+                }
+
+                // Check if this is the new summary format
+                if (!data.latestEntry || !data.overallTotals || !data.rollingAverages) {
+                    throw new Error("Data file is missing required fields (latestEntry, overallTotals, rollingAverages).");
+                }
+
+                // --- 2. Extract Data from Summary Format ---
+                const latestEntry = data.latestEntry;
+                const overallTotals = data.overallTotals;
+                const rollingAverages = data.rollingAverages;
+
+                // --- 3. Prepare Metrics ---
+                const metrics = {
+                    latestTotal: latestEntry.totalEggsEntry || latestEntry.eggs || 0,
+                    latestDate: latestEntry.surveyDate || data.reportDate,
+                    layingPercentage: latestEntry.layingPercentageDaily || '0.00%',
+                    totalEggsAll: overallTotals.totalEggsAllRecords || 0,
+                    totalTraysCalc: `(${overallTotals.totalTraysCalculated || 0} Trays + ${overallTotals.remainingEggs || 0} Eggs)`,
+                    latestBroken: latestEntry.broken || 0,
+                    avgYesterday: rollingAverages.yesterday?.average || 0,
+                    avg3Day: rollingAverages.threeDay?.average || 0,
+                    avg7Day: rollingAverages.sevenDay?.average || 0,
+                    avg30Day: rollingAverages.thirtyDay?.average || 0,
+                    todayValue: latestEntry.totalEggsEntry || latestEntry.eggs || 0
+                };
+
+                // --- 4. Determine Trend Arrows from provided trends ---
+                const getTrendFromData = (trendData) => {
+                    const trendIcon = trendData?.trend || '🔵';
+                    // Map trend emojis to colors
+                    if (trendIcon.includes('❌') || trendIcon.includes('⬇️')) {
+                        return { icon: '⬇️', color: 'text-red-500' };
+                    } else if (trendIcon.includes('⬆️') || trendIcon.includes('✅')) {
+                        return { icon: '⬆️', color: 'text-green-500' };
+                    }
+                    return { icon: '🔵', color: 'text-blue-500' };
+                };
+                
+                const trends = {
+                    yesterday: getTrendFromData(rollingAverages.yesterday),
+                    threeDay: getTrendFromData(rollingAverages.threeDay),
+                    sevenDay: getTrendFromData(rollingAverages.sevenDay),
+                    thirtyDay: getTrendFromData(rollingAverages.thirtyDay),
+                };
+
+                // --- 5. Populate HTML ---
+                document.getElementById('latest-total').textContent = metrics.latestTotal.toLocaleString();
+                document.getElementById('latest-date').textContent = `Survey Date: ${metrics.latestDate}`;
+                document.getElementById('laying-percentage').textContent = metrics.layingPercentage;
+                document.getElementById('total-eggs-all').textContent = metrics.totalEggsAll.toLocaleString();
+                document.getElementById('total-trays-calc').textContent = metrics.totalTraysCalc;
+                document.getElementById('latest-broken').textContent = metrics.latestBroken;
+
+                // Averages
+                document.getElementById('avg-yesterday').textContent = metrics.avgYesterday.toLocaleString();
+                document.getElementById('avg-3day').textContent = metrics.avg3Day.toLocaleString();
+                document.getElementById('avg-7day').textContent = metrics.avg7Day.toLocaleString();
+                document.getElementById('avg-30day').textContent = metrics.avg30Day.toLocaleString();
+                
+                // Trends
+                document.getElementById('trend-yesterday').textContent = trends.yesterday.icon;
+                document.getElementById('trend-yesterday').classList.add(trends.yesterday.color);
+                
+                document.getElementById('trend-3day').textContent = trends.threeDay.icon;
+                document.getElementById('trend-3day').classList.add(trends.threeDay.color);
+
+                document.getElementById('trend-7day').textContent = trends.sevenDay.icon;
+                document.getElementById('trend-7day').classList.add(trends.sevenDay.color);
+
+                document.getElementById('trend-30day').textContent = trends.thirtyDay.icon;
+                document.getElementById('trend-30day').classList.add(trends.thirtyDay.color);
+
+                // Show dashboard
+                loadingMessage.style.display = 'none';
+                dashboard.style.display = 'grid';
+
+            } catch (error) {
+                console.error("Error loading or processing data:", error);
+                loadingMessage.className = 'text-center text-xl text-red-600 font-semibold my-10 p-4 bg-red-100 rounded-lg shadow-md';
+                loadingMessage.innerHTML = `⚠️ **Error:** Failed to load report data from the URL.<br>Details: ${error.message}`;
+                dashboard.style.display = 'none';
+            }
+        }
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', loadSummaryData);
+    </script>
+</body>
+</html>

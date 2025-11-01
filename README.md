@@ -3,6 +3,10 @@
 ## Overview
 The Poultry Analytics Notifier is designed to automate the collection and reporting of egg production data. It fetches data from an API, processes it to calculate totals and averages, and formats the results for easy sharing via Slack. This project utilizes a Bash script for data processing and a GitHub Actions workflow to schedule the report generation and delivery.
 
+## Documentation
+For detailed documentation, visit the GitHub Pages site:
+[https://ivanemoje.github.io/poultry-analytics-notifier/](https://ivanemoje.github.io/poultry-analytics-notifier/)
+
 ## Setup Instructions
 
 1. **Clone the Repository**
@@ -33,6 +37,18 @@ This will fetch the egg collection data, process it, and output the report to th
 The project includes a GitHub Actions workflow defined in `.github/workflows/egg_report.yaml`. This workflow is scheduled to run daily at 05:00 and 22:00 UTC. It will execute the egg report script and send the generated report to the specified Slack channel.
 
 To trigger the workflow manually, you can use the "Run workflow" option in the GitHub Actions tab of your repository.
+
+### GitHub Pages
+
+The project's is now deployed on GitHub Pages, providing a clean and accessible interface for users to access detailed information . Visit [https://ivanemoje.github.io/poultry-analytics-notifier/](https://ivanemoje.github.io/poultry-analytics-notifier/) to explore:
+
+- Detailed setup instructions
+- API documentation
+- Configuration guides
+- Troubleshooting tips
+- Usage examples
+
+The documentation is automatically updated with each push to the main branch, ensuring you always have access to the latest information.
 
 ## Conclusion
 The Egg Report project simplifies the process of tracking and reporting egg production data. By automating data fetching and reporting, it allows users to focus on analysis and decision-making. For any issues or contributions, please refer to the project's GitHub repository.
