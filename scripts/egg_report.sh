@@ -7,9 +7,38 @@ set -e
 : "${ONA_FORM_ID:?Missing ONA_FORM_ID}"
 
 URL="https://api.ona.io/api/v1/data/$ONA_FORM_ID"
-response=$(curl -s -H "Authorization: Token $ONA_API_TOKEN" "$URL")
+response=$(curl -s -f -H "Authorization: Token $ONA_API_TOKEN" "$URL")
+if [ $? -ne 0 ]; then
+    echo "❌ *Error: Failed to fetch data from ONA API*
+
+*Possible causes:*
+• Invalid or expired API token
+• Network connectivity issues
+• API endpoint is unavailable
+• Invalid form ID
+
+Please check your credentials and try again.
+
+*Debug Info:*
+• URL: \`$URL\`
+• Form ID: \`$ONA_FORM_ID\`
+"
+    exit 1
+fi
 
 latest=$(echo "$response" | jq 'sort_by(._submission_time) | last')
+if [ -z "$latest" ] || [ "$latest" = "null" ]; then
+    echo "❌ *Error: No data found in the API response*
+
+*Possible causes:*
+• Form has no submissions
+• Invalid form ID
+• API response format changed
+
+Please verify the form ID and check if there are any submissions.
+"
+    exit 1
+fi
 latest_trays=$(echo "$latest" | jq -r '.numbertrays')
 latest_eggs=$(echo "$latest" | jq -r '.numbereggs')
 latest_eggs_broken=$(echo "$latest" | jq -r '.numbereggsbroken')
