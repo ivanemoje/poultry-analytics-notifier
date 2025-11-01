@@ -4,176 +4,658 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Egg Report Summary</title>
-    <script>
-        tailwind.config = {
-            darkMode: 'class', // Enable dark mode based on the 'dark' class on the HTML tag
-        }
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom styles for metrics boxes - using dark: classes for dark mode */
+        /* ============================================
+           CSS CUSTOM PROPERTIES - DARK MODE FIRST (Trade Republic Style)
+           ============================================ */
+        :root {
+            /* Dark Mode (Primary) - Trade Republic Style */
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --text-secondary: #888888;
+            --accent-color: #00d4aa;
+            --card-bg: #0a0a0a;
+            --border-color: #1a1a1a;
+            --hover-bg: #151515;
+            
+            /* Accent variations */
+            --accent-green: #00d4aa;
+            --accent-blue: #0099ff;
+            --accent-yellow: #ffb800;
+            --accent-indigo: #7b61ff;
+            --accent-red: #ff4444;
+            
+            /* Typography - Trade Republic uses clean sans-serif */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            
+            /* Spacing - More generous */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --spacing-3xl: 4rem;
+            
+            /* Border radius - Minimal, Trade Republic style */
+            --radius-sm: 0;
+            --radius-md: 0;
+            --radius-lg: 0;
+            --radius-full: 9999px;
+        }
+        
+        /* Light Mode Override */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-color: #ffffff;
+                --text-color: #000000;
+                --text-secondary: #666666;
+                --accent-color: #00d4aa;
+                --card-bg: #fafafa;
+                --border-color: #e5e5e5;
+                --hover-bg: #f5f5f5;
+            }
+        }
+        
+        /* Manual dark mode class override */
+        .dark {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --text-secondary: #888888;
+            --accent-color: #00d4aa;
+            --card-bg: #0a0a0a;
+            --border-color: #1a1a1a;
+            --hover-bg: #151515;
+        }
+        
+        /* ============================================
+           BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            padding: var(--spacing-2xl) var(--spacing-xl);
+            transition: background-color 0.2s ease, color 0.2s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-weight: var(--font-weight-normal);
+        }
+        
+        @media (min-width: 640px) {
+            body {
+                padding: var(--spacing-3xl) var(--spacing-2xl);
+            }
+        }
+        
+        /* ============================================
+           LAYOUT
+           ============================================ */
+        .container {
+            max-width: 75rem;
+            margin: 0 auto;
+        }
+        
+        /* ============================================
+           HEADER
+           ============================================ */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-3xl);
+            padding-bottom: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-color);
+            letter-spacing: -0.01em;
+            text-transform: none;
+        }
+        
+        @media (min-width: 640px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+        }
+        
+        /* ============================================
+           THEME TOGGLE BUTTON
+           ============================================ */
+        #theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.25rem;
+            height: 2.25rem;
+            padding: 0;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+            color: var(--text-color);
+        }
+        
+        #theme-toggle:hover {
+            border-color: var(--text-secondary);
+            background-color: var(--hover-bg);
+        }
+        
+        #theme-toggle svg {
+            width: 1.125rem;
+            height: 1.125rem;
+        }
+        
+        #sun-icon.hidden,
+        #moon-icon.hidden {
+            display: none;
+        }
+        
+        /* ============================================
+           LOADING MESSAGE
+           ============================================ */
+        #loading-message {
+            text-align: center;
+            font-size: 0.9375rem;
+            font-weight: var(--font-weight-medium);
+            color: var(--text-secondary);
+            margin: var(--spacing-3xl) 0;
+            padding: var(--spacing-xl);
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+        }
+        
+        /* ============================================
+           DASHBOARD GRID
+           ============================================ */
+        #summary-dashboard {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+            align-items: stretch;
+            grid-auto-rows: 1fr;
+        }
+        
+        @media (min-width: 768px) {
+            #summary-dashboard {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-lg);
+                align-items: stretch;
+                grid-auto-rows: 1fr;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            #summary-dashboard {
+                grid-template-columns: repeat(4, 1fr);
+                align-items: stretch;
+                grid-auto-rows: 1fr;
+            }
+        }
+        
+        /* ============================================
+           METRIC CARDS - Trade Republic Style
+           ============================================ */
         .metric-card {
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            /* Light mode styles */
-            background-color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+            align-items: stretch;
+            padding: var(--spacing-xl);
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+            overflow: visible;
+            height: 100%;
         }
-        /* Dark mode styles */
-        .dark .metric-card {
-            background-color: #1f2937; /* Darker background for cards */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-        }
+        
         .metric-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            border-color: var(--text-secondary);
+            background-color: var(--hover-bg);
         }
-        .dark .metric-card:hover {
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        
+        .metric-card::before {
+            display: none;
         }
-        .trend-icon {
-            font-size: 1.5rem;
+        
+        .metric-card-label {
+            font-size: 0.75rem;
+            font-weight: var(--font-weight-medium);
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
         }
+        
+        .metric-card-value {
+            font-size: 2.25rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--text-color);
+            margin-top: 0;
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+        
+        @media (min-width: 640px) {
+            .metric-card-value {
+                font-size: 2.75rem;
+            }
+        }
+        
+        .metric-card-value.accent-green {
+            color: var(--accent-green);
+        }
+        
+        .metric-card-value.accent-blue {
+            color: var(--accent-blue);
+        }
+        
+        .metric-card-value.accent-red {
+            color: var(--accent-red);
+        }
+        
+        .metric-card-value.accent-indigo {
+            color: var(--accent-indigo);
+        }
+        
+        .metric-card-footer {
+            font-size: 0.6875rem;
+            color: var(--text-secondary);
+            margin-top: var(--spacing-lg);
+            font-weight: var(--font-weight-normal);
+        }
+        
+        /* ============================================
+           DETAIL GRID
+           ============================================ */
         .detail-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 0.75rem;
-            margin-top: 0.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
         }
         
         .detail-item {
             display: flex;
             align-items: center;
-            padding: 0.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 0.375rem;
+            padding: var(--spacing-sm) 0;
+            background-color: transparent;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.8125rem;
         }
         
-        .metric-card {
-            position: relative;
-            overflow: hidden;
+        .detail-item span:first-child {
+            color: var(--text-secondary);
         }
         
-        .metric-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(to right, #10B981, #3B82F6);
-            opacity: 0.7;
+        .detail-item span:last-child {
+            margin-left: auto;
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-color);
         }
-
+        
+        /* ============================================
+           TREND ICONS
+           ============================================ */
+        .trend-icon {
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+        
+        .trend-icon.text-red-500 {
+            color: var(--accent-red);
+        }
+        
+        .trend-icon.text-green-500 {
+            color: var(--accent-green);
+        }
+        
+        .trend-icon.text-blue-500 {
+            color: var(--accent-blue);
+        }
+        
+        /* ============================================
+           AVERAGE CARDS (Full width section)
+           ============================================ */
+        .average-section {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+            align-items: stretch;
+            grid-auto-rows: 1fr;
+        }
+        
+        @media (min-width: 768px) {
+            .average-section {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-lg);
+                align-items: stretch;
+                grid-auto-rows: 1fr;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .average-section {
+                grid-template-columns: repeat(4, 1fr);
+                align-items: stretch;
+                grid-auto-rows: 1fr;
+            }
+        }
+        
+        .metric-card.border-yellow {
+            border-left: 3px solid var(--accent-yellow);
+        }
+        
+        .metric-card.border-blue {
+            border-left: 3px solid var(--accent-blue);
+        }
+        
+        .metric-card.border-green {
+            border-left: 3px solid var(--accent-green);
+        }
+        
+        .metric-card.border-indigo {
+            border-left: 3px solid var(--accent-indigo);
+        }
+        
+        .metric-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .metric-card-header-value {
+            font-size: 1.875rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--text-color);
+            margin-top: 0;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+        
+        /* ============================================
+           ALERT BADGE
+           ============================================ */
         .alert-badge {
             position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            top: var(--spacing-lg);
+            right: var(--spacing-lg);
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: 0;
+            font-size: 0.6875rem;
+            font-weight: var(--font-weight-semibold);
+            z-index: 10;
+            border: 1px solid var(--accent-red);
+            background-color: var(--card-bg);
         }
-
+        
+        .alert-badge.hidden {
+            display: none;
+        }
+        
         .alert-overdue {
-            background-color: #FEE2E2;
-            color: #DC2626;
+            color: var(--accent-red);
         }
-
-        .dark .alert-overdue {
-            background-color: #7F1D1D;
-            color: #FCA5A5;
+        
+        @media (prefers-color-scheme: light) {
+            .alert-overdue {
+                color: var(--accent-red);
+            }
+        }
+        
+        /* ============================================
+           UTILITY CLASSES (for JavaScript compatibility)
+           ============================================ */
+        .hidden {
+            display: none !important;
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-sm {
+            font-size: 0.875rem;
+        }
+        
+        .text-xs {
+            font-size: 0.75rem;
+        }
+        
+        .font-medium {
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .font-semibold {
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .font-bold {
+            font-weight: var(--font-weight-bold);
+        }
+        
+        .mt-1 {
+            margin-top: var(--spacing-xs);
+        }
+        
+        .mt-2 {
+            margin-top: var(--spacing-sm);
+        }
+        
+        .ml-2 {
+            margin-left: var(--spacing-sm);
+        }
+        
+        /* Error message styles (for JavaScript error handling) */
+        .error-message {
+            text-align: center;
+            font-size: 1.125rem;
+            font-weight: var(--font-weight-semibold);
+            margin: var(--spacing-2xl) 0;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            background-color: rgba(255, 107, 107, 0.15);
+            color: var(--accent-red);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+        
+        @media (prefers-color-scheme: light) {
+            .error-message {
+                background-color: rgba(220, 38, 38, 0.1);
+                color: #dc2626;
+            }
+        }
+        
+        .dark .error-message {
+            background-color: rgba(255, 107, 107, 0.15);
+            color: var(--accent-red);
+        }
+        
+        /* Additional utility classes for JavaScript compatibility */
+        .text-xl {
+            font-size: 1.125rem;
+        }
+        
+        .text-red-600 {
+            color: #dc2626;
+        }
+        
+        .dark .text-red-400 {
+            color: #f87171;
+        }
+        
+        .bg-red-100 {
+            background-color: #fee2e2;
+        }
+        
+        .dark .bg-red-900 {
+            background-color: #7f1d1d;
+        }
+        
+        .rounded-lg {
+            border-radius: var(--radius-lg);
+        }
+        
+        .my-10 {
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .p-4 {
+            padding: var(--spacing-lg);
         }
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-6 sm:p-10 transition-colors duration-500">
+<body>
 
-    <div class="max-w-6xl mx-auto">
+    <div class="container">
         
-        <header class="flex justify-between items-center mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
-            <h1 class="text-3xl font-bold text-green-700 dark:text-green-400">📋 Live Egg Report Summary</h1>
-            <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
-                <svg id="sun-icon" class="w-6 h-6 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <svg id="moon-icon" class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+        <header>
+            <h1>Egg Report Dashboard</h1>
+            <button id="theme-toggle">
+                <svg id="sun-icon" class="hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <svg id="moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
             </button>
         </header>
         
-        <div id="loading-message" class="text-center text-xl text-blue-600 dark:text-blue-400 font-semibold my-10 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+        <div id="loading-message">
             Fetching and calculating report data...
         </div>
 
-        <div id="summary-dashboard" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" style="display: none;">
+        <div id="summary-dashboard" style="display: none;">
 
-            <div class="metric-card">
+                        <div class="metric-card">
                 <div id="survey-alert" class="alert-badge hidden"></div>
-                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Latest Collection Details</div>
-                <div class="text-3xl font-extrabold text-gray-900 dark:text-gray-100 mt-1" id="latest-total">--</div>
+                <div class="metric-card-label">Latest Collection Details</div>
+                <div class="metric-card-value" id="latest-total">--</div>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <span class="text-sm">🥚 Trays: </span>
-                        <span class="ml-2 font-medium" id="latest-trays">--</span>
+                        <span>Trays:</span>
+                        <span id="latest-trays">--</span>
                     </div>
                     <div class="detail-item">
-                        <span class="text-sm">🔢 Loose: </span>
-                        <span class="ml-2 font-medium" id="latest-loose">--</span>
+                        <span>Loose Eggs:</span>
+                        <span id="latest-loose">--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Total as Eggs:</span>
+                        <span id="latest-as-eggs">--</span>
                     </div>
                 </div>
-                <div class="text-xs text-gray-400 dark:text-gray-500 mt-2" id="latest-date">Survey Date: --</div>
+                <div class="metric-card-footer" id="latest-date">Survey Date: --</div>
             </div>
 
             <div class="metric-card">
-                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Laying Percentage (Daily)</div>
-                <div class="text-3xl font-extrabold text-green-600 dark:text-green-400 mt-1" id="laying-percentage">--</div>
-                <div class="text-xs text-gray-400 dark:text-gray-500 mt-2">Based on 576 birds</div>
+                <div class="metric-card-label">Laying Percentage (Daily)</div>
+                <div class="metric-card-value accent-green" id="laying-percentage">--</div>
+                <div class="metric-card-footer">Based on 576 birds</div>
             </div>
 
             <div class="metric-card">
-                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Eggs (All Records)</div>
-                <div class="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-1" id="total-eggs-all">--</div>
-                <div class="text-xs text-gray-400 dark:text-gray-500 mt-2" id="total-trays-calc">--</div>
+                <div class="metric-card-label">Recent Period Totals</div>
+                <div class="metric-card-value accent-indigo" id="seven-day-total">--</div>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <span>Last 7 Days:</span>
+                        <span id="total-7-days">--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Last 30 Days:</span>
+                        <span id="total-30-days">--</span>
+                    </div>
+                </div>
+                <div class="metric-card-footer">Total eggs collected in recent periods</div>
             </div>
 
             <div class="metric-card">
-                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Broken Eggs (Latest Entry)</div>
-                <div class="text-3xl font-extrabold text-red-600 dark:text-red-400 mt-1" id="latest-broken">--</div>
-                <div class="text-xs text-gray-400 dark:text-gray-500 mt-2">Check for trend alerts</div>
+                <div class="metric-card-label">Total Eggs (All Records)</div>
+                <div class="metric-card-value accent-indigo" id="total-eggs-all">--</div>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <span>Complete Trays:</span>
+                        <span id="total-trays">--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Loose Eggs:</span>
+                        <span id="total-loose">--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Total Eggs:</span>
+                        <span id="total-breakdown">--</span>
+                    </div>
+                </div>
+                <div class="metric-card-footer">All records combined</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-card-label">Broken Eggs (Latest Entry)</div>
+                <div class="metric-card-value accent-red" id="latest-broken">--</div>
+                <div class="metric-card-footer">Check for trend alerts</div>
             </div>
             
-            <div class="lg:col-span-4 grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="metric-card border-t-4 border-yellow-500 dark:border-yellow-400">
-                    <div class="flex justify-between items-center">
-                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Yesterday's Avg</div>
+            <div class="average-section">
+                <div class="metric-card border-yellow">
+                    <div class="metric-card-header">
+                        <div class="metric-card-label">Yesterday's Avg</div>
                         <span class="trend-icon" id="trend-yesterday"></span>
                     </div>
-                    <div class="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-1" id="avg-yesterday">--</div>
+                    <div class="metric-card-header-value" id="avg-yesterday">--</div>
                 </div>
 
-                <div class="metric-card border-t-4 border-blue-500 dark:border-blue-400">
-                    <div class="flex justify-between items-center">
-                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">3-Day Avg Eggs</div>
+                <div class="metric-card border-blue">
+                    <div class="metric-card-header">
+                        <div class="metric-card-label">3-Day Avg Eggs</div>
                         <span class="trend-icon" id="trend-3day"></span>
                     </div>
-                    <div class="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-1" id="avg-3day">--</div>
+                    <div class="metric-card-header-value" id="avg-3day">--</div>
                 </div>
 
-                <div class="metric-card border-t-4 border-green-500 dark:border-green-400">
-                    <div class="flex justify-between items-center">
-                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">7-Day Avg Eggs</div>
+                <div class="metric-card border-green">
+                    <div class="metric-card-header">
+                        <div class="metric-card-label">7-Day Avg Eggs</div>
                         <span class="trend-icon" id="trend-7day"></span>
                     </div>
-                    <div class="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-1" id="avg-7day">--</div>
+                    <div class="metric-card-header-value" id="avg-7day">--</div>
                 </div>
 
-                <div class="metric-card border-t-4 border-indigo-500 dark:border-indigo-400">
-                    <div class="flex justify-between items-center">
-                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">30-Day Avg Eggs</div>
+                <div class="metric-card border-indigo">
+                    <div class="metric-card-header">
+                        <div class="metric-card-label">30-Day Avg Eggs</div>
                         <span class="trend-icon" id="trend-30day"></span>
                     </div>
-                    <div class="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-1" id="avg-30day">--</div>
+                    <div class="metric-card-header-value" id="avg-30day">--</div>
                 </div>
             </div>
             
@@ -217,8 +699,8 @@
 
         // --- Existing Dashboard Logic (Unchanged functionality) ---
 
-        // Raw URL for the JSON data
-        const JSON_URL = 'https://raw.githubusercontent.com/ivanemoje/poultry-analytics-notifier/main/egg_report_data.json';
+        // Local JSON data path
+        const JSON_URL = 'egg_report_data.json';    
         const TOTAL_BIRDS = 576; 
         const dashboard = document.getElementById('summary-dashboard');
         const loadingMessage = document.getElementById('loading-message');
@@ -260,17 +742,17 @@
 
                 // --- 3. Prepare Metrics ---
                 const metrics = {
-                    latestTotal: latestEntry.totalEggsEntry || latestEntry.eggs || 0,
+                    latestTotal: parseInt(latestEntry.totalEggsEntry) || parseInt(latestEntry.eggs) || 0,
                     latestDate: latestEntry.surveyDate || data.reportDate,
                     layingPercentage: latestEntry.layingPercentageDaily || '0.00%',
-                    totalEggsAll: overallTotals.totalEggsAllRecords || 0,
-                    totalTraysCalc: `(${overallTotals.totalTraysCalculated || 0} Trays + ${overallTotals.remainingEggs || 0} Eggs)`,
-                    latestBroken: latestEntry.broken || 0,
-                    avgYesterday: rollingAverages.yesterday?.average || 0,
-                    avg3Day: rollingAverages.threeDay?.average || 0,
-                    avg7Day: rollingAverages.sevenDay?.average || 0,
-                    avg30Day: rollingAverages.thirtyDay?.average || 0,
-                    todayValue: latestEntry.totalEggsEntry || latestEntry.eggs || 0
+                    totalEggsAll: parseInt(overallTotals.totalEggsAllRecords) || 0,
+                    totalTraysCalc: `${parseInt(overallTotals.totalTraysCalculated) || 0} Trays, ${parseInt(overallTotals.remainingEggs) || 0} Eggs`,
+                    latestBroken: parseInt(latestEntry.broken) || 0,
+                    avgYesterday: parseInt(rollingAverages.yesterday?.average) || 0,
+                    avg3Day: parseInt(rollingAverages.threeDay?.average) || 0,
+                    avg7Day: parseInt(rollingAverages.sevenDay?.average) || 0,
+                    avg30Day: parseInt(rollingAverages.thirtyDay?.average) || 0,
+                    todayValue: parseInt(latestEntry.totalEggsEntry) || parseInt(latestEntry.eggs) || 0
                 };
 
                 // Calculate latest trays and loose eggs
@@ -297,14 +779,31 @@
                 };
 
                 // --- 5. Populate HTML ---
+                // Latest Collection Details
                 document.getElementById('latest-total').textContent = metrics.latestTotal.toLocaleString();
+                document.getElementById('latest-trays').textContent = latestEntry.trays;
+                document.getElementById('latest-loose').textContent = latestEntry.eggs;
+                document.getElementById('latest-as-eggs').textContent = metrics.latestTotal;
                 document.getElementById('latest-date').textContent = `Survey Date: ${metrics.latestDate}`;
+
+                // Laying Percentage
                 document.getElementById('laying-percentage').textContent = metrics.layingPercentage;
+
+                // Total Eggs All Records
                 document.getElementById('total-eggs-all').textContent = metrics.totalEggsAll.toLocaleString();
-                document.getElementById('total-trays-calc').textContent = metrics.totalTraysCalc;
+                document.getElementById('total-trays').textContent = overallTotals.totalTraysCalculated;
+                document.getElementById('total-loose').textContent = overallTotals.remainingEggs;
+                document.getElementById('total-breakdown').textContent = metrics.totalEggsAll;
+
                 document.getElementById('latest-broken').textContent = metrics.latestBroken;
-                document.getElementById('latest-trays').textContent = metrics.latestTrays;
-                document.getElementById('latest-loose').textContent = metrics.latestLoose;
+
+                // Recent Period Totals
+                const sevenDayTotal = parseInt(data.recentTotals?.sevenDay || 0);
+                const thirtyDayTotal = parseInt(data.recentTotals?.thirtyDay || 0);
+                
+                document.getElementById('seven-day-total').textContent = sevenDayTotal.toLocaleString();
+                document.getElementById('total-7-days').textContent = sevenDayTotal.toLocaleString();
+                document.getElementById('total-30-days').textContent = thirtyDayTotal.toLocaleString();
 
                 // Averages
                 document.getElementById('avg-yesterday').textContent = metrics.avgYesterday.toLocaleString();
@@ -345,7 +844,7 @@
                     const surveyAlert = document.getElementById('survey-alert');
                     if (diffDays > 0) {
                         surveyAlert.textContent = `${diffDays} ${diffDays === 1 ? 'day' : 'days'} overdue`;
-                        surveyAlert.classList.remove('hidden');
+                        survSeyAlert.classList.remove('hidden');
                         surveyAlert.classList.add('alert-overdue');
                     } else {
                         surveyAlert.classList.add('hidden');
