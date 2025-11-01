@@ -3,9 +3,10 @@
 ## Overview
 The Poultry Analytics Notifier is designed to automate the collection and reporting of egg production data. It fetches data from an API, processes it to calculate totals and averages, and formats the results for easy sharing via Slack. This project utilizes a Bash script for data processing and a GitHub Actions workflow to schedule the report generation and delivery.
 
-## Documentation
-For detailed documentation, visit the GitHub Pages site:
-[https://ivanemoje.github.io/poultry-analytics-notifier/](https://ivanemoje.github.io/poultry-analytics-notifier/)
+## Dashboard
+
+View the interactive egg production dashboard at [https://ivanemoje.github.io/poultry-analytics-notifier/](https://ivanemoje.github.io/poultry-analytics-notifier/)
+
 
 ## Setup Instructions
 
@@ -40,15 +41,16 @@ To trigger the workflow manually, you can use the "Run workflow" option in the G
 
 ### GitHub Pages
 
-The project's is now deployed on GitHub Pages, providing a clean and accessible interface for users to access detailed information . Visit [https://ivanemoje.github.io/poultry-analytics-notifier/](https://ivanemoje.github.io/poultry-analytics-notifier/) to explore:
+**Live Dashboard!** View our interactive egg production dashboard at [https://ivanemoje.github.io/poultry-analytics-notifier/](https://ivanemoje.github.io/poultry-analytics-notifier/)
 
-- Detailed setup instructions
-- API documentation
-- Configuration guides
-- Troubleshooting tips
-- Usage examples
+Features:
+- Daily egg production metrics
+- Interactive data visualizations
+- Daily, weekly, and monthly trends
+- Mobile-responsive design
+- Automatic updates from production data
 
-The documentation is automatically updated with each push to the main branch, ensuring you always have access to the latest information.
+The dashboard updates automatically when new data is pushed to the repository, providing a live view of your poultry analytics.
 
 ## Conclusion
 The Egg Report project simplifies the process of tracking and reporting egg production data. By automating data fetching and reporting, it allows users to focus on analysis and decision-making. For any issues or contributions, please refer to the project's GitHub repository.
