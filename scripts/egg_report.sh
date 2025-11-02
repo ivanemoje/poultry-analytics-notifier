@@ -34,6 +34,11 @@ yesterday_count=0
 # Number of birds
 total_birds=576
 
+# Batch birds
+bacth_one_birds=576
+bacth_two_birds=1175
+bacth_two_birds=470
+
 mapfile -t records < <(echo "$response" | jq -c '.[]')
 for record in "${records[@]}"; do
   trays=$(echo "$record" | jq -r '.numbertrays')
@@ -134,7 +139,7 @@ total_eggs_mod=$(( total_eggs_all % 30 ))
 
 # Calculate laying percentage
 total_daily_eggs=$((latest_trays * 30 + latest_eggs))
-laying_percentage_daily=$(echo "scale=2; (500 / 576) * 100" | bc)
+laying_percentage_daily=$(echo "scale=2; ($total_daily_eggs / 576) * 100" | bc)
 
 
 # --- DEBUG LINES START ---
