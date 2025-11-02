@@ -35,9 +35,9 @@ yesterday_count=0
 total_birds=576
 
 # Batch birds
-bacth_one_birds=576
-bacth_two_birds=1175
-bacth_two_birds=470
+batch_one_birds=576
+batch_two_birds=1064
+batch_two_birds=600
 
 mapfile -t records < <(echo "$response" | jq -c '.[]')
 for record in "${records[@]}"; do
