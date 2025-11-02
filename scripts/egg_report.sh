@@ -7,38 +7,9 @@ set -e
 : "${ONA_FORM_ID:?Missing ONA_FORM_ID}"
 
 URL="https://api.ona.io/api/v1/data/$ONA_FORM_ID"
-response=$(curl -s -f -H "Authorization: Token $ONA_API_TOKEN" "$URL")
-if [ $? -ne 0 ]; then
-    echo "❌ *Error: Failed to fetch data from ONA API*
-
-*Possible causes:*
-• Invalid or expired API token
-• Network connectivity issues
-• API endpoint is unavailable
-• Invalid form ID
-
-Please check your credentials and try again.
-
-*Debug Info:*
-• URL: \`$URL\`
-• Form ID: \`$ONA_FORM_ID\`
-"
-    exit 1
-fi
+response=$(curl -s -H "Authorization: Token $ONA_API_TOKEN" "$URL")
 
 latest=$(echo "$response" | jq 'sort_by(._submission_time) | last')
-if [ -z "$latest" ] || [ "$latest" = "null" ]; then
-    echo "❌ *Error: No data found in the API response*
-
-*Possible causes:*
-• Form has no submissions
-• Invalid form ID
-• API response format changed
-
-Please verify the form ID and check if there are any submissions.
-"
-    exit 1
-fi
 latest_trays=$(echo "$latest" | jq -r '.numbertrays')
 latest_eggs=$(echo "$latest" | jq -r '.numbereggs')
 latest_eggs_broken=$(echo "$latest" | jq -r '.numbereggsbroken')
@@ -62,10 +33,6 @@ yesterday_count=0
 
 # Number of birds
 total_birds=576
-
-# Initialize Friday totals
-friday_totals=""
-last_friday_total=0
 
 mapfile -t records < <(echo "$response" | jq -c '.[]')
 for record in "${records[@]}"; do
@@ -167,33 +134,8 @@ total_eggs_mod=$(( total_eggs_all % 30 ))
 
 # Calculate laying percentage
 total_daily_eggs=$((latest_trays * 30 + latest_eggs))
-laying_percentage_daily=$(echo "scale=2; ($total_daily_eggs / $total_birds) * 100" | bc)
+laying_percentage_daily=$(echo "scale=2; (500 / 576) * 100" | bc)
 
-# Calculate Friday totals
-declare -A friday_eggs
-for record in "${records[@]}"; do
-    date=$(echo "$record" | jq -r '.surveydate')
-    # Check if the date is a Friday
-    if [[ $(date -d "$date" +%u) == "5" ]]; then
-        trays=$(echo "$record" | jq -r '.numbertrays')
-        eggs=$(echo "$record" | jq -r '.numbereggs')
-        day_total=$((trays * 30 + eggs))
-        week_ending=$date
-        friday_eggs["$week_ending"]=$day_total
-    fi
-done
-
-# Sort dates and create the report string
-friday_totals=$(
-    for date in $(echo "${!friday_eggs[@]}" | tr ' ' '\n' | sort -r | head -n 4); do
-        echo "📅 $date: ${friday_eggs[$date]} eggs"
-    done
-)
-# Get the most recent Friday's total
-last_friday=$(echo "${!friday_eggs[@]}" | tr ' ' '\n' | sort -r | head -n 1)
-if [[ -n "$last_friday" ]]; then
-    last_friday_total=${friday_eggs[$last_friday]}
-fi
 
 # --- DEBUG LINES START ---
 # echo "DEBUG: Total Birds: $total_birds" >&2 # Sends output to stderr
@@ -227,6 +169,10 @@ cat <<EOF
 
 📊 Laying Percentage (today): \`$laying_percentage_daily%\`
 
+📊 Past seven days total eggs (today): \`$seven_day_total_eggs%\`
+
+Past 7 days 
+
 
 *Totals (All Records):*
 
@@ -234,13 +180,6 @@ cat <<EOF
 🥚 Total Eggs: \`$total_eggs_all\`
 
 🧺 Trays: \`$total_trays_calc\`, 🥚 Remaining Eggs: \`$total_eggs_mod\`
-
-
-*Recent Totals:*
-
-🥚 Last 7 Days: \`$seven_day_total_eggs\`
-
-🥚 Last 30 Days: \`$thirty_day_total_eggs\`
 
 
 *📅 Rolling Averages for eggs (trays counted as 30 eggs each)*
@@ -254,10 +193,6 @@ cat <<EOF
 
 ⏱️ 30-Day average eggs: \`$avg30_eggs\` $arrow30
 
-
-*Friday Totals (Last 4 Weeks):*
-
-$(echo "$friday_totals" | sed 's/^/📊 /' | sed 's/$/\\n/')
 
 📅  Data submitted at: \`$latest_time\`
 EOF
@@ -286,12 +221,6 @@ JSON_DATA=$(jq -n \
   --arg avg30 "$avg30_eggs" \
   --arg arrow30 "$arrow30" \
   --arg latest_time "$latest_time" \
-  --arg seven_day_total "$seven_day_total_eggs" \
-  --arg thirty_day_total "$thirty_day_total_eggs" \
-  --arg last_friday_total "$last_friday_total" \
-  --argjson friday_data "$(for date in $(echo "${!friday_eggs[@]}" | tr ' ' '\n' | sort -r); do 
-      printf '{"date":"%s","total":%d},' "$date" "${friday_eggs[$date]}"
-    done | sed 's/,$//')" \
 '{
   "reportDate": $today,
   "latestEntry": {
@@ -307,14 +236,6 @@ JSON_DATA=$(jq -n \
     "totalEggsAllRecords": ($total_eggs_all | tonumber),
     "totalTraysCalculated": ($total_trays_calc | tonumber),
     "remainingEggs": ($total_eggs_mod | tonumber)
-  },
-  "recentTotals": {
-    "sevenDay": ($seven_day_total | tonumber),
-    "thirtyDay": ($thirty_day_total | tonumber)
-  },
-  "fridayTotals": {
-    "lastFridayTotal": ($last_friday_total | tonumber),
-    "history": ($friday_data | [.[] | {date: .date, total: .total}])
   },
   "rollingAverages": {
     "yesterday": {
