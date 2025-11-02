@@ -121,9 +121,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: var(--spacing-3xl);
+            margin-bottom: var(--spacing-md);
             padding-bottom: var(--spacing-lg);
             border-bottom: 1px solid var(--border-color);
+        }
+        
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+        
+        .report-date {
+            font-size: 0.8125rem;
+            font-weight: var(--font-weight-normal);
+            color: var(--text-secondary);
+            margin-top: var(--spacing-xs);
         }
         
         h1 {
@@ -205,6 +218,14 @@
                 align-items: stretch;
                 grid-auto-rows: 1fr;
             }
+            
+            .broken-eggs-card {
+                grid-column: span 2;
+            }
+            
+            .seven-day-card {
+                grid-column: span 2;
+            }
         }
         
         @media (min-width: 1024px) {
@@ -212,6 +233,14 @@
                 grid-template-columns: repeat(4, 1fr);
                 align-items: stretch;
                 grid-auto-rows: 1fr;
+            }
+            
+            .seven-day-card {
+                grid-column: span 2;
+            }
+            
+            .broken-eggs-card {
+                grid-column: span 4;
             }
         }
         
@@ -543,7 +572,10 @@
     <div class="container">
         
         <header>
-            <h1>Egg Report Dashboard</h1>
+            <div class="header-content">
+                <h1>Egg Report Dashboard</h1>
+                <div class="report-date" id="report-date">Last updated: --</div>
+            </div>
             <button id="theme-toggle">
                 <svg id="sun-icon" class="hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 <svg id="moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
@@ -619,7 +651,13 @@
                 <div class="metric-card-footer">All records combined</div>
             </div>
 
-            <div class="metric-card">
+            <div class="metric-card seven-day-card">
+                <div class="metric-card-label">7-Day Total</div>
+                <div class="metric-card-value accent-blue" id="seven-day-total-card">--</div>
+                <div class="metric-card-footer">Total eggs collected in last 7 days</div>
+            </div>
+
+            <div class="metric-card broken-eggs-card">
                 <div class="metric-card-label">Broken Eggs (Latest Entry)</div>
                 <div class="metric-card-value accent-red" id="latest-broken">--</div>
                 <div class="metric-card-footer">Check for trend alerts</div>
@@ -741,6 +779,13 @@
                 const overallTotals = data.overallTotals;
                 const rollingAverages = data.rollingAverages;
 
+                // --- 2.5. Display Report Date ---
+                const reportDate = data.reportDate || latestEntry.surveyDate || 'Unknown';
+                const reportDateElement = document.getElementById('report-date');
+                if (reportDateElement) {
+                    reportDateElement.textContent = `Last updated: ${reportDate}`;
+                }
+
                 // --- 3. Prepare Metrics ---
                 const metrics = {
                     latestTotal: parseInt(latestEntry.totalEggsEntry) || parseInt(latestEntry.eggs) || 0,
@@ -803,6 +848,7 @@
                 const thirtyDayTotal = parseInt(data.recentTotals?.thirtyDay || 0);
                 
                 document.getElementById('seven-day-total').textContent = sevenDayTotal.toLocaleString();
+                document.getElementById('seven-day-total-card').textContent = sevenDayTotal.toLocaleString();
                 document.getElementById('total-7-days').textContent = sevenDayTotal.toLocaleString();
                 document.getElementById('total-30-days').textContent = thirtyDayTotal.toLocaleString();
 
@@ -845,7 +891,7 @@
                     const surveyAlert = document.getElementById('survey-alert');
                     if (diffDays > 0) {
                         surveyAlert.textContent = `${diffDays} ${diffDays === 1 ? 'day' : 'days'} overdue`;
-                        survSeyAlert.classList.remove('hidden');
+                        surveyAlert.classList.remove('hidden');
                         surveyAlert.classList.add('alert-overdue');
                     } else {
                         surveyAlert.classList.add('hidden');
