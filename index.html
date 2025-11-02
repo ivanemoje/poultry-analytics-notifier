@@ -348,23 +348,26 @@
         }
         
         /* ============================================
-           TREND ICONS
+           TREND DOTS
            ============================================ */
         .trend-icon {
-            font-size: 1.25rem;
-            line-height: 1;
+            display: inline-block;
+            width: 0.625rem;
+            height: 0.625rem;
+            border-radius: 50%;
+            background-color: var(--accent-blue);
         }
         
         .trend-icon.text-red-500 {
-            color: var(--accent-red);
+            background-color: var(--accent-red);
         }
         
         .trend-icon.text-green-500 {
-            color: var(--accent-green);
+            background-color: var(--accent-green);
         }
         
         .trend-icon.text-blue-500 {
-            color: var(--accent-blue);
+            background-color: var(--accent-blue);
         }
         
         /* ============================================
@@ -574,7 +577,7 @@
         <header>
             <div class="header-content">
                 <h1>Egg Report Dashboard</h1>
-                <div class="report-date" id="report-date">Last updated: --</div>
+                <div class="report-date" id="report-date">Last refreshed: --</div>
             </div>
             <button id="theme-toggle">
                 <svg id="sun-icon" class="hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
@@ -602,6 +605,10 @@
                         <span id="latest-loose">--</span>
                     </div>
                     <div class="detail-item">
+                        <span>Broken Eggs:</span>
+                        <span id="latest-broken">--</span>
+                    </div>
+                    <div class="detail-item">
                         <span>Total as Eggs:</span>
                         <span id="latest-as-eggs">--</span>
                     </div>
@@ -612,12 +619,22 @@
             <div class="metric-card">
                 <div class="metric-card-label">Laying Percentage (Daily)</div>
                 <div class="metric-card-value accent-green" id="laying-percentage">--</div>
-                <div class="metric-card-footer">Based on 576 birds</div>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <span>Batch One:</span>
+                        <span id="batch-one-percentage">--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Batch Two:</span>
+                        <span id="batch-two-percentage">--</span>
+                    </div>
+                </div>
+                <div class="metric-card-footer">Batch one: 576, Batch two: 1,064 birds</div>
             </div>
 
             <div class="metric-card">
                 <div class="metric-card-label">Recent Period Totals</div>
-                <div class="metric-card-value accent-indigo" id="seven-day-total">--</div>
+                <div class="metric-card-value accent-white" id="seven-day-total">--</div>
                 <div class="detail-grid">
                     <div class="detail-item">
                         <span>Last 7 Days:</span>
@@ -633,7 +650,7 @@
 
             <div class="metric-card">
                 <div class="metric-card-label">Total Eggs (All Records)</div>
-                <div class="metric-card-value accent-indigo" id="total-eggs-all">--</div>
+                <div class="metric-card-value accent-white" id="total-eggs-all">--</div>
                 <div class="detail-grid">
                     <div class="detail-item">
                         <span>Complete Trays:</span>
@@ -651,17 +668,12 @@
                 <div class="metric-card-footer">All records combined</div>
             </div>
 
-            <div class="metric-card seven-day-card">
-                <div class="metric-card-label">7-Day Total</div>
-                <div class="metric-card-value accent-blue" id="seven-day-total-card">--</div>
-                <div class="metric-card-footer">Total eggs collected in last 7 days</div>
-            </div>
+            <!-- <div class="metric-card seven-day-card"> -->
+                <!-- <div class="metric-card-label">7-Day Total</div> -->
+                <!-- <div class="metric-card-value accent-blue" id="seven-day-total-card">--</div> -->
+                <!-- <div class="metric-card-footer">Total eggs collected in last 7 days</div> -->
+            <!-- </div> -->
 
-            <div class="metric-card broken-eggs-card">
-                <div class="metric-card-label">Broken Eggs (Latest Entry)</div>
-                <div class="metric-card-value accent-red" id="latest-broken">--</div>
-                <div class="metric-card-footer">Check for trend alerts</div>
-            </div>
             
             <div class="average-section">
                 <div class="metric-card border-yellow">
@@ -783,7 +795,7 @@
                 const reportDate = data.reportDate || latestEntry.surveyDate || 'Unknown';
                 const reportDateElement = document.getElementById('report-date');
                 if (reportDateElement) {
-                    reportDateElement.textContent = `Last updated: ${reportDate}`;
+                    reportDateElement.textContent = `Last refreshed: ${reportDate}`;
                 }
 
                 // --- 3. Prepare Metrics ---
@@ -805,16 +817,16 @@
                 metrics.latestTrays = Math.floor(metrics.latestTotal / 30);
                 metrics.latestLoose = metrics.latestTotal % 30;
 
-                // --- 4. Determine Trend Arrows from provided trends ---
+                // --- 4. Determine Trend Dots from provided trends ---
                 const getTrendFromData = (trendData) => {
                     const trendIcon = trendData?.trend || '🔵';
                     // Map trend emojis to colors
                     if (trendIcon.includes('❌') || trendIcon.includes('⬇️')) {
-                        return { icon: '⬇️', color: 'text-red-500' };
+                        return { color: 'text-red-500' };
                     } else if (trendIcon.includes('⬆️') || trendIcon.includes('✅')) {
-                        return { icon: '⬆️', color: 'text-green-500' };
+                        return { color: 'text-green-500' };
                     }
-                    return { icon: '🔵', color: 'text-blue-500' };
+                    return { color: 'text-blue-500' };
                 };
                 
                 const trends = {
@@ -848,7 +860,8 @@
                 const thirtyDayTotal = parseInt(data.recentTotals?.thirtyDay || 0);
                 
                 document.getElementById('seven-day-total').textContent = sevenDayTotal.toLocaleString();
-                document.getElementById('seven-day-total-card').textContent = sevenDayTotal.toLocaleString();
+                
+
                 document.getElementById('total-7-days').textContent = sevenDayTotal.toLocaleString();
                 document.getElementById('total-30-days').textContent = thirtyDayTotal.toLocaleString();
 
@@ -858,22 +871,16 @@
                 document.getElementById('avg-7day').textContent = metrics.avg7Day.toLocaleString();
                 document.getElementById('avg-30day').textContent = metrics.avg30Day.toLocaleString();
                 
-                // Trends (Removing old color classes and adding new ones)
+                // Trends (Setting color classes for dots)
                 const trendElements = ['trend-yesterday', 'trend-3day', 'trend-7day', 'trend-30day'];
                 trendElements.forEach(id => {
                     document.getElementById(id).className = 'trend-icon'; // Reset classes
+                    document.getElementById(id).textContent = ''; // Clear any text/emojis
                 });
 
-                document.getElementById('trend-yesterday').textContent = trends.yesterday.icon;
                 document.getElementById('trend-yesterday').classList.add(trends.yesterday.color);
-                
-                document.getElementById('trend-3day').textContent = trends.threeDay.icon;
                 document.getElementById('trend-3day').classList.add(trends.threeDay.color);
-
-                document.getElementById('trend-7day').textContent = trends.sevenDay.icon;
                 document.getElementById('trend-7day').classList.add(trends.sevenDay.color);
-
-                document.getElementById('trend-30day').textContent = trends.thirtyDay.icon;
                 document.getElementById('trend-30day').classList.add(trends.thirtyDay.color);
 
                 // --- Survey Date Check Logic (New) ---
