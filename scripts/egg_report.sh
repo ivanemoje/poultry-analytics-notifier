@@ -176,9 +176,6 @@ cat <<EOF
 
 📊 Past seven days total eggs (today): \`$seven_day_total_eggs%\`
 
-Past 7 days 
-
-
 *Totals (All Records):*
 
 
@@ -214,6 +211,7 @@ JSON_DATA=$(jq -n \
   --arg latest_broken "$latest_eggs_broken" \
   --arg latest_total "$((latest_trays * 30 + latest_eggs))" \
   --arg daily_perc "$laying_percentage_daily" \
+  --arg seven_day_total "$seven_day_total_eggs" \
   --arg total_eggs_all "$total_eggs_all" \
   --arg total_trays_calc "$total_trays_calc" \
   --arg total_eggs_mod "$total_eggs_mod" \
@@ -235,6 +233,7 @@ JSON_DATA=$(jq -n \
     "broken": ($latest_broken | tonumber),
     "totalEggsEntry": ($latest_total | tonumber),
     "layingPercentageDaily": $daily_perc,
+    "sevenDayTotal": $seven_day_total,
     "submittedAt": $latest_time
   },
   "overallTotals": {
