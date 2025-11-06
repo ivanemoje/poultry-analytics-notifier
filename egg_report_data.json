@@ -1,5 +1,5 @@
 {
-  "reportDate": "2025-11-05",
+  "reportDate": "2025-11-06",
   "latestEntry": {
     "surveyDate": "2025-11-05",
     "trays": 16,
@@ -7,7 +7,7 @@
     "broken": 1,
     "totalEggsEntry": 496,
     "layingPercentageDaily": "86.00",
-    "sevenDayTotal": "7495",
+    "sevenDayTotal": "6995",
     "submittedAt": "2025-11-05 22:13"
   },
   "overallTotals": {
@@ -17,11 +17,11 @@
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 500,
+      "average": 496,
       "trend": "❌"
     },
     "threeDay": {
-      "average": 499,
+      "average": 498,
       "trend": "❌"
     },
     "sevenDay": {
