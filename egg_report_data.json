@@ -1,5 +1,5 @@
 {
-  "reportDate": "2025-11-21",
+  "reportDate": "2025-11-22",
   "latestEntry": {
     "surveyDate": "2025-11-21",
     "trays": 16,
@@ -17,16 +17,16 @@
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 490,
-      "trend": "✅"
+      "average": 493,
+      "trend": "❌"
     },
     "threeDay": {
       "average": 491,
-      "trend": "✅"
+      "trend": "❌"
     },
     "sevenDay": {
       "average": 492,
-      "trend": "✅"
+      "trend": "❌"
     },
     "thirtyDay": {
       "average": 497,
