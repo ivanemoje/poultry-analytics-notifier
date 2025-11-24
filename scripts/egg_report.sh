@@ -106,6 +106,47 @@ for record in "${records[@]}"; do
 done
 today_avg_eggs=$(( today_count > 0 ? today_total_eggs / today_count : 0 ))
 
+# Compare today's average to each rolling average
+if (( today_avg_eggs > yesterday_avg_eggs )); then
+  arrow_yesterday="✅"
+elif (( today_avg_eggs < yesterday_avg_eggs )); then
+  arrow_yesterday="❌"
+elif (( today_avg_eggs == yesterday_avg_eggs )); then
+  arrow_yesterday="🔵"
+else
+  arrow_yesterday="❌"
+fi
+
+if (( today_avg_eggs > avg3_eggs )); then
+  arrow3="✅"
+elif (( today_avg_eggs < avg3_eggs )); then
+  arrow3="❌"
+elif (( today_avg_eggs == avg3_eggs )); then
+  arrow3="🔵"
+else
+  arrow3="❌"
+fi
+
+if (( today_avg_eggs > avg7_eggs )); then
+  arrow7="✅"
+elif (( today_avg_eggs < avg7_eggs )); then
+  arrow7="❌"
+elif (( today_avg_eggs == avg7_eggs )); then
+  arrow7="🔵"
+else
+  arrow7="❌"
+fi
+
+if (( today_avg_eggs > avg30_eggs )); then
+  arrow30="✅"
+elif (( today_avg_eggs < avg30_eggs )); then
+  arrow30="❌"
+elif (( today_avg_eggs == avg30_eggs )); then
+  arrow30="🔵"
+else
+  arrow30="❌"
+fi
+
 # Combined totals
 total_eggs_all=0
 for record in "${records[@]}"; do
@@ -148,10 +189,10 @@ cat <<EOF
 🧺 Trays: \`$total_trays_calc\`, 🥚 Remaining Eggs: \`$total_eggs_mod\`
 
 *📅 Rolling Averages (combined batches)*
-🗓️ Yesterday's average eggs: \`$yesterday_avg_eggs\`
-⏱️ 3-Day average eggs: \`$avg3_eggs\`
-⏱️ 7-Day average eggs: \`$avg7_eggs\`
-⏱️ 30-Day average eggs: \`$avg30_eggs\`
+🗓️ Yesterday's average eggs: \`$yesterday_avg_eggs\` $arrow_yesterday
+⏱️ 3-Day average eggs: \`$avg3_eggs\` $arrow3
+⏱️ 7-Day average eggs: \`$avg7_eggs\` $arrow7
+⏱️ 30-Day average eggs: \`$avg30_eggs\` $arrow30
 
 📅 Data submitted at: \`$latest_time\`
 EOF
@@ -175,9 +216,13 @@ JSON_DATA=$(jq -n \
   --arg total_trays_calc "$total_trays_calc" \
   --arg total_eggs_mod "$total_eggs_mod" \
   --arg yesterday_avg "$yesterday_avg_eggs" \
+  --arg arrow_yesterday "$arrow_yesterday" \
   --arg avg3 "$avg3_eggs" \
+  --arg arrow3 "$arrow3" \
   --arg avg7 "$avg7_eggs" \
+  --arg arrow7 "$arrow7" \
   --arg avg30 "$avg30_eggs" \
+  --arg arrow30 "$arrow30" \
   --arg latest_time "$latest_time" \
   '{
     "reportDate": $today,
@@ -217,9 +262,21 @@ JSON_DATA=$(jq -n \
       }
     },
     "rollingAverages": {
-      "yesterday": { "average": ($yesterday_avg | tonumber) },
-      "threeDay": { "average": ($avg3 | tonumber) },
-      "sevenDay": { "average": ($avg7 | tonumber) },
-      "thirtyDay": { "average": ($avg30 | tonumber) }
+      "yesterday": {
+        "average": ($yesterday_avg | tonumber),
+        "trend": $arrow_yesterday
+      },
+      "threeDay": {
+        "average": ($avg3 | tonumber),
+        "trend": $arrow3
+      },
+      "sevenDay": {
+        "average": ($avg7 | tonumber),
+        "trend": $arrow7
+      },
+      "thirtyDay": {
+        "average": ($avg30 | tonumber),
+        "trend": $arrow30
+      }
     }
   }' | tee "$OUTPUT_FILE")
