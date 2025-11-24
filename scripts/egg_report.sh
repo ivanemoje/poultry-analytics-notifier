@@ -165,36 +165,36 @@ total_daily_eggs=$((latest_trays * 30 + latest_eggs + latest_trays_batch2 * 30 +
 laying_percentage_daily=$(echo "scale=2; ($total_daily_eggs / $total_birds) * 100" | bc)
 
 cat <<EOF
-*🐣 Egg Report Summary*
-*Reporting for: \`$today\`*
+*:hatching_chick: Egg Report Summary*
+*Reporting for:* \`$today\`
 
-📅 Survey Date: \`$latest_date\`
+:calendar: Survey Date: \`$latest_date\`
 
---- Batch 1 ---
-🧺 Trays: \`$latest_trays\`
-🥚 Eggs: \`$latest_eggs\`
-🔴 Broken: \`$latest_eggs_broken\`
+*--- Batch 1 ---*
+:basket: Trays: \`$latest_trays\`
+:egg: Eggs: \`$latest_eggs\`
+:red_circle: Broken: \`$latest_eggs_broken\`
 
---- Batch 2 ---
-🧺 Trays: \`$latest_trays_batch2\`
-🥚 Eggs: \`$latest_eggs_batch2\`
-🔴 Broken: \`$latest_eggs_broken_batch2\`
+*--- Batch 2 ---*
+:basket: Trays: \`$latest_trays_batch2\`
+:egg: Eggs: \`$latest_eggs_batch2\`
+:red_circle: Broken: \`$latest_eggs_broken_batch2\`
 
---- Combined ---
-🥚 Total Eggs (this entry): \`$total_daily_eggs\`
-📊 Laying Percentage (today): \`$laying_percentage_daily%\`
+*--- Combined ---*
+:egg: Total Eggs (this entry): \`$total_daily_eggs\`
+:chart_with_upwards_trend: Laying Percentage (today): \`$laying_percentage_daily%\`
 
 *Totals (All Records):*
-🥚 Total Eggs: \`$total_eggs_all\`
-🧺 Trays: \`$total_trays_calc\`, 🥚 Remaining Eggs: \`$total_eggs_mod\`
+:egg: Total Eggs: \`$total_eggs_all\`
+:basket: Trays: \`$total_trays_calc\` | :egg: Remaining Eggs: \`$total_eggs_mod\`
 
-*📅 Rolling Averages (combined batches)*
-🗓️ Yesterday's average eggs: \`$yesterday_avg_eggs\` $arrow_yesterday
-⏱️ 3-Day average eggs: \`$avg3_eggs\` $arrow3
-⏱️ 7-Day average eggs: \`$avg7_eggs\` $arrow7
-⏱️ 30-Day average eggs: \`$avg30_eggs\` $arrow30
+*:calendar: Rolling Averages (combined batches)*
+:spiral_calendar_pad: Yesterday avg: \`$yesterday_avg_eggs\` $arrow_yesterday
+:stopwatch: 3-Day avg: \`$avg3_eggs\` $arrow3
+:stopwatch: 7-Day avg: \`$avg7_eggs\` $arrow7
+:stopwatch: 30-Day avg: \`$avg30_eggs\` $arrow30
 
-📅 Data submitted at: \`$latest_time\`
+:calendar: Data submitted at: \`$latest_time\`
 EOF
 
 # 1. Define the output file path
