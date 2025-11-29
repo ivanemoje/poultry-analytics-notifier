@@ -41,7 +41,7 @@ To trigger the workflow manually, you can use the "Run workflow" option in the G
 
 ### GitHub Pages
 
-**Live Dashboard!** View our interactive egg production dashboard at [https://ivanemoje.github.io/poultry-analytics-notifier/](https://ivanemoje.github.io/poultry-analytics-notifier/)
+**Live Dashboard!** View our interactive poultry analytics notifier dashboard at [https://ivanemoje.github.io/poultry-analytics-notifier/](https://ivanemoje.github.io/poultry-analytics-notifier/)
 
 Features:
 - Daily egg production metrics
@@ -53,4 +53,4 @@ Features:
 The dashboard updates automatically when new data is pushed to the repository, providing a live view of your poultry analytics.
 
 ## Conclusion
-The Egg Report project simplifies the process of tracking and reporting egg production data. By automating data fetching and reporting, it allows users to focus on analysis and decision-making. For any issues or contributions, please refer to the project's GitHub repository.
+The Poultry Analytics Notifier# simplifies the process of tracking and reporting egg production data. By automating data fetching and reporting, it allows users to focus on analysis and decision-making. For any issues or contributions, please refer to the project's GitHub repository.
