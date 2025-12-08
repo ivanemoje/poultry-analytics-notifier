@@ -591,7 +591,7 @@
 
         <div id="summary-dashboard" style="display: none;">
 
-                        <div class="metric-card">
+            <div class="metric-card">
                 <div id="survey-alert" class="alert-badge hidden"></div>
                 <div class="metric-card-label">Latest Collection Details</div>
                 <div class="metric-card-value" id="latest-total">--</div>
@@ -667,13 +667,6 @@
                 </div>
                 <div class="metric-card-footer">All records combined</div>
             </div>
-
-            <!-- <div class="metric-card seven-day-card"> -->
-                <!-- <div class="metric-card-label">7-Day Total</div> -->
-                <!-- <div class="metric-card-value accent-blue" id="seven-day-total-card">--</div> -->
-                <!-- <div class="metric-card-footer">Total eggs collected in last 7 days</div> -->
-            <!-- </div> -->
-
             
             <div class="average-section">
                 <div class="metric-card border-yellow">
@@ -713,7 +706,7 @@
     </div>
 
     <script>
-        // --- Dark Mode Logic (New) ---
+        // --- Dark Mode Logic ---
         const htmlElement = document.documentElement;
         const toggleButton = document.getElementById('theme-toggle');
         const sunIcon = document.getElementById('sun-icon');
@@ -747,7 +740,7 @@
             applyTheme(isDarkMode);
         });
 
-        // --- Existing Dashboard Logic (Unchanged functionality) ---
+        // --- Dashboard Logic ---
 
         // GitHub raw URL for JSON data
         const JSON_BASE_URL = 'https://raw.githubusercontent.com/ivanemoje/poultry-analytics-notifier/refs/heads/main/';
@@ -768,17 +761,40 @@
          */
         async function loadSummaryData() {
             try {
-                // 1. Fetch Data
-                const response = await fetch(JSON_URL);
+                // 1. Fetch Data with cache-busting and timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+                
+                const cacheBuster = `?t=${new Date().getTime()}`;
+                const response = await fetch(JSON_URL + cacheBuster, {
+                    signal: controller.signal,
+                    cache: 'no-cache'
+                });
+                clearTimeout(timeoutId);
+                
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 
-                const data = await response.json();
+                // Get the raw text first to check if it's valid
+                const rawText = await response.text();
+                
+                if (!rawText || rawText.trim().length === 0) {
+                    throw new Error("Data file is empty");
+                }
+                
+                // Try to parse the JSON
+                let data;
+                try {
+                    data = JSON.parse(rawText);
+                } catch (parseError) {
+                    console.error("Raw response:", rawText.substring(0, 200));
+                    throw new Error(`JSON parse error: ${parseError.message}. Check if the file is valid JSON.`);
+                }
                 
                 // Check if data is empty or malformed
                 if (!data || typeof data !== 'object') {
-                    throw new Error("Data file is empty or malformed.");
+                    throw new Error("Data file is malformed (not a valid object).");
                 }
 
                 // Check if this is the new summary format
@@ -790,6 +806,9 @@
                 const latestEntry = data.latestEntry;
                 const overallTotals = data.overallTotals;
                 const rollingAverages = data.rollingAverages;
+                
+                // Handle missing recentTotals gracefully
+                const recentTotals = data.recentTotals || {};
 
                 // --- 2.5. Display Report Date ---
                 const reportDate = data.reportDate || latestEntry.surveyDate || 'Unknown';
@@ -855,13 +874,12 @@
 
                 document.getElementById('latest-broken').textContent = metrics.latestBroken;
 
-                // Recent Period Totals
-                const sevenDayTotal = parseInt(data.recentTotals?.sevenDay || 0);
-                const thirtyDayTotal = parseInt(data.recentTotals?.thirtyDay || 0);
+                // Recent Period Totals - use latestEntry.sevenDayTotal if recentTotals not available
+                const sevenDayTotal = parseInt(recentTotals.sevenDay || latestEntry.sevenDayTotal || 0);
+                const thirtyDayTotal = parseInt(recentTotals.thirtyDay || 0);
                 
                 document.getElementById('seven-day-total').textContent = sevenDayTotal.toLocaleString();
                 
-
                 document.getElementById('total-7-days').textContent = sevenDayTotal.toLocaleString();
                 document.getElementById('total-30-days').textContent = thirtyDayTotal.toLocaleString();
 
@@ -883,7 +901,7 @@
                 document.getElementById('trend-7day').classList.add(trends.sevenDay.color);
                 document.getElementById('trend-30day').classList.add(trends.thirtyDay.color);
 
-                // --- Survey Date Check Logic (New) ---
+                // --- Survey Date Check Logic ---
                 try {
                     const surveyDate = new Date(metrics.latestDate);
                     const today = new Date();
