@@ -818,23 +818,37 @@
                 }
 
                 // --- 3. Prepare Metrics ---
+                // Handle both old and new JSON structure
+                const combined = latestEntry.combined || latestEntry;
+                const batch1 = latestEntry.batch1 || {};
+                const batch2 = latestEntry.batch2 || {};
+                const overallCombined = overallTotals.combined || overallTotals;
+                
                 const metrics = {
-                    latestTotal: parseInt(latestEntry.totalEggsEntry) || parseInt(latestEntry.eggs) || 0,
+                    latestTotal: parseInt(combined.totalEggsEntry) || 0,
                     latestDate: latestEntry.surveyDate || data.reportDate,
-                    layingPercentage: latestEntry.layingPercentageDaily || '0.00%',
-                    totalEggsAll: parseInt(overallTotals.totalEggsAllRecords) || 0,
-                    totalTraysCalc: `${parseInt(overallTotals.totalTraysCalculated) || 0} Trays, ${parseInt(overallTotals.remainingEggs) || 0} Eggs`,
-                    latestBroken: parseInt(latestEntry.broken) || 0,
+                    layingPercentage: combined.layingPercentageDaily || '0.00',
+                    batch1Percentage: batch1.layingPercentage || '0.00',
+                    batch2Percentage: batch2.layingPercentage || '0.00',
+                    totalEggsAll: parseInt(overallCombined.totalEggsAllRecords) || 0,
+                    totalTraysCalc: parseInt(overallCombined.totalTraysCalculated) || 0,
+                    totalEggsRemaining: parseInt(overallCombined.remainingEggs) || 0,
+                    latestBrokenBatch1: parseInt(batch1.broken) || 0,
+                    latestBrokenBatch2: parseInt(batch2.broken) || 0,
+                    latestTraysBatch1: parseInt(batch1.trays) || 0,
+                    latestEggsBatch1: parseInt(batch1.eggs) || 0,
+                    latestTraysBatch2: parseInt(batch2.trays) || 0,
+                    latestEggsBatch2: parseInt(batch2.eggs) || 0,
                     avgYesterday: parseInt(rollingAverages.yesterday?.average) || 0,
                     avg3Day: parseInt(rollingAverages.threeDay?.average) || 0,
                     avg7Day: parseInt(rollingAverages.sevenDay?.average) || 0,
-                    avg30Day: parseInt(rollingAverages.thirtyDay?.average) || 0,
-                    todayValue: parseInt(latestEntry.totalEggsEntry) || parseInt(latestEntry.eggs) || 0
+                    avg30Day: parseInt(rollingAverages.thirtyDay?.average) || 0
                 };
 
-                // Calculate latest trays and loose eggs
-                metrics.latestTrays = Math.floor(metrics.latestTotal / 30);
-                metrics.latestLoose = metrics.latestTotal % 30;
+                // Calculate combined trays and loose eggs for display
+                const totalTrays = metrics.latestTraysBatch1 + metrics.latestTraysBatch2;
+                const totalLooseEggs = metrics.latestEggsBatch1 + metrics.latestEggsBatch2;
+                const totalBroken = metrics.latestBrokenBatch1 + metrics.latestBrokenBatch2;
 
                 // --- 4. Determine Trend Dots from provided trends ---
                 const getTrendFromData = (trendData) => {
@@ -858,21 +872,30 @@
                 // --- 5. Populate HTML ---
                 // Latest Collection Details
                 document.getElementById('latest-total').textContent = metrics.latestTotal.toLocaleString();
-                document.getElementById('latest-trays').textContent = latestEntry.trays;
-                document.getElementById('latest-loose').textContent = latestEntry.eggs;
+                document.getElementById('latest-trays').textContent = totalTrays;
+                document.getElementById('latest-loose').textContent = totalLooseEggs;
                 document.getElementById('latest-as-eggs').textContent = metrics.latestTotal;
                 document.getElementById('latest-date').textContent = `Survey Date: ${metrics.latestDate}`;
 
-                // Laying Percentage
-                document.getElementById('laying-percentage').textContent = metrics.layingPercentage;
+                // Laying Percentage - add % if not present
+                const layingPerc = metrics.layingPercentage.toString().includes('%') ? 
+                    metrics.layingPercentage : `${metrics.layingPercentage}%`;
+                const batch1Perc = metrics.batch1Percentage.toString().includes('%') ? 
+                    metrics.batch1Percentage : `${metrics.batch1Percentage}%`;
+                const batch2Perc = metrics.batch2Percentage.toString().includes('%') ? 
+                    metrics.batch2Percentage : `${metrics.batch2Percentage}%`;
+                
+                document.getElementById('laying-percentage').textContent = layingPerc;
+                document.getElementById('batch-one-percentage').textContent = batch1Perc;
+                document.getElementById('batch-two-percentage').textContent = batch2Perc;
 
                 // Total Eggs All Records
                 document.getElementById('total-eggs-all').textContent = metrics.totalEggsAll.toLocaleString();
-                document.getElementById('total-trays').textContent = overallTotals.totalTraysCalculated;
-                document.getElementById('total-loose').textContent = overallTotals.remainingEggs;
-                document.getElementById('total-breakdown').textContent = metrics.totalEggsAll;
+                document.getElementById('total-trays').textContent = metrics.totalTraysCalc;
+                document.getElementById('total-loose').textContent = metrics.totalEggsRemaining;
+                document.getElementById('total-breakdown').textContent = metrics.totalEggsAll.toLocaleString();
 
-                document.getElementById('latest-broken').textContent = metrics.latestBroken;
+                document.getElementById('latest-broken').textContent = totalBroken;
 
                 // Recent Period Totals - use latestEntry.sevenDayTotal if recentTotals not available
                 const sevenDayTotal = parseInt(recentTotals.sevenDay || latestEntry.sevenDayTotal || 0);
