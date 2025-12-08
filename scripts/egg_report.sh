@@ -160,8 +160,13 @@ done
 total_trays_calc=$(( total_eggs_all / 30 ))
 total_eggs_mod=$(( total_eggs_all % 30 ))
 
-# Laying percentage (combined)
-total_daily_eggs=$((latest_trays * 30 + latest_eggs + latest_trays_batch2 * 30 + latest_eggs_batch2))
+# Calculate batch-specific daily eggs and laying percentages
+batch1_daily_eggs=$((latest_trays * 30 + latest_eggs))
+batch2_daily_eggs=$((latest_trays_batch2 * 30 + latest_eggs_batch2))
+total_daily_eggs=$((batch1_daily_eggs + batch2_daily_eggs))
+
+laying_percentage_batch1=$(echo "scale=2; ($batch1_daily_eggs / $batch_one_birds) * 100" | bc)
+laying_percentage_batch2=$(echo "scale=2; ($batch2_daily_eggs / $batch_two_birds) * 100" | bc)
 laying_percentage_daily=$(echo "scale=2; ($total_daily_eggs / $total_birds) * 100" | bc)
 
 cat <<EOF
@@ -174,11 +179,13 @@ cat <<EOF
 :basket: Trays: \`$latest_trays\`
 :egg: Eggs: \`$latest_eggs\`
 :red_circle: Broken: \`$latest_eggs_broken\`
+:chart_with_upwards_trend: Laying %: \`$laying_percentage_batch1%\`
 
 *Batch 2*
 :basket: Trays: \`$latest_trays_batch2\`
 :egg: Eggs: \`$latest_eggs_batch2\`
 :red_circle: Broken: \`$latest_eggs_broken_batch2\`
+:chart_with_upwards_trend: Laying %: \`$laying_percentage_batch2%\`
 
 *Combined*
 :egg: Total Eggs (this entry): \`$total_daily_eggs\`
