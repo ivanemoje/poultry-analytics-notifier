@@ -200,63 +200,112 @@ EOF
 # 1. Define the output file path
 OUTPUT_FILE="egg_report_data.json"
 
-# 2. Construct the JSON data
+# 2. Construct and write the JSON data
 jq -n \
   --arg today "$today" \
   --arg latest_date "$latest_date" \
-  --arg latest_trays "$latest_trays" \
-  --arg latest_eggs "$latest_eggs" \
-  --arg latest_broken "$latest_eggs_broken" \
-  --arg latest_total "$((latest_trays * 30 + latest_eggs))" \
+  --argjson latest_trays "$latest_trays" \
+  --argjson latest_eggs "$latest_eggs" \
+  --argjson latest_broken "$latest_eggs_broken" \
+  --argjson latest_trays_batch2 "$latest_trays_batch2" \
+  --argjson latest_eggs_batch2 "$latest_eggs_batch2" \
+  --argjson latest_broken_batch2 "$latest_eggs_broken_batch2" \
+  --argjson batch1_daily "$batch1_daily_eggs" \
+  --argjson batch2_daily "$batch2_daily_eggs" \
+  --argjson total_daily "$total_daily_eggs" \
   --arg daily_perc "$laying_percentage_daily" \
-  --arg seven_day_total "$seven_day_total_eggs" \
-  --arg total_eggs_all "$total_eggs_all" \
-  --arg total_trays_calc "$total_trays_calc" \
-  --arg total_eggs_mod "$total_eggs_mod" \
-  --arg yesterday_avg "$yesterday_avg_eggs" \
+  --arg batch1_perc "$laying_percentage_batch1" \
+  --arg batch2_perc "$laying_percentage_batch2" \
+  --argjson seven_day_total "$seven_day_total_eggs" \
+  --argjson thirty_day_total "$thirty_day_total_eggs" \
+  --argjson total_eggs_all "$total_eggs_all" \
+  --argjson total_trays_calc "$total_trays_calc" \
+  --argjson total_eggs_mod "$total_eggs_mod" \
+  --argjson total_trays_b1 "$total_trays" \
+  --argjson total_eggs_b1 "$total_eggs" \
+  --argjson total_broken_b1 "$total_eggs_broken" \
+  --argjson total_trays_b2 "$total_trays_batch2" \
+  --argjson total_eggs_b2 "$total_eggs_batch2" \
+  --argjson total_broken_b2 "$total_eggs_broken_batch2" \
+  --argjson yesterday_avg "$yesterday_avg_eggs" \
   --arg arrow_yesterday "$arrow_yesterday" \
-  --arg avg3 "$avg3_eggs" \
+  --argjson avg3 "$avg3_eggs" \
   --arg arrow3 "$arrow3" \
-  --arg avg7 "$avg7_eggs" \
+  --argjson avg7 "$avg7_eggs" \
   --arg arrow7 "$arrow7" \
-  --arg avg30 "$avg30_eggs" \
+  --argjson avg30 "$avg30_eggs" \
   --arg arrow30 "$arrow30" \
   --arg latest_time "$latest_time" \
 '{
   "reportDate": $today,
   "latestEntry": {
     "surveyDate": $latest_date,
-    "trays": ($latest_trays | tonumber),
-    "eggs": ($latest_eggs | tonumber),
-    "broken": ($latest_broken | tonumber),
-    "totalEggsEntry": ($latest_total | tonumber),
-    "layingPercentageDaily": $daily_perc,
-    "sevenDayTotal": ($seven_day_total | tonumber),
+    "batch1": {
+      "trays": $latest_trays,
+      "eggs": $latest_eggs,
+      "broken": $latest_broken,
+      "totalEggs": $batch1_daily,
+      "layingPercentage": $batch1_perc
+    },
+    "batch2": {
+      "trays": $latest_trays_batch2,
+      "eggs": $latest_eggs_batch2,
+      "broken": $latest_broken_batch2,
+      "totalEggs": $batch2_daily,
+      "layingPercentage": $batch2_perc
+    },
+    "combined": {
+      "totalEggsEntry": $total_daily,
+      "layingPercentageDaily": $daily_perc
+    },
     "submittedAt": $latest_time
   },
   "overallTotals": {
-    "totalEggsAllRecords": ($total_eggs_all | tonumber),
-    "totalTraysCalculated": ($total_trays_calc | tonumber),
-    "remainingEggs": ($total_eggs_mod | tonumber)
+    "batch1": {
+      "trays": $total_trays_b1,
+      "eggs": $total_eggs_b1,
+      "broken": $total_broken_b1
+    },
+    "batch2": {
+      "trays": $total_trays_b2,
+      "eggs": $total_eggs_b2,
+      "broken": $total_broken_b2
+    },
+    "combined": {
+      "totalEggsAllRecords": $total_eggs_all,
+      "totalTraysCalculated": $total_trays_calc,
+      "remainingEggs": $total_eggs_mod
+    }
+  },
+  "recentTotals": {
+    "sevenDay": $seven_day_total,
+    "thirtyDay": $thirty_day_total
   },
   "rollingAverages": {
     "yesterday": {
-      "average": ($yesterday_avg | tonumber),
+      "average": $yesterday_avg,
       "trend": $arrow_yesterday
     },
     "threeDay": {
-      "average": ($avg3 | tonumber),
+      "average": $avg3,
       "trend": $arrow3
     },
     "sevenDay": {
-      "average": ($avg7 | tonumber),
+      "average": $avg7,
       "trend": $arrow7
     },
     "thirtyDay": {
-      "average": ($avg30 | tonumber),
+      "average": $avg30,
       "trend": $arrow30
     }
   }
 }' > "$OUTPUT_FILE"
 
-echo "JSON data written to $OUTPUT_FILE"
+# Verify the file was written successfully
+if [ -s "$OUTPUT_FILE" ]; then
+  echo "✓ JSON data successfully written to $OUTPUT_FILE"
+  echo "File size: $(wc -c < "$OUTPUT_FILE") bytes"
+else
+  echo "✗ ERROR: $OUTPUT_FILE is empty or was not created"
+  exit 1
+fi
