@@ -170,17 +170,17 @@ cat <<EOF
 
 :calendar: Survey Date: \`$latest_date\`
 
-*--- Batch 1 ---*
+*Batch 1:*
 :basket: Trays: \`$latest_trays\`
 :egg: Eggs: \`$latest_eggs\`
 :red_circle: Broken: \`$latest_eggs_broken\`
 
-*--- Batch 2 ---*
+*Batch 2*
 :basket: Trays: \`$latest_trays_batch2\`
 :egg: Eggs: \`$latest_eggs_batch2\`
 :red_circle: Broken: \`$latest_eggs_broken_batch2\`
 
-*--- Combined ---*
+*Combined*
 :egg: Total Eggs (this entry): \`$total_daily_eggs\`
 :chart_with_upwards_trend: Laying Percentage (today): \`$laying_percentage_daily%\`
 
@@ -201,17 +201,15 @@ EOF
 OUTPUT_FILE="egg_report_data.json"
 
 # 2. Construct the JSON data
-JSON_DATA=$(jq -n \
+jq -n \
   --arg today "$today" \
   --arg latest_date "$latest_date" \
   --arg latest_trays "$latest_trays" \
   --arg latest_eggs "$latest_eggs" \
   --arg latest_broken "$latest_eggs_broken" \
-  --arg latest_trays_batch2 "$latest_trays_batch2" \
-  --arg latest_eggs_batch2 "$latest_eggs_batch2" \
-  --arg latest_broken_batch2 "$latest_eggs_broken_batch2" \
-  --arg total_daily_eggs "$total_daily_eggs" \
-  --arg laying_percentage_daily "$laying_percentage_daily" \
+  --arg latest_total "$((latest_trays * 30 + latest_eggs))" \
+  --arg daily_perc "$laying_percentage_daily" \
+  --arg seven_day_total "$seven_day_total_eggs" \
   --arg total_eggs_all "$total_eggs_all" \
   --arg total_trays_calc "$total_trays_calc" \
   --arg total_eggs_mod "$total_eggs_mod" \
@@ -224,59 +222,41 @@ JSON_DATA=$(jq -n \
   --arg avg30 "$avg30_eggs" \
   --arg arrow30 "$arrow30" \
   --arg latest_time "$latest_time" \
-  '{
-    "reportDate": $today,
-    "latestEntry": {
-      "surveyDate": $latest_date,
-      "batch1": {
-        "trays": ($latest_trays | tonumber),
-        "eggs": ($latest_eggs | tonumber),
-        "broken": ($latest_broken | tonumber)
-      },
-      "batch2": {
-        "trays": ($latest_trays_batch2 | tonumber),
-        "eggs": ($latest_eggs_batch2 | tonumber),
-        "broken": ($latest_broken_batch2 | tonumber)
-      },
-      "combined": {
-        "totalEggsEntry": ($total_daily_eggs | tonumber),
-        "layingPercentageDaily": $laying_percentage_daily
-      },
-      "submittedAt": $latest_time
+'{
+  "reportDate": $today,
+  "latestEntry": {
+    "surveyDate": $latest_date,
+    "trays": ($latest_trays | tonumber),
+    "eggs": ($latest_eggs | tonumber),
+    "broken": ($latest_broken | tonumber),
+    "totalEggsEntry": ($latest_total | tonumber),
+    "layingPercentageDaily": $daily_perc,
+    "sevenDayTotal": ($seven_day_total | tonumber),
+    "submittedAt": $latest_time
+  },
+  "overallTotals": {
+    "totalEggsAllRecords": ($total_eggs_all | tonumber),
+    "totalTraysCalculated": ($total_trays_calc | tonumber),
+    "remainingEggs": ($total_eggs_mod | tonumber)
+  },
+  "rollingAverages": {
+    "yesterday": {
+      "average": ($yesterday_avg | tonumber),
+      "trend": $arrow_yesterday
     },
-    "overallTotals": {
-      "batch1": {
-        "trays": ($total_trays | tonumber),
-        "eggs": ($total_eggs | tonumber),
-        "broken": ($total_eggs_broken | tonumber)
-      },
-      "batch2": {
-        "trays": ($total_trays_batch2 | tonumber),
-        "eggs": ($total_eggs_batch2 | tonumber),
-        "broken": ($total_eggs_broken_batch2 | tonumber)
-      },
-      "combined": {
-        "totalEggsAllRecords": ($total_eggs_all | tonumber),
-        "totalTraysCalculated": ($total_trays_calc | tonumber),
-        "remainingEggs": ($total_eggs_mod | tonumber)
-      }
+    "threeDay": {
+      "average": ($avg3 | tonumber),
+      "trend": $arrow3
     },
-    "rollingAverages": {
-      "yesterday": {
-        "average": ($yesterday_avg | tonumber),
-        "trend": $arrow_yesterday
-      },
-      "threeDay": {
-        "average": ($avg3 | tonumber),
-        "trend": $arrow3
-      },
-      "sevenDay": {
-        "average": ($avg7 | tonumber),
-        "trend": $arrow7
-      },
-      "thirtyDay": {
-        "average": ($avg30 | tonumber),
-        "trend": $arrow30
-      }
+    "sevenDay": {
+      "average": ($avg7 | tonumber),
+      "trend": $arrow7
+    },
+    "thirtyDay": {
+      "average": ($avg30 | tonumber),
+      "trend": $arrow30
     }
-  }' | tee "$OUTPUT_FILE")
+  }
+}' > "$OUTPUT_FILE"
+
+echo "JSON data written to $OUTPUT_FILE"

@@ -13,8 +13,8 @@ View the interactive egg production dashboard at [https://ivanemoje.github.io/po
 1. **Clone the Repository**
    Begin by cloning the repository to your local machine:
    ```
-   git clone <repository-url>
-   cd eggsreport
+   git clone git@github.com:ivanemoje/poultry-analytics-notifier.git
+   cd poultry-analytics-notifier
    ```
 
 2. **Environment Variables**
@@ -53,4 +53,8 @@ Features:
 The dashboard updates automatically when new data is pushed to the repository, providing a live view of your poultry analytics.
 
 ## Conclusion
+<<<<<<< HEAD
 The Poultry Analytics Notifier# simplifies the process of tracking and reporting egg production data. By automating data fetching and reporting, it allows users to focus on analysis and decision-making. For any issues or contributions, please refer to the project's GitHub repository.
+=======
+The Poultry notifier project simplifies the process of tracking and reporting egg production data. By automating data fetching and reporting, it allows users to focus on analysis and decision-making. For any issues or contributions, please refer to the project's GitHub repository.
+>>>>>>> b6a48ba (fix json output)
