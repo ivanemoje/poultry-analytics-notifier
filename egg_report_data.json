@@ -1,5 +1,5 @@
 {
-  "reportDate": "2025-12-14",
+  "reportDate": "2025-12-15",
   "latestEntry": {
     "surveyDate": "2025-12-14",
     "batch1": {
@@ -45,20 +45,20 @@
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1415,
-      "trend": "✅"
+      "average": 1430,
+      "trend": "❌"
     },
     "threeDay": {
       "average": 1422,
-      "trend": "✅"
+      "trend": "❌"
     },
     "sevenDay": {
       "average": 1422,
-      "trend": "✅"
+      "trend": "❌"
     },
     "thirtyDay": {
       "average": 1134,
-      "trend": "✅"
+      "trend": "❌"
     }
   }
 }
