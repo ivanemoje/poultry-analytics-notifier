@@ -1,64 +1,64 @@
 {
-  "reportDate": "2025-12-16",
+  "reportDate": "2025-12-17",
   "latestEntry": {
-    "surveyDate": "2025-12-14",
+    "surveyDate": "2025-12-17",
     "batch1": {
-      "trays": 16,
-      "eggs": 8,
-      "broken": 1,
-      "totalEggs": 488,
-      "layingPercentage": "84.00"
+      "trays": 15,
+      "eggs": 10,
+      "broken": 0,
+      "totalEggs": 460,
+      "layingPercentage": "79.00"
     },
     "batch2": {
       "trays": 31,
-      "eggs": 12,
-      "broken": 2,
-      "totalEggs": 942,
-      "layingPercentage": "88.00"
+      "eggs": 23,
+      "broken": 3,
+      "totalEggs": 953,
+      "layingPercentage": "89.00"
     },
     "combined": {
-      "totalEggsEntry": 1430,
-      "layingPercentageDaily": "87.00"
+      "totalEggsEntry": 1413,
+      "layingPercentageDaily": "86.00"
     },
-    "submittedAt": "2025-12-14 17:44"
+    "submittedAt": "2025-12-17 23:45"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 3382,
-      "eggs": 2097,
-      "broken": 131
+      "trays": 3445,
+      "eggs": 2143,
+      "broken": 132
     },
     "batch2": {
-      "trays": 531,
-      "eggs": 305,
-      "broken": 31
+      "trays": 655,
+      "eggs": 366,
+      "broken": 39
     },
     "combined": {
-      "totalEggsAllRecords": 119792,
-      "totalTraysCalculated": 3993,
-      "remainingEggs": 2
+      "totalEggsAllRecords": 125509,
+      "totalTraysCalculated": 4183,
+      "remainingEggs": 19
     }
   },
   "recentTotals": {
-    "sevenDay": 2845,
-    "thirtyDay": 23001
+    "sevenDay": 8562,
+    "thirtyDay": 27841
   },
   "rollingAverages": {
     "yesterday": {
       "average": 0,
-      "trend": "🔵"
+      "trend": "✅"
     },
     "threeDay": {
-      "average": 1430,
-      "trend": "❌"
+      "average": 1429,
+      "trend": "🔵"
     },
     "sevenDay": {
-      "average": 1422,
-      "trend": "❌"
+      "average": 1427,
+      "trend": "✅"
     },
     "thirtyDay": {
-      "average": 1150,
-      "trend": "❌"
+      "average": 1210,
+      "trend": "✅"
     }
   }
 }
