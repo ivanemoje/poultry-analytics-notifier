@@ -30,12 +30,12 @@ View the interactive egg production dashboard at [https://ivanemoje.github.io/po
 ### Running the Script Manually
 To run the Poultry Analytics Notifier script manually, execute the following command in your terminal:
 ```
-bash ./scripts/egg_report.sh
+bash ./scripts/poultry_analytics.sh
 ```
 This will fetch the egg collection data, process it, and output the report to the console.
 
 ### GitHub Actions Workflow
-The project includes a GitHub Actions workflow defined in `.github/workflows/egg_report.yaml`. This workflow is scheduled to run daily at 05:00 and 22:00 UTC. It will execute the egg report script and send the generated report to the specified Slack channel.
+The project includes a GitHub Actions workflow defined in `.github/workflows/poultry_analytics.yaml`. This workflow is scheduled to run daily at 05:00 and 22:00 UTC. It will execute the egg report script and send the generated report to the specified Slack channel.
 
 To trigger the workflow manually, you can use the "Run workflow" option in the GitHub Actions tab of your repository.
 

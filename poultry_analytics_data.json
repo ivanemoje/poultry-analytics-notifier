@@ -16,6 +16,13 @@
       "totalEggs": 870,
       "layingPercentage": "81.00"
     },
+    "batch3": {
+      "trays": 29,
+      "eggs": 7,
+      "broken": 0,
+      "totalEggs": 877,
+      "layingPercentage": "82.00"
+    },
     "combined": {
       "totalEggsEntry": 1320,
       "layingPercentageDaily": "80.00"
@@ -32,6 +39,11 @@
       "trays": 1116,
       "eggs": 531,
       "broken": 53
+    },
+    "batch3": {
+      "trays": 469,
+      "eggs": 288,
+      "broken": 27
     },
     "combined": {
       "totalEggsAllRecords": 146331,
@@ -59,6 +71,42 @@
     "thirtyDay": {
       "average": 1381,
       "trend": "❌"
+    }
+  }
+  },
+  "batchStats": {
+    "batch1": {
+      "id": 1,
+      "dateOfBirth": "",
+      "supplier": "",
+      "currentTrays": 3350,
+      "totalEggsRecorded": 2089,
+      "brokenEggsRecorded": 130,
+      "latestLayingPercentage": "83.00",
+      "source": "overallTotals / latestEntry",
+      "notes": "Basic static stats for batch 1"
+    },
+    "batch2": {
+      "id": 2,
+      "dateOfBirth": "",
+      "supplier": "",
+      "currentTrays": 469,
+      "totalEggsRecorded": 288,
+      "brokenEggsRecorded": 27,
+      "latestLayingPercentage": "82.00",
+      "source": "overallTotals / latestEntry",
+      "notes": "Basic static stats for batch 2"
+    },
+    "batch3": {
+      "id": 3,
+      "dateOfBirth": "",
+      "supplier": "",
+      "currentTrays": 469,
+      "totalEggsRecorded": 288,
+      "brokenEggsRecorded": 27,
+      "latestLayingPercentage": "82.00",
+      "source": "overallTotals / latestEntry",
+      "notes": "Basic static stats for batch 3"
     }
   }
 }

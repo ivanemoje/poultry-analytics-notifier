@@ -46,6 +46,7 @@ yesterday_count=0
 # Number of birds
 batch_one_birds=576
 batch_two_birds=1064
+batch_three_birds=407
 total_birds=$((batch_one_birds + batch_two_birds))
 
 mapfile -t records < <(echo "$response" | jq -c '.[]')
@@ -205,7 +206,15 @@ cat <<EOF
 EOF
 
 # 1. Define the output file path
-OUTPUT_FILE="egg_report_data.json"
+OUTPUT_FILE="poultry_analytics_data.json"
+
+# Load optional batch metadata from file (dateOfBirth, supplier, etc.)
+BATCH_METADATA_FILE="batch_metadata.json"
+if [ -f "$BATCH_METADATA_FILE" ]; then
+  batch_metadata_json=$(cat "$BATCH_METADATA_FILE")
+else
+  batch_metadata_json='{"batch1":{"dateOfBirth":"","supplier":""},"batch2":{"dateOfBirth":"","supplier":""},"batch3":{"dateOfBirth":"","supplier":""}}'
+fi
 
 # 2. Construct and write the JSON data
 jq -n \
@@ -243,6 +252,7 @@ jq -n \
   --argjson avg30 "$avg30_eggs" \
   --arg arrow30 "$arrow30" \
   --arg latest_time "$latest_time" \
+  --argjson batchStats "$batch_metadata_json" \
 '{
   "reportDate": $today,
   "latestEntry": {
@@ -306,6 +316,8 @@ jq -n \
       "trend": $arrow30
     }
   }
+  ,
+  "batchStats": $batchStats
 }' > "$OUTPUT_FILE"
 
 # Verify the file was written successfully

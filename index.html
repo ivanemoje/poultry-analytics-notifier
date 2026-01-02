@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Egg Report Summary</title>
+    <title>Live Poultry Analyticss Summary</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -579,7 +579,7 @@
                 <h1>Egg Report Dashboard</h1>
                 <div class="report-date" id="report-date">Last refreshed: --</div>
                 <div class="report-date" id="survey"><a href="https://enketo.ona.io/x/UY8hb56i">Add information</a></div>
-                
+                <div class="report-date" id="survey"><a href="https://enketo.ona.io/x/79JK2boY">Add sales</a></div>
             </div>
             </div>
             <button id="theme-toggle">
@@ -747,7 +747,7 @@
 
         // GitHub raw URL for JSON data
         const JSON_BASE_URL = 'https://raw.githubusercontent.com/ivanemoje/poultry-analytics-notifier/refs/heads/main/';
-        const JSON_URL = JSON_BASE_URL + 'egg_report_data.json';    
+        const JSON_URL = JSON_BASE_URL + 'poultry_analytics_data.json';    
         const TOTAL_BIRDS = 576; 
         const dashboard = document.getElementById('summary-dashboard');
         const loadingMessage = document.getElementById('loading-message');
