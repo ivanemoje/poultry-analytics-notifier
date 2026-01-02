@@ -1,5 +1,5 @@
 {
-  "reportDate": "2026-01-01",
+  "reportDate": "2026-01-02",
   "latestEntry": {
     "surveyDate": "2026-01-01",
     "batch1": {
@@ -15,13 +15,6 @@
       "broken": 0,
       "totalEggs": 870,
       "layingPercentage": "81.00"
-    },
-    "batch3": {
-      "trays": 29,
-      "eggs": 7,
-      "broken": 0,
-      "totalEggs": 877,
-      "layingPercentage": "82.00"
     },
     "combined": {
       "totalEggsEntry": 1320,
@@ -40,11 +33,6 @@
       "eggs": 531,
       "broken": 53
     },
-    "batch3": {
-      "trays": 469,
-      "eggs": 288,
-      "broken": 27
-    },
     "combined": {
       "totalEggsAllRecords": 146331,
       "totalTraysCalculated": 4877,
@@ -52,12 +40,12 @@
     }
   },
   "recentTotals": {
-    "sevenDay": 9526,
-    "thirtyDay": 35929
+    "sevenDay": 8108,
+    "thirtyDay": 34676
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1349,
+      "average": 1320,
       "trend": "❌"
     },
     "threeDay": {
@@ -65,48 +53,26 @@
       "trend": "❌"
     },
     "sevenDay": {
-      "average": 1360,
+      "average": 1351,
       "trend": "❌"
     },
     "thirtyDay": {
-      "average": 1381,
+      "average": 1387,
       "trend": "❌"
     }
-  }
   },
   "batchStats": {
     "batch1": {
-      "id": 1,
       "dateOfBirth": "",
-      "supplier": "",
-      "currentTrays": 3350,
-      "totalEggsRecorded": 2089,
-      "brokenEggsRecorded": 130,
-      "latestLayingPercentage": "83.00",
-      "source": "overallTotals / latestEntry",
-      "notes": "Basic static stats for batch 1"
+      "supplier": ""
     },
     "batch2": {
-      "id": 2,
       "dateOfBirth": "",
-      "supplier": "",
-      "currentTrays": 469,
-      "totalEggsRecorded": 288,
-      "brokenEggsRecorded": 27,
-      "latestLayingPercentage": "82.00",
-      "source": "overallTotals / latestEntry",
-      "notes": "Basic static stats for batch 2"
+      "supplier": ""
     },
     "batch3": {
-      "id": 3,
       "dateOfBirth": "",
-      "supplier": "",
-      "currentTrays": 469,
-      "totalEggsRecorded": 288,
-      "brokenEggsRecorded": 27,
-      "latestLayingPercentage": "82.00",
-      "source": "overallTotals / latestEntry",
-      "notes": "Basic static stats for batch 3"
+      "supplier": ""
     }
   }
 }
