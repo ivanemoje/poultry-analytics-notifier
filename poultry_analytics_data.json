@@ -1,63 +1,63 @@
 {
-  "reportDate": "2026-01-02",
+  "reportDate": "2026-01-03",
   "latestEntry": {
-    "surveyDate": "2026-01-02",
+    "surveyDate": "2026-01-03",
     "batch1": {
       "trays": 14,
-      "eggs": 16,
-      "broken": 0,
-      "totalEggs": 436,
-      "layingPercentage": "75.00"
+      "eggs": 5,
+      "broken": 2,
+      "totalEggs": 425,
+      "layingPercentage": "73.00"
     },
     "batch2": {
-      "trays": 29,
-      "eggs": 0,
-      "broken": 0,
-      "totalEggs": 870,
-      "layingPercentage": "81.00"
+      "trays": 30,
+      "eggs": 21,
+      "broken": 2,
+      "totalEggs": 921,
+      "layingPercentage": "86.00"
     },
     "combined": {
-      "totalEggsEntry": 1306,
-      "layingPercentageDaily": "79.00"
+      "totalEggsEntry": 1346,
+      "layingPercentageDaily": "82.00"
     },
-    "submittedAt": "2026-01-02 23:48"
+    "submittedAt": "2026-01-03 22:29"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 3682,
-      "eggs": 2296,
-      "broken": 141
+      "trays": 3696,
+      "eggs": 2301,
+      "broken": 143
     },
     "batch2": {
-      "trays": 1145,
-      "eggs": 531,
-      "broken": 53
+      "trays": 1175,
+      "eggs": 552,
+      "broken": 55
     },
     "combined": {
-      "totalEggsAllRecords": 147637,
-      "totalTraysCalculated": 4921,
-      "remainingEggs": 7
+      "totalEggsAllRecords": 148983,
+      "totalTraysCalculated": 4966,
+      "remainingEggs": 3
     }
   },
   "recentTotals": {
-    "sevenDay": 9414,
-    "thirtyDay": 35982
+    "sevenDay": 10760,
+    "thirtyDay": 37328
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1320,
-      "trend": "❌"
+      "average": 1306,
+      "trend": "✅"
     },
     "threeDay": {
-      "average": 1331,
-      "trend": "❌"
+      "average": 1324,
+      "trend": "✅"
     },
     "sevenDay": {
-      "average": 1344,
-      "trend": "❌"
+      "average": 1345,
+      "trend": "✅"
     },
     "thirtyDay": {
-      "average": 1383,
+      "average": 1382,
       "trend": "❌"
     }
   },
