@@ -120,7 +120,7 @@ for record in "${records[@]}"; do
     record_total_eggs=$((trays * 30 + eggs + trays2 * 30 + eggs2 + trays3 * 30 + eggs3))
     if [[ "$date" == "$today" ]]; then
         today_total_eggs=$((today_total_eggs + record_total_eggs))
-        today_count=$((today_count + 1))`
+        today_count=$((today_count + 1))
     fi
 done
 today_avg_eggs=$(( today_count > 0 ? today_total_eggs / today_count : 0 ))
