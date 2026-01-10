@@ -1,20 +1,20 @@
 {
   "reportDate": "2026-01-10",
   "latestEntry": {
-    "surveyDate": "2026-01-08",
+    "surveyDate": "2026-01-10",
     "latestsales": {
       "latestcategory": "CHICKEN",
       "subcategory": "TRAYS",
       "paymentmode": "CASH",
-      "amount": 730000,
-      "numtrays": 73,
+      "amount": 710000,
+      "numtrays": 71,
       "numanimals": 0,
       "comments": ""
     },
     "combined": {
-      "totalAmount": 12263069
+      "totalAmount": 12973069
     },
-    "submittedAt": "2026-01-08 19:35"
+    "submittedAt": "2026-01-10 23:47"
   },
   "batchStats": {
     "batch1": {
