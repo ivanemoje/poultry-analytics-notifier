@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 22 * * *'  # Runs daily at 10:00 and 22:00 UTC
+    - cron: '0 22 * * *'  # Runs daily at 22:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -17,8 +17,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install jq
-        run: sudo apt-get install -y jq
+      - name: Install dependencies
+        run: sudo apt-get install -y jq bc
 
       - name: Run Poultry Analytics Script
         env:
@@ -30,6 +30,17 @@ jobs:
           cat poultry_analytics.txt >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
+      - name: Run Sales Data Script
+        env:
+          ONA_API_TOKEN: ${{ secrets.ONA_API_TOKEN }}
+          # Note: Matching the variable name expected in your poultry_sales.sh
+          SALES_ONA_FORM_ID: ${{ secrets.SALES_ONA_FORM_ID }}
+        run: |
+          bash ./scripts/poultry_sales.sh > poultry_sales_data.txt
+          echo "POULTRY_SALES_DATA<<EOF" >> $GITHUB_ENV
+          cat poultry_sales_data.txt >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Send to Slack
         uses: slackapi/slack-github-action@v2.0.0
         with:
@@ -37,15 +48,19 @@ jobs:
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
-            text: "Daily Poultry Analytics Report"
             blocks:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "${{ env.POULTRY_ANALYTICS }}"
+                  text: "*Daily Poultry Analytics Report*\n${{ env.POULTRY_ANALYTICS }}"
+              - type: "divider"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "*Daily Poultry Sales Data*\n${{ env.POULTRY_SALES_DATA }}"
 
       - name: Save Data File and Commit
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Automated: Update poultry analytics data for website"
-          file_pattern: poultry_analytics_data.json
+          commit_message: "Automated: Update poultry analytics and sales data"
+          file_pattern: "*.json"

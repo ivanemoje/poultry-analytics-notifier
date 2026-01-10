@@ -19,6 +19,10 @@ latest_trays_batch2=$(echo "$latest" | jq -r '.numbertraysbatchtwo')
 latest_eggs_batch2=$(echo "$latest" | jq -r '.numbereggsbatchtwo')
 latest_eggs_broken_batch2=$(echo "$latest" | jq -r '.numbereggsbrokenbatchtwo')
 
+latest_trays_batch3=$(echo "$latest" | jq -r '.numbertraysbatchthree')
+latest_eggs_batch3=$(echo "$latest" | jq -r '.numbereggsbatchthree')
+latest_eggs_broken_batch3 =$(echo "$latest" | jq -r '.numbereggsbrokenbatchthree')
+
 latest_date=$(echo "$latest" | jq -r '.surveydate')
 latest_time=$(echo "$latest" | jq -r '._submission_time' | xargs -I{} date -d "{} +3 hours" +"%Y-%m-%d %H:%M")
 
@@ -37,6 +41,10 @@ total_trays_batch2=0
 total_eggs_batch2=0
 total_eggs_broken_batch2=0
 
+total_trays_batch3=0
+total_eggs_batch3=0
+total_eggs_broken_batch3=0
+
 three_day_total_eggs=0
 seven_day_total_eggs=0
 thirty_day_total_eggs=0
@@ -47,7 +55,7 @@ yesterday_count=0
 batch_one_birds=576
 batch_two_birds=1064
 batch_three_birds=407
-total_birds=$((batch_one_birds + batch_two_birds))
+total_birds=$((batch_one_birds + batch_two_birds + batch_three_birds))
 
 mapfile -t records < <(echo "$response" | jq -c '.[]')
 
@@ -60,6 +68,10 @@ for record in "${records[@]}"; do
     eggs2=$(echo "$record" | jq -r '.numbereggsbatchtwo')
     eggsbroken2=$(echo "$record" | jq -r '.numbereggsbrokenbatchtwo')
 
+    trays3=$(echo "$record" | jq -r '.numbertraysbatchthree')
+    eggs3=$(echo "$record" | jq -r '.numbereggsbatchthree')
+    eggsbroken3=$(echo "$record" | jq -r '.numbereggsbrokenbatchthree')
+
     total_trays=$((total_trays + trays))
     total_eggs=$((total_eggs + eggs))
     total_eggs_broken=$((total_eggs_broken + eggsbroken))
@@ -67,6 +79,10 @@ for record in "${records[@]}"; do
     total_trays_batch2=$((total_trays_batch2 + trays2))
     total_eggs_batch2=$((total_eggs_batch2 + eggs2))
     total_eggs_broken_batch2=$((total_eggs_broken_batch2 + eggsbroken2))
+
+    total_trays_batch3=$((total_trays_batch3 + trays3))
+    total_eggs_batch3=$((total_eggs_batch3 + eggs3))
+    total_eggs_broken_batch3=$((total_eggs_broken_batch3 + eggsbroken3))
 
     date=$(echo "$record" | jq -r '.surveydate')
     record_total_eggs=$((trays * 30 + eggs + trays2 * 30 + eggs2))
@@ -98,11 +114,13 @@ for record in "${records[@]}"; do
     eggs=$(echo "$record" | jq -r '.numbereggs')
     trays2=$(echo "$record" | jq -r '.numbertraysbatchtwo')
     eggs2=$(echo "$record" | jq -r '.numbereggsbatchtwo')
+    trays3=$(echo "$record" | jq -r '.numbertraysbatchthree')
+    eggs3=$(echo "$record" | jq -r '.numbereggsbatchthree')
     date=$(echo "$record" | jq -r '.surveydate')
-    record_total_eggs=$((trays * 30 + eggs + trays2 * 30 + eggs2))
+    record_total_eggs=$((trays * 30 + eggs + trays2 * 30 + eggs2 + trays3 * 30 + eggs3))
     if [[ "$date" == "$today" ]]; then
         today_total_eggs=$((today_total_eggs + record_total_eggs))
-        today_count=$((today_count + 1))
+        today_count=$((today_count + 1))`
     fi
 done
 today_avg_eggs=$(( today_count > 0 ? today_total_eggs / today_count : 0 ))
@@ -164,10 +182,13 @@ total_eggs_mod=$(( total_eggs_all % 30 ))
 # Calculate batch-specific daily eggs and laying percentages
 batch1_daily_eggs=$((latest_trays * 30 + latest_eggs))
 batch2_daily_eggs=$((latest_trays_batch2 * 30 + latest_eggs_batch2))
-total_daily_eggs=$((batch1_daily_eggs + batch2_daily_eggs))
+batch3_daily_eggs=$((latest_trays_batch3 * 30 + latest_eggs_batch3))
+
+total_daily_eggs=$((batch1_daily_eggs + batch2_daily_eggs + batch3_daily_eggs))
 
 laying_percentage_batch1=$(echo "scale=2; ($batch1_daily_eggs / $batch_one_birds) * 100" | bc)
 laying_percentage_batch2=$(echo "scale=2; ($batch2_daily_eggs / $batch_two_birds) * 100" | bc)
+laying_percentage_batch3=$(echo "scale=2; ($batch3_daily_eggs / $batch_three_birds) * 100" | bc)
 laying_percentage_daily=$(echo "scale=2; ($total_daily_eggs / $total_birds) * 100" | bc)
 
 cat <<EOF
@@ -187,6 +208,12 @@ cat <<EOF
 :egg: Eggs: \`$latest_eggs_batch2\`
 :red_circle: Broken: \`$latest_eggs_broken_batch2\`
 :chart_with_upwards_trend: Laying %: \`$laying_percentage_batch2%\`
+
+*Batch 3*
+:basket: Trays: \`$latest_trays_batch3\`
+:egg: Eggs: \`$latest_eggs_batch3\`
+:red_circle: Broken: \`$latest_eggs_broken_batch3\`
+:chart_with_upwards_trend: Laying %: \`$laying_percentage_batch3%\`
 
 *Combined*
 :egg: Total Eggs (this entry): \`$total_daily_eggs\`
@@ -209,7 +236,7 @@ EOF
 OUTPUT_FILE="poultry_analytics_data.json"
 
 # Load optional batch metadata from file (dateOfBirth, supplier, etc.)
-BATCH_METADATA_FILE="batch_metadata.json"
+BATCH_METADATA_FILE="config/batch_metadata.json"
 if [ -f "$BATCH_METADATA_FILE" ]; then
   batch_metadata_json=$(cat "$BATCH_METADATA_FILE")
 else
@@ -226,12 +253,17 @@ jq -n \
   --argjson latest_trays_batch2 "$latest_trays_batch2" \
   --argjson latest_eggs_batch2 "$latest_eggs_batch2" \
   --argjson latest_broken_batch2 "$latest_eggs_broken_batch2" \
+  --argjson latest_trays_batch3 "$latest_trays_batch3" \
+  --argjson latest_eggs_batch3 "$latest_eggs_batch3" \
+  --argjson latest_broken_batch3 "$latest_eggs_broken_batch3" \
   --argjson batch1_daily "$batch1_daily_eggs" \
   --argjson batch2_daily "$batch2_daily_eggs" \
+  --argjson batch3_daily "$batch3_daily_eggs" \
   --argjson total_daily "$total_daily_eggs" \
   --arg daily_perc "$laying_percentage_daily" \
   --arg batch1_perc "$laying_percentage_batch1" \
   --arg batch2_perc "$laying_percentage_batch2" \
+  --arg batch3_perc "$laying_percentage_batch3" \
   --argjson seven_day_total "$seven_day_total_eggs" \
   --argjson thirty_day_total "$thirty_day_total_eggs" \
   --argjson total_eggs_all "$total_eggs_all" \
@@ -271,6 +303,13 @@ jq -n \
       "totalEggs": $batch2_daily,
       "layingPercentage": $batch2_perc
     },
+    "batch3": {
+      "trays": $latest_trays_batch3,
+      "eggs": $latest_eggs_batch3,
+      "broken": $latest_broken_batch3,
+      "totalEggs": $batch3_daily,
+      "layingPercentage": $batch3_perc
+    },
     "combined": {
       "totalEggsEntry": $total_daily,
       "layingPercentageDaily": $daily_perc
@@ -287,6 +326,11 @@ jq -n \
       "trays": $total_trays_b2,
       "eggs": $total_eggs_b2,
       "broken": $total_broken_b2
+    },
+    "batch3": {
+      "trays": $total_trays_b3,
+      "eggs": $total_eggs_b3,
+      "broken": $total_broken_b3
     },
     "combined": {
       "totalEggsAllRecords": $total_eggs_all,
