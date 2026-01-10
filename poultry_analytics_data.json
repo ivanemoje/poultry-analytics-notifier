@@ -16,9 +16,16 @@
       "totalEggs": 870,
       "layingPercentage": "81.00"
     },
+    "batch3": {
+      "trays": 0,
+      "eggs": 0,
+      "broken": 0,
+      "totalEggs": 0,
+      "layingPercentage": "0"
+    },
     "combined": {
       "totalEggsEntry": 1300,
-      "layingPercentageDaily": "79.00"
+      "layingPercentageDaily": "63.00"
     },
     "submittedAt": "2026-01-09 22:24"
   },
@@ -32,6 +39,11 @@
       "trays": 1352,
       "eggs": 586,
       "broken": 57
+    },
+    "batch3": {
+      "trays": 0,
+      "eggs": 0,
+      "broken": 0
     },
     "combined": {
       "totalEggsAllRecords": 156868,
@@ -63,16 +75,16 @@
   },
   "batchStats": {
     "batch1": {
-      "dateOfBirth": "",
-      "supplier": ""
+      "dateOfBirth": "2023-06-01",
+      "supplier": "Supplier A"
     },
     "batch2": {
-      "dateOfBirth": "",
-      "supplier": ""
+      "dateOfBirth": "2023-07-15",
+      "supplier": "Supplier B"
     },
     "batch3": {
-      "dateOfBirth": "",
-      "supplier": ""
+      "dateOfBirth": "2023-08-20",
+      "supplier": "Supplier C"
     }
   }
 }
