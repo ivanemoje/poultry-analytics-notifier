@@ -21,7 +21,7 @@ latest_eggs_broken_batch2=$(echo "$latest" | jq -r '.numbereggsbrokenbatchtwo')
 
 latest_trays_batch3=$(echo "$latest" | jq -r '.numbertraysbatchthree')
 latest_eggs_batch3=$(echo "$latest" | jq -r '.numbereggsbatchthree')
-latest_eggs_broken_batch3 =$(echo "$latest" | jq -r '.numbereggsbrokenbatchthree')
+latest_eggs_broken_batch3=$(echo "$latest" | jq -r '.numbereggsbrokenbatchthree')
 
 latest_date=$(echo "$latest" | jq -r '.surveydate')
 latest_time=$(echo "$latest" | jq -r '._submission_time' | xargs -I{} date -d "{} +3 hours" +"%Y-%m-%d %H:%M")
