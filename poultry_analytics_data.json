@@ -1,5 +1,5 @@
 {
-  "reportDate": "2026-01-10",
+  "reportDate": "2026-01-11",
   "latestEntry": {
     "surveyDate": "2026-01-10",
     "batch1": {
@@ -57,12 +57,12 @@
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1300,
-      "trend": "✅"
+      "average": 1311,
+      "trend": "❌"
     },
     "threeDay": {
-      "average": 1303,
-      "trend": "✅"
+      "average": 1305,
+      "trend": "❌"
     },
     "sevenDay": {
       "average": 1313,
