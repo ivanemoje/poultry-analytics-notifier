@@ -1,5 +1,5 @@
 {
-  "reportDate": "2026-01-15",
+  "reportDate": "2026-01-16",
   "latestEntry": {
     "surveyDate": "2026-01-12",
     "batch1": {
@@ -52,8 +52,8 @@
     }
   },
   "recentTotals": {
-    "sevenDay": 4834,
-    "thirtyDay": 40610
+    "sevenDay": 3534,
+    "thirtyDay": 34893
   },
   "rollingAverages": {
     "yesterday": {
@@ -65,11 +65,11 @@
       "trend": "🔵"
     },
     "sevenDay": {
-      "average": 1208,
+      "average": 1178,
       "trend": "❌"
     },
     "thirtyDay": {
-      "average": 1353,
+      "average": 1342,
       "trend": "❌"
     }
   },
