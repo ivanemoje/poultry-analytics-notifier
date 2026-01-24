@@ -1,20 +1,20 @@
 {
-  "reportDate": "2026-01-23",
+  "reportDate": "2026-01-24",
   "latestEntry": {
-    "surveyDate": "2026-01-22",
+    "surveyDate": "2026-01-24",
     "latestsales": {
       "latestcategory": "CHICKEN",
       "subcategory": "TRAYS",
-      "paymentmode": "AIRTEL_MOBILE_MONEY",
-      "amount": 700000,
-      "numtrays": 70,
+      "paymentmode": "CASH",
+      "amount": 54000,
+      "numtrays": 5,
       "numanimals": 0,
-      "comments": "Sent to Gloria 700,000ugx for trays "
+      "comments": ""
     },
     "combined": {
-      "totalAmount": 16233069
+      "totalAmount": 16287069
     },
-    "submittedAt": "2026-01-22 23:15"
+    "submittedAt": "2026-01-24 22:54"
   },
   "batchStats": {
     "batch1": {
