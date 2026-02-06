@@ -1,20 +1,20 @@
 {
-  "reportDate": "2026-02-05",
+  "reportDate": "2026-02-06",
   "latestEntry": {
-    "surveyDate": "2026-02-05",
+    "surveyDate": "2026-02-06",
     "latestsales": {
       "latestcategory": "CHICKEN",
       "subcategory": "TRAYS",
-      "paymentmode": "AIRTEL_MOBILE_MONEY",
-      "amount": 600000,
-      "numtrays": 60,
+      "paymentmode": "BANK",
+      "amount": 1430000,
+      "numtrays": 130,
       "numanimals": 0,
       "comments": ""
     },
     "combined": {
-      "totalAmount": 21257069
+      "totalAmount": 22687069
     },
-    "submittedAt": "2026-02-05 22:40"
+    "submittedAt": "2026-02-06 23:04"
   },
   "batchStats": {
     "batch1": {
