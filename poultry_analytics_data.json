@@ -1,19 +1,19 @@
 {
-  "reportDate": "2026-03-11",
+  "reportDate": "2026-03-12",
   "latestEntry": {
-    "surveyDate": "2026-03-11",
+    "surveyDate": "2026-03-12",
     "batch1": {
       "trays": 14,
-      "eggs": 19,
+      "eggs": 12,
       "broken": 1,
-      "totalEggs": 439,
-      "layingPercentage": "76.00"
+      "totalEggs": 432,
+      "layingPercentage": "75.00"
     },
     "batch2": {
       "trays": 29,
-      "eggs": 11,
+      "eggs": 10,
       "broken": 2,
-      "totalEggs": 881,
+      "totalEggs": 880,
       "layingPercentage": "82.00"
     },
     "batch3": {
@@ -24,21 +24,21 @@
       "layingPercentage": "0"
     },
     "combined": {
-      "totalEggsEntry": 1320,
+      "totalEggsEntry": 1312,
       "layingPercentageDaily": "64.00"
     },
-    "submittedAt": "2026-03-11 23:18"
+    "submittedAt": "2026-03-12 22:53"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 4550,
-      "eggs": 2926,
-      "broken": 215
+      "trays": 4564,
+      "eggs": 2938,
+      "broken": 216
     },
     "batch2": {
-      "trays": 2958,
-      "eggs": 1201,
-      "broken": 149
+      "trays": 2987,
+      "eggs": 1211,
+      "broken": 151
     },
     "batch3": {
       "trays": 0,
@@ -46,31 +46,31 @@
       "broken": 0
     },
     "combined": {
-      "totalEggsAllRecords": 229367,
-      "totalTraysCalculated": 7645,
-      "remainingEggs": 17
+      "totalEggsAllRecords": 230679,
+      "totalTraysCalculated": 7689,
+      "remainingEggs": 9
     }
   },
   "recentTotals": {
-    "sevenDay": 8966,
-    "thirtyDay": 39389
+    "sevenDay": 9268,
+    "thirtyDay": 39366
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1333,
+      "average": 1320,
       "trend": "❌"
     },
     "threeDay": {
-      "average": 1327,
+      "average": 1321,
       "trend": "❌"
     },
     "sevenDay": {
-      "average": 1280,
-      "trend": "✅"
+      "average": 1324,
+      "trend": "❌"
     },
     "thirtyDay": {
       "average": 1312,
-      "trend": "✅"
+      "trend": "🔵"
     }
   },
   "batchStats": {
