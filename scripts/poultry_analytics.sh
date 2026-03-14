@@ -40,9 +40,10 @@ three_day_total_eggs=0; seven_day_total_eggs=0; thirty_day_total_eggs=0
 yesterday_total_eggs=0; yesterday_count=0
 
 # Number of birds
-batch_one_birds=576
-batch_two_birds=1064
-batch_three_birds=407
+# to move to batch_metadata.json in future for dynamic updates
+batch_one_birds=567
+batch_two_birds=1052
+batch_three_birds=399
 total_birds=$((batch_one_birds + batch_two_birds + batch_three_birds))
 
 mapfile -t records < <(echo "$response" | jq -c '.[]')

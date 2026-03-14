@@ -1,14 +1,26 @@
 {
   "batch1": {
-    "dateOfBirth": "2023-06-01",
-    "supplier": "Supplier A"
+    "dateOfBirth": "2024-12-05",
+    "supplier": "jeka",
+    "initialBirds": 576,
+    "currentBirds": 567
   },
   "batch2": {
-    "dateOfBirth": "2023-07-15",
-    "supplier": "Supplier B"
+    "dateOfBirth": "2025-06-15",
+    "supplier": "jayden",
+    "initialBirds": 1215,
+    "currentBirds": 1052
   },
   "batch3": {
-    "dateOfBirth": "2023-08-20",
-    "supplier": "Supplier C"
+    "dateOfBirth": "2025-12-20",
+    "supplier": "jeka",
+    "initialBirds": 400,
+    "currentBirds": 399
+  },
+   "batch4": {
+    "dateOfBirth": "2026-04-15",
+    "supplier": "jeka",
+    "initialBirds": 1000,
+    "currentBirds": 1000
   }
 }
