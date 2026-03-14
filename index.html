@@ -632,7 +632,7 @@
                         <span id="batch-two-percentage">--</span>
                     </div>
                 </div>
-                <div class="metric-card-footer">Batch one: 576, Batch two: 1,064 birds</div>
+                <div class="metric-card-footer" id="batch-birds-footer">Batch birds: --</div>
             </div>
 
             <div class="metric-card">
@@ -767,22 +767,40 @@
         async function loadBatchMetadata() {
             try {
                 const batchMetadataUrl = JSON_BASE_URL + 'config/batch_metadata.json?t=' + new Date().getTime();
+                console.log('Fetching batch metadata from:', batchMetadataUrl);
                 const response = await fetch(batchMetadataUrl, { cache: 'no-cache' });
                 
                 if (response.ok) {
                     const metadata = await response.json();
-                    const batch1Birds = metadata.batch1?.currentBirds || 576;
-                    const batch2Birds = metadata.batch2?.currentBirds || 1064;
+                    console.log('Batch metadata loaded:', metadata);
                     
-                    // Update the footer with current bird counts
-                    const footerElement = document.querySelector('.metric-card:nth-child(2) .metric-card-footer');
-                    if (footerElement) {
-                        footerElement.textContent = `Batch one: ${batch1Birds.toLocaleString()}, Batch two: ${batch2Birds.toLocaleString()} birds`;
+                    // Loop through all batches dynamically
+                    const batchStrings = [];
+                    const batchNames = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+                    
+                    for (const [key, batch] of Object.entries(metadata)) {
+                        if (batch && batch.currentBirds !== undefined) {
+                            const batchNum = key.replace('batch', ''); // Extract number from key
+                            const batchName = batchNames[parseInt(batchNum) - 1] || batchNum;
+                            batchStrings.push(`Batch ${batchName}: ${batch.currentBirds.toLocaleString()}`);
+                        }
                     }
+                    
+                    console.log('Batch strings:', batchStrings);
+                    // Update the footer with current bird counts
+                    const footerElement = document.getElementById('batch-birds-footer');
+                    if (footerElement && batchStrings.length > 0) {
+                        footerElement.textContent = batchStrings.join(', ') + ' birds';
+                        console.log('Footer updated successfully');
+                    } else {
+                        console.warn('Footer element not found or no batches');
+                    }
+                } else {
+                    console.warn('Failed to fetch batch metadata, status:', response.status);
                 }
             } catch (error) {
                 console.warn('Failed to load batch metadata:', error);
-                // Silently fail - use hardcoded values if fetch fails
+                // Silently fail - use placeholder if fetch fails
             }
         }
 
