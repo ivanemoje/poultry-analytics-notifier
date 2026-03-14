@@ -748,7 +748,8 @@
         // GitHub raw URL for JSON data
         const JSON_BASE_URL = 'https://raw.githubusercontent.com/ivanemoje/poultry-analytics-notifier/refs/heads/main/';
         const JSON_URL = JSON_BASE_URL + 'poultry_analytics_data.json';
-        const JSON_SALES_FILE = JSON_BASE_URL + 'poultry_sales_data.json'; 
+        const JSON_SALES_FILE = JSON_BASE_URL + 'poultry_sales_data.json';
+        const JSON_BATCH_METADATA = JSON_BASE_URL + 'config/batch_metadata.json';
         const TOTAL_BIRDS = 576; 
         const dashboard = document.getElementById('summary-dashboard');
         const loadingMessage = document.getElementById('loading-message');
@@ -758,6 +759,31 @@
          */
         function getYYYYMMDD(date) {
             return date.toISOString().split('T')[0];
+        }
+
+        /**
+         * Fetches batch metadata and updates the Laying Percentage card footer.
+         */
+        async function loadBatchMetadata() {
+            try {
+                const batchMetadataUrl = JSON_BASE_URL + 'config/batch_metadata.json?t=' + new Date().getTime();
+                const response = await fetch(batchMetadataUrl, { cache: 'no-cache' });
+                
+                if (response.ok) {
+                    const metadata = await response.json();
+                    const batch1Birds = metadata.batch1?.currentBirds || 576;
+                    const batch2Birds = metadata.batch2?.currentBirds || 1064;
+                    
+                    // Update the footer with current bird counts
+                    const footerElement = document.querySelector('.metric-card:nth-child(2) .metric-card-footer');
+                    if (footerElement) {
+                        footerElement.textContent = `Batch one: ${batch1Birds.toLocaleString()}, Batch two: ${batch2Birds.toLocaleString()} birds`;
+                    }
+                }
+            } catch (error) {
+                console.warn('Failed to load batch metadata:', error);
+                // Silently fail - use hardcoded values if fetch fails
+            }
         }
 
         /**
@@ -967,7 +993,10 @@
         }
 
         // Initialize the dashboard
-        document.addEventListener('DOMContentLoaded', loadSummaryData);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSummaryData();
+            loadBatchMetadata();
+        });
     </script>
 </body>
 </html>
