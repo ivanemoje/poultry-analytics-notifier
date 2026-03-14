@@ -1,26 +1,42 @@
 {
   "batch1": {
     "dateOfBirth": "2024-12-05",
+    "expectedOfflay": "2026-06-05",
+    "status": "active",
     "supplier": "jeka",
-    "initialBirds": 576,
+    "initialBirds": 620,
     "currentBirds": 567
   },
   "batch2": {
     "dateOfBirth": "2025-06-15",
+    "expectedOfflay": "2026-12-15",
     "supplier": "jayden",
+    "status": "active",
     "initialBirds": 1215,
     "currentBirds": 1052
   },
   "batch3": {
     "dateOfBirth": "2025-12-20",
+    "expectedOfflay": "2027-06-20",
     "supplier": "jeka",
+    "status": "active",
     "initialBirds": 400,
     "currentBirds": 399
   },
    "batch4": {
     "dateOfBirth": "2026-04-15",
+    "expectedOfflay": "2027-10-15",
     "supplier": "jeka",
+    "status": "pending",
     "initialBirds": 1000,
     "currentBirds": 1000
+  },
+    "batch5": {
+      "dateOfBirth": "2026-08-01",
+      "expectedOfflay": "2028-02-01",
+      "supplier": "jeka",
+      "status": "pending",
+      "initialBirds": 3000,
+      "currentBirds": 3000
   }
 }
