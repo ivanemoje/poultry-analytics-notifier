@@ -33,7 +33,6 @@ jobs:
       - name: Run Sales Data Script
         env:
           ONA_API_TOKEN: ${{ secrets.ONA_API_TOKEN }}
-          # Note: Matching the variable name expected in your poultry_sales.sh
           SALES_ONA_FORM_ID: ${{ secrets.SALES_ONA_FORM_ID }}
         run: |
           bash ./scripts/poultry_sales.sh > poultry_sales_data.txt
