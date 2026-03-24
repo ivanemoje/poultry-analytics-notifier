@@ -1,20 +1,20 @@
 {
-  "reportDate": "2026-03-23",
+  "reportDate": "2026-03-24",
   "latestEntry": {
-    "surveyDate": "2026-03-23",
+    "surveyDate": "2026-03-24",
     "batch1": {
       "trays": 14,
       "eggs": 2,
-      "broken": 1,
+      "broken": 2,
       "totalEggs": 422,
       "layingPercentage": "74.00"
     },
     "batch2": {
-      "trays": 28,
-      "eggs": 22,
+      "trays": 29,
+      "eggs": 5,
       "broken": 2,
-      "totalEggs": 862,
-      "layingPercentage": "81.00"
+      "totalEggs": 875,
+      "layingPercentage": "83.00"
     },
     "batch3": {
       "trays": 0,
@@ -24,21 +24,21 @@
       "layingPercentage": "0"
     },
     "combined": {
-      "totalEggsEntry": 1284,
-      "layingPercentageDaily": "63.00"
+      "totalEggsEntry": 1297,
+      "layingPercentageDaily": "64.00"
     },
-    "submittedAt": "2026-03-23 23:02"
+    "submittedAt": "2026-03-24 23:27"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 4714,
-      "eggs": 3070,
-      "broken": 231
+      "trays": 4728,
+      "eggs": 3072,
+      "broken": 233
     },
     "batch2": {
-      "trays": 3299,
-      "eggs": 1381,
-      "broken": 173
+      "trays": 3328,
+      "eggs": 1386,
+      "broken": 175
     },
     "batch3": {
       "trays": 0,
@@ -46,30 +46,30 @@
       "broken": 0
     },
     "combined": {
-      "totalEggsAllRecords": 244841,
-      "totalTraysCalculated": 8161,
-      "remainingEggs": 11
+      "totalEggsAllRecords": 246138,
+      "totalTraysCalculated": 8204,
+      "remainingEggs": 18
     }
   },
   "recentTotals": {
-    "sevenDay": 8929,
-    "thirtyDay": 39041
+    "sevenDay": 9022,
+    "thirtyDay": 39016
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1301,
-      "trend": "❌"
+      "average": 1284,
+      "trend": "✅"
     },
     "threeDay": {
       "average": 1294,
-      "trend": "❌"
+      "trend": "✅"
     },
     "sevenDay": {
-      "average": 1275,
+      "average": 1288,
       "trend": "✅"
     },
     "thirtyDay": {
-      "average": 1301,
+      "average": 1300,
       "trend": "❌"
     }
   },
