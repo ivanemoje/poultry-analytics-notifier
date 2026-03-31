@@ -1,20 +1,20 @@
 {
-  "reportDate": "2026-03-30",
+  "reportDate": "2026-03-31",
   "latestEntry": {
-    "surveyDate": "2026-03-30",
+    "surveyDate": "2026-03-31",
     "batch1": {
-      "trays": 13,
-      "eggs": 12,
-      "broken": 2,
-      "totalEggs": 402,
-      "layingPercentage": "70.00"
+      "trays": 14,
+      "eggs": 9,
+      "broken": 1,
+      "totalEggs": 429,
+      "layingPercentage": "75.00"
     },
     "batch2": {
-      "trays": 28,
-      "eggs": 2,
-      "broken": 1,
-      "totalEggs": 842,
-      "layingPercentage": "80.00"
+      "trays": 29,
+      "eggs": 15,
+      "broken": 2,
+      "totalEggs": 885,
+      "layingPercentage": "84.00"
     },
     "batch3": {
       "trays": 0,
@@ -24,21 +24,21 @@
       "layingPercentage": "0"
     },
     "combined": {
-      "totalEggsEntry": 1244,
-      "layingPercentageDaily": "61.00"
+      "totalEggsEntry": 1314,
+      "layingPercentageDaily": "65.00"
     },
-    "submittedAt": "2026-03-30 22:45"
+    "submittedAt": "2026-03-31 22:08"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 4810,
-      "eggs": 3134,
-      "broken": 242
+      "trays": 4824,
+      "eggs": 3143,
+      "broken": 243
     },
     "batch2": {
-      "trays": 3499,
-      "eggs": 1484,
-      "broken": 184
+      "trays": 3528,
+      "eggs": 1499,
+      "broken": 186
     },
     "batch3": {
       "trays": 0,
@@ -46,31 +46,31 @@
       "broken": 0
     },
     "combined": {
-      "totalEggsAllRecords": 253888,
-      "totalTraysCalculated": 8462,
-      "remainingEggs": 28
+      "totalEggsAllRecords": 255202,
+      "totalTraysCalculated": 8506,
+      "remainingEggs": 22
     }
   },
   "recentTotals": {
-    "sevenDay": 9047,
-    "thirtyDay": 38686
+    "sevenDay": 9064,
+    "thirtyDay": 38716
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1321,
-      "trend": "❌"
+      "average": 1244,
+      "trend": "✅"
     },
     "threeDay": {
-      "average": 1290,
-      "trend": "❌"
+      "average": 1293,
+      "trend": "✅"
     },
     "sevenDay": {
-      "average": 1292,
-      "trend": "❌"
+      "average": 1294,
+      "trend": "✅"
     },
     "thirtyDay": {
-      "average": 1289,
-      "trend": "❌"
+      "average": 1290,
+      "trend": "✅"
     }
   },
   "batchStats": {
