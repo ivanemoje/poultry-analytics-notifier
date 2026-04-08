@@ -1,19 +1,19 @@
 {
-  "reportDate": "2026-04-07",
+  "reportDate": "2026-04-08",
   "latestEntry": {
-    "surveyDate": "2026-04-07",
+    "surveyDate": "2026-04-08",
     "batch1": {
-      "trays": 13,
-      "eggs": 13,
+      "trays": 14,
+      "eggs": 2,
       "broken": 1,
-      "totalEggs": 403,
-      "layingPercentage": "71.00"
+      "totalEggs": 422,
+      "layingPercentage": "74.00"
     },
     "batch2": {
       "trays": 30,
-      "eggs": 2,
-      "broken": 1,
-      "totalEggs": 902,
+      "eggs": 1,
+      "broken": 2,
+      "totalEggs": 901,
       "layingPercentage": "85.00"
     },
     "batch3": {
@@ -24,21 +24,21 @@
       "layingPercentage": "0"
     },
     "combined": {
-      "totalEggsEntry": 1305,
-      "layingPercentageDaily": "64.00"
+      "totalEggsEntry": 1323,
+      "layingPercentageDaily": "65.00"
     },
-    "submittedAt": "2026-04-07 22:45"
+    "submittedAt": "2026-04-08 22:44"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 4921,
-      "eggs": 3197,
-      "broken": 252
+      "trays": 4935,
+      "eggs": 3199,
+      "broken": 253
     },
     "batch2": {
-      "trays": 3737,
-      "eggs": 1566,
-      "broken": 198
+      "trays": 3767,
+      "eggs": 1567,
+      "broken": 200
     },
     "batch3": {
       "trays": 0,
@@ -46,26 +46,26 @@
       "broken": 0
     },
     "combined": {
-      "totalEggsAllRecords": 264503,
-      "totalTraysCalculated": 8816,
-      "remainingEggs": 23
+      "totalEggsAllRecords": 265826,
+      "totalTraysCalculated": 8860,
+      "remainingEggs": 26
     }
   },
   "recentTotals": {
-    "sevenDay": 9301,
-    "thirtyDay": 39118
+    "sevenDay": 9304,
+    "thirtyDay": 39112
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1341,
-      "trend": "❌"
+      "average": 1305,
+      "trend": "✅"
     },
     "threeDay": {
-      "average": 1327,
-      "trend": "❌"
+      "average": 1323,
+      "trend": "🔵"
     },
     "sevenDay": {
-      "average": 1328,
+      "average": 1329,
       "trend": "❌"
     },
     "thirtyDay": {
