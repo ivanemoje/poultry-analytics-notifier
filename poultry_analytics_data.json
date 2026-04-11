@@ -1,20 +1,20 @@
 {
   "reportDate": "2026-04-11",
   "latestEntry": {
-    "surveyDate": "2026-04-10",
+    "surveyDate": "2026-04-11",
     "batch1": {
-      "trays": 14,
-      "eggs": 10,
+      "trays": 13,
+      "eggs": 14,
       "broken": 1,
-      "totalEggs": 430,
-      "layingPercentage": "75.00"
+      "totalEggs": 404,
+      "layingPercentage": "71.00"
     },
     "batch2": {
-      "trays": 28,
-      "eggs": 4,
+      "trays": 29,
+      "eggs": 10,
       "broken": 2,
-      "totalEggs": 844,
-      "layingPercentage": "80.00"
+      "totalEggs": 880,
+      "layingPercentage": "83.00"
     },
     "batch3": {
       "trays": 0,
@@ -24,21 +24,21 @@
       "layingPercentage": "0"
     },
     "combined": {
-      "totalEggsEntry": 1274,
+      "totalEggsEntry": 1284,
       "layingPercentageDaily": "63.00"
     },
-    "submittedAt": "2026-04-10 23:32"
+    "submittedAt": "2026-04-11 23:19"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 4962,
-      "eggs": 3235,
-      "broken": 255
+      "trays": 4975,
+      "eggs": 3249,
+      "broken": 256
     },
     "batch2": {
-      "trays": 3823,
-      "eggs": 1596,
-      "broken": 203
+      "trays": 3852,
+      "eggs": 1606,
+      "broken": 205
     },
     "batch3": {
       "trays": 0,
@@ -46,30 +46,30 @@
       "broken": 0
     },
     "combined": {
-      "totalEggsAllRecords": 268381,
-      "totalTraysCalculated": 8946,
-      "remainingEggs": 1
+      "totalEggsAllRecords": 269665,
+      "totalTraysCalculated": 8988,
+      "remainingEggs": 25
     }
   },
   "recentTotals": {
-    "sevenDay": 7861,
-    "thirtyDay": 37702
+    "sevenDay": 9145,
+    "thirtyDay": 38986
   },
   "rollingAverages": {
     "yesterday": {
       "average": 1274,
-      "trend": "❌"
+      "trend": "✅"
     },
     "threeDay": {
-      "average": 1277,
-      "trend": "❌"
+      "average": 1279,
+      "trend": "✅"
     },
     "sevenDay": {
-      "average": 1310,
+      "average": 1306,
       "trend": "❌"
     },
     "thirtyDay": {
-      "average": 1300,
+      "average": 1299,
       "trend": "❌"
     }
   },
