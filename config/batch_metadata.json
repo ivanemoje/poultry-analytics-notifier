@@ -24,8 +24,8 @@
     "currentBirds": 399
   },
    "batch4": {
-    "dateOfBirth": "2026-05-21",
-    "expectedOfflay": "2027-11-21",
+    "dateOfBirth": "2026-04-21",
+    "expectedOfflay": "2027-10-21",
     "supplier": "jeka",
     "status": "pending",
     "initialBirds": 1000,
