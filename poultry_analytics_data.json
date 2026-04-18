@@ -1,20 +1,20 @@
 {
-  "reportDate": "2026-04-17",
+  "reportDate": "2026-04-18",
   "latestEntry": {
-    "surveyDate": "2026-04-17",
+    "surveyDate": "2026-04-19",
     "batch1": {
       "trays": 13,
-      "eggs": 1,
+      "eggs": 10,
       "broken": 1,
-      "totalEggs": 391,
-      "layingPercentage": "68.00"
+      "totalEggs": 400,
+      "layingPercentage": "70.00"
     },
     "batch2": {
-      "trays": 28,
-      "eggs": 1,
+      "trays": 29,
+      "eggs": 2,
       "broken": 1,
-      "totalEggs": 841,
-      "layingPercentage": "79.00"
+      "totalEggs": 872,
+      "layingPercentage": "82.00"
     },
     "batch3": {
       "trays": 0,
@@ -24,21 +24,21 @@
       "layingPercentage": "0"
     },
     "combined": {
-      "totalEggsEntry": 1232,
-      "layingPercentageDaily": "61.00"
+      "totalEggsEntry": 1272,
+      "layingPercentageDaily": "63.00"
     },
-    "submittedAt": "2026-04-17 23:33"
+    "submittedAt": "2026-04-19 00:12"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 5053,
-      "eggs": 3321,
-      "broken": 262
+      "trays": 5066,
+      "eggs": 3331,
+      "broken": 263
     },
     "batch2": {
-      "trays": 4023,
-      "eggs": 1669,
-      "broken": 215
+      "trays": 4052,
+      "eggs": 1671,
+      "broken": 216
     },
     "batch3": {
       "trays": 0,
@@ -46,26 +46,26 @@
       "broken": 0
     },
     "combined": {
-      "totalEggsAllRecords": 277270,
-      "totalTraysCalculated": 9242,
-      "remainingEggs": 10
+      "totalEggsAllRecords": 278542,
+      "totalTraysCalculated": 9284,
+      "remainingEggs": 22
     }
   },
   "recentTotals": {
-    "sevenDay": 8889,
-    "thirtyDay": 38871
+    "sevenDay": 8877,
+    "thirtyDay": 38856
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1242,
+      "average": 1232,
       "trend": "❌"
     },
     "threeDay": {
-      "average": 1255,
+      "average": 1248,
       "trend": "❌"
     },
     "sevenDay": {
-      "average": 1269,
+      "average": 1268,
       "trend": "❌"
     },
     "thirtyDay": {
