@@ -1,20 +1,20 @@
 {
-  "reportDate": "2026-04-18",
+  "reportDate": "2026-04-19",
   "latestEntry": {
     "surveyDate": "2026-04-19",
     "batch1": {
       "trays": 13,
-      "eggs": 10,
+      "eggs": 0,
       "broken": 1,
-      "totalEggs": 400,
-      "layingPercentage": "70.00"
+      "totalEggs": 390,
+      "layingPercentage": "68.00"
     },
     "batch2": {
-      "trays": 29,
-      "eggs": 2,
+      "trays": 28,
+      "eggs": 10,
       "broken": 1,
-      "totalEggs": 872,
-      "layingPercentage": "82.00"
+      "totalEggs": 850,
+      "layingPercentage": "80.00"
     },
     "batch3": {
       "trays": 0,
@@ -24,21 +24,21 @@
       "layingPercentage": "0"
     },
     "combined": {
-      "totalEggsEntry": 1272,
-      "layingPercentageDaily": "63.00"
+      "totalEggsEntry": 1240,
+      "layingPercentageDaily": "61.00"
     },
-    "submittedAt": "2026-04-19 00:12"
+    "submittedAt": "2026-04-19 22:53"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 5066,
+      "trays": 5079,
       "eggs": 3331,
-      "broken": 263
+      "broken": 264
     },
     "batch2": {
-      "trays": 4052,
-      "eggs": 1671,
-      "broken": 216
+      "trays": 4080,
+      "eggs": 1681,
+      "broken": 217
     },
     "batch3": {
       "trays": 0,
@@ -46,30 +46,30 @@
       "broken": 0
     },
     "combined": {
-      "totalEggsAllRecords": 278542,
-      "totalTraysCalculated": 9284,
-      "remainingEggs": 22
+      "totalEggsAllRecords": 279782,
+      "totalTraysCalculated": 9326,
+      "remainingEggs": 2
     }
   },
   "recentTotals": {
-    "sevenDay": 8877,
-    "thirtyDay": 38856
+    "sevenDay": 8794,
+    "thirtyDay": 38823
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1232,
-      "trend": "❌"
+      "average": 0,
+      "trend": "✅"
     },
     "threeDay": {
       "average": 1248,
-      "trend": "❌"
+      "trend": "✅"
     },
     "sevenDay": {
-      "average": 1268,
-      "trend": "❌"
+      "average": 1256,
+      "trend": "🔵"
     },
     "thirtyDay": {
-      "average": 1295,
+      "average": 1294,
       "trend": "❌"
     }
   },
