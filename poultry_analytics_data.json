@@ -1,19 +1,19 @@
 {
-  "reportDate": "2026-04-22",
+  "reportDate": "2026-04-23",
   "latestEntry": {
-    "surveyDate": "2026-04-22",
+    "surveyDate": "2026-04-23",
     "batch1": {
       "trays": 13,
-      "eggs": 25,
+      "eggs": 13,
       "broken": 1,
-      "totalEggs": 415,
-      "layingPercentage": "73.00"
+      "totalEggs": 403,
+      "layingPercentage": "71.00"
     },
     "batch2": {
       "trays": 29,
-      "eggs": 2,
+      "eggs": 3,
       "broken": 1,
-      "totalEggs": 872,
+      "totalEggs": 873,
       "layingPercentage": "82.00"
     },
     "batch3": {
@@ -24,21 +24,21 @@
       "layingPercentage": "0"
     },
     "combined": {
-      "totalEggsEntry": 1287,
+      "totalEggsEntry": 1276,
       "layingPercentageDaily": "63.00"
     },
-    "submittedAt": "2026-04-22 23:34"
+    "submittedAt": "2026-04-23 23:19"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 5117,
-      "eggs": 3365,
-      "broken": 266
+      "trays": 5130,
+      "eggs": 3378,
+      "broken": 267
     },
     "batch2": {
-      "trays": 4166,
-      "eggs": 1723,
-      "broken": 222
+      "trays": 4195,
+      "eggs": 1726,
+      "broken": 223
     },
     "batch3": {
       "trays": 0,
@@ -46,30 +46,30 @@
       "broken": 0
     },
     "combined": {
-      "totalEggsAllRecords": 283578,
-      "totalTraysCalculated": 9452,
-      "remainingEggs": 18
+      "totalEggsAllRecords": 284854,
+      "totalTraysCalculated": 9495,
+      "remainingEggs": 4
     }
   },
   "recentTotals": {
-    "sevenDay": 8782,
-    "thirtyDay": 38737
+    "sevenDay": 8816,
+    "thirtyDay": 38716
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1254,
-      "trend": "✅"
+      "average": 1287,
+      "trend": "❌"
     },
     "threeDay": {
-      "average": 1265,
+      "average": 1268,
       "trend": "✅"
     },
     "sevenDay": {
-      "average": 1254,
+      "average": 1259,
       "trend": "✅"
     },
     "thirtyDay": {
-      "average": 1291,
+      "average": 1290,
       "trend": "❌"
     }
   },
