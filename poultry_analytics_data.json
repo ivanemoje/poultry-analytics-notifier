@@ -1,19 +1,19 @@
 {
-  "reportDate": "2026-04-23",
+  "reportDate": "2026-04-24",
   "latestEntry": {
-    "surveyDate": "2026-04-23",
+    "surveyDate": "2026-04-24",
     "batch1": {
-      "trays": 13,
-      "eggs": 13,
+      "trays": 14,
+      "eggs": 3,
       "broken": 1,
-      "totalEggs": 403,
-      "layingPercentage": "71.00"
+      "totalEggs": 423,
+      "layingPercentage": "74.00"
     },
     "batch2": {
       "trays": 29,
-      "eggs": 3,
+      "eggs": 0,
       "broken": 1,
-      "totalEggs": 873,
+      "totalEggs": 870,
       "layingPercentage": "82.00"
     },
     "batch3": {
@@ -24,21 +24,21 @@
       "layingPercentage": "0"
     },
     "combined": {
-      "totalEggsEntry": 1276,
-      "layingPercentageDaily": "63.00"
+      "totalEggsEntry": 1293,
+      "layingPercentageDaily": "64.00"
     },
-    "submittedAt": "2026-04-23 23:19"
+    "submittedAt": "2026-04-24 23:54"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 5130,
-      "eggs": 3378,
-      "broken": 267
+      "trays": 5144,
+      "eggs": 3381,
+      "broken": 268
     },
     "batch2": {
-      "trays": 4195,
+      "trays": 4224,
       "eggs": 1726,
-      "broken": 223
+      "broken": 224
     },
     "batch3": {
       "trays": 0,
@@ -46,31 +46,31 @@
       "broken": 0
     },
     "combined": {
-      "totalEggsAllRecords": 284854,
-      "totalTraysCalculated": 9495,
-      "remainingEggs": 4
+      "totalEggsAllRecords": 286147,
+      "totalTraysCalculated": 9538,
+      "remainingEggs": 7
     }
   },
   "recentTotals": {
-    "sevenDay": 8816,
-    "thirtyDay": 38716
+    "sevenDay": 8877,
+    "thirtyDay": 38729
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1287,
-      "trend": "❌"
+      "average": 1276,
+      "trend": "✅"
     },
     "threeDay": {
-      "average": 1268,
+      "average": 1285,
       "trend": "✅"
     },
     "sevenDay": {
-      "average": 1259,
+      "average": 1268,
       "trend": "✅"
     },
     "thirtyDay": {
       "average": 1290,
-      "trend": "❌"
+      "trend": "✅"
     }
   },
   "batchStats": {
