@@ -1,5 +1,5 @@
 {
-  "reportDate": "2026-04-28",
+  "reportDate": "2026-04-29",
   "latestEntry": {
     "surveyDate": "2026-04-28",
     "batch1": {
@@ -52,25 +52,25 @@
     }
   },
   "recentTotals": {
-    "sevenDay": 9042,
-    "thirtyDay": 38689
+    "sevenDay": 7755,
+    "thirtyDay": 37445
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1308,
-      "trend": "✅"
+      "average": 1313,
+      "trend": "❌"
     },
     "threeDay": {
-      "average": 1297,
-      "trend": "✅"
+      "average": 1310,
+      "trend": "❌"
     },
     "sevenDay": {
-      "average": 1291,
-      "trend": "✅"
+      "average": 1292,
+      "trend": "❌"
     },
     "thirtyDay": {
-      "average": 1289,
-      "trend": "✅"
+      "average": 1291,
+      "trend": "❌"
     }
   },
   "batchStats": {
@@ -99,10 +99,10 @@
       "currentBirds": 399
     },
     "batch4": {
-      "dateOfBirth": "2026-04-21",
-      "expectedOfflay": "2027-10-21",
+      "dateOfBirth": "2026-04-24",
+      "expectedOfflay": "2027-10-24",
       "supplier": "jeka",
-      "status": "pending",
+      "status": "brooding",
       "initialBirds": 1000,
       "currentBirds": 1000
     },
