@@ -1,20 +1,20 @@
 {
   "reportDate": "2026-04-29",
   "latestEntry": {
-    "surveyDate": "2026-04-28",
+    "surveyDate": "2026-04-29",
     "batch1": {
       "trays": 13,
-      "eggs": 2,
-      "broken": 1,
-      "totalEggs": 392,
-      "layingPercentage": "69.00"
+      "eggs": 23,
+      "broken": 0,
+      "totalEggs": 413,
+      "layingPercentage": "72.00"
     },
     "batch2": {
-      "trays": 30,
-      "eggs": 21,
-      "broken": 0,
-      "totalEggs": 921,
-      "layingPercentage": "87.00"
+      "trays": 29,
+      "eggs": 26,
+      "broken": 2,
+      "totalEggs": 896,
+      "layingPercentage": "85.00"
     },
     "batch3": {
       "trays": 0,
@@ -24,21 +24,21 @@
       "layingPercentage": "0"
     },
     "combined": {
-      "totalEggsEntry": 1313,
-      "layingPercentageDaily": "65.00"
+      "totalEggsEntry": 1309,
+      "layingPercentageDaily": "64.00"
     },
-    "submittedAt": "2026-04-28 22:52"
+    "submittedAt": "2026-04-29 22:09"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 5197,
-      "eggs": 3408,
+      "trays": 5210,
+      "eggs": 3431,
       "broken": 273
     },
     "batch2": {
-      "trays": 4342,
-      "eggs": 1755,
-      "broken": 228
+      "trays": 4371,
+      "eggs": 1781,
+      "broken": 230
     },
     "batch3": {
       "trays": 0,
@@ -46,14 +46,14 @@
       "broken": 0
     },
     "combined": {
-      "totalEggsAllRecords": 291333,
-      "totalTraysCalculated": 9711,
-      "remainingEggs": 3
+      "totalEggsAllRecords": 292642,
+      "totalTraysCalculated": 9754,
+      "remainingEggs": 22
     }
   },
   "recentTotals": {
-    "sevenDay": 7755,
-    "thirtyDay": 37445
+    "sevenDay": 9064,
+    "thirtyDay": 38754
   },
   "rollingAverages": {
     "yesterday": {
@@ -65,12 +65,12 @@
       "trend": "❌"
     },
     "sevenDay": {
-      "average": 1292,
-      "trend": "❌"
+      "average": 1294,
+      "trend": "✅"
     },
     "thirtyDay": {
       "average": 1291,
-      "trend": "❌"
+      "trend": "✅"
     }
   },
   "batchStats": {
