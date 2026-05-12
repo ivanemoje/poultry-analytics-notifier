@@ -1,7 +1,7 @@
 {
-  "reportDate": "2026-05-11",
+  "reportDate": "2026-05-12",
   "latestEntry": {
-    "surveyDate": "2026-05-09",
+    "surveyDate": "2026-05-12",
     "latestsales": {
       "latestcategory": "CHICKEN",
       "subcategory": "TRAYS",
@@ -12,9 +12,9 @@
       "comments": ""
     },
     "combined": {
-      "totalAmount": 64208569
+      "totalAmount": 64838569
     },
-    "submittedAt": "2026-05-09 13:21"
+    "submittedAt": "2026-05-12 22:19"
   },
   "batchStats": {
     "batch1": {
