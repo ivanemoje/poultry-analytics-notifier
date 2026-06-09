@@ -52,6 +52,42 @@ else
   batch_metadata_json='{"batch1":{"dateOfBirth":"","supplier":""}}'
 fi
 
+sales_records_json=$(echo "$response" | jq '
+  def n: tonumber? // 0;
+  def text: tostring | ascii_upcase;
+  def is_expense:
+    ((.type // .category // .subcategory // .expense // "" | text) | test("EXPENSE|COST|FEED|VET|VACCINE|TRANSPORT|MAIZE|BRAN|HUSK|LIME|CALCIUM|VITAMIN|CHARCOAL|CONCENTRATE|DEWORMER|CHICKS"));
+  sort_by(.surveydate // ._submission_time // "") |
+  map(select(is_expense | not) | {
+    date: (.surveydate // ""),
+    amount: (.amount | n),
+    payment: (.paymentmode // .payment // ""),
+    category: (.category // ""),
+    subcategory: (.subcategory // ""),
+    trays: (.numtrays | n),
+    animals: (.numanimals | n),
+    comments: (.comments // ""),
+    submittedAt: (._submission_time // "")
+  })
+')
+
+expense_records_json=$(echo "$response" | jq '
+  def n: tonumber? // 0;
+  def text: tostring | ascii_upcase;
+  def is_expense:
+    ((.type // .category // .subcategory // .expense // "" | text) | test("EXPENSE|COST|FEED|VET|VACCINE|TRANSPORT|MAIZE|BRAN|HUSK|LIME|CALCIUM|VITAMIN|CHARCOAL|CONCENTRATE|DEWORMER|CHICKS"));
+  sort_by(.surveydate // ._submission_time // "") |
+  map(select(is_expense) | {
+    date: (.surveydate // ""),
+    expense: (.expense // .subcategory // .category // "EXPENSE"),
+    amount: (.amount | n),
+    payment: (.paymentmode // .payment // ""),
+    category: (.category // ""),
+    comments: (.comments // ""),
+    submittedAt: (._submission_time // "")
+  })
+')
+
 # Construct JSON
 jq -n \
   --arg today "$today" \
@@ -66,6 +102,8 @@ jq -n \
   --arg latestsubmissiontime "$latestsubmissiontime" \
   --argjson totalamountall "$totalamountall" \
   --argjson batchStats "$batch_metadata_json" \
+  --argjson salesRecords "$sales_records_json" \
+  --argjson expenseRecords "$expense_records_json" \
 '{
   "reportDate": $today,
   "latestEntry": {
@@ -84,7 +122,9 @@ jq -n \
     },
     "submittedAt": $latestsubmissiontime
   },
-  "batchStats": $batchStats
+  "batchStats": $batchStats,
+  "salesRecords": $salesRecords,
+  "expenseRecords": $expenseRecords
 }' > "$OUTPUT_FILE"
 
 # Verify the file was written successfully

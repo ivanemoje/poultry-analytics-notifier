@@ -189,6 +189,24 @@ else
   batch_metadata_json='{"batch1":{"dateOfBirth":"","supplier":""},"batch2":{"dateOfBirth":"","supplier":""},"batch3":{"dateOfBirth":"","supplier":""}}'
 fi
 
+records_json=$(echo "$response" | jq '
+  def n: tonumber? // 0;
+  sort_by(.surveydate // ._submission_time // "") |
+  map({
+    date: (.surveydate // ""),
+    b1_trays: (.numbertrays | n),
+    b1_eggs: (.numbereggs | n),
+    b1_broken: (.numbereggsbroken | n),
+    b2_trays: (.numbertraysbatchtwo | n),
+    b2_eggs: (.numbereggsbatchtwo | n),
+    b2_broken: (.numbereggsbrokenbatchtwo | n),
+    b3_trays: (.numbertraysbatchthree | n),
+    b3_eggs: (.numbereggsbatchthree | n),
+    b3_broken: (.numbereggsbrokenbatchthree | n),
+    submittedAt: (._submission_time // "")
+  })
+')
+
 jq -n \
   --arg today "$today" \
   --arg latest_date "$latest_date" \
@@ -233,6 +251,7 @@ jq -n \
   --arg arrow30 "$arrow30" \
   --arg latest_time "$latest_time" \
   --argjson batchStats "$batch_metadata_json" \
+  --argjson records "$records_json" \
 '{
   "reportDate": $today,
   "latestEntry": {
@@ -256,7 +275,8 @@ jq -n \
     "sevenDay": { "average": $avg7, "trend": $arrow7 },
     "thirtyDay": { "average": $avg30, "trend": $arrow30 }
   },
-  "batchStats": $batchStats
+  "batchStats": $batchStats,
+  "records": $records
 }' > "$OUTPUT_FILE"
 
 if [ -s "$OUTPUT_FILE" ]; then

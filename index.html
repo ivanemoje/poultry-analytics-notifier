@@ -1,1020 +1,1115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Poultry Analytics Summary</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* ============================================
-           CSS CUSTOM PROPERTIES - DARK MODE FIRST
-           ============================================ */
-        :root {
-            /* Dark Mode (Primary) - Trade Republic Style */
-            --bg-color: #000000;
-            --text-color: #ffffff;
-            --text-secondary: #888888;
-            --accent-color: #00d4aa;
-            --card-bg: #0a0a0a;
-            --border-color: #1a1a1a;
-            --hover-bg: #151515;
-            
-            /* Accent variations */
-            --accent-green: #00d4aa;
-            --accent-blue: #0099ff;
-            --accent-yellow: #ffb800;
-            --accent-indigo: #7b61ff;
-            --accent-red: #ff4444;
-            
-            /* Typography - Trade Republic uses clean sans-serif */
-            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            --font-weight-normal: 400;
-            --font-weight-medium: 500;
-            --font-weight-semibold: 600;
-            --font-weight-bold: 700;
-            
-            /* Spacing - More generous */
-            --spacing-xs: 0.25rem;
-            --spacing-sm: 0.5rem;
-            --spacing-md: 1rem;
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2rem;
-            --spacing-2xl: 3rem;
-            --spacing-3xl: 4rem;
-            
-            /* Border radius - Minimal */
-            --radius-sm: 0;
-            --radius-md: 0;
-            --radius-lg: 0;
-            --radius-full: 9999px;
-        }
-        
-        /* Light Mode Override */
-        @media (prefers-color-scheme: light) {
-            :root {
-                --bg-color: #ffffff;
-                --text-color: #000000;
-                --text-secondary: #666666;
-                --accent-color: #00d4aa;
-                --card-bg: #fafafa;
-                --border-color: #e5e5e5;
-                --hover-bg: #f5f5f5;
-            }
-        }
-        
-        /* Manual dark mode class override */
-        .dark {
-            --bg-color: #000000;
-            --text-color: #ffffff;
-            --text-secondary: #888888;
-            --accent-color: #00d4aa;
-            --card-bg: #0a0a0a;
-            --border-color: #1a1a1a;
-            --hover-bg: #151515;
-        }
-        
-        /* ============================================
-           BASE STYLES
-           ============================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        html {
-            font-size: 16px;
-        }
-        
-        body {
-            font-family: var(--font-family);
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.5;
-            padding: var(--spacing-2xl) var(--spacing-xl);
-            transition: background-color 0.2s ease, color 0.2s ease;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            font-weight: var(--font-weight-normal);
-        }
-        
-        @media (min-width: 640px) {
-            body {
-                padding: var(--spacing-3xl) var(--spacing-2xl);
-            }
-        }
-        
-        /* ============================================
-           LAYOUT
-           ============================================ */
-        .container {
-            max-width: 75rem;
-            margin: 0 auto;
-        }
-        
-        /* ============================================
-           HEADER
-           ============================================ */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-md);
-            padding-bottom: var(--spacing-lg);
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .header-content {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-xs);
-        }
-        
-        .report-date {
-            font-size: 0.8125rem;
-            font-weight: var(--font-weight-normal);
-            color: var(--text-secondary);
-            margin-top: var(--spacing-xs);
-        }
-        
-        h1 {
-            font-size: 1.5rem;
-            font-weight: var(--font-weight-semibold);
-            color: var(--text-color);
-            letter-spacing: -0.01em;
-            text-transform: none;
-        }
-        
-        @media (min-width: 640px) {
-            h1 {
-                font-size: 1.75rem;
-            }
-        }
-        
-        /* ============================================
-           THEME TOGGLE BUTTON
-           ============================================ */
-        #theme-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2.25rem;
-            height: 2.25rem;
-            padding: 0;
-            border: 1px solid var(--border-color);
-            background: var(--card-bg);
-            border-radius: var(--radius-full);
-            cursor: pointer;
-            transition: border-color 0.2s ease, background-color 0.2s ease;
-            color: var(--text-color);
-        }
-        
-        #theme-toggle:hover {
-            border-color: var(--text-secondary);
-            background-color: var(--hover-bg);
-        }
-        
-        #theme-toggle svg {
-            width: 1.125rem;
-            height: 1.125rem;
-        }
-        
-        #sun-icon.hidden,
-        #moon-icon.hidden {
-            display: none;
-        }
-        
-        /* ============================================
-           LOADING MESSAGE
-           ============================================ */
-        #loading-message {
-            text-align: center;
-            font-size: 0.9375rem;
-            font-weight: var(--font-weight-medium);
-            color: var(--text-secondary);
-            margin: var(--spacing-3xl) 0;
-            padding: var(--spacing-xl);
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-        }
-        
-        /* ============================================
-           DASHBOARD GRID
-           ============================================ */
-        #summary-dashboard {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: var(--spacing-md);
-            align-items: stretch;
-            grid-auto-rows: 1fr;
-        }
-        
-        @media (min-width: 768px) {
-            #summary-dashboard {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--spacing-lg);
-                align-items: stretch;
-                grid-auto-rows: 1fr;
-            }
-            
-            .broken-eggs-card {
-                grid-column: span 2;
-            }
-            
-            .seven-day-card {
-                grid-column: span 2;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            #summary-dashboard {
-                grid-template-columns: repeat(4, 1fr);
-                align-items: stretch;
-                grid-auto-rows: 1fr;
-            }
-            
-            .seven-day-card {
-                grid-column: span 2;
-            }
-            
-            .broken-eggs-card {
-                grid-column: span 4;
-            }
-        }
-        
-        /* ============================================
-           METRIC CARDS - Trade Republic Style
-           ============================================ */
-        .metric-card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: stretch;
-            padding: var(--spacing-xl);
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            transition: border-color 0.15s ease, background-color 0.15s ease;
-            overflow: visible;
-            height: 100%;
-        }
-        
-        .metric-card:hover {
-            border-color: var(--text-secondary);
-            background-color: var(--hover-bg);
-        }
-        
-        .metric-card::before {
-            display: none;
-        }
-        
-        .metric-card-label {
-            font-size: 0.75rem;
-            font-weight: var(--font-weight-medium);
-            color: var(--text-secondary);
-            margin-bottom: var(--spacing-md);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-        
-        .metric-card-value {
-            font-size: 2.25rem;
-            font-weight: var(--font-weight-bold);
-            color: var(--text-color);
-            margin-top: 0;
-            margin-bottom: var(--spacing-sm);
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
-        
-        @media (min-width: 640px) {
-            .metric-card-value {
-                font-size: 2.75rem;
-            }
-        }
-        
-        .metric-card-value.accent-green {
-            color: var(--accent-green);
-        }
-        
-        .metric-card-value.accent-blue {
-            color: var(--accent-blue);
-        }
-        
-        .metric-card-value.accent-red {
-            color: var(--accent-red);
-        }
-        
-        .metric-card-value.accent-indigo {
-            color: var(--accent-indigo);
-        }
-        
-        .metric-card-footer {
-            font-size: 0.6875rem;
-            color: var(--text-secondary);
-            margin-top: var(--spacing-lg);
-            font-weight: var(--font-weight-normal);
-        }
-        
-        /* ============================================
-           DETAIL GRID
-           ============================================ */
-        .detail-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-lg);
-        }
-        
-        .detail-item {
-            display: flex;
-            align-items: center;
-            padding: var(--spacing-sm) 0;
-            background-color: transparent;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.8125rem;
-        }
-        
-        .detail-item span:first-child {
-            color: var(--text-secondary);
-        }
-        
-        .detail-item span:last-child {
-            margin-left: auto;
-            font-weight: var(--font-weight-semibold);
-            color: var(--text-color);
-        }
-        
-        /* ============================================
-           TREND DOTS
-           ============================================ */
-        .trend-icon {
-            display: inline-block;
-            width: 0.625rem;
-            height: 0.625rem;
-            border-radius: 50%;
-            background-color: var(--accent-blue);
-        }
-        
-        .trend-icon.text-red-500 {
-            background-color: var(--accent-red);
-        }
-        
-        .trend-icon.text-green-500 {
-            background-color: var(--accent-green);
-        }
-        
-        .trend-icon.text-blue-500 {
-            background-color: var(--accent-blue);
-        }
-        
-        /* ============================================
-           AVERAGE CARDS (Full width section)
-           ============================================ */
-        .average-section {
-            grid-column: 1 / -1;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-lg);
-            align-items: stretch;
-            grid-auto-rows: 1fr;
-        }
-        
-        @media (min-width: 768px) {
-            .average-section {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--spacing-lg);
-                align-items: stretch;
-                grid-auto-rows: 1fr;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .average-section {
-                grid-template-columns: repeat(4, 1fr);
-                align-items: stretch;
-                grid-auto-rows: 1fr;
-            }
-        }
-        
-        .metric-card.border-yellow {
-            border-left: 3px solid var(--accent-yellow);
-        }
-        
-        .metric-card.border-blue {
-            border-left: 3px solid var(--accent-blue);
-        }
-        
-        .metric-card.border-green {
-            border-left: 3px solid var(--accent-green);
-        }
-        
-        .metric-card.border-indigo {
-            border-left: 3px solid var(--accent-indigo);
-        }
-        
-        .metric-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .metric-card-header-value {
-            font-size: 1.875rem;
-            font-weight: var(--font-weight-bold);
-            color: var(--text-color);
-            margin-top: 0;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
-        
-        /* ============================================
-           ALERT BADGE
-           ============================================ */
-        .alert-badge {
-            position: absolute;
-            top: var(--spacing-lg);
-            right: var(--spacing-lg);
-            padding: var(--spacing-xs) var(--spacing-md);
-            border-radius: 0;
-            font-size: 0.6875rem;
-            font-weight: var(--font-weight-semibold);
-            z-index: 10;
-            border: 1px solid var(--accent-red);
-            background-color: var(--card-bg);
-        }
-        
-        .alert-badge.hidden {
-            display: none;
-        }
-        
-        .alert-overdue {
-            color: var(--accent-red);
-        }
-        
-        @media (prefers-color-scheme: light) {
-            .alert-overdue {
-                color: var(--accent-red);
-            }
-        }
-        
-        /* ============================================
-           UTILITY CLASSES (for JavaScript compatibility)
-           ============================================ */
-        .hidden {
-            display: none !important;
-        }
-        
-        .flex {
-            display: flex;
-        }
-        
-        .text-center {
-            text-align: center;
-        }
-        
-        .text-sm {
-            font-size: 0.875rem;
-        }
-        
-        .text-xs {
-            font-size: 0.75rem;
-        }
-        
-        .font-medium {
-            font-weight: var(--font-weight-medium);
-        }
-        
-        .font-semibold {
-            font-weight: var(--font-weight-semibold);
-        }
-        
-        .font-bold {
-            font-weight: var(--font-weight-bold);
-        }
-        
-        .mt-1 {
-            margin-top: var(--spacing-xs);
-        }
-        
-        .mt-2 {
-            margin-top: var(--spacing-sm);
-        }
-        
-        .ml-2 {
-            margin-left: var(--spacing-sm);
-        }
-        
-        /* Error message styles (for JavaScript error handling) */
-        .error-message {
-            text-align: center;
-            font-size: 1.125rem;
-            font-weight: var(--font-weight-semibold);
-            margin: var(--spacing-2xl) 0;
-            padding: var(--spacing-lg);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            background-color: rgba(255, 107, 107, 0.15);
-            color: var(--accent-red);
-            border: 1px solid rgba(255, 107, 107, 0.3);
-        }
-        
-        @media (prefers-color-scheme: light) {
-            .error-message {
-                background-color: rgba(220, 38, 38, 0.1);
-                color: #dc2626;
-            }
-        }
-        
-        .dark .error-message {
-            background-color: rgba(255, 107, 107, 0.15);
-            color: var(--accent-red);
-        }
-        
-        /* Additional utility classes for JavaScript compatibility */
-        .text-xl {
-            font-size: 1.125rem;
-        }
-        
-        .text-red-600 {
-            color: #dc2626;
-        }
-        
-        .dark .text-red-400 {
-            color: #f87171;
-        }
-        
-        .bg-red-100 {
-            background-color: #fee2e2;
-        }
-        
-        .dark .bg-red-900 {
-            background-color: #7f1d1d;
-        }
-        
-        .rounded-lg {
-            border-radius: var(--radius-lg);
-        }
-        
-        .my-10 {
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-2xl);
-        }
-        
-        .p-4 {
-            padding: var(--spacing-lg);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kayanja Farm Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #f5f3ee;
+  --surface: #faf9f6;
+  --surface2: #ede9e0;
+  --border: #d8d2c5;
+  --text: #1a1714;
+  --text2: #6b6358;
+  --text3: #9c9186;
+  --accent: #2d5a27;
+  --accent2: #c8440a;
+  --accent3: #1a3a6e;
+  --accent4: #7a4f1d;
+  --green: #2d5a27;
+  --red: #c8440a;
+  --blue: #1a3a6e;
+  --amber: #7a4f1d;
+  --font-body: 'Sora', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+.dark {
+  --bg: #0f0e0c;
+  --surface: #161411;
+  --surface2: #1e1c18;
+  --border: #2a2720;
+  --text: #f0ece4;
+  --text2: #a09890;
+  --text3: #6a6258;
+  --accent: #5aac4e;
+  --accent2: #f26535;
+  --accent3: #4a80d4;
+  --accent4: #c4864a;
+  --green: #5aac4e;
+  --red: #f26535;
+  --blue: #4a80d4;
+  --amber: #c4864a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:16px;}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  transition:background .25s,color .25s;
+}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* TOPBAR */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+  position:sticky;top:0;z-index:100;
+}
+.topbar-left{display:flex;align-items:center;gap:.75rem;}
+.farm-logo{
+  width:2rem;height:2rem;border-radius:.25rem;
+  background:var(--green);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+}
+.farm-name{font-weight:700;font-size:.95rem;letter-spacing:-.01em;}
+.farm-sub{font-size:.7rem;color:var(--text3);font-family:var(--font-mono);}
+.topbar-right{display:flex;align-items:center;gap:.5rem;}
+.btn-icon{
+  width:2rem;height:2rem;border-radius:.25rem;
+  border:1px solid var(--border);
+  background:transparent;cursor:pointer;color:var(--text);
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;
+  transition:background .15s;
+}
+.btn-icon:hover{background:var(--surface2);}
+.btn-link{
+  font-size:.75rem;font-family:var(--font-mono);
+  padding:.35rem .6rem;border-radius:.25rem;
+  border:1px solid var(--border);background:transparent;
+  color:var(--text2);cursor:pointer;text-decoration:none;
+  transition:background .15s,color .15s;
+}
+.btn-link:hover{background:var(--surface2);color:var(--text);}
+
+/* PERIOD FILTER */
+.period-bar{
+  display:flex;align-items:center;gap:.35rem;
+  padding:.75rem 1.5rem;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  overflow-x:auto;
+  flex-wrap:wrap;
+}
+.period-btn{
+  font-family:var(--font-mono);font-size:.7rem;
+  padding:.3rem .65rem;border-radius:.2rem;
+  border:1px solid var(--border);background:transparent;
+  color:var(--text2);cursor:pointer;white-space:nowrap;
+  transition:all .15s;
+}
+.period-btn:hover{color:var(--text);border-color:var(--text3);}
+.period-btn.active{
+  background:var(--text);color:var(--bg);border-color:var(--text);
+}
+.period-sep{color:var(--border);font-size:.8rem;}
+
+/* TABS */
+.tabs{
+  display:flex;gap:0;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+  overflow-x:auto;
+}
+.tab-btn{
+  font-size:.78rem;font-weight:600;letter-spacing:.03em;
+  padding:.7rem 1.25rem;border:none;background:none;
+  color:var(--text3);cursor:pointer;white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:color .15s,border-color .15s;
+}
+.tab-btn.active{color:var(--text);border-bottom-color:var(--text);}
+.tab-btn:hover{color:var(--text2);}
+
+/* MAIN */
+.main{padding:1.25rem 1.5rem;max-width:1400px;margin:0 auto;}
+
+/* KPI STRIP */
+.kpi-strip{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:.75rem;
+  margin-bottom:1.25rem;
+}
+@media(min-width:640px){.kpi-strip{grid-template-columns:repeat(4,1fr);}}
+@media(min-width:1024px){.kpi-strip{grid-template-columns:repeat(4,1fr);}}
+
+.kpi{
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:1rem;
+  border-radius:.3rem;
+  position:relative;
+  overflow:hidden;
+}
+.kpi::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:var(--kpi-color,var(--green));
+}
+.kpi-label{font-size:.65rem;font-family:var(--font-mono);color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.5rem;}
+.kpi-value{font-size:1.6rem;font-weight:700;letter-spacing:-.03em;line-height:1;color:var(--text);}
+.kpi-value.accent-green{color:var(--green);}
+.kpi-value.accent-red{color:var(--red);}
+.kpi-value.accent-blue{color:var(--blue);}
+.kpi-sub{font-size:.65rem;color:var(--text3);margin-top:.4rem;font-family:var(--font-mono);}
+.kpi-badge{
+  position:absolute;top:.6rem;right:.6rem;
+  font-size:.55rem;font-family:var(--font-mono);
+  padding:.15rem .35rem;border-radius:.15rem;
+  background:rgba(200,68,10,.15);color:var(--red);border:1px solid var(--red);
+}
+
+/* GRID LAYOUTS */
+.grid-2{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:1.25rem;}
+@media(min-width:768px){.grid-2{grid-template-columns:1fr 1fr;}}
+.grid-3{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:1.25rem;}
+@media(min-width:768px){.grid-3{grid-template-columns:repeat(3,1fr);}}
+.grid-1-2{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:1.25rem;}
+@media(min-width:1024px){.grid-1-2{grid-template-columns:1fr 2fr;}}
+.grid-2-1{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:1.25rem;}
+@media(min-width:1024px){.grid-2-1{grid-template-columns:2fr 1fr;}}
+
+/* CARD */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:.3rem;
+  overflow:hidden;
+}
+.card-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 1rem;
+  border-bottom:1px solid var(--border);
+}
+.card-title{font-size:.72rem;font-family:var(--font-mono);color:var(--text3);text-transform:uppercase;letter-spacing:.07em;}
+.card-body{padding:1rem;}
+.card-body.no-pad{padding:0;}
+
+/* BATCH CARDS */
+.batch-grid{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:1.25rem;}
+@media(min-width:640px){.batch-grid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:1024px){.batch-grid{grid-template-columns:repeat(3,1fr);}}
+
+.batch-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:.3rem;padding:1rem;
+  position:relative;
+}
+.batch-card.pending{opacity:.6;}
+.batch-status{
+  position:absolute;top:.7rem;right:.7rem;
+  font-size:.6rem;font-family:var(--font-mono);
+  padding:.15rem .4rem;border-radius:.15rem;
+  text-transform:uppercase;letter-spacing:.05em;
+}
+.status-active{background:rgba(45,90,39,.2);color:var(--green);border:1px solid var(--green);}
+.status-pending{background:var(--surface2);color:var(--text3);border:1px solid var(--border);}
+.batch-name{font-weight:700;font-size:.85rem;margin-bottom:.15rem;}
+.batch-supplier{font-size:.65rem;color:var(--text3);font-family:var(--font-mono);margin-bottom:.75rem;}
+.batch-metrics{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+.bm{border-bottom:1px solid var(--border);padding-bottom:.4rem;}
+.bm-label{font-size:.6rem;color:var(--text3);font-family:var(--font-mono);margin-bottom:.15rem;}
+.bm-value{font-size:.95rem;font-weight:600;}
+.laying-bar{height:.2rem;background:var(--surface2);border-radius:99px;margin-top:.5rem;}
+.laying-bar-fill{height:100%;border-radius:99px;background:var(--green);transition:width .5s;}
+
+/* PERIOD TABLE */
+.period-table{width:100%;border-collapse:collapse;}
+.period-table th{
+  font-size:.62rem;font-family:var(--font-mono);color:var(--text3);
+  text-transform:uppercase;letter-spacing:.06em;
+  padding:.5rem .75rem;text-align:right;border-bottom:1px solid var(--border);
+}
+.period-table th:first-child{text-align:left;}
+.period-table td{
+  font-size:.78rem;padding:.55rem .75rem;text-align:right;
+  border-bottom:1px solid var(--border);font-family:var(--font-mono);
+}
+.period-table td:first-child{text-align:left;font-family:var(--font-body);font-weight:600;font-size:.78rem;}
+.period-table tr:last-child td{border-bottom:none;}
+.period-table tbody tr:hover{background:var(--surface2);}
+.val-green{color:var(--green);}
+.val-red{color:var(--red);}
+
+/* AVG ROW CARDS */
+.avg-strip{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;
+  margin-bottom:1.25rem;
+}
+@media(min-width:640px){.avg-strip{grid-template-columns:repeat(4,1fr);}}
+.avg-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:.3rem;padding:.75rem;
+}
+.avg-label{font-size:.6rem;font-family:var(--font-mono);color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem;}
+.avg-value{font-size:1.25rem;font-weight:700;letter-spacing:-.02em;}
+.avg-trend{font-size:.65rem;font-family:var(--font-mono);margin-top:.3rem;}
+.trend-up{color:var(--green);}
+.trend-down{color:var(--red);}
+.trend-flat{color:var(--text3);}
+
+/* CHART CONTAINERS */
+.chart-wrap{position:relative;padding:1rem;}
+.chart-wrap canvas{max-height:260px;}
+
+/* REVENUE TABLE */
+.rev-table{width:100%;border-collapse:collapse;}
+.rev-table td{padding:.5rem .75rem;border-bottom:1px solid var(--border);font-size:.78rem;}
+.rev-table td:last-child{text-align:right;font-family:var(--font-mono);}
+.rev-table tr:last-child td{border:none;}
+
+/* FLAGS */
+.flags-list{padding:.75rem 1rem;}
+.flag-item{
+  display:flex;gap:.5rem;align-items:flex-start;
+  padding:.5rem 0;border-bottom:1px solid var(--border);
+  font-size:.78rem;
+}
+.flag-item:last-child{border:none;}
+.flag-dot{width:.4rem;height:.4rem;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:.35rem;}
+.flag-dot.amber{background:var(--amber);}
+
+/* SECTION DIVIDER */
+.section-label{
+  font-size:.65rem;font-family:var(--font-mono);color:var(--text3);
+  text-transform:uppercase;letter-spacing:.1em;
+  margin-bottom:.6rem;margin-top:.25rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* EXPENSE BREAKDOWN */
+.expense-row{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.45rem 0;border-bottom:1px solid var(--border);
+}
+.expense-row:last-child{border:none;}
+.expense-name{font-size:.75rem;flex:1;text-transform:capitalize;}
+.expense-bar-wrap{flex:2;height:.25rem;background:var(--surface2);border-radius:99px;overflow:hidden;}
+.expense-bar{height:100%;border-radius:99px;background:var(--blue);}
+.expense-amt{font-size:.7rem;font-family:var(--font-mono);color:var(--text2);min-width:5rem;text-align:right;}
+
+/* TABS CONTENT */
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* HIDE/SHOW */
+.hidden{display:none!important;}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+  .main{padding:.75rem;}
+  .topbar{padding:.75rem;}
+  .period-bar{padding:.5rem .75rem;}
+  .kpi-value{font-size:1.3rem;}
+}
+
+/* SUMMARY STAT */
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:.45rem 0;border-bottom:1px solid var(--border);font-size:.78rem;}
+.stat-row:last-child{border:none;}
+.stat-label{color:var(--text2);}
+.stat-value{font-family:var(--font-mono);font-weight:600;}
+
+/* LOADING */
+.loading{padding:3rem;text-align:center;color:var(--text3);font-family:var(--font-mono);font-size:.8rem;}
+</style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <header>
-            <div class="header-content">
-                <h1>Poultry Analytics Dashboard</h1>
-                <div class="report-date" id="report-date">Last refreshed: --</div>
-                <div class="report-date" id="survey"><a href="https://enketo.ona.io/x/UY8hb56i">Add information</a></div>
-                <div class="report-date" id="survey"><a href="https://enketo.ona.io/x/79JK2boY">Add sales</a></div>
-            </div>
-            </div>
-            <button id="theme-toggle">
-                <svg id="sun-icon" class="hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <svg id="moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-            </button>
-        </header>
-        
-        <div id="loading-message">
-            Fetching and calculating report data...
-        </div>
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="farm-logo">🐓</div>
+    <div>
+      <div class="farm-name">Kayanja Farm</div>
+      <div class="farm-sub" id="last-refreshed">Loading...</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <a class="btn-link" href="https://enketo.ona.io/x/UY8hb56i" target="_blank">+ Eggs</a>
+    <a class="btn-link" href="https://enketo.ona.io/x/79JK2boY" target="_blank">+ Sales</a>
+    <button class="btn-icon" id="theme-toggle" title="Toggle theme">☀</button>
+  </div>
+</div>
 
-        <div id="summary-dashboard" style="display: none;">
+<div class="period-bar">
+  <span style="font-size:.65rem;font-family:'DM Mono',monospace;color:var(--text3);margin-right:.25rem;">PERIOD</span>
+  <button class="period-btn" data-days="7">7D</button>
+  <button class="period-btn" data-days="14">14D</button>
+  <button class="period-btn active" data-days="30">30D</button>
+  <button class="period-btn" data-days="90">3M</button>
+  <button class="period-btn" data-days="180">6M</button>
+  <button class="period-btn" data-days="365">1Y</button>
+  <button class="period-btn" data-days="9999">ALL</button>
+  <span class="period-sep">|</span>
+  <span style="font-size:.65rem;font-family:'DM Mono',monospace;color:var(--text3);margin-right:.25rem;">BATCH</span>
+  <button class="period-btn active" data-batch="all">ALL</button>
+  <button class="period-btn" data-batch="1">B1</button>
+  <button class="period-btn" data-batch="2">B2</button>
+  <button class="period-btn" data-batch="3">B3</button>
+</div>
 
-            <div class="metric-card">
-                <div id="survey-alert" class="alert-badge hidden"></div>
-                <div class="metric-card-label">Latest Collection Details</div>
-                <div class="metric-card-value" id="latest-total">--</div>
-                <div class="detail-grid">
-                    <div class="detail-item">
-                        <span>Trays:</span>
-                        <span id="latest-trays">--</span>
-                    </div>
-                    <div class="detail-item">
-                        <span>Loose Eggs:</span>
-                        <span id="latest-loose">--</span>
-                    </div>
-                    <div class="detail-item">
-                        <span>Broken Eggs:</span>
-                        <span id="latest-broken">--</span>
-                    </div>
-                    <div class="detail-item">
-                        <span>Total as Eggs:</span>
-                        <span id="latest-as-eggs">--</span>
-                    </div>
-                </div>
-                <div class="metric-card-footer" id="latest-date">Survey Date: --</div>
-            </div>
+<div class="tabs">
+  <button class="tab-btn active" data-tab="overview">Overview</button>
+  <button class="tab-btn" data-tab="production">Production</button>
+  <button class="tab-btn" data-tab="financial">Financial</button>
+  <button class="tab-btn" data-tab="batches">Batches</button>
+</div>
 
-            <div class="metric-card">
-                <div class="metric-card-label">Laying Percentage (Daily)</div>
-                <div class="metric-card-value accent-green" id="laying-percentage">--</div>
-                <div class="detail-grid">
-                    <div class="detail-item">
-                        <span>Batch One:</span>
-                        <span id="batch-one-percentage">--</span>
-                    </div>
-                    <div class="detail-item">
-                        <span>Batch Two:</span>
-                        <span id="batch-two-percentage">--</span>
-                    </div>
-                </div>
-                <div class="metric-card-footer" id="batch-birds-footer">Batch birds: --</div>
-            </div>
+<div class="main">
 
-            <div class="metric-card">
-                <div class="metric-card-label">Recent Period Totals</div>
-                <div class="metric-card-value accent-white" id="seven-day-total">--</div>
-                <div class="detail-grid">
-                    <div class="detail-item">
-                        <span>Last 7 Days:</span>
-                        <span id="total-7-days">--</span>
-                    </div>
-                    <div class="detail-item">
-                        <span>Last 30 Days:</span>
-                        <span id="total-30-days">--</span>
-                    </div>
-                </div>
-                <div class="metric-card-footer">Total eggs collected in recent periods</div>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-card-label">Total Eggs (All Records)</div>
-                <div class="metric-card-value accent-white" id="total-eggs-all">--</div>
-                <div class="detail-grid">
-                    <div class="detail-item">
-                        <span>Complete Trays:</span>
-                        <span id="total-trays">--</span>
-                    </div>
-                    <div class="detail-item">
-                        <span>Loose Eggs:</span>
-                        <span id="total-loose">--</span>
-                    </div>
-                    <div class="detail-item">
-                        <span>Total Eggs:</span>
-                        <span id="total-breakdown">--</span>
-                    </div>
-                </div>
-                <div class="metric-card-footer">All records combined</div>
-            </div>
-            
-            <div class="average-section">
-                <div class="metric-card border-yellow">
-                    <div class="metric-card-header">
-                        <div class="metric-card-label">Yesterday's Avg</div>
-                        <span class="trend-icon" id="trend-yesterday"></span>
-                    </div>
-                    <div class="metric-card-header-value" id="avg-yesterday">--</div>
-                </div>
-
-                <div class="metric-card border-blue">
-                    <div class="metric-card-header">
-                        <div class="metric-card-label">3-Day Avg Eggs</div>
-                        <span class="trend-icon" id="trend-3day"></span>
-                    </div>
-                    <div class="metric-card-header-value" id="avg-3day">--</div>
-                </div>
-
-                <div class="metric-card border-green">
-                    <div class="metric-card-header">
-                        <div class="metric-card-label">7-Day Avg Eggs</div>
-                        <span class="trend-icon" id="trend-7day"></span>
-                    </div>
-                    <div class="metric-card-header-value" id="avg-7day">--</div>
-                </div>
-
-                <div class="metric-card border-indigo">
-                    <div class="metric-card-header">
-                        <div class="metric-card-label">30-Day Avg Eggs</div>
-                        <span class="trend-icon" id="trend-30day"></span>
-                    </div>
-                    <div class="metric-card-header-value" id="avg-30day">--</div>
-                </div>
-            </div>
-            
-        </div>
+  <!-- OVERVIEW TAB -->
+  <div class="tab-content active" id="tab-overview">
+    <div class="kpi-strip" id="kpi-strip">
+      <div class="kpi" style="--kpi-color:var(--green)">
+        <div class="kpi-label">Eggs Collected</div>
+        <div class="kpi-value" id="kpi-eggs">—</div>
+        <div class="kpi-sub" id="kpi-eggs-sub">period total</div>
+        <div class="kpi-badge hidden" id="kpi-overdue"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--green)">
+        <div class="kpi-label">Laying %</div>
+        <div class="kpi-value accent-green" id="kpi-laying">—</div>
+        <div class="kpi-sub" id="kpi-laying-sub">latest entry</div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--blue)">
+        <div class="kpi-label">Revenue (UGX)</div>
+        <div class="kpi-value accent-blue" id="kpi-revenue">—</div>
+        <div class="kpi-sub" id="kpi-revenue-sub">period total</div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--amber)">
+        <div class="kpi-label">P&L (UGX)</div>
+        <div class="kpi-value" id="kpi-pnl">—</div>
+        <div class="kpi-sub" id="kpi-pnl-sub">revenue − expenses</div>
+      </div>
     </div>
 
-    <script>
-        // --- Dark Mode Logic ---
-        const htmlElement = document.documentElement;
-        const toggleButton = document.getElementById('theme-toggle');
-        const sunIcon = document.getElementById('sun-icon');
-        const moonIcon = document.getElementById('moon-icon');
+    <div class="avg-strip" id="avg-strip">
+      <div class="avg-card">
+        <div class="avg-label">Yesterday</div>
+        <div class="avg-value" id="avg-yesterday">—</div>
+        <div class="avg-trend" id="avg-yesterday-trend"></div>
+      </div>
+      <div class="avg-card">
+        <div class="avg-label">7-Day Avg</div>
+        <div class="avg-value" id="avg-7d">—</div>
+        <div class="avg-trend" id="avg-7d-trend"></div>
+      </div>
+      <div class="avg-card">
+        <div class="avg-label">30-Day Avg</div>
+        <div class="avg-value" id="avg-30d">—</div>
+        <div class="avg-trend" id="avg-30d-trend"></div>
+      </div>
+      <div class="avg-card">
+        <div class="avg-label">All-Time Total</div>
+        <div class="avg-value" id="avg-alltime">—</div>
+        <div class="avg-trend" style="color:var(--text3)" id="avg-alltime-sub">eggs ever</div>
+      </div>
+    </div>
 
-        // Check for saved theme preference or default to system preference
-        const savedTheme = localStorage.getItem('color-theme');
-        const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        let isDarkMode = savedTheme === 'dark' || (!savedTheme && isSystemDark);
+    <div class="grid-2-1">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Daily Egg Production</span>
+          <span style="font-size:.65rem;font-family:'DM Mono',monospace;color:var(--text3)" id="chart-period-label"></span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="chart-eggs-daily"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Period Breakdown</span></div>
+        <div class="card-body">
+          <div class="section-label">Eggs by Period</div>
+          <div id="period-table-wrap"></div>
+          <div class="section-label" style="margin-top:1rem">Latest Entry</div>
+          <div id="latest-entry-wrap"></div>
+        </div>
+      </div>
+    </div>
 
-        function applyTheme(isDark) {
-            if (isDark) {
-                htmlElement.classList.add('dark');
-                sunIcon.classList.remove('hidden');
-                moonIcon.classList.add('hidden');
-                localStorage.setItem('color-theme', 'dark');
-            } else {
-                htmlElement.classList.remove('dark');
-                sunIcon.classList.add('hidden');
-                moonIcon.classList.remove('hidden');
-                localStorage.setItem('color-theme', 'light');
-            }
-        }
+    <div class="grid-1-2">
+      <div class="card">
+        <div class="card-header"><span class="card-title">🚩 Red Flags</span></div>
+        <div class="flags-list" id="flags-list">
+          <div class="loading">Analysing...</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Monthly Performance</span></div>
+        <div class="chart-wrap">
+          <canvas id="chart-monthly-eggs"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // Apply initial theme
-        applyTheme(isDarkMode);
+  <!-- PRODUCTION TAB -->
+  <div class="tab-content" id="tab-production">
+    <div class="section-label">Laying Performance by Batch</div>
+    <div class="batch-grid" id="batch-laying-cards"></div>
 
-        // Toggle function
-        toggleButton.addEventListener('click', () => {
-            isDarkMode = !isDarkMode;
-            applyTheme(isDarkMode);
-        });
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><span class="card-title">Batch Comparison — Laying %</span></div>
+        <div class="chart-wrap">
+          <canvas id="chart-batch-laying"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Eggs by Batch (Period)</span></div>
+        <div class="chart-wrap">
+          <canvas id="chart-batch-eggs"></canvas>
+        </div>
+      </div>
+    </div>
 
-        // --- Dashboard Logic ---
+    <div class="card" style="margin-bottom:1.25rem">
+      <div class="card-header"><span class="card-title">Period Table — Eggs by Timeframe</span></div>
+      <div class="card-body no-pad" style="overflow-x:auto">
+        <table class="period-table" id="period-detail-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>7 Days</th>
+              <th>14 Days</th>
+              <th>30 Days</th>
+              <th>3 Months</th>
+              <th>6 Months</th>
+              <th>1 Year</th>
+              <th>All Time</th>
+            </tr>
+          </thead>
+          <tbody id="period-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-        // GitHub raw URL for JSON data
-        const JSON_BASE_URL = 'https://raw.githubusercontent.com/ivanemoje/poultry-analytics-notifier/refs/heads/main/';
-        const JSON_URL = JSON_BASE_URL + 'poultry_analytics_data.json';
-        const JSON_SALES_FILE = JSON_BASE_URL + 'poultry_sales_data.json';
-        const JSON_BATCH_METADATA = JSON_BASE_URL + 'config/batch_metadata.json';
-        const TOTAL_BIRDS = 576; 
-        const dashboard = document.getElementById('summary-dashboard');
-        const loadingMessage = document.getElementById('loading-message');
+  <!-- FINANCIAL TAB -->
+  <div class="tab-content" id="tab-financial">
+    <div class="kpi-strip">
+      <div class="kpi" style="--kpi-color:var(--blue)">
+        <div class="kpi-label">Total Revenue</div>
+        <div class="kpi-value accent-blue" id="fin-revenue">—</div>
+        <div class="kpi-sub">All time</div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--red)">
+        <div class="kpi-label">Total Expenses</div>
+        <div class="kpi-value accent-red" id="fin-expenses">—</div>
+        <div class="kpi-sub">All time</div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--green)">
+        <div class="kpi-label">Net P&L</div>
+        <div class="kpi-value" id="fin-pnl">—</div>
+        <div class="kpi-sub">Revenue − Expenses</div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--amber)">
+        <div class="kpi-label">Avg Price / Tray</div>
+        <div class="kpi-value" id="fin-price-tray">—</div>
+        <div class="kpi-sub" id="fin-price-sub">recent weeks</div>
+      </div>
+    </div>
 
-        /**
-         * Utility function to get the date part in 'YYYY-MM-DD' format.
-         */
-        function getYYYYMMDD(date) {
-            return date.toISOString().split('T')[0];
-        }
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><span class="card-title">Monthly Revenue vs Expenses</span></div>
+        <div class="chart-wrap">
+          <canvas id="chart-fin-monthly"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Payment Breakdown</span></div>
+        <div class="chart-wrap" style="display:flex;align-items:center;justify-content:center">
+          <canvas id="chart-payment" style="max-height:220px;max-width:220px"></canvas>
+        </div>
+      </div>
+    </div>
 
-        /**
-         * Fetches batch metadata and updates the Laying Percentage card footer.
-         */
-        async function loadBatchMetadata() {
-            try {
-                const batchMetadataUrl = JSON_BASE_URL + 'config/batch_metadata.json?t=' + new Date().getTime();
-                console.log('Fetching batch metadata from:', batchMetadataUrl);
-                const response = await fetch(batchMetadataUrl, { cache: 'no-cache' });
-                
-                if (response.ok) {
-                    const metadata = await response.json();
-                    console.log('Batch metadata loaded:', metadata);
-                    
-                    // Loop through all batches dynamically
-                    const batchStrings = [];
-                    const batchNames = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-                    
-                    for (const [key, batch] of Object.entries(metadata)) {
-                        if (batch && batch.currentBirds !== undefined) {
-                            const batchNum = key.replace('batch', ''); // Extract number from key
-                            const batchName = batchNames[parseInt(batchNum) - 1] || batchNum;
-                            batchStrings.push(`Batch ${batchName}: ${batch.currentBirds.toLocaleString()}`);
-                        }
-                    }
-                    
-                    console.log('Batch strings:', batchStrings);
-                    // Update the footer with current bird counts
-                    const footerElement = document.getElementById('batch-birds-footer');
-                    if (footerElement && batchStrings.length > 0) {
-                        footerElement.textContent = batchStrings.join(', ') + ' birds';
-                        console.log('Footer updated successfully');
-                    } else {
-                        console.warn('Footer element not found or no batches');
-                    }
-                } else {
-                    console.warn('Failed to fetch batch metadata, status:', response.status);
-                }
-            } catch (error) {
-                console.warn('Failed to load batch metadata:', error);
-                // Silently fail - use placeholder if fetch fails
-            }
-        }
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><span class="card-title">Expense Categories</span></div>
+        <div class="card-body" id="expense-breakdown"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Recent Sales</span></div>
+        <div class="card-body no-pad" style="overflow-y:auto;max-height:280px">
+          <table class="rev-table" id="sales-table">
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        /**
-         * Fetches and processes the data to populate the dashboard metrics.
-         */
-        async function loadSummaryData() {
-            try {
-                // 1. Fetch Data with cache-busting and timeout
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
-                
-                const cacheBuster = `?t=${new Date().getTime()}`;
-                const response = await fetch(JSON_URL + cacheBuster, {
-                    signal: controller.signal,
-                    cache: 'no-cache'
-                });
-                clearTimeout(timeoutId);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                
-                // Get the raw text first to check if it's valid
-                const rawText = await response.text();
-                
-                if (!rawText || rawText.trim().length === 0) {
-                    throw new Error("Data file is empty");
-                }
-                
-                // Try to parse the JSON
-                let data;
-                try {
-                    data = JSON.parse(rawText);
-                } catch (parseError) {
-                    console.error("Raw response:", rawText.substring(0, 200));
-                    throw new Error(`JSON parse error: ${parseError.message}. Check if the file is valid JSON.`);
-                }
-                
-                // Check if data is empty or malformed
-                if (!data || typeof data !== 'object') {
-                    throw new Error("Data file is malformed (not a valid object).");
-                }
+  <!-- BATCHES TAB -->
+  <div class="tab-content" id="tab-batches">
+    <div class="section-label">Active & Planned Batches</div>
+    <div class="batch-grid" id="all-batches-grid"></div>
+  </div>
 
-                // Check if this is the new summary format
-                if (!data.latestEntry || !data.overallTotals || !data.rollingAverages) {
-                    throw new Error("Data file is missing required fields (latestEntry, overallTotals, rollingAverages).");
-                }
+</div><!-- /main -->
 
-                // --- 2. Extract Data from Summary Format ---
-                const latestEntry = data.latestEntry;
-                const overallTotals = data.overallTotals;
-                const rollingAverages = data.rollingAverages;
-                
-                // Handle missing recentTotals gracefully
-                const recentTotals = data.recentTotals || {};
+<script>
+// ============ DATA ============
+let BATCH_CONFIG = {
+  batch1:{name:"Batch 1",dob:"2024-12-05",expectedOfflay:"2026-06-05",status:"active",supplier:"Jeka",initialBirds:620,currentBirds:567},
+  batch2:{name:"Batch 2",dob:"2025-06-15",expectedOfflay:"2026-12-15",status:"active",supplier:"Jayden",initialBirds:1215,currentBirds:1052},
+  batch3:{name:"Batch 3",dob:"2025-12-20",expectedOfflay:"2027-06-20",status:"active",supplier:"Jeka",initialBirds:400,currentBirds:399},
+  batch4:{name:"Batch 4",dob:"2026-04-15",expectedOfflay:"2027-10-15",status:"pending",supplier:"Jeka",initialBirds:1000,currentBirds:1000},
+  batch5:{name:"Batch 5",dob:"2026-08-01",expectedOfflay:"2028-02-01",status:"pending",supplier:"Jeka",initialBirds:2000,currentBirds:2000}
+};
 
-                // --- 2.5. Display Report Date ---
-                const reportDate = data.reportDate || latestEntry.surveyDate || 'Unknown';
-                const reportDateElement = document.getElementById('report-date');
-                if (reportDateElement) {
-                    reportDateElement.textContent = `Last refreshed: ${reportDate}`;
-                }
+const JSON_BASE = 'https://raw.githubusercontent.com/ivanemoje/poultry-analytics-notifier/refs/heads/main/';
+const JSON_ANALYTICS = JSON_BASE + 'poultry_analytics_data.json';
+const JSON_SALES = JSON_BASE + 'poultry_sales_data.json';
+const JSON_BATCH_METADATA = JSON_BASE + 'config/batch_metadata.json';
 
-                // --- 3. Prepare Metrics ---
-                // Handle both old and new JSON structure
-                const combined = latestEntry.combined || latestEntry;
-                const batch1 = latestEntry.batch1 || {};
-                const batch2 = latestEntry.batch2 || {};
-                const overallCombined = overallTotals.combined || overallTotals;
-                
-                const metrics = {
-                    latestTotal: parseInt(combined.totalEggsEntry) || 0,
-                    latestDate: latestEntry.surveyDate || data.reportDate,
-                    layingPercentage: combined.layingPercentageDaily || '0.00',
-                    batch1Percentage: batch1.layingPercentage || '0.00',
-                    batch2Percentage: batch2.layingPercentage || '0.00',
-                    totalEggsAll: parseInt(overallCombined.totalEggsAllRecords) || 0,
-                    totalTraysCalc: parseInt(overallCombined.totalTraysCalculated) || 0,
-                    totalEggsRemaining: parseInt(overallCombined.remainingEggs) || 0,
-                    latestBrokenBatch1: parseInt(batch1.broken) || 0,
-                    latestBrokenBatch2: parseInt(batch2.broken) || 0,
-                    latestTraysBatch1: parseInt(batch1.trays) || 0,
-                    latestEggsBatch1: parseInt(batch1.eggs) || 0,
-                    latestTraysBatch2: parseInt(batch2.trays) || 0,
-                    latestEggsBatch2: parseInt(batch2.eggs) || 0,
-                    avgYesterday: parseInt(rollingAverages.yesterday?.average) || 0,
-                    avg3Day: parseInt(rollingAverages.threeDay?.average) || 0,
-                    avg7Day: parseInt(rollingAverages.sevenDay?.average) || 0,
-                    avg30Day: parseInt(rollingAverages.thirtyDay?.average) || 0
-                };
+// Embedded CSV data (from uploaded files)
+let RAW_EGGS = [{"date":"2025-05-19","b1_trays":18,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-05-20","b1_trays":18,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-05-21","b1_trays":18,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-05-22","b1_trays":18,"b1_eggs":4,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-05-22","b1_trays":18,"b1_eggs":4,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-05-23","b1_trays":18,"b1_eggs":4,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-05-24","b1_trays":17,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-05-25","b1_trays":17,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-05-26","b1_trays":18,"b1_eggs":0,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-05-27","b1_trays":18,"b1_eggs":5,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-05-28","b1_trays":18,"b1_eggs":4,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-05-29","b1_trays":18,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-05-30","b1_trays":18,"b1_eggs":3,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-01","b1_trays":18,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-02","b1_trays":18,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-03","b1_trays":18,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-04","b1_trays":18,"b1_eggs":12,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-05","b1_trays":19,"b1_eggs":2,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-06","b1_trays":17,"b1_eggs":12,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-07","b1_trays":17,"b1_eggs":4,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-08","b1_trays":18,"b1_eggs":0,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-09","b1_trays":18,"b1_eggs":2,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-10","b1_trays":18,"b1_eggs":3,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-11","b1_trays":18,"b1_eggs":3,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-12","b1_trays":18,"b1_eggs":0,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-13","b1_trays":18,"b1_eggs":4,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-14","b1_trays":18,"b1_eggs":4,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-15","b1_trays":17,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-16","b1_trays":17,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-17","b1_trays":18,"b1_eggs":0,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-18","b1_trays":17,"b1_eggs":11,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-19","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-20","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-21","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-22","b1_trays":17,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-23","b1_trays":18,"b1_eggs":1,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-24","b1_trays":17,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-25","b1_trays":17,"b1_eggs":11,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-26","b1_trays":17,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-27","b1_trays":17,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-28","b1_trays":17,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-29","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-06-30","b1_trays":17,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-01","b1_trays":17,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-02","b1_trays":17,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-03","b1_trays":17,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-04","b1_trays":17,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-05","b1_trays":17,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-06","b1_trays":17,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-07","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-08","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-09","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-10","b1_trays":17,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-11","b1_trays":17,"b1_eggs":11,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-12","b1_trays":17,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-13","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-14","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-15","b1_trays":17,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-16","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-17","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-18","b1_trays":17,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-19","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-20","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-21","b1_trays":17,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-22","b1_trays":17,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-23","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-24","b1_trays":17,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-25","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-26","b1_trays":17,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-27","b1_trays":17,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-28","b1_trays":17,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-29","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-30","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-07-31","b1_trays":17,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-01","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-02","b1_trays":17,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-03","b1_trays":17,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-04","b1_trays":17,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-05","b1_trays":17,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-06","b1_trays":17,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-07","b1_trays":17,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-08","b1_trays":17,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-09","b1_trays":17,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-10","b1_trays":17,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-11","b1_trays":17,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-12","b1_trays":17,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-13","b1_trays":17,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-14","b1_trays":17,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-15","b1_trays":17,"b1_eggs":5,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-16","b1_trays":16,"b1_eggs":12,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-17","b1_trays":16,"b1_eggs":11,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-18","b1_trays":16,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-19","b1_trays":16,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-20","b1_trays":16,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-21","b1_trays":16,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-22","b1_trays":16,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-23","b1_trays":16,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-24","b1_trays":16,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-25","b1_trays":16,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-26","b1_trays":16,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-27","b1_trays":16,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-28","b1_trays":16,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-29","b1_trays":16,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-30","b1_trays":16,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-08-31","b1_trays":16,"b1_eggs":5,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-01","b1_trays":16,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-02","b1_trays":15,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-03","b1_trays":15,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-04","b1_trays":15,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-05","b1_trays":15,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-06","b1_trays":15,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-07","b1_trays":15,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-08","b1_trays":15,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-09","b1_trays":15,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-10","b1_trays":15,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-11","b1_trays":15,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-12","b1_trays":15,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-13","b1_trays":15,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-14","b1_trays":15,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-15","b1_trays":15,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-16","b1_trays":15,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-17","b1_trays":15,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-18","b1_trays":15,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-19","b1_trays":15,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-20","b1_trays":14,"b1_eggs":14,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-21","b1_trays":14,"b1_eggs":13,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-22","b1_trays":14,"b1_eggs":12,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-23","b1_trays":14,"b1_eggs":12,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-24","b1_trays":14,"b1_eggs":12,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-25","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-26","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-27","b1_trays":14,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-28","b1_trays":14,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-29","b1_trays":14,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-09-30","b1_trays":14,"b1_eggs":10,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-01","b1_trays":14,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-02","b1_trays":14,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-03","b1_trays":14,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-04","b1_trays":14,"b1_eggs":9,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-05","b1_trays":14,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-06","b1_trays":14,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-07","b1_trays":14,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-08","b1_trays":14,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-09","b1_trays":14,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-10","b1_trays":14,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-11","b1_trays":14,"b1_eggs":8,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-12","b1_trays":14,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-13","b1_trays":14,"b1_eggs":7,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-14","b1_trays":14,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-15","b1_trays":14,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-16","b1_trays":14,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-17","b1_trays":14,"b1_eggs":6,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-18","b1_trays":14,"b1_eggs":5,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-19","b1_trays":14,"b1_eggs":5,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-20","b1_trays":14,"b1_eggs":5,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-21","b1_trays":14,"b1_eggs":5,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-22","b1_trays":14,"b1_eggs":4,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-23","b1_trays":14,"b1_eggs":4,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-24","b1_trays":14,"b1_eggs":4,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-25","b1_trays":14,"b1_eggs":4,"b1_broken":0,"b2_trays":0,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-26","b1_trays":13,"b1_eggs":13,"b1_broken":0,"b2_trays":10,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-27","b1_trays":13,"b1_eggs":13,"b1_broken":0,"b2_trays":10,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-28","b1_trays":13,"b1_eggs":13,"b1_broken":0,"b2_trays":10,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-29","b1_trays":13,"b1_eggs":12,"b1_broken":0,"b2_trays":10,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-30","b1_trays":13,"b1_eggs":12,"b1_broken":0,"b2_trays":10,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-10-31","b1_trays":13,"b1_eggs":12,"b1_broken":0,"b2_trays":10,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-01","b1_trays":13,"b1_eggs":11,"b1_broken":0,"b2_trays":18,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-02","b1_trays":13,"b1_eggs":11,"b1_broken":0,"b2_trays":18,"b2_eggs":5,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-03","b1_trays":13,"b1_eggs":11,"b1_broken":0,"b2_trays":18,"b2_eggs":10,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-04","b1_trays":13,"b1_eggs":10,"b1_broken":0,"b2_trays":18,"b2_eggs":12,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-05","b1_trays":13,"b1_eggs":10,"b1_broken":0,"b2_trays":19,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-06","b1_trays":13,"b1_eggs":10,"b1_broken":0,"b2_trays":19,"b2_eggs":5,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-07","b1_trays":13,"b1_eggs":9,"b1_broken":0,"b2_trays":19,"b2_eggs":10,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-08","b1_trays":13,"b1_eggs":9,"b1_broken":0,"b2_trays":20,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-09","b1_trays":13,"b1_eggs":9,"b1_broken":0,"b2_trays":20,"b2_eggs":5,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-10","b1_trays":13,"b1_eggs":9,"b1_broken":0,"b2_trays":20,"b2_eggs":10,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-11","b1_trays":13,"b1_eggs":8,"b1_broken":0,"b2_trays":21,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-12","b1_trays":13,"b1_eggs":8,"b1_broken":0,"b2_trays":21,"b2_eggs":5,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-13","b1_trays":13,"b1_eggs":8,"b1_broken":0,"b2_trays":21,"b2_eggs":10,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-14","b1_trays":13,"b1_eggs":8,"b1_broken":0,"b2_trays":22,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-15","b1_trays":13,"b1_eggs":7,"b1_broken":0,"b2_trays":22,"b2_eggs":5,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-16","b1_trays":13,"b1_eggs":7,"b1_broken":0,"b2_trays":22,"b2_eggs":10,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-17","b1_trays":13,"b1_eggs":7,"b1_broken":0,"b2_trays":23,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-18","b1_trays":13,"b1_eggs":7,"b1_broken":0,"b2_trays":23,"b2_eggs":5,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-19","b1_trays":13,"b1_eggs":6,"b1_broken":0,"b2_trays":23,"b2_eggs":10,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-20","b1_trays":13,"b1_eggs":6,"b1_broken":0,"b2_trays":24,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-21","b1_trays":13,"b1_eggs":6,"b1_broken":0,"b2_trays":24,"b2_eggs":5,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-22","b1_trays":13,"b1_eggs":5,"b1_broken":0,"b2_trays":24,"b2_eggs":10,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-23","b1_trays":13,"b1_eggs":5,"b1_broken":0,"b2_trays":25,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-24","b1_trays":13,"b1_eggs":5,"b1_broken":0,"b2_trays":25,"b2_eggs":5,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-25","b1_trays":13,"b1_eggs":4,"b1_broken":0,"b2_trays":25,"b2_eggs":10,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-26","b1_trays":13,"b1_eggs":4,"b1_broken":0,"b2_trays":26,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-27","b1_trays":13,"b1_eggs":4,"b1_broken":0,"b2_trays":26,"b2_eggs":5,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-28","b1_trays":13,"b1_eggs":3,"b1_broken":0,"b2_trays":26,"b2_eggs":10,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-29","b1_trays":13,"b1_eggs":3,"b1_broken":0,"b2_trays":27,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-11-30","b1_trays":13,"b1_eggs":3,"b1_broken":0,"b2_trays":27,"b2_eggs":5,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-01","b1_trays":13,"b1_eggs":2,"b1_broken":0,"b2_trays":27,"b2_eggs":10,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-02","b1_trays":13,"b1_eggs":2,"b1_broken":0,"b2_trays":28,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-03","b1_trays":13,"b1_eggs":1,"b1_broken":0,"b2_trays":28,"b2_eggs":5,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-04","b1_trays":13,"b1_eggs":1,"b1_broken":0,"b2_trays":28,"b2_eggs":10,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-05","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-06","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":5,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-07","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":10,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-08","b1_trays":12,"b1_eggs":17,"b1_broken":0,"b2_trays":29,"b2_eggs":14,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-09","b1_trays":12,"b1_eggs":17,"b1_broken":0,"b2_trays":29,"b2_eggs":16,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-10","b1_trays":12,"b1_eggs":16,"b1_broken":0,"b2_trays":29,"b2_eggs":18,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-11","b1_trays":12,"b1_eggs":16,"b1_broken":0,"b2_trays":29,"b2_eggs":20,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-12","b1_trays":12,"b1_eggs":15,"b1_broken":0,"b2_trays":29,"b2_eggs":22,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-13","b1_trays":12,"b1_eggs":15,"b1_broken":0,"b2_trays":29,"b2_eggs":24,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-14","b1_trays":12,"b1_eggs":14,"b1_broken":0,"b2_trays":29,"b2_eggs":25,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-15","b1_trays":12,"b1_eggs":14,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-16","b1_trays":12,"b1_eggs":13,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-17","b1_trays":12,"b1_eggs":13,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-18","b1_trays":12,"b1_eggs":12,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-19","b1_trays":12,"b1_eggs":12,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-20","b1_trays":12,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-21","b1_trays":12,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-22","b1_trays":12,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-23","b1_trays":12,"b1_eggs":10,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-24","b1_trays":12,"b1_eggs":10,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-25","b1_trays":12,"b1_eggs":9,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-26","b1_trays":12,"b1_eggs":9,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-27","b1_trays":12,"b1_eggs":9,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-28","b1_trays":12,"b1_eggs":8,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-29","b1_trays":12,"b1_eggs":8,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-30","b1_trays":12,"b1_eggs":7,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2025-12-31","b1_trays":12,"b1_eggs":7,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-01","b1_trays":12,"b1_eggs":7,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-02","b1_trays":12,"b1_eggs":6,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-03","b1_trays":12,"b1_eggs":6,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-04","b1_trays":14,"b1_eggs":12,"b1_broken":0,"b2_trays":29,"b2_eggs":20,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-05","b1_trays":14,"b1_eggs":12,"b1_broken":0,"b2_trays":29,"b2_eggs":22,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-06","b1_trays":14,"b1_eggs":12,"b1_broken":0,"b2_trays":29,"b2_eggs":22,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-07","b1_trays":14,"b1_eggs":12,"b1_broken":0,"b2_trays":29,"b2_eggs":22,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-08","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":23,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-09","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":23,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-10","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":24,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-11","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":24,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-12","b1_trays":14,"b1_eggs":10,"b1_broken":1,"b2_trays":29,"b2_eggs":24,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-13","b1_trays":14,"b1_eggs":10,"b1_broken":0,"b2_trays":29,"b2_eggs":25,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-14","b1_trays":14,"b1_eggs":10,"b1_broken":0,"b2_trays":29,"b2_eggs":25,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-15","b1_trays":14,"b1_eggs":10,"b1_broken":0,"b2_trays":29,"b2_eggs":25,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-16","b1_trays":14,"b1_eggs":9,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-17","b1_trays":14,"b1_eggs":9,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-18","b1_trays":14,"b1_eggs":9,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-19","b1_trays":14,"b1_eggs":9,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-20","b1_trays":14,"b1_eggs":8,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-21","b1_trays":14,"b1_eggs":8,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-22","b1_trays":14,"b1_eggs":8,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-23","b1_trays":14,"b1_eggs":8,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-24","b1_trays":14,"b1_eggs":7,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-25","b1_trays":14,"b1_eggs":7,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-26","b1_trays":14,"b1_eggs":7,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-27","b1_trays":14,"b1_eggs":6,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-28","b1_trays":14,"b1_eggs":6,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-29","b1_trays":14,"b1_eggs":6,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-30","b1_trays":14,"b1_eggs":5,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-31","b1_trays":14,"b1_eggs":5,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-01","b1_trays":14,"b1_eggs":4,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-02","b1_trays":14,"b1_eggs":4,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-03","b1_trays":14,"b1_eggs":3,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-04","b1_trays":14,"b1_eggs":2,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-05","b1_trays":14,"b1_eggs":2,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-06","b1_trays":14,"b1_eggs":1,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-07","b1_trays":14,"b1_eggs":1,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-08","b1_trays":14,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-09","b1_trays":14,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-10","b1_trays":13,"b1_eggs":21,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-11","b1_trays":13,"b1_eggs":20,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-12","b1_trays":13,"b1_eggs":20,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-13","b1_trays":13,"b1_eggs":19,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-14","b1_trays":13,"b1_eggs":19,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-15","b1_trays":13,"b1_eggs":18,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-16","b1_trays":13,"b1_eggs":18,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-17","b1_trays":13,"b1_eggs":17,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-18","b1_trays":13,"b1_eggs":17,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-19","b1_trays":13,"b1_eggs":16,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-20","b1_trays":13,"b1_eggs":16,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-21","b1_trays":13,"b1_eggs":15,"b1_broken":0,"b2_trays":29,"b2_eggs":25,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-22","b1_trays":13,"b1_eggs":15,"b1_broken":0,"b2_trays":29,"b2_eggs":25,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-23","b1_trays":13,"b1_eggs":14,"b1_broken":0,"b2_trays":29,"b2_eggs":25,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-24","b1_trays":13,"b1_eggs":14,"b1_broken":0,"b2_trays":29,"b2_eggs":25,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-25","b1_trays":13,"b1_eggs":13,"b1_broken":0,"b2_trays":29,"b2_eggs":24,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-26","b1_trays":13,"b1_eggs":13,"b1_broken":0,"b2_trays":29,"b2_eggs":24,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-27","b1_trays":13,"b1_eggs":12,"b1_broken":0,"b2_trays":29,"b2_eggs":24,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-28","b1_trays":13,"b1_eggs":12,"b1_broken":0,"b2_trays":29,"b2_eggs":24,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-01","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-02","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-03","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-04","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-05","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-06","b1_trays":14,"b1_eggs":10,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-07","b1_trays":14,"b1_eggs":10,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-08","b1_trays":14,"b1_eggs":10,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-09","b1_trays":14,"b1_eggs":10,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-10","b1_trays":14,"b1_eggs":11,"b1_broken":1,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-11","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-12","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-13","b1_trays":14,"b1_eggs":11,"b1_broken":1,"b2_trays":29,"b2_eggs":26,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-14","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-15","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-16","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-17","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-18","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-19","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-20","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-21","b1_trays":14,"b1_eggs":11,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0}];
 
-                // Calculate combined trays and loose eggs for display
-                const totalTrays = metrics.latestTraysBatch1 + metrics.latestTraysBatch2;
-                const totalLooseEggs = metrics.latestEggsBatch1 + metrics.latestEggsBatch2;
-                const totalBroken = metrics.latestBrokenBatch1 + metrics.latestBrokenBatch2;
+let RAW_SALES = [{"date":"2025-07-08","amount":150000,"payment":"CASH"},{"date":"2025-07-08","amount":100000,"payment":"CASH"},{"date":"2025-07-08","amount":1035500,"payment":"CASH"},{"date":"2025-07-09","amount":210000,"payment":"CASH"},{"date":"2025-07-10","amount":315000,"payment":"CASH"},{"date":"2025-07-11","amount":420000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2025-07-15","amount":262500,"payment":"CASH"},{"date":"2025-07-17","amount":262500,"payment":"CASH"},{"date":"2025-07-19","amount":367500,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2025-07-21","amount":262500,"payment":"CASH"},{"date":"2025-07-22","amount":367500,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2025-07-25","amount":280000,"payment":"CASH"},{"date":"2025-07-31","amount":210000,"payment":"CASH"},{"date":"2025-08-04","amount":385000,"payment":"CASH"},{"date":"2025-08-05","amount":87500,"payment":"CASH"},{"date":"2025-08-07","amount":122500,"payment":"CASH"},{"date":"2025-08-09","amount":280000,"payment":"CASH"},{"date":"2025-08-09","amount":157500,"payment":"CASH"},{"date":"2025-08-13","amount":262500,"payment":"CASH"},{"date":"2025-08-13","amount":367500,"payment":"CASH"},{"date":"2025-08-17","amount":367500,"payment":"CASH"},{"date":"2025-08-22","amount":262500,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2025-08-23","amount":187500,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2025-09-05","amount":350000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-01-02","amount":2307500,"payment":"CASH"},{"date":"2026-01-05","amount":52500,"payment":"CASH"},{"date":"2026-01-06","amount":1050000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-01-07","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-01-09","amount":840000,"payment":"BANK"},{"date":"2026-01-12","amount":840000,"payment":"MTN_MOBILE_MONEY"},{"date":"2026-01-14","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-01-16","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-01-19","amount":840000,"payment":"CASH"},{"date":"2026-01-23","amount":840000,"payment":"CASH"},{"date":"2026-01-26","amount":840000,"payment":"CASH"},{"date":"2026-01-28","amount":840000,"payment":"BANK"},{"date":"2026-02-02","amount":840000,"payment":"CASH"},{"date":"2026-02-04","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-02-06","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-02-10","amount":1650000,"payment":"BANK"},{"date":"2026-02-11","amount":840000,"payment":"MTN_MOBILE_MONEY"},{"date":"2026-02-13","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-02-14","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-02-16","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-02-18","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-02-19","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-02-20","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-02-22","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-02-24","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-02-26","amount":840000,"payment":"CASH"},{"date":"2026-02-28","amount":1100000,"payment":"BANK"},{"date":"2026-03-02","amount":315000,"payment":"MTN_MOBILE_MONEY"},{"date":"2026-03-04","amount":840000,"payment":"MTN_MOBILE_MONEY"},{"date":"2026-03-06","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-03-09","amount":840000,"payment":"MTN_MOBILE_MONEY"},{"date":"2026-03-10","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-03-12","amount":840000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-03-13","amount":1050000,"payment":"MTN_MOBILE_MONEY"},{"date":"2026-03-14","amount":315000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-03-16","amount":840000,"payment":"MTN_MOBILE_MONEY"},{"date":"2026-03-17","amount":315000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-03-18","amount":315000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-03-19","amount":315000,"payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-03-20","amount":315000,"payment":"AIRTEL_MOBILE_MONEY"}];
 
-                // --- 4. Determine Trend Dots from provided trends ---
-                const getTrendFromData = (trendData) => {
-                    const trendIcon = trendData?.trend || '🔵';
-                    // Map trend emojis to colors
-                    if (trendIcon.includes('❌') || trendIcon.includes('⬇️')) {
-                        return { color: 'text-red-500' };
-                    } else if (trendIcon.includes('⬆️') || trendIcon.includes('✅')) {
-                        return { color: 'text-green-500' };
-                    }
-                    return { color: 'text-blue-500' };
-                };
-                
-                const trends = {
-                    yesterday: getTrendFromData(rollingAverages.yesterday),
-                    threeDay: getTrendFromData(rollingAverages.threeDay),
-                    sevenDay: getTrendFromData(rollingAverages.sevenDay),
-                    thirtyDay: getTrendFromData(rollingAverages.thirtyDay),
-                };
+let RAW_EXPENSES = [{"date":"2025-08-04","expense":"BROKEN_MAIZE","amount":2500000,"payment":"CASH"},{"date":"2025-08-04","expense":"MAIZE_BRAN","amount":450000,"payment":"CASH"},{"date":"2025-08-04","expense":"COFFEE_HUSKS","amount":144000,"payment":"CASH"},{"date":"2025-08-04","expense":"LIME","amount":100000,"payment":"CASH"},{"date":"2025-09-02","expense":"TRANSPORT","amount":50000,"payment":"CASH"},{"date":"2025-10-09","expense":"CHICKS","amount":500000,"payment":"CASH"},{"date":"2026-01-02","expense":"BROKEN_MAIZE","amount":2500000,"payment":"CASH"},{"date":"2026-01-02","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-01-02","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-01-06","expense":"STARTERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-01-07","expense":"GROWERS_CONCENTRATE","amount":588000,"payment":"CASH"},{"date":"2026-01-12","expense":"LIME","amount":100000,"payment":"CASH"},{"date":"2026-01-17","expense":"VACCINE","amount":210000,"payment":"CASH"},{"date":"2026-01-22","expense":"BROKEN_MAIZE","amount":2500000,"payment":"CASH"},{"date":"2026-01-29","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-01-29","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-01-29","expense":"BROKEN_MAIZE","amount":1200000,"payment":"CASH"},{"date":"2026-01-30","expense":"CALCIUM","amount":85000,"payment":"CASH"},{"date":"2026-01-30","expense":"VITAMINS","amount":165000,"payment":"CASH"},{"date":"2026-02-02","expense":"BROKEN_MAIZE","amount":1500000,"payment":"CASH"},{"date":"2026-02-05","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-02-05","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-02-06","expense":"LAYERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-02-10","expense":"DEWORMER","amount":120000,"payment":"CASH"},{"date":"2026-02-13","expense":"BROKEN_MAIZE","amount":1500000,"payment":"CASH"},{"date":"2026-02-13","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-02-13","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-02-17","expense":"CHARCOAL","amount":150000,"payment":"CASH"},{"date":"2026-02-17","expense":"VET","amount":200000,"payment":"CASH"},{"date":"2026-02-19","expense":"LAYERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-02-21","expense":"BROKEN_MAIZE","amount":2200000,"payment":"CASH"},{"date":"2026-02-25","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-02-25","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-02-27","expense":"DEWORMER","amount":120000,"payment":"CASH"},{"date":"2026-02-28","expense":"TRANSPORT","amount":46025,"payment":"CASH"},{"date":"2026-02-28","expense":"CALCIUM","amount":170000,"payment":"CASH"},{"date":"2026-02-28","expense":"LAYERS_CONCENTRATE","amount":1200000,"payment":"CASH"},{"date":"2026-02-28","expense":"VITAMINS","amount":30000,"payment":"CASH"},{"date":"2026-03-02","expense":"BROKEN_MAIZE","amount":1500000,"payment":"CASH"},{"date":"2026-03-02","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-03-02","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-03-04","expense":"LAYERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-03-05","expense":"LIME","amount":80000,"payment":"CASH"},{"date":"2026-03-06","expense":"TRANSPORT","amount":30000,"payment":"CASH"},{"date":"2026-03-06","expense":"CHARCOAL","amount":150000,"payment":"CASH"},{"date":"2026-03-07","expense":"CALCIUM","amount":85000,"payment":"CASH"},{"date":"2026-03-07","expense":"VITAMINS","amount":60000,"payment":"CASH"},{"date":"2026-03-09","expense":"VACCINE","amount":210000,"payment":"CASH"},{"date":"2026-03-09","expense":"BROKEN_MAIZE","amount":2200000,"payment":"CASH"},{"date":"2026-03-09","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-03-09","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-03-09","expense":"LAYERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-03-11","expense":"DEWORMER","amount":120000,"payment":"CASH"},{"date":"2026-03-11","expense":"VET","amount":200000,"payment":"CASH"},{"date":"2026-03-14","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-03-14","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-03-14","expense":"BROKEN_MAIZE","amount":850000,"payment":"CASH"},{"date":"2026-03-14","expense":"LAYERS_CONCENTRATE","amount":800000,"payment":"CASH"},{"date":"2026-03-14","expense":"CHARCOAL","amount":150000,"payment":"CASH"},{"date":"2026-03-14","expense":"LIME","amount":60000,"payment":"CASH"},{"date":"2026-03-14","expense":"CALCIUM","amount":85000,"payment":"CASH"},{"date":"2026-03-14","expense":"VITAMINS","amount":130000,"payment":"CASH"},{"date":"2026-03-14","expense":"TRANSPORT","amount":50000,"payment":"CASH"}];
 
-                // --- 5. Populate HTML ---
-                // Latest Collection Details
-                document.getElementById('latest-total').textContent = metrics.latestTotal.toLocaleString();
-                document.getElementById('latest-trays').textContent = totalTrays;
-                document.getElementById('latest-loose').textContent = totalLooseEggs;
-                document.getElementById('latest-as-eggs').textContent = metrics.latestTotal;
-                document.getElementById('latest-date').textContent = `Survey Date: ${metrics.latestDate}`;
+// ============ HELPERS ============
+const fmtN = (n, d=0) => n==null||isNaN(n)?'—':Math.round(n).toLocaleString();
+const fmtM = n => {
+  if(n>=1e9) return (n/1e9).toFixed(1)+'B';
+  if(n>=1e6) return (n/1e6).toFixed(1)+'M';
+  if(n>=1e3) return (n/1e3).toFixed(0)+'K';
+  return Math.round(n).toLocaleString();
+};
+const fmtDate = d => new Date(d).toLocaleDateString('en-UG',{day:'numeric',month:'short'});
+const fmtMonth = m => {const[y,mo]=m.split('-');return new Date(y,mo-1).toLocaleDateString('en',{month:'short',year:'2-digit'});};
 
-                // Laying Percentage - add % if not present
-                const layingPerc = metrics.layingPercentage.toString().includes('%') ? 
-                    metrics.layingPercentage : `${metrics.layingPercentage}%`;
-                const batch1Perc = metrics.batch1Percentage.toString().includes('%') ? 
-                    metrics.batch1Percentage : `${metrics.batch1Percentage}%`;
-                const batch2Perc = metrics.batch2Percentage.toString().includes('%') ? 
-                    metrics.batch2Percentage : `${metrics.batch2Percentage}%`;
-                
-                document.getElementById('laying-percentage').textContent = layingPerc;
-                document.getElementById('batch-one-percentage').textContent = batch1Perc;
-                document.getElementById('batch-two-percentage').textContent = batch2Perc;
+function daysBefore(n){
+  const anchor = EGGS.length ? EGGS[EGGS.length-1].date : new Date().toISOString().split('T')[0];
+  const d=new Date(anchor); d.setHours(0,0,0,0); d.setDate(d.getDate()-n);
+  return d.toISOString().split('T')[0];
+}
 
-                // Total Eggs All Records
-                document.getElementById('total-eggs-all').textContent = metrics.totalEggsAll.toLocaleString();
-                document.getElementById('total-trays').textContent = metrics.totalTraysCalc;
-                document.getElementById('total-loose').textContent = metrics.totalEggsRemaining;
-                document.getElementById('total-breakdown').textContent = metrics.totalEggsAll.toLocaleString();
+let EGGS = [];
+let lastReportDate = '';
 
-                document.getElementById('latest-broken').textContent = totalBroken;
+function rebuildData(){
+  EGGS = RAW_EGGS.map(r=>({
+    ...r,
+    b1_total: r.b1_trays*30+r.b1_eggs,
+    b2_total: r.b2_trays*30+r.b2_eggs,
+    b3_total: r.b3_trays*30+r.b3_eggs,
+    total: (r.b1_trays+r.b2_trays+r.b3_trays)*30+r.b1_eggs+r.b2_eggs+r.b3_eggs,
+    broken: r.b1_broken+r.b2_broken+r.b3_broken,
+  }));
+  EGGS.sort((a,b)=>a.date.localeCompare(b.date));
+  RAW_SALES.sort((a,b)=>a.date.localeCompare(b.date));
+  RAW_EXPENSES.sort((a,b)=>a.date.localeCompare(b.date));
+}
 
-                // Recent Period Totals - use latestEntry.sevenDayTotal if recentTotals not available
-                const sevenDayTotal = parseInt(recentTotals.sevenDay || latestEntry.sevenDayTotal || 0);
-                const thirtyDayTotal = parseInt(recentTotals.thirtyDay || 0);
-                
-                document.getElementById('seven-day-total').textContent = sevenDayTotal.toLocaleString();
-                
-                document.getElementById('total-7-days').textContent = sevenDayTotal.toLocaleString();
-                document.getElementById('total-30-days').textContent = thirtyDayTotal.toLocaleString();
+function normalizeBatchConfig(metadata){
+  return Object.fromEntries(Object.entries(metadata || {}).map(([key, batch], index)=>[
+    key,
+    {
+      name: `Batch ${index + 1}`,
+      dob: batch.dateOfBirth || batch.dob || '',
+      expectedOfflay: batch.expectedOfflay || '',
+      status: batch.status || 'active',
+      supplier: batch.supplier || '',
+      initialBirds: Number(batch.initialBirds || batch.currentBirds || 0),
+      currentBirds: Number(batch.currentBirds || batch.initialBirds || 0)
+    }
+  ]));
+}
 
-                // Averages
-                document.getElementById('avg-yesterday').textContent = metrics.avgYesterday.toLocaleString();
-                document.getElementById('avg-3day').textContent = metrics.avg3Day.toLocaleString();
-                document.getElementById('avg-7day').textContent = metrics.avg7Day.toLocaleString();
-                document.getElementById('avg-30day').textContent = metrics.avg30Day.toLocaleString();
-                
-                // Trends (Setting color classes for dots)
-                const trendElements = ['trend-yesterday', 'trend-3day', 'trend-7day', 'trend-30day'];
-                trendElements.forEach(id => {
-                    document.getElementById(id).className = 'trend-icon'; // Reset classes
-                    document.getElementById(id).textContent = ''; // Clear any text/emojis
-                });
+rebuildData();
 
-                document.getElementById('trend-yesterday').classList.add(trends.yesterday.color);
-                document.getElementById('trend-3day').classList.add(trends.threeDay.color);
-                document.getElementById('trend-7day').classList.add(trends.sevenDay.color);
-                document.getElementById('trend-30day').classList.add(trends.thirtyDay.color);
+// ============ STATE ============
+let activeDays = 30;
+let activeBatch = 'all';
+let charts = {};
 
-                // --- Survey Date Check Logic ---
-                try {
-                    const surveyDate = new Date(metrics.latestDate);
-                    const today = new Date();
-                    
-                    // Reset time parts to compare dates only
-                    surveyDate.setHours(0, 0, 0, 0);
-                    today.setHours(0, 0, 0, 0);
-                    
-                    const diffTime = Math.abs(today - surveyDate);
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1;
+// ============ FILTER ============
+function filterEggs(days, batch){
+  const cutoff = days<9000 ? daysBefore(days) : '2000-01-01';
+  let rows = EGGS.filter(r=>r.date>=cutoff);
+  if(batch!=='all'){
+    const key = 'b'+batch+'_total';
+    rows = rows.map(r=>({...r, total: r[key], b1_total: batch=='1'?r.b1_total:0, b2_total:batch=='2'?r.b2_total:0, b3_total:batch=='3'?r.b3_total:0}));
+  }
+  return rows;
+}
+function filterSales(days){
+  const cutoff = days<9000 ? daysBefore(days) : '2000-01-01';
+  return RAW_SALES.filter(r=>r.date>=cutoff);
+}
+function filterExpenses(days){
+  const cutoff = days<9000 ? daysBefore(days) : '2000-01-01';
+  return RAW_EXPENSES.filter(r=>r.date>=cutoff);
+}
 
-                    const surveyAlert = document.getElementById('survey-alert');
-                    if (diffDays > 0) {
-                        surveyAlert.textContent = `${diffDays} ${diffDays === 1 ? 'day' : 'days'} overdue`;
-                        surveyAlert.classList.remove('hidden');
-                        surveyAlert.classList.add('alert-overdue');
-                    } else {
-                        surveyAlert.classList.add('hidden');
-                    }
-                } catch (error) {
-                    console.warn('Failed to calculate survey date status:', error);
-                    // Fail silently - don't break the dashboard if date check fails
-                }
+// ============ CHART FACTORY ============
+function mkChart(id, type, data, options){
+  if(charts[id]) charts[id].destroy();
+  const ctx = document.getElementById(id);
+  if(!ctx) return;
+  const isDark = document.documentElement.classList.contains('dark');
+  const textColor = isDark ? 'rgba(240,236,228,.6)' : 'rgba(26,23,20,.5)';
+  const gridColor = isDark ? 'rgba(255,255,255,.05)' : 'rgba(0,0,0,.06)';
+  const defaults = {
+    plugins:{legend:{labels:{color:textColor,font:{family:'DM Mono',size:11}}},tooltip:{titleFont:{family:'DM Mono',size:11},bodyFont:{family:'DM Mono',size:11}}},
+    scales:type==='doughnut'||type==='pie'?{}:{
+      x:{ticks:{color:textColor,font:{family:'DM Mono',size:10}},grid:{color:gridColor}},
+      y:{ticks:{color:textColor,font:{family:'DM Mono',size:10}},grid:{color:gridColor}}
+    }
+  };
+  charts[id] = new Chart(ctx,{type,data,options:{...defaults,...options,plugins:{...defaults.plugins,...(options.plugins||{})}}});
+  return charts[id];
+}
 
-                // Show dashboard
-                loadingMessage.style.display = 'none';
-                dashboard.style.display = 'grid';
+// ============ RENDER FUNCTIONS ============
+function renderKPIs(eggs, sales, expenses){
+  const totalEggs = eggs.reduce((s,r)=>s+r.total,0);
+  const totalRevenue = sales.reduce((s,r)=>s+r.amount,0);
+  const totalExpenses = expenses.reduce((s,r)=>s+r.amount,0);
+  const pnl = totalRevenue - totalExpenses;
 
-            } catch (error) {
-                console.error("Error loading or processing data:", error);
-                // Update error message for dark mode compatibility
-                loadingMessage.className = 'text-center text-xl text-red-600 dark:text-red-400 font-semibold my-10 p-4 bg-red-100 dark:bg-red-900 rounded-lg shadow-md';
-                loadingMessage.innerHTML = `⚠️ **Error:** Failed to load report data from the URL.<br>Details: ${error.message}`;
-                dashboard.style.display = 'none';
-            }
-        }
+  document.getElementById('kpi-eggs').textContent = fmtN(totalEggs);
+  document.getElementById('kpi-eggs-sub').textContent = `${eggs.length} entries`;
+  document.getElementById('kpi-revenue').textContent = fmtM(totalRevenue)+' UGX';
+  document.getElementById('kpi-pnl').textContent = (pnl>=0?'+':'')+fmtM(pnl)+' UGX';
+  document.getElementById('kpi-pnl').className = 'kpi-value '+(pnl>=0?'accent-green':'accent-red');
 
-        // Initialize the dashboard
-        document.addEventListener('DOMContentLoaded', () => {
-            loadSummaryData();
-            loadBatchMetadata();
-        });
-    </script>
+  // Latest laying %
+  const latest = EGGS[EGGS.length-1];
+  if(latest){
+    const b1=BATCH_CONFIG.batch1.currentBirds, b2=BATCH_CONFIG.batch2.currentBirds, b3=BATCH_CONFIG.batch3.currentBirds;
+    const total_birds = activeBatch==='all'?(b1+b2+b3):activeBatch==='1'?b1:activeBatch==='2'?b2:b3;
+    const total_eggs = activeBatch==='all'?latest.total:activeBatch==='1'?latest.b1_total:activeBatch==='2'?latest.b2_total:latest.b3_total;
+    const pct = ((total_eggs/total_birds)*100).toFixed(1);
+    document.getElementById('kpi-laying').textContent = pct+'%';
+    document.getElementById('kpi-laying-sub').textContent = 'Survey: '+latest.date;
+
+    // Overdue check
+    const badge = document.getElementById('kpi-overdue');
+    const diffDays = Math.floor((new Date()-new Date(latest.date))/(86400000));
+    if(diffDays>1){badge.textContent=diffDays+'d overdue';badge.classList.remove('hidden');}
+    else{badge.classList.add('hidden');}
+  }
+}
+
+function renderAverages(){
+  const now = EGGS.length ? EGGS[EGGS.length-1].date : new Date().toISOString().split('T')[0];
+  const get = (days) => {
+    const cutoff = daysBefore(days);
+    const rows = EGGS.filter(r=>r.date>=cutoff&&r.date<=now);
+    if(!rows.length) return 0;
+    return rows.reduce((s,r)=>s+r.total,0)/rows.length;
+  };
+  const yday = get(1); const d7=get(7); const d30=get(30);
+  const allTotal = EGGS.reduce((s,r)=>s+r.total,0);
+
+  document.getElementById('avg-yesterday').textContent = fmtN(yday);
+  document.getElementById('avg-7d').textContent = fmtN(d7);
+  document.getElementById('avg-30d').textContent = fmtN(d30);
+  document.getElementById('avg-alltime').textContent = fmtM(allTotal);
+
+  const arrow = (a,b) => a>b ? '<span class="trend-up">↑ above 7d avg</span>' : a<b ? '<span class="trend-down">↓ below 7d avg</span>' : '<span class="trend-flat">→ flat</span>';
+  document.getElementById('avg-yesterday-trend').innerHTML = arrow(yday,d7);
+  document.getElementById('avg-7d-trend').innerHTML = d7>d30?'<span class="trend-up">↑ vs 30d</span>':'<span class="trend-down">↓ vs 30d</span>';
+  document.getElementById('avg-30d-trend').innerHTML = '';
+  document.getElementById('avg-alltime-sub').textContent = 'eggs collected ever';
+}
+
+function renderDailyChart(eggs){
+  // Group by date (sum duplicates)
+  const byDate = {};
+  eggs.forEach(r=>{byDate[r.date]=(byDate[r.date]||0)+r.total;});
+  const dates = Object.keys(byDate).sort();
+  const vals = dates.map(d=>byDate[d]);
+
+  // Limit to last N points for readability
+  const limit = activeDays<=30?dates.length:Math.min(dates.length,120);
+  const sliceDates = dates.slice(-limit);
+  const sliceVals = vals.slice(-limit);
+
+  document.getElementById('chart-period-label').textContent = sliceDates.length ? sliceDates[0]+'→'+sliceDates[sliceDates.length-1] : 'No records';
+
+  const isDark = document.documentElement.classList.contains('dark');
+  mkChart('chart-eggs-daily','line',{
+    labels: sliceDates.map(fmtDate),
+    datasets:[{
+      label:'Total Eggs',
+      data:sliceVals,
+      borderColor:'#5aac4e',
+      backgroundColor:'rgba(90,172,78,.1)',
+      borderWidth:1.5,
+      pointRadius:sliceDates.length>60?0:2,
+      tension:0.3,
+      fill:true
+    }]
+  },{
+    plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:false}}
+  });
+}
+
+function renderMonthlyChart(){
+  const months = [...new Set(EGGS.map(r=>r.date.substr(0,7)))].sort();
+  const byMonth = {};
+  EGGS.forEach(r=>{const m=r.date.substr(0,7);byMonth[m]=(byMonth[m]||0)+r.total;});
+  mkChart('chart-monthly-eggs','bar',{
+    labels:months.map(fmtMonth),
+    datasets:[{label:'Eggs',data:months.map(m=>byMonth[m]||0),backgroundColor:'rgba(90,172,78,.7)',borderColor:'#5aac4e',borderWidth:1}]
+  },{plugins:{legend:{display:false}}});
+}
+
+function renderPeriodTable(container){
+  const periods = [7,14,30,90,180,365,9999];
+  const labels = ['7D','14D','30D','3M','6M','1Y','All'];
+  const b1=BATCH_CONFIG.batch1.currentBirds, b2=BATCH_CONFIG.batch2.currentBirds, b3=BATCH_CONFIG.batch3.currentBirds;
+  const total_birds = b1+b2+b3;
+  
+  const rows = periods.map((days,i)=>{
+    const cutoff = days<9000?daysBefore(days):'2000-01-01';
+    const rows = EGGS.filter(r=>r.date>=cutoff);
+    if(!rows.length) return {label:labels[i],total:0,avg:0,pct:0};
+    const total = rows.reduce((s,r)=>s+r.total,0);
+    const avg = total/rows.length;
+    const pct = ((avg/total_birds)*100).toFixed(1);
+    return {label:labels[i],total,avg,pct};
+  });
+
+  container.innerHTML = rows.map(r=>`
+    <div class="stat-row">
+      <span class="stat-label">${r.label}</span>
+      <span class="stat-value">${fmtN(r.total)} <span style="color:var(--text3);font-weight:400;font-size:.65rem">(avg ${fmtN(r.avg)}/day, ${r.pct}%)</span></span>
+    </div>`).join('');
+}
+
+function renderLatestEntry(container){
+  const latest = EGGS[EGGS.length-1];
+  if(!latest){container.innerHTML='<div style="color:var(--text3);font-size:.75rem">No data</div>';return;}
+  const b1=BATCH_CONFIG.batch1.currentBirds,b2=BATCH_CONFIG.batch2.currentBirds,b3=BATCH_CONFIG.batch3.currentBirds;
+  container.innerHTML = `
+    <div class="stat-row"><span class="stat-label">Date</span><span class="stat-value">${latest.date}</span></div>
+    <div class="stat-row"><span class="stat-label">Batch 1 (${b1} birds)</span><span class="stat-value">${latest.b1_total} eggs <span style="color:var(--green)">(${((latest.b1_total/b1)*100).toFixed(0)}%)</span></span></div>
+    <div class="stat-row"><span class="stat-label">Batch 2 (${b2} birds)</span><span class="stat-value">${latest.b2_total} eggs <span style="color:var(--green)">(${((latest.b2_total/b2)*100).toFixed(0)}%)</span></span></div>
+    <div class="stat-row"><span class="stat-label">Batch 3 (${b3} birds)</span><span class="stat-value">${latest.b3_total} eggs <span style="color:var(--text3)">—</span></span></div>
+    <div class="stat-row"><span class="stat-label">Broken</span><span class="stat-value ${latest.broken>5?'val-red':''}">${latest.broken}</span></div>
+    <div class="stat-row"><span class="stat-label">Combined</span><span class="stat-value">${latest.total} eggs</span></div>`;
+}
+
+function renderFlags(){
+  const flags = [];
+  // Check last entry date
+  const latest = EGGS[EGGS.length-1];
+  if(latest){
+    const diff = Math.floor((new Date()-new Date(latest.date))/86400000);
+    if(diff>1) flags.push({sev:'red',msg:`Last entry was ${diff} days ago (${latest.date}) — data may be stale.`});
+  }
+  // Check for gaps
+  let prevDate = null, maxGap=0, gapStart='';
+  EGGS.forEach(r=>{
+    if(prevDate){const gap=Math.floor((new Date(r.date)-new Date(prevDate))/86400000);if(gap>maxGap){maxGap=gap;gapStart=prevDate;}}
+    prevDate=r.date;
+  });
+  if(maxGap>5) flags.push({sev:'amber',msg:`Longest gap: ${maxGap} days (from ${gapStart}). Missing log days could skew totals.`});
+  // High broken rate
+  const recentEggs = EGGS.filter(r=>r.date>=daysBefore(30));
+  const totalBroken = recentEggs.reduce((s,r)=>s+r.broken,0);
+  const totalEggs30 = recentEggs.reduce((s,r)=>s+r.total,0);
+  if(totalEggs30>0&&(totalBroken/totalEggs30)>0.01) flags.push({sev:'amber',msg:`Broken egg rate: ${((totalBroken/totalEggs30)*100).toFixed(2)}% in last 30 days (${totalBroken} broken).`});
+  // Feb expenses surge
+  const febExp = RAW_EXPENSES.filter(r=>r.date.startsWith('2026-02')).reduce((s,r)=>s+r.amount,0);
+  const janExp = RAW_EXPENSES.filter(r=>r.date.startsWith('2026-01')).reduce((s,r)=>s+r.amount,0);
+  if(febExp>janExp*1.3) flags.push({sev:'red',msg:`Expenses spiked ${((febExp/janExp-1)*100).toFixed(0)}% in Feb vs Jan (${fmtM(janExp)}→${fmtM(febExp)} UGX).`});
+  // March pnl
+  const marSales=RAW_SALES.filter(r=>r.date.startsWith('2026-03')).reduce((s,r)=>s+r.amount,0);
+  const marExp=RAW_EXPENSES.filter(r=>r.date.startsWith('2026-03')).reduce((s,r)=>s+r.amount,0);
+  if(marSales<marExp) flags.push({sev:'red',msg:`March is loss-making: ${fmtM(marSales)} revenue vs ${fmtM(marExp)} expenses (${fmtM(marSales-marExp)} UGX).`});
+
+  const el = document.getElementById('flags-list');
+  if(!flags.length){el.innerHTML='<div style="color:var(--green);font-size:.78rem;padding:.5rem 0">✓ No critical flags detected</div>';return;}
+  el.innerHTML = flags.map(f=>`<div class="flag-item"><div class="flag-dot ${f.sev==='amber'?'amber':''}"></div><div>${f.msg}</div></div>`).join('');
+}
+
+// ============ PRODUCTION TAB ============
+function renderBatchLayingCards(){
+  const el = document.getElementById('batch-laying-cards');
+  const batches = ['batch1','batch2','batch3'];
+  const batchKeys = ['b1','b2','b3'];
+  const colors = ['var(--green)','var(--blue)','var(--amber)'];
+  
+  el.innerHTML = batches.map((bk,i)=>{
+    const cfg = BATCH_CONFIG[bk];
+    const key = batchKeys[i]+'_total';
+    const recent = EGGS.filter(r=>r.date>=daysBefore(30));
+    const periodEggs = recent.reduce((s,r)=>s+r[key],0);
+    const avgEggs = recent.length?periodEggs/recent.length:0;
+    const layingPct = cfg.status==='active'?((avgEggs/cfg.currentBirds)*100).toFixed(1):0;
+    const latest = EGGS[EGGS.length-1];
+    const latestEggs = latest?latest[key]:0;
+    const latestPct = cfg.status==='active'?((latestEggs/cfg.currentBirds)*100).toFixed(1):0;
+    
+    return `<div class="batch-card ${cfg.status==='pending'?'pending':''}">
+      <div class="batch-status status-${cfg.status}">${cfg.status}</div>
+      <div class="batch-name">${cfg.name}</div>
+      <div class="batch-supplier">Supplier: ${cfg.supplier}</div>
+      <div class="batch-metrics">
+        <div class="bm"><div class="bm-label">Birds</div><div class="bm-value">${fmtN(cfg.currentBirds)} / ${fmtN(cfg.initialBirds)}</div></div>
+        <div class="bm"><div class="bm-label">Laying % (today)</div><div class="bm-value" style="color:${colors[i]}">${latestPct}%</div></div>
+        <div class="bm"><div class="bm-label">30D Avg Eggs</div><div class="bm-value">${fmtN(avgEggs)}/day</div></div>
+        <div class="bm"><div class="bm-label">DOB</div><div class="bm-value">${cfg.dob}</div></div>
+      </div>
+      <div class="laying-bar"><div class="laying-bar-fill" style="width:${Math.min(100,layingPct)}%;background:${colors[i]}"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderBatchCharts(){
+  const recent30 = EGGS.filter(r=>r.date>=daysBefore(30));
+  const dates30 = [...new Set(recent30.map(r=>r.date))].sort();
+  
+  // Batch laying % over time
+  mkChart('chart-batch-laying','line',{
+    labels:dates30.map(fmtDate),
+    datasets:[
+      {label:'B1 Laying%',data:dates30.map(d=>{const r=EGGS.find(x=>x.date===d);return r?((r.b1_total/BATCH_CONFIG.batch1.currentBirds)*100).toFixed(1):null}),borderColor:'#5aac4e',borderWidth:1.5,pointRadius:0,tension:0.3},
+      {label:'B2 Laying%',data:dates30.map(d=>{const r=EGGS.find(x=>x.date===d);return r?((r.b2_total/BATCH_CONFIG.batch2.currentBirds)*100).toFixed(1):null}),borderColor:'#4a80d4',borderWidth:1.5,pointRadius:0,tension:0.3},
+    ]
+  },{scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}});
+
+  // Eggs by batch (stacked bar, monthly)
+  const months = [...new Set(EGGS.map(r=>r.date.substr(0,7)))].sort();
+  const byMonth1={},byMonth2={},byMonth3={};
+  EGGS.forEach(r=>{const m=r.date.substr(0,7);byMonth1[m]=(byMonth1[m]||0)+r.b1_total;byMonth2[m]=(byMonth2[m]||0)+r.b2_total;byMonth3[m]=(byMonth3[m]||0)+r.b3_total;});
+  mkChart('chart-batch-eggs','bar',{
+    labels:months.map(fmtMonth),
+    datasets:[
+      {label:'B1',data:months.map(m=>byMonth1[m]||0),backgroundColor:'rgba(90,172,78,.7)'},
+      {label:'B2',data:months.map(m=>byMonth2[m]||0),backgroundColor:'rgba(74,128,212,.7)'},
+      {label:'B3',data:months.map(m=>byMonth3[m]||0),backgroundColor:'rgba(196,134,74,.7)'},
+    ]
+  },{scales:{x:{stacked:true},y:{stacked:true}}});
+}
+
+function renderPeriodDetailTable(){
+  const periods=[7,14,30,90,180,365,9999];
+  const labels=['7D','14D','30D','3M','6M','1Y','All'];
+  const batchKeys=[['b1_total','batch1'],['b2_total','batch2'],['b3_total','batch3']];
+  const rows = [
+    {label:'Total (all batches)', vals:periods.map(d=>{const c=d<9999?daysBefore(d):'2000-01-01';return fmtN(EGGS.filter(r=>r.date>=c).reduce((s,r)=>s+r.total,0));})},
+    ...batchKeys.map(([key,bk])=>({label:BATCH_CONFIG[bk].name, vals:periods.map(d=>{const c=d<9999?daysBefore(d):'2000-01-01';return fmtN(EGGS.filter(r=>r.date>=c).reduce((s,r)=>s+r[key],0));})})),
+    {label:'Avg Laying %',vals:periods.map(d=>{const c=d<9999?daysBefore(d):'2000-01-01';const rows=EGGS.filter(r=>r.date>=c);if(!rows.length)return'—';const avg=rows.reduce((s,r)=>s+r.total,0)/rows.length;const birds=BATCH_CONFIG.batch1.currentBirds+BATCH_CONFIG.batch2.currentBirds+BATCH_CONFIG.batch3.currentBirds;return((avg/birds)*100).toFixed(1)+'%';})},
+  ];
+  document.getElementById('period-table-body').innerHTML = rows.map(r=>`<tr><td>${r.label}</td>${r.vals.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('');
+}
+
+// ============ FINANCIAL TAB ============
+function renderFinancial(){
+  const totalRev = RAW_SALES.reduce((s,r)=>s+r.amount,0);
+  const totalExp = RAW_EXPENSES.reduce((s,r)=>s+r.amount,0);
+  const pnl = totalRev-totalExp;
+  document.getElementById('fin-revenue').textContent = fmtM(totalRev)+' UGX';
+  document.getElementById('fin-expenses').textContent = fmtM(totalExp)+' UGX';
+  document.getElementById('fin-pnl').textContent = (pnl>=0?'+':'')+fmtM(pnl)+' UGX';
+  document.getElementById('fin-pnl').className = 'kpi-value '+(pnl>=0?'accent-green':'accent-red');
+
+  // Price per tray (last 3 weeks)
+  const cutoff = daysBefore(21);
+  const recentSales = RAW_SALES.filter(r=>r.date>=cutoff);
+  const recentTrays = EGGS.filter(r=>r.date>=cutoff).reduce((s,r)=>s+Math.floor(r.total/30),0);
+  const recentRevenue = recentSales.reduce((s,r)=>s+r.amount,0);
+  const pricePerTray = recentTrays>0?recentRevenue/recentTrays:0;
+  document.getElementById('fin-price-tray').textContent = fmtM(pricePerTray)+' UGX';
+  document.getElementById('fin-price-sub').textContent = 'last 3 weeks (~'+recentTrays+' trays)';
+
+  // Monthly chart
+  const months = [...new Set([...RAW_SALES.map(r=>r.date.substr(0,7)),...RAW_EXPENSES.map(r=>r.date.substr(0,7))])].sort();
+  const mRev={},mExp={};
+  RAW_SALES.forEach(r=>{const m=r.date.substr(0,7);mRev[m]=(mRev[m]||0)+r.amount;});
+  RAW_EXPENSES.forEach(r=>{const m=r.date.substr(0,7);mExp[m]=(mExp[m]||0)+r.amount;});
+  mkChart('chart-fin-monthly','bar',{
+    labels:months.map(fmtMonth),
+    datasets:[
+      {label:'Revenue',data:months.map(m=>mRev[m]||0),backgroundColor:'rgba(74,128,212,.7)'},
+      {label:'Expenses',data:months.map(m=>mExp[m]||0),backgroundColor:'rgba(200,68,10,.7)'},
+    ]
+  },{});
+
+  // Payment donut
+  const payAmt = {};
+  RAW_SALES.forEach(r=>{payAmt[r.payment]=(payAmt[r.payment]||0)+r.amount;});
+  const payLabels = Object.keys(payAmt).map(k=>k.replace(/_/g,' '));
+  mkChart('chart-payment','doughnut',{
+    labels:payLabels,
+    datasets:[{data:Object.values(payAmt),backgroundColor:['rgba(90,172,78,.8)','rgba(74,128,212,.8)','rgba(196,134,74,.8)','rgba(200,68,10,.8)']}]
+  },{plugins:{legend:{position:'bottom'}}});
+
+  // Expense breakdown
+  const expCat = {};
+  RAW_EXPENSES.forEach(r=>{expCat[r.expense]=(expCat[r.expense]||0)+r.amount;});
+  const maxExp = Math.max(...Object.values(expCat));
+  const sorted = Object.entries(expCat).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('expense-breakdown').innerHTML = sorted.map(([k,v])=>`
+    <div class="expense-row">
+      <span class="expense-name">${k.toLowerCase().replace(/_/g,' ')}</span>
+      <div class="expense-bar-wrap"><div class="expense-bar" style="width:${(v/maxExp*100).toFixed(0)}%"></div></div>
+      <span class="expense-amt">${fmtM(v)}</span>
+    </div>`).join('');
+
+  // Recent sales table
+  const recentForTable = [...RAW_SALES].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,20);
+  document.getElementById('sales-table').querySelector('tbody').innerHTML = recentForTable.map(r=>`
+    <tr><td>${fmtDate(r.date)}</td><td style="color:var(--text2);font-size:.7rem">${r.payment.replace(/_/g,' ')}</td><td>${fmtM(r.amount)}</td></tr>`).join('');
+}
+
+// ============ BATCHES TAB ============
+function renderAllBatches(){
+  const colors = ['var(--green)','var(--blue)','var(--amber)','var(--text3)','var(--text3)'];
+  const el = document.getElementById('all-batches-grid');
+  el.innerHTML = Object.entries(BATCH_CONFIG).map(([bk,cfg],i)=>{
+    const dob = new Date(cfg.dob);
+    const ageMonths = Math.floor((new Date()-dob)/2628000000);
+    const offlay = new Date(cfg.expectedOfflay);
+    const daysToOfflay = Math.ceil((offlay-new Date())/86400000);
+    const mortality = cfg.status==='active'?((1-cfg.currentBirds/cfg.initialBirds)*100).toFixed(1):0;
+    return `<div class="batch-card ${cfg.status==='pending'?'pending':''}">
+      <div class="batch-status status-${cfg.status}">${cfg.status}</div>
+      <div class="batch-name">${cfg.name}</div>
+      <div class="batch-supplier" style="margin-bottom:1rem">Supplier: ${cfg.supplier}</div>
+      <div class="batch-metrics">
+        <div class="bm"><div class="bm-label">Date of Birth</div><div class="bm-value" style="font-size:.8rem">${cfg.dob}</div></div>
+        <div class="bm"><div class="bm-label">Age</div><div class="bm-value">${ageMonths}mo</div></div>
+        <div class="bm"><div class="bm-label">Initial Birds</div><div class="bm-value">${fmtN(cfg.initialBirds)}</div></div>
+        <div class="bm"><div class="bm-label">Current Birds</div><div class="bm-value" style="color:${colors[i]}">${fmtN(cfg.currentBirds)}</div></div>
+        <div class="bm"><div class="bm-label">Mortality %</div><div class="bm-value ${mortality>5?'val-red':''}">${mortality}%</div></div>
+        <div class="bm"><div class="bm-label">Days to Offlay</div><div class="bm-value ${daysToOfflay<90?'val-red':''}">${daysToOfflay<0?'Offlay':daysToOfflay+'d'}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============ MAIN RENDER ============
+function render(){
+  const eggs = filterEggs(activeDays, activeBatch);
+  const sales = filterSales(activeDays);
+  const expenses = filterExpenses(activeDays);
+  renderKPIs(eggs, sales, expenses);
+  renderAverages();
+  renderDailyChart(eggs);
+  renderPeriodTable(document.getElementById('period-table-wrap'));
+  renderLatestEntry(document.getElementById('latest-entry-wrap'));
+  renderFlags();
+  renderMonthlyChart();
+  
+  // Production
+  renderBatchLayingCards();
+  renderBatchCharts();
+  renderPeriodDetailTable();
+  
+  // Financial
+  renderFinancial();
+  
+  // Batches
+  renderAllBatches();
+
+  document.getElementById('last-refreshed').textContent = lastReportDate || new Date().toISOString().split('T')[0];
+}
+
+// ============ LIVE DATA ============
+async function tryLoadLiveData(){
+  try{
+    const [analyticsRes, salesRes, batchRes] = await Promise.all([
+      fetch(JSON_ANALYTICS+'?t='+Date.now(),{cache:'no-cache'}),
+      fetch(JSON_SALES+'?t='+Date.now(),{cache:'no-cache'}),
+      fetch(JSON_BATCH_METADATA+'?t='+Date.now(),{cache:'no-cache'})
+    ]);
+
+    if(batchRes.ok){
+      BATCH_CONFIG = normalizeBatchConfig(await batchRes.json());
+    }
+    if(analyticsRes.ok){
+      const analytics = await analyticsRes.json();
+      lastReportDate = analytics.reportDate || lastReportDate;
+      if(Array.isArray(analytics.records) && analytics.records.length){
+        RAW_EGGS = analytics.records;
+      }
+      if(analytics.batchStats){
+        BATCH_CONFIG = normalizeBatchConfig(analytics.batchStats);
+      }
+    }
+    if(salesRes.ok){
+      const sales = await salesRes.json();
+      lastReportDate = sales.reportDate || lastReportDate;
+      if(Array.isArray(sales.salesRecords)){
+        RAW_SALES = sales.salesRecords;
+      }
+      if(Array.isArray(sales.expenseRecords)){
+        RAW_EXPENSES = sales.expenseRecords;
+      }
+    }
+
+    rebuildData();
+    render();
+  }catch(e){
+    document.getElementById('last-refreshed').textContent = 'Using embedded fallback';
+  }
+}
+
+// ============ EVENT LISTENERS ============
+document.querySelectorAll('.period-btn[data-days]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.period-btn[data-days]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeDays = parseInt(btn.dataset.days);
+    render();
+  });
+});
+document.querySelectorAll('.period-btn[data-batch]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.period-btn[data-batch]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeBatch = btn.dataset.batch;
+    render();
+  });
+});
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    // Re-render charts on tab switch
+    setTimeout(render,50);
+  });
+});
+
+// Theme toggle
+const savedTheme = localStorage.getItem('color-theme');
+let isDark = savedTheme ? savedTheme==='dark' : true;
+function applyTheme(dark){
+  document.documentElement.classList.toggle('dark',dark);
+  document.getElementById('theme-toggle').textContent = dark?'☀':'☾';
+  localStorage.setItem('color-theme',dark?'dark':'light');
+  // Rebuild charts with new colors
+  Object.keys(charts).forEach(k=>{if(charts[k])charts[k].destroy();charts[k]=null;});
+  setTimeout(render,50);
+}
+applyTheme(isDark);
+document.getElementById('theme-toggle').addEventListener('click',()=>{isDark=!isDark;applyTheme(isDark);});
+
+// Init
+render();
+tryLoadLiveData();
+</script>
 </body>
 </html>
