@@ -1,20 +1,20 @@
 {
-  "reportDate": "2026-06-10",
+  "reportDate": "2026-06-11",
   "latestEntry": {
-    "surveyDate": "2026-06-09",
+    "surveyDate": "2026-06-11",
     "latestsales": {
       "latestcategory": "CHICKEN",
       "subcategory": "TRAYS",
       "paymentmode": "AIRTEL_MOBILE_MONEY",
-      "amount": 694000,
-      "numtrays": 68,
+      "amount": 22000,
+      "numtrays": 2,
       "numanimals": 0,
-      "comments": "8 trays for batch 4"
+      "comments": ""
     },
     "combined": {
-      "totalAmount": 77861707
+      "totalAmount": 79793707
     },
-    "submittedAt": "2026-06-10 21:58"
+    "submittedAt": "2026-06-11 22:17"
   },
   "batchStats": {
     "batch1": {
@@ -1416,6 +1416,50 @@
       "animals": 0,
       "comments": "8 trays for batch 4",
       "submittedAt": "2026-06-10T18:58:56.936037+00:00"
+    },
+    {
+      "date": "2026-06-10",
+      "amount": 33000,
+      "payment": "AIRTEL_MOBILE_MONEY",
+      "category": "CHICKEN",
+      "subcategory": "TRAYS",
+      "trays": 3,
+      "animals": 0,
+      "comments": "",
+      "submittedAt": "2026-06-11T19:13:34.786225+00:00"
+    },
+    {
+      "date": "2026-06-11",
+      "amount": 1070000,
+      "payment": "AIRTEL_MOBILE_MONEY",
+      "category": "CHICKEN",
+      "subcategory": "TRAYS",
+      "trays": 100,
+      "animals": 0,
+      "comments": "",
+      "submittedAt": "2026-06-11T19:13:36.170769+00:00"
+    },
+    {
+      "date": "2026-06-11",
+      "amount": 807000,
+      "payment": "AIRTEL_MOBILE_MONEY",
+      "category": "CHICKEN",
+      "subcategory": "TRAYS",
+      "trays": 79,
+      "animals": 0,
+      "comments": "9 trays are for batch 3",
+      "submittedAt": "2026-06-11T19:16:23.117733+00:00"
+    },
+    {
+      "date": "2026-06-11",
+      "amount": 22000,
+      "payment": "AIRTEL_MOBILE_MONEY",
+      "category": "CHICKEN",
+      "subcategory": "TRAYS",
+      "trays": 2,
+      "animals": 0,
+      "comments": "",
+      "submittedAt": "2026-06-11T19:17:17.050812+00:00"
     }
   ],
   "expenseRecords": []
