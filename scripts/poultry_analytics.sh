@@ -1,4 +1,4 @@
-#!/bin/bash
+ja#!/bin/bash
 set -e
 
 : "${ONA_API_TOKEN:?Missing ONA_API_TOKEN}"
@@ -44,6 +44,7 @@ yesterday_total_eggs=0; yesterday_count=0
 batch_one_birds=539
 batch_two_birds=1027
 batch_three_birds=390
+batch_four_birds=979
 total_birds=$((batch_one_birds + batch_two_birds + batch_three_birds))
 
 mapfile -t records < <(echo "$response" | jq -c '.[]')
