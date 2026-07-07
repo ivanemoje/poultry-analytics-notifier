@@ -1,5 +1,5 @@
 {
-  "reportDate": "2026-07-06",
+  "reportDate": "2026-07-07",
   "latestEntry": {
     "surveyDate": "2026-07-06",
     "batch1": {
@@ -7,25 +7,25 @@
       "eggs": 5,
       "broken": 0,
       "totalEggs": 395,
-      "layingPercentage": "69.00"
+      "layingPercentage": "73.00"
     },
     "batch2": {
       "trays": 30,
       "eggs": 23,
       "broken": 0,
       "totalEggs": 923,
-      "layingPercentage": "87.00"
+      "layingPercentage": "89.00"
     },
     "batch3": {
       "trays": 10,
       "eggs": 18,
       "broken": 1,
       "totalEggs": 318,
-      "layingPercentage": "79.00"
+      "layingPercentage": "81.00"
     },
     "combined": {
       "totalEggsEntry": 1636,
-      "layingPercentageDaily": "81.00"
+      "layingPercentageDaily": "83.00"
     },
     "submittedAt": "2026-07-06 22:19"
   },
@@ -52,25 +52,25 @@
     }
   },
   "recentTotals": {
-    "sevenDay": 11294,
-    "thirtyDay": 46689
+    "sevenDay": 9691,
+    "thirtyDay": 45237
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1620,
-      "trend": "✅"
+      "average": 1636,
+      "trend": "❌"
     },
     "threeDay": {
-      "average": 1621,
-      "trend": "✅"
+      "average": 1628,
+      "trend": "❌"
     },
     "sevenDay": {
-      "average": 1613,
-      "trend": "✅"
+      "average": 1615,
+      "trend": "❌"
     },
     "thirtyDay": {
-      "average": 1556,
-      "trend": "✅"
+      "average": 1559,
+      "trend": "❌"
     }
   },
   "batchStats": {
@@ -81,7 +81,7 @@
       "dailyconsumptionkgs": 0.12,
       "supplier": "jeka",
       "initialBirds": 620,
-      "currentBirds": 567
+      "currentBirds": 539
     },
     "batch2": {
       "dateOfBirth": "2025-06-15",
@@ -90,7 +90,7 @@
       "supplier": "jayden",
       "status": "active",
       "initialBirds": 1215,
-      "currentBirds": 1052
+      "currentBirds": 1027
     },
     "batch3": {
       "dateOfBirth": "2025-12-20",
@@ -99,7 +99,7 @@
       "supplier": "jeka",
       "status": "active",
       "initialBirds": 400,
-      "currentBirds": 399
+      "currentBirds": 390
     },
     "batch4": {
       "dateOfBirth": "2026-04-24",
