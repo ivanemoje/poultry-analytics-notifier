@@ -108,7 +108,7 @@
       "supplier": "jeka",
       "status": "brooding",
       "initialBirds": 1000,
-      "currentBirds": 980
+      "currentBirds": 979
     },
     "batch5": {
       "dateOfBirth": "2026-10-01",
