@@ -6,7 +6,7 @@
     "dailyconsumptionkgs": 0.12,
     "supplier": "jeka",
     "initialBirds": 620,
-    "currentBirds": 567
+    "currentBirds": 539
   },
   "batch2": {
     "dateOfBirth": "2025-06-15",
@@ -15,7 +15,7 @@
     "supplier": "jayden",
     "status": "active",
     "initialBirds": 1215,
-    "currentBirds": 1052
+    "currentBirds": 1027
   },
   "batch3": {
     "dateOfBirth": "2025-12-20",
@@ -24,7 +24,7 @@
     "supplier": "jeka",
     "status": "active",
     "initialBirds": 400,
-    "currentBirds": 399
+    "currentBirds": 390
   },
   "batch4": {
     "dateOfBirth": "2026-04-24",
