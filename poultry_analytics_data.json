@@ -1,5 +1,5 @@
 {
-  "reportDate": "2026-07-07",
+  "reportDate": "2026-07-08",
   "latestEntry": {
     "surveyDate": "2026-07-07",
     "batch1": {
@@ -52,24 +52,24 @@
     }
   },
   "recentTotals": {
-    "sevenDay": 11342,
-    "thirtyDay": 46888
+    "sevenDay": 9721,
+    "thirtyDay": 45446
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1636,
+      "average": 1651,
       "trend": "❌"
     },
     "threeDay": {
-      "average": 1226,
+      "average": 1643,
       "trend": "❌"
     },
     "sevenDay": {
-      "average": 1417,
+      "average": 1620,
       "trend": "❌"
     },
     "thirtyDay": {
-      "average": 1512,
+      "average": 1567,
       "trend": "❌"
     }
   },
@@ -5502,19 +5502,6 @@
       "b3_eggs": 18,
       "b3_broken": 1,
       "submittedAt": "2026-07-06T19:19:46.206549+00:00"
-    },
-    {
-      "date": "2026-07-07",
-      "b1_trays": 0,
-      "b1_eggs": 0,
-      "b1_broken": 0,
-      "b2_trays": 0,
-      "b2_eggs": 0,
-      "b2_broken": 0,
-      "b3_trays": 0,
-      "b3_eggs": 0,
-      "b3_broken": 0,
-      "submittedAt": "2026-07-07T15:14:25.107003+00:00"
     },
     {
       "date": "2026-07-07",
