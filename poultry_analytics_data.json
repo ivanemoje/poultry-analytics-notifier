@@ -1,72 +1,72 @@
 {
-  "reportDate": "2026-07-18",
+  "reportDate": "2026-07-19",
   "latestEntry": {
-    "surveyDate": "2026-07-17",
+    "surveyDate": "2026-07-19",
     "batch1": {
       "trays": 13,
-      "eggs": 6,
-      "broken": 1,
-      "totalEggs": 396,
-      "layingPercentage": "73.00"
+      "eggs": 0,
+      "broken": 0,
+      "totalEggs": 390,
+      "layingPercentage": "72.00"
     },
     "batch2": {
       "trays": 30,
-      "eggs": 5,
-      "broken": 1,
-      "totalEggs": 905,
+      "eggs": 6,
+      "broken": 2,
+      "totalEggs": 906,
       "layingPercentage": "88.00"
     },
     "batch3": {
       "trays": 10,
-      "eggs": 1,
-      "broken": 0,
-      "totalEggs": 301,
-      "layingPercentage": "77.00"
+      "eggs": 0,
+      "broken": 1,
+      "totalEggs": 300,
+      "layingPercentage": "76.00"
     },
     "combined": {
-      "totalEggsEntry": 1602,
+      "totalEggsEntry": 1596,
       "layingPercentageDaily": "81.00"
     },
-    "submittedAt": "2026-07-17 22:38"
+    "submittedAt": "2026-07-19 23:01"
   },
   "overallTotals": {
     "batch1": {
-      "trays": 6275,
+      "trays": 6301,
       "eggs": 4308,
       "broken": 347
     },
     "batch2": {
-      "trays": 6719,
-      "eggs": 2756,
-      "broken": 361
+      "trays": 6778,
+      "eggs": 2781,
+      "broken": 363
     },
     "batch3": {
-      "trays": 369,
+      "trays": 389,
       "eggs": 986,
-      "broken": 69
+      "broken": 70
     },
     "combined": {
-      "totalEggsAllRecords": 408940,
-      "totalTraysCalculated": 13631,
-      "remainingEggs": 10
+      "totalEggsAllRecords": 412115,
+      "totalTraysCalculated": 13737,
+      "remainingEggs": 5
     }
   },
   "recentTotals": {
-    "sevenDay": 9528,
-    "thirtyDay": 46408
+    "sevenDay": 11108,
+    "thirtyDay": 48019
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1594,
-      "trend": "❌"
+      "average": 0,
+      "trend": "✅"
     },
     "threeDay": {
-      "average": 1594,
+      "average": 1591,
       "trend": "❌"
     },
     "sevenDay": {
-      "average": 1588,
-      "trend": "❌"
+      "average": 1586,
+      "trend": "✅"
     },
     "thirtyDay": {
       "average": 1600,
@@ -5645,6 +5645,32 @@
       "b3_eggs": 1,
       "b3_broken": 0,
       "submittedAt": "2026-07-17T19:38:24.800459+00:00"
+    },
+    {
+      "date": "2026-07-19",
+      "b1_trays": 13,
+      "b1_eggs": 0,
+      "b1_broken": 0,
+      "b2_trays": 29,
+      "b2_eggs": 19,
+      "b2_broken": 0,
+      "b3_trays": 10,
+      "b3_eggs": 0,
+      "b3_broken": 0,
+      "submittedAt": "2026-07-19T03:25:47.820194+00:00"
+    },
+    {
+      "date": "2026-07-19",
+      "b1_trays": 13,
+      "b1_eggs": 0,
+      "b1_broken": 0,
+      "b2_trays": 30,
+      "b2_eggs": 6,
+      "b2_broken": 2,
+      "b3_trays": 10,
+      "b3_eggs": 0,
+      "b3_broken": 1,
+      "submittedAt": "2026-07-19T20:01:57.023164+00:00"
     }
   ]
 }
