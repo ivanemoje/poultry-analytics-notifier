@@ -1,7 +1,9 @@
 {
   "batch1": {
     "dateOfBirth": "2024-12-05",
-    "expectedOfflay": "2026-06-05",
+    "expectedLay": "2025-06-05",
+    "expectedOfflay": "2026-08-05",
+    "expectedOfflay": "2026-12-05",
     "status": "active",
     "dailyconsumptionkgs": 0.12,
     "supplier": "jeka",
@@ -10,7 +12,9 @@
   },
   "batch2": {
     "dateOfBirth": "2025-06-15",
-    "expectedOfflay": "2026-12-15",
+    "expectedLay": "2025-12-15",
+    "expectedOfflay": "2027-03-15",
+    "expectedOfflay": "2027-06-15",
     "dailyconsumptionkgs": 0.15,
     "supplier": "jayden",
     "status": "active",
@@ -19,7 +23,9 @@
   },
   "batch3": {
     "dateOfBirth": "2025-12-20",
-    "expectedOfflay": "2027-06-20",
+     "expectedLay": "2026-06-29",
+    "expectedOfflay": "2027-09-11",
+     "expectedOfflay": "2027-12-20",
     "dailyconsumptionkgs": 0.1,
     "supplier": "jeka",
     "status": "active",
@@ -28,7 +34,9 @@
   },
   "batch4": {
     "dateOfBirth": "2026-04-24",
-    "expectedOfflay": "2027-10-24",
+    "expectedLay": "2026-10-24",
+    "expectedOfflay": "2028-01-24",
+    "expectedOfflay": "2028-04-24",
     "dailyconsumptionkgs": 0,
     "supplier": "jeka",
     "status": "brooding",
@@ -36,8 +44,10 @@
     "currentBirds": 979
   },
   "batch5": {
-    "dateOfBirth": "2026-10-01",
-    "expectedOfflay": "2028-04-01",
+    "dateOfBirth": "2026-10-22",
+    "expectedLay": "2027-04-22",
+    "expectedOfflay": "2028-06-22",
+    "expectedOfflay": "2028-10-22",
     "dailyconsumptionkgs": 0,
     "supplier": "jeka",
     "status": "pending",
