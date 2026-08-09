@@ -8,7 +8,8 @@
     "dailyconsumptionkgs": 0.12,
     "supplier": "jeka",
     "initialBirds": 620,
-    "currentBirds": 539
+    "currentBirds": 539,
+     "offlaidBirds": 525 (2 died, 5 catherine)
   },
   "batch2": {
     "dateOfBirth": "2025-06-15",
