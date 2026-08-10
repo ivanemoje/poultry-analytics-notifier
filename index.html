@@ -204,7 +204,7 @@ a:hover{text-decoration:underline;}
   border-radius:.3rem;padding:1rem;
   position:relative;
 }
-.batch-card.pending{opacity:.6;}
+.batch-card.pending,.batch-card.offlaid{opacity:.6;}
 .batch-status{
   position:absolute;top:.7rem;right:.7rem;
   font-size:.6rem;font-family:var(--font-mono);
@@ -213,6 +213,7 @@ a:hover{text-decoration:underline;}
 }
 .status-active{background:rgba(45,90,39,.2);color:var(--green);border:1px solid var(--green);}
 .status-pending{background:var(--surface2);color:var(--text3);border:1px solid var(--border);}
+.status-offlaid{background:var(--surface2);color:var(--text3);border:1px solid var(--border);}
 .batch-name{font-weight:700;font-size:.85rem;margin-bottom:.15rem;}
 .batch-supplier{font-size:.65rem;color:var(--text3);font-family:var(--font-mono);margin-bottom:.75rem;}
 .batch-metrics{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
@@ -352,7 +353,7 @@ a:hover{text-decoration:underline;}
   <span class="period-sep">|</span>
   <span style="font-size:.65rem;font-family:'DM Mono',monospace;color:var(--text3);margin-right:.25rem;">BATCH</span>
   <button class="period-btn active" data-batch="all">ALL</button>
-  <button class="period-btn" data-batch="1">B1</button>
+  <!-- Batch 1 offlaid; keep historical records but remove from active production filters. -->
   <button class="period-btn" data-batch="2">B2</button>
   <button class="period-btn" data-batch="3">B3</button>
 </div>
@@ -561,7 +562,7 @@ a:hover{text-decoration:underline;}
 <script>
 // ============ DATA ============
 let BATCH_CONFIG = {
-  batch1:{name:"Batch 1",dob:"2024-12-05",expectedOfflay:"2026-06-05",status:"active",supplier:"Jeka",initialBirds:620,currentBirds:567},
+  batch1:{name:"Batch 1",dob:"2024-12-05",expectedOfflay:"2026-08-05",status:"offlaid",supplier:"Jeka",initialBirds:620,currentBirds:539},
   batch2:{name:"Batch 2",dob:"2025-06-15",expectedOfflay:"2026-12-15",status:"active",supplier:"Jayden",initialBirds:1215,currentBirds:1052},
   batch3:{name:"Batch 3",dob:"2025-12-20",expectedOfflay:"2027-06-20",status:"active",supplier:"Jeka",initialBirds:400,currentBirds:399},
   batch4:{name:"Batch 4",dob:"2026-04-15",expectedOfflay:"2027-10-15",status:"pending",supplier:"Jeka",initialBirds:1000,currentBirds:1000},
@@ -599,6 +600,35 @@ function daysBefore(n){
 
 let EGGS = [];
 let lastReportDate = '';
+const PRODUCTION_BATCHES = [
+  {key:'batch1', prefix:'b1', number:'1', label:'B1', color:'#5aac4e'},
+  {key:'batch2', prefix:'b2', number:'2', label:'B2', color:'#4a80d4'},
+  {key:'batch3', prefix:'b3', number:'3', label:'B3', color:'#c4864a'}
+];
+
+function activeProductionBatches(){
+  return PRODUCTION_BATCHES.filter(b=>BATCH_CONFIG[b.key]?.status==='active');
+}
+
+function batchTotal(r, batch){
+  return r[batch.prefix+'_total'] || 0;
+}
+
+function batchBroken(r, batch){
+  return r[batch.prefix+'_broken'] || 0;
+}
+
+function activeEggTotal(r){
+  return activeProductionBatches().reduce((sum,b)=>sum+batchTotal(r,b),0);
+}
+
+function activeBrokenTotal(r){
+  return activeProductionBatches().reduce((sum,b)=>sum+batchBroken(r,b),0);
+}
+
+function activeBirdTotal(){
+  return activeProductionBatches().reduce((sum,b)=>sum+(BATCH_CONFIG[b.key]?.currentBirds || 0),0);
+}
 
 function rebuildData(){
   EGGS = RAW_EGGS.map(r=>({
@@ -640,7 +670,9 @@ let charts = {};
 function filterEggs(days, batch){
   const cutoff = days<9000 ? daysBefore(days) : '2000-01-01';
   let rows = EGGS.filter(r=>r.date>=cutoff);
-  if(batch!=='all'){
+  if(batch==='all'){
+    rows = rows.map(r=>({...r, total: activeEggTotal(r), broken: activeBrokenTotal(r)}));
+  }else{
     const key = 'b'+batch+'_total';
     rows = rows.map(r=>({...r, total: r[key], b1_total: batch=='1'?r.b1_total:0, b2_total:batch=='2'?r.b2_total:0, b3_total:batch=='3'?r.b3_total:0}));
   }
@@ -690,10 +722,10 @@ function renderKPIs(eggs, sales, expenses){
   // Latest laying %
   const latest = EGGS[EGGS.length-1];
   if(latest){
-    const b1=BATCH_CONFIG.batch1.currentBirds, b2=BATCH_CONFIG.batch2.currentBirds, b3=BATCH_CONFIG.batch3.currentBirds;
-    const total_birds = activeBatch==='all'?(b1+b2+b3):activeBatch==='1'?b1:activeBatch==='2'?b2:b3;
-    const total_eggs = activeBatch==='all'?latest.total:activeBatch==='1'?latest.b1_total:activeBatch==='2'?latest.b2_total:latest.b3_total;
-    const pct = ((total_eggs/total_birds)*100).toFixed(1);
+    const selected = PRODUCTION_BATCHES.find(b=>b.number===activeBatch);
+    const total_birds = activeBatch==='all'?activeBirdTotal():(BATCH_CONFIG[selected?.key]?.currentBirds || 0);
+    const total_eggs = activeBatch==='all'?activeEggTotal(latest):(selected?batchTotal(latest, selected):0);
+    const pct = total_birds ? ((total_eggs/total_birds)*100).toFixed(1) : '0.0';
     document.getElementById('kpi-laying').textContent = pct+'%';
     document.getElementById('kpi-laying-sub').textContent = 'Survey: '+latest.date;
 
@@ -711,10 +743,10 @@ function renderAverages(){
     const cutoff = daysBefore(days);
     const rows = EGGS.filter(r=>r.date>=cutoff&&r.date<=now);
     if(!rows.length) return 0;
-    return rows.reduce((s,r)=>s+r.total,0)/rows.length;
+    return rows.reduce((s,r)=>s+activeEggTotal(r),0)/rows.length;
   };
   const yday = get(1); const d7=get(7); const d30=get(30);
-  const allTotal = EGGS.reduce((s,r)=>s+r.total,0);
+  const allTotal = EGGS.reduce((s,r)=>s+activeEggTotal(r),0);
 
   document.getElementById('avg-yesterday').textContent = fmtN(yday);
   document.getElementById('avg-7d').textContent = fmtN(d7);
@@ -764,7 +796,7 @@ function renderDailyChart(eggs){
 function renderMonthlyChart(){
   const months = [...new Set(EGGS.map(r=>r.date.substr(0,7)))].sort();
   const byMonth = {};
-  EGGS.forEach(r=>{const m=r.date.substr(0,7);byMonth[m]=(byMonth[m]||0)+r.total;});
+  EGGS.forEach(r=>{const m=r.date.substr(0,7);byMonth[m]=(byMonth[m]||0)+activeEggTotal(r);});
   mkChart('chart-monthly-eggs','bar',{
     labels:months.map(fmtMonth),
     datasets:[{label:'Eggs',data:months.map(m=>byMonth[m]||0),backgroundColor:'rgba(90,172,78,.7)',borderColor:'#5aac4e',borderWidth:1}]
@@ -774,16 +806,15 @@ function renderMonthlyChart(){
 function renderPeriodTable(container){
   const periods = [7,14,30,90,180,365,9999];
   const labels = ['7D','14D','30D','3M','6M','1Y','All'];
-  const b1=BATCH_CONFIG.batch1.currentBirds, b2=BATCH_CONFIG.batch2.currentBirds, b3=BATCH_CONFIG.batch3.currentBirds;
-  const total_birds = b1+b2+b3;
+  const total_birds = activeBirdTotal();
   
   const rows = periods.map((days,i)=>{
     const cutoff = days<9000?daysBefore(days):'2000-01-01';
     const rows = EGGS.filter(r=>r.date>=cutoff);
     if(!rows.length) return {label:labels[i],total:0,avg:0,pct:0};
-    const total = rows.reduce((s,r)=>s+r.total,0);
+    const total = rows.reduce((s,r)=>s+activeEggTotal(r),0);
     const avg = total/rows.length;
-    const pct = ((avg/total_birds)*100).toFixed(1);
+    const pct = total_birds ? ((avg/total_birds)*100).toFixed(1) : '0.0';
     return {label:labels[i],total,avg,pct};
   });
 
@@ -797,14 +828,17 @@ function renderPeriodTable(container){
 function renderLatestEntry(container){
   const latest = EGGS[EGGS.length-1];
   if(!latest){container.innerHTML='<div style="color:var(--text3);font-size:.75rem">No data</div>';return;}
-  const b1=BATCH_CONFIG.batch1.currentBirds,b2=BATCH_CONFIG.batch2.currentBirds,b3=BATCH_CONFIG.batch3.currentBirds;
+  const batchRows = activeProductionBatches().map(b=>{
+    const birds = BATCH_CONFIG[b.key].currentBirds;
+    const eggs = batchTotal(latest,b);
+    const pct = birds ? ((eggs/birds)*100).toFixed(0) : '0';
+    return `<div class="stat-row"><span class="stat-label">${BATCH_CONFIG[b.key].name} (${birds} birds)</span><span class="stat-value">${eggs} eggs <span style="color:var(--green)">(${pct}%)</span></span></div>`;
+  }).join('');
   container.innerHTML = `
     <div class="stat-row"><span class="stat-label">Date</span><span class="stat-value">${latest.date}</span></div>
-    <div class="stat-row"><span class="stat-label">Batch 1 (${b1} birds)</span><span class="stat-value">${latest.b1_total} eggs <span style="color:var(--green)">(${((latest.b1_total/b1)*100).toFixed(0)}%)</span></span></div>
-    <div class="stat-row"><span class="stat-label">Batch 2 (${b2} birds)</span><span class="stat-value">${latest.b2_total} eggs <span style="color:var(--green)">(${((latest.b2_total/b2)*100).toFixed(0)}%)</span></span></div>
-    <div class="stat-row"><span class="stat-label">Batch 3 (${b3} birds)</span><span class="stat-value">${latest.b3_total} eggs <span style="color:var(--text3)">—</span></span></div>
-    <div class="stat-row"><span class="stat-label">Broken</span><span class="stat-value ${latest.broken>5?'val-red':''}">${latest.broken}</span></div>
-    <div class="stat-row"><span class="stat-label">Combined</span><span class="stat-value">${latest.total} eggs</span></div>`;
+    ${batchRows}
+    <div class="stat-row"><span class="stat-label">Broken</span><span class="stat-value ${activeBrokenTotal(latest)>5?'val-red':''}">${activeBrokenTotal(latest)}</span></div>
+    <div class="stat-row"><span class="stat-label">Combined</span><span class="stat-value">${activeEggTotal(latest)} eggs</span></div>`;
 }
 
 function renderFlags(){
@@ -824,8 +858,8 @@ function renderFlags(){
   if(maxGap>5) flags.push({sev:'amber',msg:`Longest gap: ${maxGap} days (from ${gapStart}). Missing log days could skew totals.`});
   // High broken rate
   const recentEggs = EGGS.filter(r=>r.date>=daysBefore(30));
-  const totalBroken = recentEggs.reduce((s,r)=>s+r.broken,0);
-  const totalEggs30 = recentEggs.reduce((s,r)=>s+r.total,0);
+  const totalBroken = recentEggs.reduce((s,r)=>s+activeBrokenTotal(r),0);
+  const totalEggs30 = recentEggs.reduce((s,r)=>s+activeEggTotal(r),0);
   if(totalEggs30>0&&(totalBroken/totalEggs30)>0.01) flags.push({sev:'amber',msg:`Broken egg rate: ${((totalBroken/totalEggs30)*100).toFixed(2)}% in last 30 days (${totalBroken} broken).`});
   // Feb expenses surge
   const febExp = RAW_EXPENSES.filter(r=>r.date.startsWith('2026-02')).reduce((s,r)=>s+r.amount,0);
@@ -844,13 +878,11 @@ function renderFlags(){
 // ============ PRODUCTION TAB ============
 function renderBatchLayingCards(){
   const el = document.getElementById('batch-laying-cards');
-  const batches = ['batch1','batch2','batch3'];
-  const batchKeys = ['b1','b2','b3'];
-  const colors = ['var(--green)','var(--blue)','var(--amber)'];
+  const batches = activeProductionBatches();
   
-  el.innerHTML = batches.map((bk,i)=>{
-    const cfg = BATCH_CONFIG[bk];
-    const key = batchKeys[i]+'_total';
+  el.innerHTML = batches.map((batch)=>{
+    const cfg = BATCH_CONFIG[batch.key];
+    const key = batch.prefix+'_total';
     const recent = EGGS.filter(r=>r.date>=daysBefore(30));
     const periodEggs = recent.reduce((s,r)=>s+r[key],0);
     const avgEggs = recent.length?periodEggs/recent.length:0;
@@ -859,17 +891,17 @@ function renderBatchLayingCards(){
     const latestEggs = latest?latest[key]:0;
     const latestPct = cfg.status==='active'?((latestEggs/cfg.currentBirds)*100).toFixed(1):0;
     
-    return `<div class="batch-card ${cfg.status==='pending'?'pending':''}">
+    return `<div class="batch-card ${cfg.status}">
       <div class="batch-status status-${cfg.status}">${cfg.status}</div>
       <div class="batch-name">${cfg.name}</div>
       <div class="batch-supplier">Supplier: ${cfg.supplier}</div>
       <div class="batch-metrics">
         <div class="bm"><div class="bm-label">Birds</div><div class="bm-value">${fmtN(cfg.currentBirds)} / ${fmtN(cfg.initialBirds)}</div></div>
-        <div class="bm"><div class="bm-label">Laying % (today)</div><div class="bm-value" style="color:${colors[i]}">${latestPct}%</div></div>
+        <div class="bm"><div class="bm-label">Laying % (today)</div><div class="bm-value" style="color:${batch.color}">${latestPct}%</div></div>
         <div class="bm"><div class="bm-label">30D Avg Eggs</div><div class="bm-value">${fmtN(avgEggs)}/day</div></div>
         <div class="bm"><div class="bm-label">DOB</div><div class="bm-value">${cfg.dob}</div></div>
       </div>
-      <div class="laying-bar"><div class="laying-bar-fill" style="width:${Math.min(100,layingPct)}%;background:${colors[i]}"></div></div>
+      <div class="laying-bar"><div class="laying-bar-fill" style="width:${Math.min(100,layingPct)}%;background:${batch.color}"></div></div>
     </div>`;
   }).join('');
 }
@@ -881,34 +913,36 @@ function renderBatchCharts(){
   // Batch laying % over time
   mkChart('chart-batch-laying','line',{
     labels:dates30.map(fmtDate),
-    datasets:[
-      {label:'B1 Laying%',data:dates30.map(d=>{const r=EGGS.find(x=>x.date===d);return r?((r.b1_total/BATCH_CONFIG.batch1.currentBirds)*100).toFixed(1):null}),borderColor:'#5aac4e',borderWidth:1.5,pointRadius:0,tension:0.3},
-      {label:'B2 Laying%',data:dates30.map(d=>{const r=EGGS.find(x=>x.date===d);return r?((r.b2_total/BATCH_CONFIG.batch2.currentBirds)*100).toFixed(1):null}),borderColor:'#4a80d4',borderWidth:1.5,pointRadius:0,tension:0.3},
-    ]
+    datasets: activeProductionBatches().map(b=>({
+      label:b.label+' Laying%',
+      data:dates30.map(d=>{const r=EGGS.find(x=>x.date===d);const birds=BATCH_CONFIG[b.key].currentBirds;return r&&birds?((batchTotal(r,b)/birds)*100).toFixed(1):null}),
+      borderColor:b.color,
+      borderWidth:1.5,
+      pointRadius:0,
+      tension:0.3
+    }))
   },{scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}});
 
   // Eggs by batch (stacked bar, monthly)
   const months = [...new Set(EGGS.map(r=>r.date.substr(0,7)))].sort();
-  const byMonth1={},byMonth2={},byMonth3={};
-  EGGS.forEach(r=>{const m=r.date.substr(0,7);byMonth1[m]=(byMonth1[m]||0)+r.b1_total;byMonth2[m]=(byMonth2[m]||0)+r.b2_total;byMonth3[m]=(byMonth3[m]||0)+r.b3_total;});
   mkChart('chart-batch-eggs','bar',{
     labels:months.map(fmtMonth),
-    datasets:[
-      {label:'B1',data:months.map(m=>byMonth1[m]||0),backgroundColor:'rgba(90,172,78,.7)'},
-      {label:'B2',data:months.map(m=>byMonth2[m]||0),backgroundColor:'rgba(74,128,212,.7)'},
-      {label:'B3',data:months.map(m=>byMonth3[m]||0),backgroundColor:'rgba(196,134,74,.7)'},
-    ]
+    datasets: activeProductionBatches().map(b=>{
+      const byMonth = {};
+      EGGS.forEach(r=>{const m=r.date.substr(0,7);byMonth[m]=(byMonth[m]||0)+batchTotal(r,b);});
+      return {label:b.label,data:months.map(m=>byMonth[m]||0),backgroundColor:b.color.replace(')',',.7)').replace('rgb','rgba')};
+    })
   },{scales:{x:{stacked:true},y:{stacked:true}}});
 }
 
 function renderPeriodDetailTable(){
   const periods=[7,14,30,90,180,365,9999];
   const labels=['7D','14D','30D','3M','6M','1Y','All'];
-  const batchKeys=[['b1_total','batch1'],['b2_total','batch2'],['b3_total','batch3']];
+  const batchKeys=activeProductionBatches();
   const rows = [
-    {label:'Total (all batches)', vals:periods.map(d=>{const c=d<9999?daysBefore(d):'2000-01-01';return fmtN(EGGS.filter(r=>r.date>=c).reduce((s,r)=>s+r.total,0));})},
-    ...batchKeys.map(([key,bk])=>({label:BATCH_CONFIG[bk].name, vals:periods.map(d=>{const c=d<9999?daysBefore(d):'2000-01-01';return fmtN(EGGS.filter(r=>r.date>=c).reduce((s,r)=>s+r[key],0));})})),
-    {label:'Avg Laying %',vals:periods.map(d=>{const c=d<9999?daysBefore(d):'2000-01-01';const rows=EGGS.filter(r=>r.date>=c);if(!rows.length)return'—';const avg=rows.reduce((s,r)=>s+r.total,0)/rows.length;const birds=BATCH_CONFIG.batch1.currentBirds+BATCH_CONFIG.batch2.currentBirds+BATCH_CONFIG.batch3.currentBirds;return((avg/birds)*100).toFixed(1)+'%';})},
+    {label:'Total (active batches)', vals:periods.map(d=>{const c=d<9999?daysBefore(d):'2000-01-01';return fmtN(EGGS.filter(r=>r.date>=c).reduce((s,r)=>s+activeEggTotal(r),0));})},
+    ...batchKeys.map(b=>({label:BATCH_CONFIG[b.key].name, vals:periods.map(d=>{const c=d<9999?daysBefore(d):'2000-01-01';return fmtN(EGGS.filter(r=>r.date>=c).reduce((s,r)=>s+batchTotal(r,b),0));})})),
+    {label:'Avg Laying %',vals:periods.map(d=>{const c=d<9999?daysBefore(d):'2000-01-01';const rows=EGGS.filter(r=>r.date>=c);if(!rows.length)return'—';const avg=rows.reduce((s,r)=>s+activeEggTotal(r),0)/rows.length;const birds=activeBirdTotal();return birds?((avg/birds)*100).toFixed(1)+'%':'—';})},
   ];
   document.getElementById('period-table-body').innerHTML = rows.map(r=>`<tr><td>${r.label}</td>${r.vals.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('');
 }
@@ -926,7 +960,7 @@ function renderFinancial(){
   // Price per tray (last 3 weeks)
   const cutoff = daysBefore(21);
   const recentSales = RAW_SALES.filter(r=>r.date>=cutoff);
-  const recentTrays = EGGS.filter(r=>r.date>=cutoff).reduce((s,r)=>s+Math.floor(r.total/30),0);
+  const recentTrays = EGGS.filter(r=>r.date>=cutoff).reduce((s,r)=>s+Math.floor(activeEggTotal(r)/30),0);
   const recentRevenue = recentSales.reduce((s,r)=>s+r.amount,0);
   const pricePerTray = recentTrays>0?recentRevenue/recentTrays:0;
   document.getElementById('fin-price-tray').textContent = fmtM(pricePerTray)+' UGX';
@@ -982,7 +1016,7 @@ function renderAllBatches(){
     const offlay = new Date(cfg.expectedOfflay);
     const daysToOfflay = Math.ceil((offlay-new Date())/86400000);
     const mortality = cfg.status==='active'?((1-cfg.currentBirds/cfg.initialBirds)*100).toFixed(1):0;
-    return `<div class="batch-card ${cfg.status==='pending'?'pending':''}">
+    return `<div class="batch-card ${cfg.status}">
       <div class="batch-status status-${cfg.status}">${cfg.status}</div>
       <div class="batch-name">${cfg.name}</div>
       <div class="batch-supplier" style="margin-bottom:1rem">Supplier: ${cfg.supplier}</div>
@@ -1034,9 +1068,6 @@ async function tryLoadLiveData(){
       fetch(JSON_BATCH_METADATA+'?t='+Date.now(),{cache:'no-cache'})
     ]);
 
-    if(batchRes.ok){
-      BATCH_CONFIG = normalizeBatchConfig(await batchRes.json());
-    }
     if(analyticsRes.ok){
       const analytics = await analyticsRes.json();
       lastReportDate = analytics.reportDate || lastReportDate;
@@ -1046,6 +1077,9 @@ async function tryLoadLiveData(){
       if(analytics.batchStats){
         BATCH_CONFIG = normalizeBatchConfig(analytics.batchStats);
       }
+    }
+    if(batchRes.ok){
+      BATCH_CONFIG = normalizeBatchConfig(await batchRes.json());
     }
     if(salesRes.ok){
       const sales = await salesRes.json();

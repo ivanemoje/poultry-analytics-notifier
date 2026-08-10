@@ -1,4 +1,4 @@
-ja#!/bin/bash
+#!/bin/bash
 set -e
 
 : "${ONA_API_TOKEN:?Missing ONA_API_TOKEN}"
@@ -8,6 +8,12 @@ URL="https://api.ona.io/api/v1/data/$ONA_FORM_ID"
 response=$(curl -s -H "Authorization: Token $ONA_API_TOKEN" "$URL")
 
 latest=$(echo "$response" | jq 'sort_by(._submission_time) | last')
+BATCH_METADATA_FILE="config/batch_metadata.json"
+if [ -f "$BATCH_METADATA_FILE" ]; then
+  batch_metadata_json=$(cat "$BATCH_METADATA_FILE")
+else
+  batch_metadata_json='{"batch1":{"dateOfBirth":"","supplier":"","status":"active"},"batch2":{"dateOfBirth":"","supplier":"","status":"active"},"batch3":{"dateOfBirth":"","supplier":"","status":"active"}}'
+fi
 
 # --- Latest entry values ---
 latest_trays=$(echo "$latest" | jq -r '.numbertrays // 0')
@@ -45,7 +51,19 @@ batch_one_birds=539
 batch_two_birds=1027
 batch_three_birds=390
 batch_four_birds=979
-total_birds=$((batch_one_birds + batch_two_birds + batch_three_birds))
+
+batch_one_status=$(echo "$batch_metadata_json" | jq -r '.batch1.status // "active"')
+batch_two_status=$(echo "$batch_metadata_json" | jq -r '.batch2.status // "active"')
+batch_three_status=$(echo "$batch_metadata_json" | jq -r '.batch3.status // "active"')
+
+batch_one_active=$([ "$batch_one_status" = "active" ] && echo 1 || echo 0)
+batch_two_active=$([ "$batch_two_status" = "active" ] && echo 1 || echo 0)
+batch_three_active=$([ "$batch_three_status" = "active" ] && echo 1 || echo 0)
+
+active_batch_one_birds=$((batch_one_active * batch_one_birds))
+active_batch_two_birds=$((batch_two_active * batch_two_birds))
+active_batch_three_birds=$((batch_three_active * batch_three_birds))
+total_birds=$((active_batch_one_birds + active_batch_two_birds + active_batch_three_birds))
 
 mapfile -t records < <(echo "$response" | jq -c '.[]')
 
@@ -75,7 +93,7 @@ for record in "${records[@]}"; do
     total_eggs_broken_batch3=$((total_eggs_broken_batch3 + broken3))
 
     date=$(echo "$record" | jq -r '.surveydate')
-    record_total_eggs=$(( (trays * 30) + eggs + (trays2 * 30) + eggs2 + (trays3 * 30) + eggs3 ))
+    record_total_eggs=$(( batch_one_active * ((trays * 30) + eggs) + batch_two_active * ((trays2 * 30) + eggs2) + batch_three_active * ((trays3 * 30) + eggs3) ))
 
     [[ "$date" > "$three_days_ago" ]] && three_day_total_eggs=$((three_day_total_eggs + record_total_eggs))
     [[ "$date" > "$seven_days_ago" ]] && seven_day_total_eggs=$((seven_day_total_eggs + record_total_eggs))
@@ -109,7 +127,7 @@ for record in "${records[@]}"; do
         t3=$(echo "$record" | jq -r '.numbertraysbatchthree // 0')
         e3=$(echo "$record" | jq -r '.numbereggsbatchthree // 0')
         
-        record_total_eggs=$(( (t1 * 30) + e1 + (t2 * 30) + e2 + (t3 * 30) + e3 ))
+        record_total_eggs=$(( batch_one_active * ((t1 * 30) + e1) + batch_two_active * ((t2 * 30) + e2) + batch_three_active * ((t3 * 30) + e3) ))
         today_total_eggs=$((today_total_eggs + record_total_eggs))
         today_count=$((today_count + 1))
     fi
@@ -127,19 +145,40 @@ arrow7=$(get_arrow $today_avg_eggs $avg7_eggs)
 arrow30=$(get_arrow $today_avg_eggs $avg30_eggs)
 
 # Combined totals
-total_eggs_all=$(( (total_trays + total_trays_batch2 + total_trays_batch3) * 30 + total_eggs + total_eggs_batch2 + total_eggs_batch3 ))
+total_eggs_all=$(( batch_one_active * ((total_trays * 30) + total_eggs) + batch_two_active * ((total_trays_batch2 * 30) + total_eggs_batch2) + batch_three_active * ((total_trays_batch3 * 30) + total_eggs_batch3) ))
 total_trays_calc=$(( total_eggs_all / 30 ))
 total_eggs_mod=$(( total_eggs_all % 30 ))
 
-batch1_daily_eggs=$((latest_trays * 30 + latest_eggs))
-batch2_daily_eggs=$((latest_trays_batch2 * 30 + latest_eggs_batch2))
-batch3_daily_eggs=$((latest_trays_batch3 * 30 + latest_eggs_batch3))
+batch1_daily_eggs=$((batch_one_active * (latest_trays * 30 + latest_eggs)))
+batch2_daily_eggs=$((batch_two_active * (latest_trays_batch2 * 30 + latest_eggs_batch2)))
+batch3_daily_eggs=$((batch_three_active * (latest_trays_batch3 * 30 + latest_eggs_batch3)))
 total_daily_eggs=$((batch1_daily_eggs + batch2_daily_eggs + batch3_daily_eggs))
 
-laying_percentage_batch1=$(echo "scale=2; ($batch1_daily_eggs / $batch_one_birds) * 100" | bc)
-laying_percentage_batch2=$(echo "scale=2; ($batch2_daily_eggs / $batch_two_birds) * 100" | bc)
-laying_percentage_batch3=$(echo "scale=2; ($batch3_daily_eggs / $batch_three_birds) * 100" | bc)
-laying_percentage_daily=$(echo "scale=2; ($total_daily_eggs / $total_birds) * 100" | bc)
+calc_laying_percentage() {
+  if (( $2 > 0 )); then
+    echo "scale=2; ($1 / $2) * 100" | bc
+  else
+    echo "0"
+  fi
+}
+
+laying_percentage_batch1=$(calc_laying_percentage "$batch1_daily_eggs" "$active_batch_one_birds")
+laying_percentage_batch2=$(calc_laying_percentage "$batch2_daily_eggs" "$active_batch_two_birds")
+laying_percentage_batch3=$(calc_laying_percentage "$batch3_daily_eggs" "$active_batch_three_birds")
+laying_percentage_daily=$(calc_laying_percentage "$total_daily_eggs" "$total_birds")
+
+batch1_section=""
+if (( batch_one_active )); then
+  batch1_section=$(cat <<EOF
+*Batch 1:*
+:basket: Trays: \`$latest_trays\`
+:egg: Eggs: \`$latest_eggs\`
+:red_circle: Broken: \`$latest_eggs_broken\`
+:chart_with_upwards_trend: Laying %: \`$laying_percentage_batch1%\`
+
+EOF
+)
+fi
 
 cat <<EOF
 *:hatching_chick: Egg Report Summary*
@@ -147,12 +186,7 @@ cat <<EOF
 
 :calendar: Survey Date: \`$latest_date\`
 
-*Batch 1:*
-:basket: Trays: \`$latest_trays\`
-:egg: Eggs: \`$latest_eggs\`
-:red_circle: Broken: \`$latest_eggs_broken\`
-:chart_with_upwards_trend: Laying %: \`$laying_percentage_batch1%\`
-
+${batch1_section}
 *Batch 2*
 :basket: Trays: \`$latest_trays_batch2\`
 :egg: Eggs: \`$latest_eggs_batch2\`
@@ -183,12 +217,6 @@ cat <<EOF
 EOF
 
 OUTPUT_FILE="poultry_analytics_data.json"
-BATCH_METADATA_FILE="config/batch_metadata.json"
-if [ -f "$BATCH_METADATA_FILE" ]; then
-  batch_metadata_json=$(cat "$BATCH_METADATA_FILE")
-else
-  batch_metadata_json='{"batch1":{"dateOfBirth":"","supplier":""},"batch2":{"dateOfBirth":"","supplier":""},"batch3":{"dateOfBirth":"","supplier":""}}'
-fi
 
 records_json=$(echo "$response" | jq '
   def n: tonumber? // 0;
