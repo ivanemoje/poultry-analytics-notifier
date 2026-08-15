@@ -1,5 +1,5 @@
 {
-  "reportDate": "2026-08-14",
+  "reportDate": "2026-08-15",
   "latestEntry": {
     "surveyDate": "2026-08-14",
     "batch1": {
@@ -52,25 +52,25 @@
     }
   },
   "recentTotals": {
-    "sevenDay": 8570,
-    "thirtyDay": 36439
+    "sevenDay": 7350,
+    "thirtyDay": 35234
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1189,
-      "trend": "✅"
+      "average": 1219,
+      "trend": "❌"
     },
     "threeDay": {
-      "average": 1212,
-      "trend": "✅"
+      "average": 1204,
+      "trend": "❌"
     },
     "sevenDay": {
-      "average": 1224,
+      "average": 1225,
       "trend": "❌"
     },
     "thirtyDay": {
       "average": 1214,
-      "trend": "✅"
+      "trend": "❌"
     }
   },
   "batchStats": {
@@ -96,7 +96,7 @@
       "supplier": "jayden",
       "status": "active",
       "initialBirds": 1215,
-      "currentBirds": 1027
+      "currentBirds": 1026
     },
     "batch3": {
       "dateOfBirth": "2025-12-20",
