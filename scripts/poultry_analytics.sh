@@ -48,8 +48,8 @@ yesterday_total_eggs=0; yesterday_count=0
 # Number of birds
 # to move to batch_metadata.json in future for dynamic updates
 batch_one_birds=539
-batch_two_birds=1025
-batch_three_birds=390
+batch_two_birds=1022
+batch_three_birds=388
 batch_four_birds=979
 
 batch_one_status=$(echo "$batch_metadata_json" | jq -r '.batch1.status // "active"')
