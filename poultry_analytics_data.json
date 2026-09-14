@@ -1,7 +1,7 @@
 {
-  "reportDate": "2026-09-13",
+  "reportDate": "2026-09-14",
   "latestEntry": {
-    "surveyDate": "2026-09-13",
+    "surveyDate": "2026-09-14",
     "batch1": {
       "trays": 0,
       "eggs": 0,
@@ -11,23 +11,23 @@
     },
     "batch2": {
       "trays": 28,
-      "eggs": 27,
+      "eggs": 25,
       "broken": 2,
-      "totalEggs": 867,
+      "totalEggs": 865,
       "layingPercentage": "84.00"
     },
     "batch3": {
       "trays": 11,
-      "eggs": 12,
-      "broken": 0,
-      "totalEggs": 342,
-      "layingPercentage": "87.00"
+      "eggs": 13,
+      "broken": 1,
+      "totalEggs": 343,
+      "layingPercentage": "88.00"
     },
     "combined": {
-      "totalEggsEntry": 1209,
+      "totalEggsEntry": 1208,
       "layingPercentageDaily": "85.00"
     },
-    "submittedAt": "2026-09-13 04:44"
+    "submittedAt": "2026-09-14 05:59"
   },
   "overallTotals": {
     "batch1": {
@@ -36,40 +36,40 @@
       "broken": 361
     },
     "batch2": {
-      "trays": 8323,
-      "eggs": 3457,
-      "broken": 444
+      "trays": 8351,
+      "eggs": 3482,
+      "broken": 446
     },
     "batch3": {
-      "trays": 965,
-      "eggs": 1639,
-      "broken": 116
+      "trays": 976,
+      "eggs": 1652,
+      "broken": 117
     },
     "combined": {
-      "totalEggsAllRecords": 283736,
-      "totalTraysCalculated": 9457,
-      "remainingEggs": 26
+      "totalEggsAllRecords": 284944,
+      "totalTraysCalculated": 9498,
+      "remainingEggs": 4
     }
   },
   "recentTotals": {
-    "sevenDay": 8380,
-    "thirtyDay": 34523
+    "sevenDay": 8400,
+    "thirtyDay": 35731
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1210,
+      "average": 1209,
       "trend": "❌"
     },
     "threeDay": {
-      "average": 1210,
+      "average": 1209,
       "trend": "❌"
     },
     "sevenDay": {
-      "average": 1197,
+      "average": 1200,
       "trend": "✅"
     },
     "thirtyDay": {
-      "average": 1190,
+      "average": 1191,
       "trend": "✅"
     }
   },
@@ -96,7 +96,7 @@
       "supplier": "jayden",
       "status": "active",
       "initialBirds": 1215,
-      "currentBirds": 1024
+      "currentBirds": 1022
     },
     "batch3": {
       "dateOfBirth": "2025-12-20",
@@ -107,7 +107,7 @@
       "supplier": "jeka",
       "status": "active",
       "initialBirds": 400,
-      "currentBirds": 390
+      "currentBirds": 388
     },
     "batch4": {
       "dateOfBirth": "2026-04-24",
@@ -6385,6 +6385,19 @@
       "b3_eggs": 12,
       "b3_broken": 0,
       "submittedAt": "2026-09-13T01:44:01.230229+00:00"
+    },
+    {
+      "date": "2026-09-14",
+      "b1_trays": 0,
+      "b1_eggs": 0,
+      "b1_broken": 0,
+      "b2_trays": 28,
+      "b2_eggs": 25,
+      "b2_broken": 2,
+      "b3_trays": 11,
+      "b3_eggs": 13,
+      "b3_broken": 1,
+      "submittedAt": "2026-09-14T02:59:29.578722+00:00"
     }
   ]
 }
