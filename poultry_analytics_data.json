@@ -1,5 +1,5 @@
 {
-  "reportDate": "2026-09-14",
+  "reportDate": "2026-09-15",
   "latestEntry": {
     "surveyDate": "2026-09-14",
     "batch1": {
@@ -52,25 +52,25 @@
     }
   },
   "recentTotals": {
-    "sevenDay": 8400,
-    "thirtyDay": 35731
+    "sevenDay": 7200,
+    "thirtyDay": 33603
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1209,
+      "average": 1208,
       "trend": "❌"
     },
     "threeDay": {
-      "average": 1209,
+      "average": 1208,
       "trend": "❌"
     },
     "sevenDay": {
       "average": 1200,
-      "trend": "✅"
+      "trend": "❌"
     },
     "thirtyDay": {
-      "average": 1191,
-      "trend": "✅"
+      "average": 1200,
+      "trend": "❌"
     }
   },
   "batchStats": {
