@@ -1,7 +1,7 @@
 {
-  "reportDate": "2026-09-15",
+  "reportDate": "2026-09-16",
   "latestEntry": {
-    "surveyDate": "2026-09-14",
+    "surveyDate": "2026-09-15",
     "batch1": {
       "trays": 0,
       "eggs": 0,
@@ -11,23 +11,23 @@
     },
     "batch2": {
       "trays": 28,
-      "eggs": 25,
-      "broken": 2,
-      "totalEggs": 865,
+      "eggs": 28,
+      "broken": 1,
+      "totalEggs": 868,
       "layingPercentage": "84.00"
     },
     "batch3": {
       "trays": 11,
-      "eggs": 13,
-      "broken": 1,
-      "totalEggs": 343,
-      "layingPercentage": "88.00"
+      "eggs": 2,
+      "broken": 0,
+      "totalEggs": 332,
+      "layingPercentage": "85.00"
     },
     "combined": {
-      "totalEggsEntry": 1208,
+      "totalEggsEntry": 1200,
       "layingPercentageDaily": "85.00"
     },
-    "submittedAt": "2026-09-14 05:59"
+    "submittedAt": "2026-09-15 04:25"
   },
   "overallTotals": {
     "batch1": {
@@ -36,40 +36,40 @@
       "broken": 361
     },
     "batch2": {
-      "trays": 8351,
-      "eggs": 3482,
-      "broken": 446
+      "trays": 8379,
+      "eggs": 3510,
+      "broken": 447
     },
     "batch3": {
-      "trays": 976,
-      "eggs": 1652,
+      "trays": 987,
+      "eggs": 1654,
       "broken": 117
     },
     "combined": {
-      "totalEggsAllRecords": 284944,
-      "totalTraysCalculated": 9498,
+      "totalEggsAllRecords": 286144,
+      "totalTraysCalculated": 9538,
       "remainingEggs": 4
     }
   },
   "recentTotals": {
-    "sevenDay": 7200,
-    "thirtyDay": 33603
+    "sevenDay": 7215,
+    "thirtyDay": 33571
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1208,
+      "average": 1200,
       "trend": "❌"
     },
     "threeDay": {
-      "average": 1208,
+      "average": 1204,
       "trend": "❌"
     },
     "sevenDay": {
-      "average": 1200,
+      "average": 1202,
       "trend": "❌"
     },
     "thirtyDay": {
-      "average": 1200,
+      "average": 1198,
       "trend": "❌"
     }
   },
@@ -6398,6 +6398,19 @@
       "b3_eggs": 13,
       "b3_broken": 1,
       "submittedAt": "2026-09-14T02:59:29.578722+00:00"
+    },
+    {
+      "date": "2026-09-15",
+      "b1_trays": 0,
+      "b1_eggs": 0,
+      "b1_broken": 0,
+      "b2_trays": 28,
+      "b2_eggs": 28,
+      "b2_broken": 1,
+      "b3_trays": 11,
+      "b3_eggs": 2,
+      "b3_broken": 0,
+      "submittedAt": "2026-09-15T01:25:34.133896+00:00"
     }
   ]
 }
