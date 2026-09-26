@@ -46,14 +46,14 @@
     "currentBirds": 979
   },
   "batch5": {
-    "dateOfBirth": "2026-10-22",
-    "expectedLay": "2027-04-22",
-    "expectedOfflay": "2028-06-22",
-    "expectedOfflayLatest": "2028-10-22",
+    "dateOfBirth": "2026-09-25",
+    "expectedLay": "2027-03-25",
+    "expectedOfflay": "2028-05-25",
+    "expectedOfflayLatest": "2028-09-25",
     "dailyconsumptionkgs": 0,
     "supplier": "jeka",
-    "status": "pending",
-    "initialBirds": 4000,
-    "currentBirds": 4000
+    "status": "brooding",
+    "initialBirds": 4662,
+    "currentBirds": 4662
   }
 }
