@@ -116,7 +116,7 @@
       "expectedOfflayLatest": "2028-04-24",
       "dailyconsumptionkgs": 0,
       "supplier": "jeka",
-      "status": "brooding",
+      "status": "laying",
       "initialBirds": 1000,
       "currentBirds": 979
     },
