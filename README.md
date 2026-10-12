@@ -1,7 +1,7 @@
 # Poultry Analytics Notifier
 
 ## Overview
-The Poultry Analytics Notifier is designed to automate the collection and reporting of egg production data. It fetches data from an API, processes it to calculate totals and averages, and formats the results for easy sharing via Slack. This project utilizes a Bash script for data processing and a GitHub Actions workflow to schedule the report generation and delivery.
+The Poultry Analytics Notifier fetches Ona submissions, generates dashboard data and a Slack report with Python 3, and runs on a GitHub Actions schedule.
 
 ## Dashboard
 
@@ -51,6 +51,10 @@ Features:
 - Automatic updates from production data
 
 The dashboard updates automatically when new data is pushed to the repository, providing a live view of your poultry analytics.
+
+The Batches tab shows all five batches. Batch and period filters apply to the records table, which shows trays, loose eggs, broken eggs, recorded deaths, and daily feed in grams per bird. Egg totals include available records for every batch.
+
+Laying percentages use the current bird counts in `config/batch_metadata.json` for batches marked `active` or `laying` with a reported egg or tray count. This applies to historical percentages as well. The combined rate divides eligible eggs by eligible birds.
 
 ## Conclusion
 The Poultry notifier project simplifies the process of tracking and reporting egg production data. By automating data fetching and reporting, it allows users to focus on analysis and decision-making. For any issues or contributions, please refer to the project's GitHub repository.
