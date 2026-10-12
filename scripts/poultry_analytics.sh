@@ -4,6 +4,10 @@ set -e
 : "${ONA_API_TOKEN:?Missing ONA_API_TOKEN}"
 : "${ONA_FORM_ID:?Missing ONA_FORM_ID}"
 
+# Temp file for the records array (too large to pass as a jq CLI argument)
+RECORDS_TMP=$(mktemp)
+trap 'rm -f "$RECORDS_TMP"' EXIT
+
 URL="https://api.ona.io/api/v1/data/$ONA_FORM_ID"
 response=$(curl -s -H "Authorization: Token $ONA_API_TOKEN" "$URL")
 
@@ -218,7 +222,10 @@ EOF
 
 OUTPUT_FILE="poultry_analytics_data.json"
 
-records_json=$(echo "$response" | jq '
+# Write the (potentially large) records array to a temp file instead of
+# passing it as a command-line argument, which hits the OS per-argument
+# size limit (~128 KB) and causes "Argument list too long".
+echo "$response" | jq '
   def n: tonumber? // 0;
   sort_by(.surveydate // ._submission_time // "") |
   map({
@@ -234,7 +241,7 @@ records_json=$(echo "$response" | jq '
     b3_broken: (.numbereggsbrokenbatchthree | n),
     submittedAt: (._submission_time // "")
   })
-')
+' > "$RECORDS_TMP"
 
 jq -n \
   --arg today "$today" \
@@ -280,7 +287,7 @@ jq -n \
   --arg arrow30 "$arrow30" \
   --arg latest_time "$latest_time" \
   --argjson batchStats "$batch_metadata_json" \
-  --argjson records "$records_json" \
+  --slurpfile records "$RECORDS_TMP" \
 '{
   "reportDate": $today,
   "latestEntry": {
@@ -305,7 +312,7 @@ jq -n \
     "thirtyDay": { "average": $avg30, "trend": $arrow30 }
   },
   "batchStats": $batchStats,
-  "records": $records
+  "records": $records[0]
 }' > "$OUTPUT_FILE"
 
 if [ -s "$OUTPUT_FILE" ]; then
