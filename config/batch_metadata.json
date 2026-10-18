@@ -42,8 +42,8 @@
     "dailyconsumptionkgs": 0,
     "supplier": "jeka",
     "status": "brooding",
-    "initialBirds": 1000,
-    "currentBirds": 979
+    "initialBirds": 1075,
+    "currentBirds": 1016
   },
   "batch5": {
     "dateOfBirth": "2026-10-22",
