@@ -1,7 +1,7 @@
 {
-  "reportDate": "2026-10-22",
+  "reportDate": "2026-10-23",
   "latestEntry": {
-    "surveyDate": "2026-10-20",
+    "surveyDate": "2026-10-22",
     "batch1": {
       "trays": 0,
       "eggs": 0,
@@ -10,11 +10,11 @@
       "layingPercentage": "0"
     },
     "batch2": {
-      "trays": 27,
+      "trays": 28,
       "eggs": 1,
-      "broken": 1,
-      "totalEggs": 811,
-      "layingPercentage": "78.00"
+      "broken": 2,
+      "totalEggs": 841,
+      "layingPercentage": "81.00"
     },
     "batch3": {
       "trays": 11,
@@ -24,10 +24,10 @@
       "layingPercentage": "85.00"
     },
     "combined": {
-      "totalEggsEntry": 1143,
-      "layingPercentageDaily": "80.00"
+      "totalEggsEntry": 1173,
+      "layingPercentageDaily": "82.00"
     },
-    "submittedAt": "2026-10-20 06:28"
+    "submittedAt": "2026-10-22 06:33"
   },
   "overallTotals": {
     "batch1": {
@@ -36,40 +36,40 @@
       "broken": 361
     },
     "batch2": {
-      "trays": 9353,
-      "eggs": 3887,
-      "broken": 486
+      "trays": 9408,
+      "eggs": 3890,
+      "broken": 489
     },
     "batch3": {
-      "trays": 1368,
-      "eggs": 2107,
-      "broken": 145
+      "trays": 1389,
+      "eggs": 2137,
+      "broken": 148
     },
     "combined": {
-      "totalEggsAllRecords": 327624,
-      "totalTraysCalculated": 10920,
-      "remainingEggs": 24
+      "totalEggsAllRecords": 329937,
+      "totalTraysCalculated": 10997,
+      "remainingEggs": 27
     }
   },
   "recentTotals": {
-    "sevenDay": 5813,
-    "thirtyDay": 33000
+    "sevenDay": 6970,
+    "thirtyDay": 34098
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 0,
-      "trend": "🔵"
+      "average": 1156,
+      "trend": "❌"
     },
     "threeDay": {
-      "average": 1143,
+      "average": 1156,
       "trend": "❌"
     },
     "sevenDay": {
-      "average": 1162,
+      "average": 1161,
       "trend": "❌"
     },
     "thirtyDay": {
-      "average": 1178,
+      "average": 1175,
       "trend": "❌"
     }
   },
@@ -6866,6 +6866,32 @@
       "b3_eggs": 2,
       "b3_broken": 1,
       "submittedAt": "2026-10-20T03:28:38.038973+00:00"
+    },
+    {
+      "date": "2026-10-22",
+      "b1_trays": 0,
+      "b1_eggs": 0,
+      "b1_broken": 0,
+      "b2_trays": 27,
+      "b2_eggs": 2,
+      "b2_broken": 1,
+      "b3_trays": 10,
+      "b3_eggs": 28,
+      "b3_broken": 2,
+      "submittedAt": "2026-10-22T03:26:08.277609+00:00"
+    },
+    {
+      "date": "2026-10-22",
+      "b1_trays": 0,
+      "b1_eggs": 0,
+      "b1_broken": 0,
+      "b2_trays": 28,
+      "b2_eggs": 1,
+      "b2_broken": 2,
+      "b3_trays": 11,
+      "b3_eggs": 2,
+      "b3_broken": 1,
+      "submittedAt": "2026-10-22T03:33:22.180617+00:00"
     }
   ]
 }
