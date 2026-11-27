@@ -14,11 +14,13 @@ BATCH_METRICS = (
 
 
 def batch_metrics(counts, include_missing=True):
-    return " | ".join(
-        f"{label} `{counts[key] if counts[key] is not None else '—'}`"
-        for key, label in BATCH_METRICS
-        if include_missing or counts[key] is not None
-    )
+    parts = []
+    for key, label in BATCH_METRICS:
+        value = counts[key]
+        if value is not None or include_missing:
+            displayed = "—" if value is None else f"{value:,}"
+            parts.append(f"{label} `{displayed}`")
+    return " | ".join(parts)
 
 
 def batch_egg_trend(report, batch):
@@ -63,17 +65,17 @@ def print_summary(report):
 
     combined = latest["combined"]
     totals = report["overallTotals"]["combined"]
-    print(f"*Combined*\n:egg: Total Eggs (this entry): `{combined['totalEggsEntry']}`\n"
+    print(f"*Combined*\n:egg: Total Eggs (this entry): `{combined['totalEggsEntry']:,}`\n"
           f":chart_with_upwards_trend: Laying % (laying batches): "
           f"`{percent(combined['layingPercentageDaily'])}`\n\n"
-          f"*Totals (All Records):*\n:egg: Total Eggs: `{totals['totalEggsAllRecords']}`\n"
-          f":basket: Trays: `{totals['totalTraysCalculated']}` | "
-          f":egg: Remaining Eggs: `{totals['remainingEggs']}`\n\n"
+          f"*Totals (All Records):*\n:egg: Total Eggs: `{totals['totalEggsAllRecords']:,}`\n"
+          f":basket: Trays: `{totals['totalTraysCalculated']:,}` | "
+          f":egg: Remaining Eggs: `{totals['remainingEggs']:,}`\n\n"
           f"*:calendar: Rolling Averages (combined batches)*")
     for key, label in (("yesterday", "Yesterday"), ("threeDay", "3-Day"),
                        ("sevenDay", "7-Day"), ("thirtyDay", "30-Day")):
         avg = report["rollingAverages"][key]
-        print(f"{label} avg: `{avg['average']}` {ROLLING_ICONS[avg['trend']]}")
+        print(f"{label} avg: `{avg['average']:,}` {ROLLING_ICONS[avg['trend']]}")
     print(f"\n:calendar: Data submitted at: `{latest['submittedAt']}`")
     financials = report["financials"]
     sale = financials["latestSale"]
@@ -82,8 +84,14 @@ def print_summary(report):
         daily_revenue = sum(row["amount"] for row in financials["salesRecords"]
                             if row["date"] == sale["date"])
         print(f"Revenue on `{sale['date']}`: `{daily_revenue:,} UGX`")
+    recent = financials["recentRevenue"]
+    if recent["throughDate"]:
+        print(f"Sales through `{recent['throughDate']}`")
+        for key, label in (("last7Days", "Last 7 days"), ("last30Days", "Last 30 days"),
+                           ("last90Days", "Last 90 days")):
+            print(f"{label}: `{recent[key]:,} UGX`")
     print(f"Total sales revenue: `{financials['totalRevenue']:,} UGX` "
-          f"({len(financials['salesRecords'])} records)")
+          f"({len(financials['salesRecords']):,} records)")
 
     if offlaid:
         print("\n*Offlaid batches*")

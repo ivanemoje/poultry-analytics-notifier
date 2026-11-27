@@ -526,6 +526,18 @@ a:hover{text-decoration:underline;}
       </div>
     </div>
 
+    <div class="card" style="margin-bottom:1rem">
+      <div class="card-header">
+        <span class="card-title">Sales by Period</span>
+        <span class="kpi-sub" id="fin-sales-through"></span>
+      </div>
+      <div class="card-body">
+        <div class="stat-row"><span class="stat-label">Last 7 days</span><span class="stat-value" id="fin-sales-7">—</span></div>
+        <div class="stat-row"><span class="stat-label">Last 30 days</span><span class="stat-value" id="fin-sales-30">—</span></div>
+        <div class="stat-row"><span class="stat-label">Last 90 days</span><span class="stat-value" id="fin-sales-90">—</span></div>
+      </div>
+    </div>
+
     <div class="grid-2">
       <div class="card">
         <div class="card-header"><span class="card-title">Monthly Revenue vs Expenses</span></div>
@@ -595,14 +607,8 @@ let RAW_SALES = [{"date":"2025-07-08","amount":150000,"payment":"CASH","category
 let RAW_EXPENSES = [{"date":"2025-08-04","expense":"BROKEN_MAIZE","amount":2500000,"payment":"CASH"},{"date":"2025-08-04","expense":"MAIZE_BRAN","amount":450000,"payment":"CASH"},{"date":"2025-08-04","expense":"COFFEE_HUSKS","amount":144000,"payment":"CASH"},{"date":"2025-08-04","expense":"LIME","amount":100000,"payment":"CASH"},{"date":"2025-09-02","expense":"TRANSPORT","amount":50000,"payment":"CASH"},{"date":"2025-10-09","expense":"CHICKS","amount":500000,"payment":"CASH"},{"date":"2026-01-02","expense":"BROKEN_MAIZE","amount":2500000,"payment":"CASH"},{"date":"2026-01-02","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-01-02","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-01-06","expense":"STARTERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-01-07","expense":"GROWERS_CONCENTRATE","amount":588000,"payment":"CASH"},{"date":"2026-01-12","expense":"LIME","amount":100000,"payment":"CASH"},{"date":"2026-01-17","expense":"VACCINE","amount":210000,"payment":"CASH"},{"date":"2026-01-22","expense":"BROKEN_MAIZE","amount":2500000,"payment":"CASH"},{"date":"2026-01-29","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-01-29","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-01-29","expense":"BROKEN_MAIZE","amount":1200000,"payment":"CASH"},{"date":"2026-01-30","expense":"CALCIUM","amount":85000,"payment":"CASH"},{"date":"2026-01-30","expense":"VITAMINS","amount":165000,"payment":"CASH"},{"date":"2026-02-02","expense":"BROKEN_MAIZE","amount":1500000,"payment":"CASH"},{"date":"2026-02-05","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-02-05","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-02-06","expense":"LAYERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-02-10","expense":"DEWORMER","amount":120000,"payment":"CASH"},{"date":"2026-02-13","expense":"BROKEN_MAIZE","amount":1500000,"payment":"CASH"},{"date":"2026-02-13","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-02-13","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-02-17","expense":"CHARCOAL","amount":150000,"payment":"CASH"},{"date":"2026-02-17","expense":"VET","amount":200000,"payment":"CASH"},{"date":"2026-02-19","expense":"LAYERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-02-21","expense":"BROKEN_MAIZE","amount":2200000,"payment":"CASH"},{"date":"2026-02-25","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-02-25","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-02-27","expense":"DEWORMER","amount":120000,"payment":"CASH"},{"date":"2026-02-28","expense":"TRANSPORT","amount":46025,"payment":"CASH"},{"date":"2026-02-28","expense":"CALCIUM","amount":170000,"payment":"CASH"},{"date":"2026-02-28","expense":"LAYERS_CONCENTRATE","amount":1200000,"payment":"CASH"},{"date":"2026-02-28","expense":"VITAMINS","amount":30000,"payment":"CASH"},{"date":"2026-03-02","expense":"BROKEN_MAIZE","amount":1500000,"payment":"CASH"},{"date":"2026-03-02","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-03-02","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-03-04","expense":"LAYERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-03-05","expense":"LIME","amount":80000,"payment":"CASH"},{"date":"2026-03-06","expense":"TRANSPORT","amount":30000,"payment":"CASH"},{"date":"2026-03-06","expense":"CHARCOAL","amount":150000,"payment":"CASH"},{"date":"2026-03-07","expense":"CALCIUM","amount":85000,"payment":"CASH"},{"date":"2026-03-07","expense":"VITAMINS","amount":60000,"payment":"CASH"},{"date":"2026-03-09","expense":"VACCINE","amount":210000,"payment":"CASH"},{"date":"2026-03-09","expense":"BROKEN_MAIZE","amount":2200000,"payment":"CASH"},{"date":"2026-03-09","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-03-09","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-03-09","expense":"LAYERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-03-11","expense":"DEWORMER","amount":120000,"payment":"CASH"},{"date":"2026-03-11","expense":"VET","amount":200000,"payment":"CASH"},{"date":"2026-03-14","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-03-14","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-03-14","expense":"BROKEN_MAIZE","amount":850000,"payment":"CASH"},{"date":"2026-03-14","expense":"LAYERS_CONCENTRATE","amount":800000,"payment":"CASH"},{"date":"2026-03-14","expense":"CHARCOAL","amount":150000,"payment":"CASH"},{"date":"2026-03-14","expense":"LIME","amount":60000,"payment":"CASH"},{"date":"2026-03-14","expense":"CALCIUM","amount":85000,"payment":"CASH"},{"date":"2026-03-14","expense":"VITAMINS","amount":130000,"payment":"CASH"},{"date":"2026-03-14","expense":"TRANSPORT","amount":50000,"payment":"CASH"}];
 
 // ============ HELPERS ============
-const fmtN = (n, d=0) => n==null||isNaN(n)?'—':Math.round(n).toLocaleString();
-const fmtMoney = new Intl.NumberFormat('en-UG',{maximumFractionDigits:0}).format;
-const fmtM = n => {
-  if(n>=1e9) return (n/1e9).toFixed(1)+'B';
-  if(n>=1e6) return (n/1e6).toFixed(1)+'M';
-  if(n>=1e3) return (n/1e3).toFixed(0)+'K';
-  return Math.round(n).toLocaleString();
-};
+const formatWholeNumber = new Intl.NumberFormat('en-UG',{maximumFractionDigits:0}).format;
+const fmtN = n => n==null||isNaN(n)?'—':formatWholeNumber(n);
 const fmtDate = d => new Date(d).toLocaleDateString('en-UG',{day:'numeric',month:'short'});
 const fmtMonth = m => {const[y,mo]=m.split('-');return new Date(y,mo-1).toLocaleDateString('en',{month:'short',year:'2-digit'});};
 
@@ -612,6 +618,7 @@ function daysBefore(n,anchor=EGGS.at(-1)?.date || new Date().toISOString().slice
 
 let EGGS = [];
 let lastReportDate = '2026-11-27';
+let salesRevenueByPeriod = null;
 const PRODUCTION_BATCHES = [
   {key:'batch1', prefix:'b1', number:'1', label:'B1', color:'#5aac4e'},
   {key:'batch2', prefix:'b2', number:'2', label:'B2', color:'#4a80d4'},
@@ -719,6 +726,7 @@ function mkChart(id, type, data, options){
   const textColor = isDark ? 'rgba(240,236,228,.6)' : 'rgba(26,23,20,.5)';
   const gridColor = isDark ? 'rgba(255,255,255,.05)' : 'rgba(0,0,0,.06)';
   const defaults = {
+    locale:'en-UG',
     plugins:{legend:{labels:{color:textColor,font:{family:'DM Mono',size:11}}},tooltip:{titleFont:{family:'DM Mono',size:11},bodyFont:{family:'DM Mono',size:11}}},
     scales:type==='doughnut'||type==='pie'?{}:{
       x:{ticks:{color:textColor,font:{family:'DM Mono',size:10}},grid:{color:gridColor}},
@@ -738,8 +746,8 @@ function renderKPIs(eggs, sales, expenses){
 
   document.getElementById('kpi-eggs').textContent = fmtN(totalEggs);
   document.getElementById('kpi-eggs-sub').textContent = `${eggs.length} entries`;
-  document.getElementById('kpi-revenue').textContent = fmtMoney(totalRevenue)+' UGX';
-  document.getElementById('kpi-pnl').textContent = (pnl>=0?'+':'')+fmtMoney(pnl)+' UGX';
+  document.getElementById('kpi-revenue').textContent = fmtN(totalRevenue)+' UGX';
+  document.getElementById('kpi-pnl').textContent = (pnl>=0?'+':'')+fmtN(pnl)+' UGX';
   document.getElementById('kpi-pnl').className = 'kpi-value '+(pnl>=0?'accent-green':'accent-red');
 
   const latest = latestProductionEntry();
@@ -770,7 +778,7 @@ function renderAverages(){
   document.getElementById('avg-yesterday').textContent = fmtN(yday);
   document.getElementById('avg-7d').textContent = fmtN(d7);
   document.getElementById('avg-30d').textContent = fmtN(d30);
-  document.getElementById('avg-alltime').textContent = fmtM(allTotal);
+  document.getElementById('avg-alltime').textContent = fmtN(allTotal);
 
   const arrow = (a,b) => a>b ? '<span class="trend-up">↑ above 7d avg</span>' : a<b ? '<span class="trend-down">↓ below 7d avg</span>' : '<span class="trend-flat">→ flat</span>';
   document.getElementById('avg-yesterday-trend').innerHTML = arrow(yday,d7);
@@ -857,8 +865,8 @@ function renderLatestEntry(container){
   container.innerHTML = `
     <div class="stat-row"><span class="stat-label">Date</span><span class="stat-value">${latest.date}</span></div>
     ${batchRows}
-    <div class="stat-row"><span class="stat-label">Broken</span><span class="stat-value ${broken>5?'val-red':''}">${broken}</span></div>
-    <div class="stat-row"><span class="stat-label">Combined</span><span class="stat-value">${eggTotal(latest)} eggs</span></div>`;
+    <div class="stat-row"><span class="stat-label">Broken</span><span class="stat-value ${broken>5?'val-red':''}">${fmtN(broken)}</span></div>
+    <div class="stat-row"><span class="stat-label">Combined</span><span class="stat-value">${fmtN(eggTotal(latest))} eggs</span></div>`;
 }
 
 function renderFlags(){
@@ -884,11 +892,11 @@ function renderFlags(){
   // Feb expenses surge
   const febExp = RAW_EXPENSES.filter(r=>r.date.startsWith('2026-02')).reduce((s,r)=>s+r.amount,0);
   const janExp = RAW_EXPENSES.filter(r=>r.date.startsWith('2026-01')).reduce((s,r)=>s+r.amount,0);
-  if(febExp>janExp*1.3) flags.push({sev:'red',msg:`Expenses spiked ${((febExp/janExp-1)*100).toFixed(0)}% in Feb vs Jan (${fmtMoney(janExp)}→${fmtMoney(febExp)} UGX).`});
+  if(febExp>janExp*1.3) flags.push({sev:'red',msg:`Expenses spiked ${((febExp/janExp-1)*100).toFixed(0)}% in Feb vs Jan (${fmtN(janExp)}→${fmtN(febExp)} UGX).`});
   // March pnl
   const marSales=RAW_SALES.filter(r=>r.date.startsWith('2026-03')).reduce((s,r)=>s+r.amount,0);
   const marExp=RAW_EXPENSES.filter(r=>r.date.startsWith('2026-03')).reduce((s,r)=>s+r.amount,0);
-  if(marSales<marExp) flags.push({sev:'red',msg:`March is loss-making: ${fmtMoney(marSales)} revenue vs ${fmtMoney(marExp)} expenses (${fmtMoney(marSales-marExp)} UGX).`});
+  if(marSales<marExp) flags.push({sev:'red',msg:`March is loss-making: ${fmtN(marSales)} revenue vs ${fmtN(marExp)} expenses (${fmtN(marSales-marExp)} UGX).`});
 
   const el = document.getElementById('flags-list');
   if(!flags.length){el.innerHTML='<div style="color:var(--green);font-size:.78rem;padding:.5rem 0">✓ No critical flags detected</div>';return;}
@@ -966,23 +974,40 @@ function renderPeriodDetailTable(){
 }
 
 // ============ FINANCIAL TAB ============
+function renderSalesByPeriod(latestSalesDate){
+  const through = salesRevenueByPeriod?.throughDate || latestSalesDate;
+  document.getElementById('fin-sales-through').textContent = through ? 'Through '+through : '';
+  for(const days of [7,30,90]){
+    const element = document.getElementById('fin-sales-'+days);
+    if(!through){
+      element.textContent = '—';
+      continue;
+    }
+    const start = daysBefore(days-1,through);
+    const amount = salesRevenueByPeriod?.[`last${days}Days`] ?? RAW_SALES
+      .filter(row=>row.date>=start && row.date<=through).reduce((sum,row)=>sum+row.amount,0);
+    element.textContent = fmtN(amount)+' UGX';
+  }
+}
+
 function renderFinancial(){
   const totalRev = RAW_SALES.reduce((s,r)=>s+r.amount,0);
   const totalExp = RAW_EXPENSES.reduce((s,r)=>s+r.amount,0);
   const pnl = totalRev-totalExp;
-  document.getElementById('fin-revenue').textContent = fmtMoney(totalRev)+' UGX';
-  document.getElementById('fin-expenses').textContent = fmtMoney(totalExp)+' UGX';
-  document.getElementById('fin-pnl').textContent = (pnl>=0?'+':'')+fmtMoney(pnl)+' UGX';
+  document.getElementById('fin-revenue').textContent = fmtN(totalRev)+' UGX';
+  document.getElementById('fin-expenses').textContent = fmtN(totalExp)+' UGX';
+  document.getElementById('fin-pnl').textContent = (pnl>=0?'+':'')+fmtN(pnl)+' UGX';
   document.getElementById('fin-pnl').className = 'kpi-value '+(pnl>=0?'accent-green':'accent-red');
 
   const latestSalesDate = RAW_SALES.at(-1)?.date;
+  renderSalesByPeriod(latestSalesDate);
   const cutoff = latestSalesDate
     ? daysBefore(20,latestSalesDate)
     : '';
   const traySales = RAW_SALES.filter(r=>r.date>=cutoff && r.subcategory==='TRAYS' && r.trays>0);
   const recentTrays = traySales.reduce((sum,row)=>sum+row.trays,0);
   const trayRevenue = traySales.reduce((sum,row)=>sum+row.amount,0);
-  document.getElementById('fin-price-tray').textContent = recentTrays?fmtMoney(trayRevenue/recentTrays)+' UGX':'—';
+  document.getElementById('fin-price-tray').textContent = recentTrays?fmtN(trayRevenue/recentTrays)+' UGX':'—';
   document.getElementById('fin-price-sub').textContent = 'regular trays sold in last 3 weeks';
 
   // Monthly chart
@@ -996,7 +1021,7 @@ function renderFinancial(){
       {label:'Revenue',data:months.map(m=>mRev[m]||0),backgroundColor:'rgba(74,128,212,.7)'},
       {label:'Expenses',data:months.map(m=>mExp[m]||0),backgroundColor:'rgba(200,68,10,.7)'},
     ]
-  },{locale:'en-UG'});
+  },{});
 
   // Payment donut
   const payAmt = Object.create(null);
@@ -1005,7 +1030,7 @@ function renderFinancial(){
   mkChart('chart-payment','doughnut',{
     labels:payLabels,
     datasets:[{data:Object.values(payAmt),backgroundColor:['#5aac4e','#4a80d4','#c4864a','#c8440a','#a57cce','#48a7a3']}]
-  },{locale:'en-UG',plugins:{legend:{position:'bottom'}}});
+  },{plugins:{legend:{position:'bottom'}}});
 
   // Expense breakdown
   const expCat = Object.create(null);
@@ -1017,7 +1042,7 @@ function renderFinancial(){
     <div class="expense-row">
       <span class="expense-name">${escapeText(k.toLowerCase().replace(/_/g,' '))}</span>
       <div class="expense-bar-wrap"><div class="expense-bar" style="width:${maxExp>0?(v/maxExp*100).toFixed(0):0}%"></div></div>
-      <span class="expense-amt">${fmtMoney(v)}</span>
+      <span class="expense-amt">${fmtN(v)}</span>
     </div>`).join('');
 
   const table = document.getElementById('sales-table').querySelector('tbody');
@@ -1027,7 +1052,7 @@ function renderFinancial(){
     const row = table.insertRow();
     const product = (sale.subcategory || sale.category || '—').replace(/_/g,' ');
     const payment = (sale.payment || '—').replace(/_/g,' ');
-    for(const value of [sale.date,product,payment,sale.trays?fmtN(sale.trays):'—',fmtMoney(sale.amount)]){
+    for(const value of [sale.date,product,payment,sale.trays?fmtN(sale.trays):'—',fmtN(sale.amount)]){
       row.insertCell().textContent = value;
     }
   }
@@ -1124,6 +1149,7 @@ async function tryLoadLiveData(){
       }
       if(Array.isArray(analytics.financials?.salesRecords)){
         RAW_SALES = analytics.financials.salesRecords;
+        salesRevenueByPeriod = analytics.financials.recentRevenue || null;
       }
       if(analytics.financials?.expenseRecords?.length){
         RAW_EXPENSES = analytics.financials.expenseRecords;

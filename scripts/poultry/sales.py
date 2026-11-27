@@ -1,6 +1,7 @@
 """Normalize sales and expenses and build their report data."""
 
 import re
+from datetime import date, timedelta
 
 from .ona import count, farm_time, field
 
@@ -8,6 +9,18 @@ EXPENSE_CATEGORY = re.compile(
     r"EXPENSE|COST|FEED|VET|VACCINE|TRANSPORT|MAIZE|BRAN|HUSK|LIME|CALCIUM|"
     r"VITAMIN|CHARCOAL|CONCENTRATE|DEWORMER|CHICKS"
 )
+SALES_PERIODS = {"last7Days": 7, "last30Days": 30, "last90Days": 90}
+
+
+def recent_revenue(sales):
+    through_date = max((row["date"] for row in sales), default="")
+    totals = {"throughDate": through_date, **dict.fromkeys(SALES_PERIODS, 0)}
+    if through_date:
+        end = date.fromisoformat(through_date)
+        for period, days in SALES_PERIODS.items():
+            start = (end - timedelta(days=days - 1)).isoformat()
+            totals[period] = sum(row["amount"] for row in sales if start <= row["date"] <= through_date)
+    return totals
 
 
 def build_financials(sources):
@@ -43,6 +56,7 @@ def build_financials(sources):
         "salesRecords": sales,
         "expenseRecords": expenses,
         "totalRevenue": sum(row["amount"] for row in sales),
+        "recentRevenue": recent_revenue(sales),
         "latestSale": max(sales, key=lambda row: row["submittedAt"], default=None),
     }
 
