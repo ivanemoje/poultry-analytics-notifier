@@ -20320,6 +20320,12 @@
     ],
     "expenseRecords": [],
     "totalRevenue": 166796843,
+    "recentRevenue": {
+      "throughDate": "2026-11-27",
+      "last7Days": 5753000,
+      "last30Days": 21617504,
+      "last90Days": 50202996
+    },
     "latestSale": {
       "date": "2026-11-27",
       "amount": 400000,
