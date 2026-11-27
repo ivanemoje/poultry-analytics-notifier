@@ -17,27 +17,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: sudo apt-get install -y jq bc
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
       - name: Run Poultry Analytics Script
         env:
           ONA_API_TOKEN: ${{ secrets.ONA_API_TOKEN }}
           ONA_FORM_ID: ${{ secrets.ONA_FORM_ID }}
+          SALES_ONA_FORM_ID: ${{ secrets.SALES_ONA_FORM_ID }}
         run: |
           bash ./scripts/poultry_analytics.sh > poultry_analytics.txt
           echo "POULTRY_ANALYTICS<<EOF" >> $GITHUB_ENV
           cat poultry_analytics.txt >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
-      - name: Run Sales Data Script
-        env:
-          ONA_API_TOKEN: ${{ secrets.ONA_API_TOKEN }}
-          SALES_ONA_FORM_ID: ${{ secrets.SALES_ONA_FORM_ID }}
-        run: |
-          bash ./scripts/poultry_sales.sh > poultry_sales_data.txt
-          echo "POULTRY_SALES_DATA<<EOF" >> $GITHUB_ENV
-          cat poultry_sales_data.txt >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Send to Slack
@@ -51,12 +44,7 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "*Daily Poultry Analytics Report*\n${{ env.POULTRY_ANALYTICS }}"
-              - type: "divider"
-              - type: "section"
-                text:
-                  type: "mrkdwn"
-                  text: "*Daily Poultry Sales Data*\n${{ env.POULTRY_SALES_DATA }}"
+                  text: ${{ toJSON(env.POULTRY_ANALYTICS) }}
 
       - name: Save Data File and Commit
         uses: stefanzweifel/git-auto-commit-action@v5

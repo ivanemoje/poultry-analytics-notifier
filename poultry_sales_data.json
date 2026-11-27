@@ -36,3201 +36,3492 @@
       "amount": 150000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "From farm (5th July 2025)",
+      "submittedAt": "2025-07-08T02:01:12.879490+00:00",
       "subcategory": "TRAYS",
       "trays": 0,
-      "animals": 0,
-      "comments": "From farm (5th July 2025)",
-      "submittedAt": "2025-07-08T02:01:12.879490+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-07-08",
       "amount": 100000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "From farm (7th July 2025)",
+      "submittedAt": "2025-07-08T02:02:55.105862+00:00",
       "subcategory": "TRAYS",
       "trays": 0,
-      "animals": 0,
-      "comments": "From farm (7th July 2025)",
-      "submittedAt": "2025-07-08T02:02:55.105862+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-07-08",
       "amount": 1035500,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "Total number of eggs owed (damage) 9, money owed to us 300shs",
+      "submittedAt": "2025-07-08T02:04:46.690468+00:00",
       "subcategory": "TRAYS",
       "trays": 0,
-      "animals": 0,
-      "comments": "Total number of eggs owed (damage) 9, money owed to us 300shs",
-      "submittedAt": "2025-07-08T02:04:46.690468+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-07-09",
       "amount": 210000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2025-07-09T09:50:52.583245+00:00",
       "subcategory": "TRAYS",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2025-07-09T09:50:52.583245+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-07-11",
       "amount": 845500,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "damage 6",
+      "submittedAt": "2025-07-22T14:46:28.263825+00:00",
       "subcategory": "TRAYS",
       "trays": 89,
-      "animals": 0,
-      "comments": "damage 6",
-      "submittedAt": "2025-07-22T14:46:28.263825+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-07-22",
       "amount": 340000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2025-07-22T14:05:38.308299+00:00",
       "subcategory": "TRAYS",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2025-07-22T14:05:38.308299+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-07-22",
       "amount": 784100,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "Paid less 4400 due to damaged eggs reconciliation from previous times + today",
+      "submittedAt": "2025-07-22T14:45:20.179292+00:00",
       "subcategory": "TRAYS",
       "trays": 83,
-      "animals": 0,
-      "comments": "Paid less 4400 due to damaged eggs reconciliation from previous times + today",
-      "submittedAt": "2025-07-22T14:45:20.179292+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-07-25",
       "amount": 350000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2025-07-25T19:21:08.031000+00:00",
       "subcategory": "TRAYS",
       "trays": 35,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2025-07-25T19:21:08.031000+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-07-29",
       "amount": 836000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2025-07-29T18:01:50.489105+00:00",
       "subcategory": "TRAYS",
       "trays": 88,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2025-07-29T18:01:50.489105+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-08-01",
       "amount": 1111500,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "2 trays to Andrew (farm visit), 1 tray of eggs damaged during transport, Sam didn’t sell",
+      "submittedAt": "2025-08-01T11:06:58.492447+00:00",
       "subcategory": "TRAYS",
       "trays": 117,
-      "animals": 0,
-      "comments": "2 trays to Andrew (farm visit), 1 tray of eggs damaged during transport, Sam didn’t sell",
-      "submittedAt": "2025-08-01T11:06:58.492447+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-08-08",
       "amount": 170000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "07th/09/2025",
+      "submittedAt": "2025-08-08T03:39:35.558867+00:00",
       "subcategory": "TRAYS",
       "trays": 17,
-      "animals": 0,
-      "comments": "07th/09/2025",
-      "submittedAt": "2025-08-08T03:39:35.558867+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-08-11",
       "amount": 959500,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2025-08-11T12:44:39.542429+00:00",
       "subcategory": "TRAYS",
       "trays": 101,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2025-08-11T12:44:39.542429+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-08-21",
       "amount": 240000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "Fair",
+      "submittedAt": "2025-08-21T10:17:28.823310+00:00",
       "subcategory": "TRAYS",
       "trays": 14,
-      "animals": 0,
-      "comments": "Fair",
-      "submittedAt": "2025-08-21T10:17:28.823310+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-08-29",
       "amount": 969,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2025-08-29T09:53:50.758877+00:00",
       "subcategory": "TRAYS",
       "trays": 102,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2025-08-29T09:53:50.758877+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-09-10",
       "amount": 150000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2025-09-10T09:53:28.316621+00:00",
       "subcategory": "TRAYS",
       "trays": 15,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2025-09-10T09:53:28.316621+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2025-09-24",
       "amount": 200000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2025-09-24T18:52:55.628737+00:00",
       "subcategory": "TRAYS",
       "trays": 20,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2025-09-24T18:52:55.628737+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-02",
       "amount": 2307500,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-01-02T15:17:24.927218+00:00",
       "subcategory": "TRAYS",
       "trays": 248,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-01-02T15:17:24.927218+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-03",
       "amount": 380000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "40 trays @at 9500",
+      "submittedAt": "2026-01-03T18:33:49.206881+00:00",
       "subcategory": "TRAYS",
       "trays": 40,
-      "animals": 0,
-      "comments": "40 trays @at 9500",
-      "submittedAt": "2026-01-03T18:33:49.206881+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-05",
       "amount": 570000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "60 trays @ 9500=570000",
+      "submittedAt": "2026-01-05T20:01:34.049915+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "60 trays @ 9500=570000",
-      "submittedAt": "2026-01-05T20:01:34.049915+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-05",
       "amount": 52500,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "5 trays @ 10500ugx",
+      "submittedAt": "2026-01-05T20:01:34.773809+00:00",
       "subcategory": "TRAYS",
       "trays": 5,
-      "animals": 0,
-      "comments": "5 trays @ 10500ugx",
-      "submittedAt": "2026-01-05T20:01:34.773809+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-05",
       "amount": 740000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "74 trays @ 10000ugx but I used 2500ugx for sending all the money ",
+      "submittedAt": "2026-01-05T20:01:35.573313+00:00",
       "subcategory": "TRAYS",
       "trays": 74,
-      "animals": 0,
-      "comments": "74 trays @ 10000ugx but I used 2500ugx for sending all the money ",
-      "submittedAt": "2026-01-05T20:01:35.573313+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-08",
       "amount": 730000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-01-08T16:35:19.494027+00:00",
       "subcategory": "TRAYS",
       "trays": 73,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-01-08T16:35:19.494027+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-10",
       "amount": 710000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-01-10T20:47:57.165616+00:00",
       "subcategory": "TRAYS",
       "trays": 71,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-01-10T20:47:57.165616+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-12",
       "amount": 700000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-01-12T19:10:33.512059+00:00",
       "subcategory": "TRAYS",
       "trays": 70,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-01-12T19:10:33.512059+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-19",
       "amount": 1200000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "Batche two",
+      "submittedAt": "2026-01-19T15:44:30.201319+00:00",
       "subcategory": "TRAYS",
       "trays": 120,
-      "animals": 0,
-      "comments": "Batche two",
-      "submittedAt": "2026-01-19T15:44:30.201319+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-20",
       "amount": 660000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "A tray at 11,000ugx",
+      "submittedAt": "2026-01-20T19:13:16.455801+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "A tray at 11,000ugx",
-      "submittedAt": "2026-01-20T19:13:16.455801+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-22",
       "amount": 700000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "Sent to Gloria 700,000ugx for trays ",
+      "submittedAt": "2026-01-22T20:15:04.780856+00:00",
       "subcategory": "TRAYS",
       "trays": 70,
-      "animals": 0,
-      "comments": "Sent to Gloria 700,000ugx for trays ",
-      "submittedAt": "2026-01-22T20:15:04.780856+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-24",
       "amount": 54000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-01-24T19:54:26.184113+00:00",
       "subcategory": "TRAYS",
       "trays": 5,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-01-24T19:54:26.184113+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-25",
       "amount": 600000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-01-25T20:48:18.009322+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-01-25T20:48:18.009322+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-29",
       "amount": 1070000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-01-29T20:12:41.552672+00:00",
       "subcategory": "TRAYS",
       "trays": 107,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-01-29T20:12:41.552672+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-01-30",
       "amount": 1320000,
       "payment": "BANK",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-01-30T20:11:13.453491+00:00",
       "subcategory": "TRAYS",
       "trays": 120,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-01-30T20:11:13.453491+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-01",
       "amount": 750000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-01T20:12:02.883709+00:00",
       "subcategory": "TRAYS",
       "trays": 75,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-01T20:12:02.883709+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-02",
       "amount": 130000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-02T20:14:05.912005+00:00",
       "subcategory": "TRAYS",
       "trays": 13,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-02T20:14:05.912005+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-03",
       "amount": 500000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-03T20:22:44.750005+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-03T20:22:44.750005+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-05",
       "amount": 600000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-05T19:40:15.379005+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-05T19:40:15.379005+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-06",
       "amount": 1430000,
       "payment": "BANK",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-06T20:04:01.146981+00:00",
       "subcategory": "TRAYS",
       "trays": 130,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-06T20:04:01.146981+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-07",
       "amount": 500000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-07T20:27:28.576130+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-07T20:27:28.576130+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-08",
       "amount": 140000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-08T19:47:45.705278+00:00",
       "subcategory": "TRAYS",
       "trays": 14,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-08T19:47:45.705278+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-09",
       "amount": 500000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-09T20:22:13.852219+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-09T20:22:13.852219+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-11",
       "amount": 500000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-11T20:55:09.909573+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-11T20:55:09.909573+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-12",
       "amount": 990000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-12T20:17:39.757637+00:00",
       "subcategory": "TRAYS",
       "trays": 90,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-12T20:17:39.757637+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-13",
       "amount": 630000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-13T19:42:12.568098+00:00",
       "subcategory": "TRAYS",
       "trays": 63,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-13T19:42:12.568098+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-15",
       "amount": 630000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-15T20:08:42.873531+00:00",
       "subcategory": "TRAYS",
       "trays": 63,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-15T20:08:42.873531+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-17",
       "amount": 525000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-17T20:31:17.527395+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-17T20:31:17.527395+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-18",
       "amount": 110000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-18T16:15:46.866639+00:00",
       "subcategory": "TRAYS",
       "trays": 11,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-18T16:15:46.866639+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-18",
       "amount": 1650000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-18T16:21:02.110701+00:00",
       "subcategory": "TRAYS",
       "trays": 150,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-18T16:21:02.110701+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-22",
       "amount": 525000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-22T20:04:24.730598+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-22T20:04:24.730598+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-22",
       "amount": 130000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-24T19:13:34.684359+00:00",
       "subcategory": "TRAYS",
       "trays": 13,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-24T19:13:34.684359+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-25",
       "amount": 1650000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-25T20:13:24.988208+00:00",
       "subcategory": "TRAYS",
       "trays": 150,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-25T20:13:24.988208+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-26",
       "amount": 630000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-26T20:10:19.982176+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-26T20:10:19.982176+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-27",
       "amount": 116000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-27T20:03:21.789839+00:00",
       "subcategory": "TRAYS",
       "trays": 11,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-27T20:03:21.789839+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-02-28",
       "amount": 483000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-02-28T19:30:34.075651+00:00",
       "subcategory": "TRAYS",
       "trays": 46,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-02-28T19:30:34.075651+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-02",
       "amount": 504000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-02T19:56:42.341218+00:00",
       "subcategory": "TRAYS",
       "trays": 48,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-02T19:56:42.341218+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-04",
       "amount": 1100000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-04T20:22:49.175226+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-04T20:22:49.175226+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-05",
       "amount": 735000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-05T20:33:02.642430+00:00",
       "subcategory": "TRAYS",
       "trays": 70,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-05T20:33:02.642430+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-06",
       "amount": 315000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-06T19:51:34.475425+00:00",
       "subcategory": "TRAYS",
       "trays": 30,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-06T19:51:34.475425+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-08",
       "amount": 315000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-13T20:34:08.016897+00:00",
       "subcategory": "TRAYS",
       "trays": 30,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-13T20:34:08.016897+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-09",
       "amount": 550000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-09T20:13:04.532554+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-09T20:13:04.532554+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-11",
       "amount": 1100000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-11T20:18:50.516228+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-11T20:18:50.516228+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-11",
       "amount": 550000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-11T20:18:51.095688+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-11T20:18:51.095688+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-13",
       "amount": 660000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-14T20:39:28.808820+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-14T20:39:28.808820+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-14",
       "amount": 402000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-14T20:37:47.366937+00:00",
       "subcategory": "TRAYS",
       "trays": 36,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-14T20:37:47.366937+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-15",
       "amount": 682000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-15T20:23:02.477909+00:00",
       "subcategory": "TRAYS",
       "trays": 62,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-15T20:23:02.477909+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-18",
       "amount": 1540000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-18T20:24:19.704134+00:00",
       "subcategory": "TRAYS",
       "trays": 140,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-18T20:24:19.704134+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-20",
       "amount": 550000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-20T19:36:37.452255+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-20T19:36:37.452255+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-22",
       "amount": 662000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-22T19:20:27.522561+00:00",
       "subcategory": "TRAYS",
       "trays": 62,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-22T19:20:27.522561+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-24",
       "amount": 550000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-24T20:27:10.686446+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-24T20:27:10.686446+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-25",
       "amount": 1155000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-25T19:45:00.444602+00:00",
       "subcategory": "TRAYS",
       "trays": 105,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-25T19:45:00.444602+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-26",
       "amount": 550000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-26T19:39:53.935828+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-26T19:39:53.935828+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-28",
       "amount": 550000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-28T20:30:35.467464+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-28T20:30:35.467464+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-29",
       "amount": 88000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-29T20:06:03.731646+00:00",
       "subcategory": "TRAYS",
       "trays": 8,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-29T20:06:03.731646+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-03-30",
       "amount": 550000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-03-30T19:45:57.798492+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-03-30T19:45:57.798492+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-01",
       "amount": 550000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-01T19:52:33.822241+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-01T19:52:33.822241+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-01",
       "amount": 1100000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-01T19:52:35.167699+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-01T19:52:35.167699+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-03",
       "amount": 660000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-03T18:56:58.479760+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-03T18:56:58.479760+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-05",
       "amount": 704000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-05T20:20:06.449628+00:00",
       "subcategory": "TRAYS",
       "trays": 64,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-05T20:20:06.449628+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-07",
       "amount": 550000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-07T19:39:30.139910+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-07T19:39:30.139910+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-09",
       "amount": 660000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-09T18:36:39.397652+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-09T18:36:39.397652+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-09",
       "amount": 1100000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-09T18:38:23.637621+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-09T18:38:23.637621+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-11",
       "amount": 550000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-11T20:21:57.602826+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-11T20:21:57.602826+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-13",
       "amount": 550000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-13T19:51:47.151983+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-13T19:51:47.151983+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-15",
       "amount": 660000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-15T12:02:19.381911+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-15T12:02:19.381911+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-15",
       "amount": 121000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-15T12:03:43.452897+00:00",
       "subcategory": "TRAYS",
       "trays": 11,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-15T12:03:43.452897+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-17",
       "amount": 660000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-17T10:21:02.763276+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-17T10:21:02.763276+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-17",
       "amount": 1100000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-17T13:40:13.309220+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-17T13:40:13.309220+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-19",
       "amount": 110000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-19T06:02:55.268695+00:00",
       "subcategory": "TRAYS",
       "trays": 10,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-19T06:02:55.268695+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-19",
       "amount": 660000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-19T16:40:27.240752+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-19T16:40:27.240752+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-21",
       "amount": 525000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-21T19:41:23.615371+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-21T19:41:23.615371+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-23",
       "amount": 856000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-23T20:19:50.612322+00:00",
       "subcategory": "TRAYS",
       "trays": 80,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-23T20:19:50.612322+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-26",
       "amount": 1070000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "26th/04/2026",
+      "submittedAt": "2026-04-26T15:28:10.483943+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "26th/04/2026",
-      "submittedAt": "2026-04-26T15:28:10.483943+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-27",
       "amount": 1070000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-27T16:46:55.466296+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-27T16:46:55.466296+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-04-29",
       "amount": 856000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-04-29T12:46:31.615076+00:00",
       "subcategory": "TRAYS",
       "trays": 80,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-04-29T12:46:31.615076+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-01",
       "amount": 856000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-01T19:19:56.764402+00:00",
       "subcategory": "TRAYS",
       "trays": 80,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-01T19:19:56.764402+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-02",
       "amount": 66000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-02T18:35:37.903183+00:00",
       "subcategory": "TRAYS",
       "trays": 6,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-02T18:35:37.903183+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-03",
       "amount": 856000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-03T18:58:39.215119+00:00",
       "subcategory": "TRAYS",
       "trays": 80,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-03T18:58:39.215119+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-04",
       "amount": 315000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-04T15:16:41.085688+00:00",
       "subcategory": "TRAYS",
       "trays": 30,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-04T15:16:41.085688+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-04",
       "amount": 11000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-04T18:20:51.509145+00:00",
       "subcategory": "TRAYS",
       "trays": 10,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-04T18:20:51.509145+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-05",
       "amount": 735000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-05T19:06:22.060734+00:00",
       "subcategory": "TRAYS",
       "trays": 70,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-05T19:06:22.060734+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-06",
       "amount": 420000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-06T20:00:08.410322+00:00",
       "subcategory": "TRAYS",
       "trays": 40,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-06T20:00:08.410322+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-07",
       "amount": 703500,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-07T19:19:19.369516+00:00",
       "subcategory": "TRAYS",
       "trays": 67,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-07T19:19:19.369516+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-09",
       "amount": 630000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-09T10:21:13.898329+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-09T10:21:13.898329+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-12",
       "amount": 630000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-12T19:19:32.331451+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-12T19:19:32.331451+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-13",
       "amount": 1070000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-13T17:18:13.065664+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-13T17:18:13.065664+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-14",
       "amount": 735000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-14T16:06:25.348926+00:00",
       "subcategory": "TRAYS",
       "trays": 70,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-14T16:06:25.348926+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-14",
       "amount": 40000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "2 trays for batch 3 at 16,000ugx\n2 trays at 11,000ugx each",
+      "submittedAt": "2026-05-14T19:11:43.950077+00:00",
       "subcategory": "TRAYS",
       "trays": 4,
-      "animals": 0,
-      "comments": "2 trays for batch 3 at 16,000ugx\n2 trays at 11,000ugx each",
-      "submittedAt": "2026-05-14T19:11:43.950077+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-16",
       "amount": 630000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-16T20:25:54.308666+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-16T20:25:54.308666+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-18",
       "amount": 630000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-18T19:39:12.218703+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-18T19:39:12.218703+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-20",
       "amount": 630000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-20T19:40:27.805758+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-20T19:40:27.805758+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-21",
       "amount": 1070000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-21T11:42:57.831757+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-21T11:42:57.831757+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-21",
       "amount": 452000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "40trays are big and 4 trays are for batch 3 sold at 8000ugx",
+      "submittedAt": "2026-05-21T11:46:52.286964+00:00",
       "subcategory": "TRAYS",
       "trays": 44,
-      "animals": 0,
-      "comments": "40trays are big and 4 trays are for batch 3 sold at 8000ugx",
-      "submittedAt": "2026-05-21T11:46:52.286964+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-22",
       "amount": 430000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-22T20:13:00.585337+00:00",
       "subcategory": "TRAYS",
       "trays": 40,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-22T20:13:00.585337+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-24",
       "amount": 444000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "In that 3trays are batch 3",
+      "submittedAt": "2026-05-24T14:26:20.412469+00:00",
       "subcategory": "TRAYS",
       "trays": 40,
-      "animals": 0,
-      "comments": "In that 3trays are batch 3",
-      "submittedAt": "2026-05-24T14:26:20.412469+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-25",
       "amount": 44000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-25T19:56:08.131823+00:00",
       "subcategory": "TRAYS",
       "trays": 4,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-25T19:56:08.131823+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-26",
       "amount": 654000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-26T20:23:17.908685+00:00",
       "subcategory": "TRAYS",
       "trays": 63,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-26T20:23:17.908685+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-27",
       "amount": 1070000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-27T19:43:34.795378+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-27T19:43:34.795378+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-28",
       "amount": 549,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "Batch 3 has 3trays in it",
+      "submittedAt": "2026-05-28T19:29:07.158554+00:00",
       "subcategory": "TRAYS",
       "trays": 53,
-      "animals": 0,
-      "comments": "Batch 3 has 3trays in it",
-      "submittedAt": "2026-05-28T19:29:07.158554+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-29",
       "amount": 22000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-05-29T20:16:52.110059+00:00",
       "subcategory": "TRAYS",
       "trays": 2,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-05-29T20:16:52.110059+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-05-30",
       "amount": 662000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "4trays of batch 3",
+      "submittedAt": "2026-05-30T20:15:50.955772+00:00",
       "subcategory": "TRAYS",
       "trays": 64,
-      "animals": 0,
-      "comments": "4trays of batch 3",
-      "submittedAt": "2026-05-30T20:15:50.955772+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-01",
       "amount": 565000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "5 trays for batch 3 inclusive ",
+      "submittedAt": "2026-06-01T19:34:02.112356+00:00",
       "subcategory": "TRAYS",
       "trays": 55,
-      "animals": 0,
-      "comments": "5 trays for batch 3 inclusive ",
-      "submittedAt": "2026-06-01T19:34:02.112356+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-03",
       "amount": 678000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "6 trays are for batch 4",
+      "submittedAt": "2026-06-03T19:28:53.703934+00:00",
       "subcategory": "TRAYS",
       "trays": 66,
-      "animals": 0,
-      "comments": "6 trays are for batch 4",
-      "submittedAt": "2026-06-03T19:28:53.703934+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-03",
       "amount": 1070000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-06-03T20:24:48.969855+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-06-03T20:24:48.969855+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-05",
       "amount": 694000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
-      "subcategory": "TRAYS",
-      "trays": 68,
-      "animals": 0,
       "comments": "8 trays for batch 3",
-      "submittedAt": "2026-06-05T09:49:59.809762+00:00"
+      "submittedAt": "2026-06-05T09:49:59.809762+00:00",
+      "subcategory": "TRAYS",
+      "trays": 68,
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-05",
       "amount": 694000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "8 trays for batch 4",
+      "submittedAt": "2026-06-09T19:50:10.827499+00:00",
       "subcategory": "TRAYS",
       "trays": 68,
-      "animals": 0,
-      "comments": "8 trays for batch 4",
-      "submittedAt": "2026-06-09T19:50:10.827499+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-06",
       "amount": 44000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-06-06T18:39:31.505612+00:00",
       "subcategory": "TRAYS",
       "trays": 4,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-06-06T18:39:31.505612+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-07",
       "amount": 589,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "8trays for batch 3",
+      "submittedAt": "2026-06-07T20:26:15.639420+00:00",
       "subcategory": "TRAYS",
       "trays": 58,
-      "animals": 0,
-      "comments": "8trays for batch 3",
-      "submittedAt": "2026-06-07T20:26:15.639420+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-09",
       "amount": 694000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "8 trays for batch 4",
+      "submittedAt": "2026-06-10T18:58:56.936037+00:00",
       "subcategory": "TRAYS",
       "trays": 68,
-      "animals": 0,
-      "comments": "8 trays for batch 4",
-      "submittedAt": "2026-06-10T18:58:56.936037+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-10",
       "amount": 33000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-06-11T19:13:34.786225+00:00",
       "subcategory": "TRAYS",
       "trays": 3,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-06-11T19:13:34.786225+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-11",
       "amount": 1070000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-06-11T19:13:36.170769+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-06-11T19:13:36.170769+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-11",
       "amount": 807000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "9 trays are for batch 3",
+      "submittedAt": "2026-06-11T19:16:23.117733+00:00",
       "subcategory": "TRAYS",
       "trays": 79,
-      "animals": 0,
-      "comments": "9 trays are for batch 3",
-      "submittedAt": "2026-06-11T19:16:23.117733+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-11",
       "amount": 22000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-06-11T19:17:17.050812+00:00",
       "subcategory": "TRAYS",
       "trays": 2,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-06-11T19:17:17.050812+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-13",
       "amount": 605000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "10trays for batch 3",
+      "submittedAt": "2026-06-13T19:44:32.464695+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "10trays for batch 3",
-      "submittedAt": "2026-06-13T19:44:32.464695+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-15",
       "amount": 645000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "15trays for batch 3",
+      "submittedAt": "2026-06-15T19:23:25.402758+00:00",
       "subcategory": "TRAYS",
       "trays": 65,
-      "animals": 0,
-      "comments": "15trays for batch 3",
-      "submittedAt": "2026-06-15T19:23:25.402758+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-17",
       "amount": 710000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "10trays for batch 3",
+      "submittedAt": "2026-06-17T19:04:40.364395+00:00",
       "subcategory": "TRAYS",
       "trays": 70,
-      "animals": 0,
-      "comments": "10trays for batch 3",
-      "submittedAt": "2026-06-17T19:04:40.364395+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-19",
       "amount": 752500,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-06-19T19:07:35.021700+00:00",
       "subcategory": "TRAYS",
       "trays": 75,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-06-19T19:07:35.021700+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-22",
       "amount": 774000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "16trays for Batch 3, 22/06/2026",
+      "submittedAt": "2026-06-22T16:47:19.675412+00:00",
       "subcategory": "TRAYS",
       "trays": 76,
-      "animals": 0,
-      "comments": "16trays for Batch 3, 22/06/2026",
-      "submittedAt": "2026-06-22T16:47:19.675412+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-23",
       "amount": 783000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "17 trays for batch 3",
+      "submittedAt": "2026-06-23T18:33:02.127288+00:00",
       "subcategory": "TRAYS",
       "trays": 77,
-      "animals": 0,
-      "comments": "17 trays for batch 3",
-      "submittedAt": "2026-06-23T18:33:02.127288+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-24",
       "amount": 1070000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-06-24T19:52:03.187694+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-06-24T19:52:03.187694+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-25",
       "amount": 774000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-06-25T20:00:21.501799+00:00",
       "subcategory": "TRAYS",
       "trays": 76,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-06-25T20:00:21.501799+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-27",
       "amount": 810000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for batch 3 and a tray is at 9000ugx",
+      "submittedAt": "2026-06-27T17:50:18.070673+00:00",
       "subcategory": "TRAYS",
       "trays": 80,
-      "animals": 0,
-      "comments": "20trays for batch 3 and a tray is at 9000ugx",
-      "submittedAt": "2026-06-27T17:50:18.070673+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-06-29",
       "amount": 80,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "In 80trays, 20trays are for batch 3",
+      "submittedAt": "2026-06-29T19:16:14.008530+00:00",
       "subcategory": "TRAYS",
       "trays": 810000,
-      "animals": 0,
-      "comments": "In 80trays, 20trays are for batch 3",
-      "submittedAt": "2026-06-29T19:16:14.008530+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-01",
       "amount": 1070000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-07-01T08:09:10.495573+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-07-01T08:09:10.495573+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-01",
       "amount": 810000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for starter",
+      "submittedAt": "2026-07-01T19:47:30.132412+00:00",
       "subcategory": "TRAYS",
       "trays": 80,
-      "animals": 0,
-      "comments": "20trays for starter",
-      "submittedAt": "2026-07-01T19:47:30.132412+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-04",
       "amount": 810000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for Batch 3 each tray is at 9000",
+      "submittedAt": "2026-07-04T02:04:32.919416+00:00",
       "subcategory": "TRAYS",
       "trays": 80,
-      "animals": 0,
-      "comments": "20trays for Batch 3 each tray is at 9000",
-      "submittedAt": "2026-07-04T02:04:32.919416+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-05",
       "amount": 810000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for batch 3sold at 9000ugx",
+      "submittedAt": "2026-07-05T20:09:40.555002+00:00",
       "subcategory": "TRAYS",
       "trays": 80,
-      "animals": 0,
-      "comments": "20trays for batch 3sold at 9000ugx",
-      "submittedAt": "2026-07-05T20:09:40.555002+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-07",
       "amount": 880500,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "22trays for starter then 2 trays for 14500 not included in that 880500",
+      "submittedAt": "2026-07-07T16:54:22.021942+00:00",
       "subcategory": "TRAYS",
       "trays": 87,
-      "animals": 0,
-      "comments": "22trays for starter then 2 trays for 14500 not included in that 880500",
-      "submittedAt": "2026-07-07T16:54:22.021942+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-08",
       "amount": 1070000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-07-08T17:14:15.632768+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-07-08T17:14:15.632768+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-09",
       "amount": 822000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "22trays for batch 3",
+      "submittedAt": "2026-07-09T19:40:11.981609+00:00",
       "subcategory": "TRAYS",
       "trays": 82,
-      "animals": 0,
-      "comments": "22trays for batch 3",
-      "submittedAt": "2026-07-09T19:40:11.981609+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-12",
       "amount": 705000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for batch 3 ",
+      "submittedAt": "2026-07-12T03:41:49.872845+00:00",
       "subcategory": "TRAYS",
       "trays": 70,
-      "animals": 0,
-      "comments": "20trays for batch 3 ",
-      "submittedAt": "2026-07-12T03:41:49.872845+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-13",
       "amount": 822000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for batch 3 ",
+      "submittedAt": "2026-07-13T18:30:39.882393+00:00",
       "subcategory": "TRAYS",
       "trays": 82,
-      "animals": 0,
-      "comments": "20trays for batch 3 ",
-      "submittedAt": "2026-07-13T18:30:39.882393+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-15",
       "amount": 810000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for batch 3 ",
+      "submittedAt": "2026-07-15T17:00:33.216109+00:00",
       "subcategory": "TRAYS",
       "trays": 80,
-      "animals": 0,
-      "comments": "20trays for batch 3 ",
-      "submittedAt": "2026-07-15T17:00:33.216109+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-15",
       "amount": 1070000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-07-15T17:02:17.854398+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-07-15T17:02:17.854398+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-17",
       "amount": 810000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for Batch 3",
+      "submittedAt": "2026-07-17T19:40:01.079280+00:00",
       "subcategory": "TRAYS",
       "trays": 80,
-      "animals": 0,
-      "comments": "20trays for Batch 3",
-      "submittedAt": "2026-07-17T19:40:01.079280+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-19",
       "amount": 810000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for Batch 3 ",
+      "submittedAt": "2026-07-19T20:03:22.768046+00:00",
       "subcategory": "TRAYS",
       "trays": 80,
-      "animals": 0,
-      "comments": "20trays for Batch 3 ",
-      "submittedAt": "2026-07-19T20:03:22.768046+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-22",
       "amount": 847000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "21 trays for batch 3 and 1 tray for damage inclusive",
+      "submittedAt": "2026-07-22T03:55:53.710163+00:00",
       "subcategory": "TRAYS",
       "trays": 84,
-      "animals": 0,
-      "comments": "21 trays for batch 3 and 1 tray for damage inclusive",
-      "submittedAt": "2026-07-22T03:55:53.710163+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-23",
       "amount": 1070000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-07-23T02:24:07.796034+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-07-23T02:24:07.796034+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-24",
       "amount": 705000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-07-24T03:18:04.250633+00:00",
       "subcategory": "TRAYS",
       "trays": 70,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-07-24T03:18:04.250633+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-26",
       "amount": 60,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for batch 3",
+      "submittedAt": "2026-07-26T01:30:01.812513+00:00",
       "subcategory": "TRAYS",
       "trays": 80,
-      "animals": 0,
-      "comments": "20trays for batch 3",
-      "submittedAt": "2026-07-26T01:30:01.812513+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-27",
       "amount": 828000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "22trays for batch 3 ",
+      "submittedAt": "2026-07-27T19:42:45.688365+00:00",
       "subcategory": "TRAYS",
       "trays": 82,
-      "animals": 0,
-      "comments": "22trays for batch 3 ",
-      "submittedAt": "2026-07-27T19:42:45.688365+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-29",
       "amount": 585000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "",
+      "comments": "30trays batch 3",
+      "submittedAt": "2026-07-29T18:32:39.038528+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "30trays batch 3",
-      "submittedAt": "2026-07-29T18:32:39.038528+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-07-29",
       "amount": 1070000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-07-29T18:33:40.747030+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-07-29T18:33:40.747030+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-01",
       "amount": 705000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-08-01T03:57:07.014260+00:00",
       "subcategory": "TRAYS",
       "trays": 70,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-08-01T03:57:07.014260+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-02",
       "amount": 750000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for batch 3 ",
+      "submittedAt": "2026-08-02T18:34:14.110991+00:00",
       "subcategory": "TRAYS",
       "trays": 70,
-      "animals": 0,
-      "comments": "20trays for batch 3 ",
-      "submittedAt": "2026-08-02T18:34:14.110991+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-05",
       "amount": 750000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20 for batch 3",
+      "submittedAt": "2026-08-05T03:55:39.471132+00:00",
       "subcategory": "TRAYS",
       "trays": 70,
-      "animals": 0,
-      "comments": "20 for batch 3",
-      "submittedAt": "2026-08-05T03:55:39.471132+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-06",
       "amount": 1100000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-08-06T05:28:20.188847+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-08-06T05:28:20.188847+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-07",
       "amount": 800000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "25tray for batch 3",
+      "submittedAt": "2026-08-06T23:58:46.254617+00:00",
       "subcategory": "TRAYS",
       "trays": 75,
-      "animals": 0,
-      "comments": "25tray for batch 3",
-      "submittedAt": "2026-08-06T23:58:46.254617+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-09",
       "amount": 810000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "22trays for batch 3 and 1 tray for damage",
+      "submittedAt": "2026-08-09T02:43:15.739373+00:00",
       "subcategory": "TRAYS",
       "trays": 76,
-      "animals": 0,
-      "comments": "22trays for batch 3 and 1 tray for damage",
-      "submittedAt": "2026-08-09T02:43:15.739373+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-10",
       "amount": 77000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-08-10T00:07:33.402075+00:00",
       "subcategory": "TRAYS",
       "trays": 7,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-08-10T00:07:33.402075+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-11",
       "amount": 520000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "30trays for batch 3",
+      "submittedAt": "2026-08-11T02:16:29.652243+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "30trays for batch 3",
-      "submittedAt": "2026-08-11T02:16:29.652243+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-13",
       "amount": 640000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for batch 3 ",
+      "submittedAt": "2026-08-12T23:31:47.045227+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "20trays for batch 3 ",
-      "submittedAt": "2026-08-12T23:31:47.045227+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-13",
       "amount": 1100000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-08-12T23:33:33.065123+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-08-12T23:33:33.065123+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-16",
       "amount": 640000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20tray for batch.\nOn 14/8/2026",
+      "submittedAt": "2026-08-16T01:10:59.152967+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "20tray for batch.\nOn 14/8/2026",
-      "submittedAt": "2026-08-16T01:10:59.152967+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-18",
       "amount": 640000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for batch 3 ",
+      "submittedAt": "2026-08-19T02:46:53.980353+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "20trays for batch 3 ",
-      "submittedAt": "2026-08-19T02:46:53.980353+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-20",
       "amount": 1100000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-08-19T23:59:22.297118+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-08-19T23:59:22.297118+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-20",
       "amount": 630000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "41 tray for batch 3 ",
+      "submittedAt": "2026-08-21T02:24:57.267249+00:00",
       "subcategory": "TRAYS",
       "trays": 61,
-      "animals": 0,
-      "comments": "41 tray for batch 3 ",
-      "submittedAt": "2026-08-21T02:24:57.267249+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-23",
       "amount": 530000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for batch 3 ",
+      "submittedAt": "2026-08-22T23:49:18.196856+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "20trays for batch 3 ",
-      "submittedAt": "2026-08-22T23:49:18.196856+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-25",
       "amount": 530000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-08-25T02:37:34.823134+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-08-25T02:37:34.823134+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-27",
       "amount": 1100000,
       "payment": "",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-08-27T03:24:52.713454+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-08-27T03:24:52.713454+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-27",
       "amount": 520000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "30 trays for batch 3 ",
+      "submittedAt": "2026-08-27T03:28:20.756876+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "30 trays for batch 3 ",
-      "submittedAt": "2026-08-27T03:28:20.756876+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-29",
       "amount": 530000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-08-28T23:51:02.308866+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-08-28T23:51:02.308866+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-08-31",
       "amount": 549000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-08-31T01:48:46.210261+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-08-31T01:48:46.210261+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-02",
       "amount": 559500,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "21trays for batch 3 and medium size ",
+      "submittedAt": "2026-09-02T01:27:16.666942+00:00",
       "subcategory": "TRAYS",
       "trays": 51,
-      "animals": 0,
-      "comments": "21trays for batch 3 and medium size ",
-      "submittedAt": "2026-09-02T01:27:16.666942+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-03",
       "amount": 1130000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-03T01:16:44.176587+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-03T01:16:44.176587+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-04",
       "amount": 541000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "30trays for batch 3",
+      "submittedAt": "2026-09-04T00:49:54.672546+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "30trays for batch 3",
-      "submittedAt": "2026-09-04T00:49:54.672546+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-04",
       "amount": 60000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-04T00:50:48.019198+00:00",
       "subcategory": "TRAYS",
       "trays": 5,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-04T00:50:48.019198+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-06",
       "amount": 559000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays for batch 3",
+      "submittedAt": "2026-09-06T02:08:04.032928+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "20trays for batch 3",
-      "submittedAt": "2026-09-06T02:08:04.032928+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-08",
       "amount": 559000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-08T05:08:33.870009+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-08T05:08:33.870009+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-10",
       "amount": 1130000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-10T02:21:42.340019+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-10T02:21:42.340019+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-10",
       "amount": 559000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-10T02:23:01.710794+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-10T02:23:01.710794+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-12",
       "amount": 562000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-12T01:11:53.496254+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-12T01:11:53.496254+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-14",
       "amount": 571000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "1tray for damage ",
+      "submittedAt": "2026-09-14T03:01:35.755860+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "1tray for damage ",
-      "submittedAt": "2026-09-14T03:01:35.755860+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-16",
       "amount": 564,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-16T02:38:55.383479+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-16T02:38:55.383479+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-18",
       "amount": 1130000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-18T03:27:08.987353+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-18T03:27:08.987353+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-18",
       "amount": 48000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "6 trays ",
+      "submittedAt": "2026-09-18T03:28:40.015312+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "6 trays ",
-      "submittedAt": "2026-09-18T03:28:40.015312+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-18",
       "amount": 571000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-18T03:34:54.551354+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-18T03:34:54.551354+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-20",
       "amount": 571000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "",
+      "comments": "",
+      "submittedAt": "2026-09-20T03:09:42.941107+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-20T03:09:42.941107+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-20",
       "amount": 8000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "1 tray",
+      "submittedAt": "2026-09-20T03:10:56.109742+00:00",
       "subcategory": "TRAYS_DAMAGE",
       "trays": 0,
-      "animals": 0,
-      "comments": "1 tray",
-      "submittedAt": "2026-09-20T03:10:56.109742+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-20",
       "amount": 16000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays ",
+      "submittedAt": "2026-09-20T03:11:54.699962+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "20trays ",
-      "submittedAt": "2026-09-20T03:11:54.699962+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-22",
       "amount": 571000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-22T01:35:48.591132+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-22T01:35:48.591132+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-22",
       "amount": 32000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "4trays ",
+      "submittedAt": "2026-09-22T01:37:23.585886+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "4trays ",
-      "submittedAt": "2026-09-22T01:37:23.585886+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-22",
       "amount": 25000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-22T01:38:47.549814+00:00",
       "subcategory": "TRAYS",
       "trays": 2,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-22T01:38:47.549814+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-24",
       "amount": 1200000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-24T01:11:05.431039+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-24T01:11:05.431039+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-24",
       "amount": 163800,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-24T01:12:07.903621+00:00",
       "subcategory": "TRAYS",
       "trays": 14,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-24T01:12:07.903621+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-24",
       "amount": 330000,
       "payment": "",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-24T01:12:59.866426+00:00",
       "subcategory": "TRAYS",
       "trays": 30,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-24T01:12:59.866426+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-24",
       "amount": 48000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "6trays",
+      "submittedAt": "2026-09-24T01:14:33.390698+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "6trays",
-      "submittedAt": "2026-09-24T01:14:33.390698+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-24",
       "amount": 8000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-24T01:16:12.500064+00:00",
       "subcategory": "TRAYS_DAMAGE",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-24T01:16:12.500064+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-26",
       "amount": 571000,
       "payment": "",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-26T01:02:06.243059+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-26T01:02:06.243059+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-26",
       "amount": 48000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-26T01:03:07.295577+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-26T01:03:07.295577+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-28",
       "amount": 571000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-28T03:08:12.838467+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-28T03:08:12.838467+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-28",
       "amount": 72000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "9trays ",
+      "submittedAt": "2026-09-28T03:09:11.564814+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "9trays ",
-      "submittedAt": "2026-09-28T03:09:11.564814+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-30",
       "amount": 581000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-29T23:50:50.797800+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-29T23:50:50.797800+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-30",
       "amount": 104,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-29T23:51:39.751958+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-29T23:51:39.751958+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-09-30",
       "amount": 8000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-29T23:52:34.078375+00:00",
       "subcategory": "TRAYS_DAMAGE",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-29T23:52:34.078375+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-01",
       "amount": 1200000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-09-30T23:14:14.574466+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-09-30T23:14:14.574466+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-02",
       "amount": 520600,
       "payment": "",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-01T23:05:23.044437+00:00",
       "subcategory": "TRAYS",
       "trays": 45,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-01T23:05:23.044437+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-02",
       "amount": 136000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-01T23:07:10.817619+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-01T23:07:10.817619+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-04",
       "amount": 581000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-04T00:48:57.878026+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-04T00:48:57.878026+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-04",
       "amount": 160000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-04T00:49:59.090405+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-04T00:49:59.090405+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-04",
       "amount": 8000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-04T00:50:53.058162+00:00",
       "subcategory": "TRAYS_DAMAGE",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-04T00:50:53.058162+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-06",
       "amount": 581000,
       "payment": "",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-05T22:17:00.065565+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-05T22:17:00.065565+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-06",
       "amount": 180000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "20trays",
+      "submittedAt": "2026-10-05T22:18:17.672755+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "20trays",
-      "submittedAt": "2026-10-05T22:18:17.672755+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-08",
       "amount": 1200000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-08T00:39:30.473854+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-08T00:39:30.473854+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-08",
       "amount": 234000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-08T00:40:29.945175+00:00",
       "subcategory": "TRAYS",
       "trays": 20,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-08T00:40:29.945175+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-08",
       "amount": 299000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-08T00:41:34.404605+00:00",
       "subcategory": "TRAYS",
       "trays": 26,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-08T00:41:34.404605+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-08",
       "amount": 225000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "25",
+      "submittedAt": "2026-10-08T00:42:31.794122+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "25",
-      "submittedAt": "2026-10-08T00:42:31.794122+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-10",
       "amount": 581000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-10T03:13:31.738079+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-10T03:13:31.738079+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-10",
       "amount": 234000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-10T03:15:11.728426+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-10T03:15:11.728426+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-12",
       "amount": 498500,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-12T02:10:23.623973+00:00",
       "subcategory": "TRAYS",
       "trays": 53,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-12T02:10:23.623973+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-12",
       "amount": 252000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-12T02:11:59.048009+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-12T02:11:59.048009+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-14",
       "amount": 475500,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-14T01:54:21.680153+00:00",
       "subcategory": "TRAYS",
       "trays": 41,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-14T01:54:21.680153+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-14",
       "amount": 279,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "31trays",
+      "submittedAt": "2026-10-14T01:55:38.565055+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "31trays",
-      "submittedAt": "2026-10-14T01:55:38.565055+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-15",
       "amount": 1200000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-16T02:21:36.165685+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-16T02:21:36.165685+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-16",
       "amount": 479700,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-16T02:23:23.390274+00:00",
       "subcategory": "TRAYS",
       "trays": 41,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-16T02:23:23.390274+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-16",
       "amount": 279000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-16T02:24:51.332474+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-16T02:24:51.332474+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-16",
       "amount": 14000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-16T02:25:57.945334+00:00",
       "subcategory": "TRAYS_DAMAGE",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-16T02:25:57.945334+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-18",
       "amount": 491400,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-18T01:35:39.574214+00:00",
       "subcategory": "TRAYS",
       "trays": 42,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-18T01:35:39.574214+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-18",
       "amount": 297000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-18T01:35:56.811469+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-18T01:35:56.811469+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-20",
       "amount": 468000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-20T03:29:56.602235+00:00",
       "subcategory": "TRAYS",
       "trays": 40,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-20T03:29:56.602235+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-20",
       "amount": 270000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-20T03:30:56.420190+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-20T03:30:56.420190+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-22",
       "amount": 1200000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-22T03:27:14.546876+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-22T03:27:14.546876+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-22",
       "amount": 468000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-22T03:28:39.570843+00:00",
       "subcategory": "TRAYS",
       "trays": 40,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-22T03:28:39.570843+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-22",
       "amount": 332500,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "35trays",
+      "submittedAt": "2026-10-22T03:30:10.091781+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "35trays",
-      "submittedAt": "2026-10-22T03:30:10.091781+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-24",
       "amount": 45,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-24T03:08:29.717672+00:00",
       "subcategory": "TRAYS",
       "trays": 526500,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-24T03:08:29.717672+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-24",
       "amount": 408500,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-24T03:09:59.299076+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-24T03:09:59.299076+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-26",
       "amount": 468000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-26T03:19:09.451376+00:00",
       "subcategory": "TRAYS",
       "trays": 40,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-26T03:19:09.451376+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-26",
       "amount": 370500,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-26T03:21:12.305189+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-26T03:21:12.305189+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-28",
       "amount": 720000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-28T03:08:58.416566+00:00",
       "subcategory": "TRAYS",
       "trays": 60,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-28T03:08:58.416566+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-28",
       "amount": 400000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-28T03:09:50.813061+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-28T03:09:50.813061+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-30",
       "amount": 1200000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-30T02:17:35.669404+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-30T02:17:35.669404+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-30",
       "amount": 480000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-10-30T02:24:21.890883+00:00",
       "subcategory": "TRAYS",
       "trays": 40,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-10-30T02:24:21.890883+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-10-30",
       "amount": 506000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "46trays",
+      "submittedAt": "2026-10-30T02:26:48.106835+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "46trays",
-      "submittedAt": "2026-10-30T02:26:48.106835+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-01",
       "amount": 552000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-01T00:04:04.509505+00:00",
       "subcategory": "TRAYS",
       "trays": 46,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-01T00:04:04.509505+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-01",
       "amount": 484000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "44trays",
+      "submittedAt": "2026-11-01T00:05:09.343227+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "44trays",
-      "submittedAt": "2026-11-01T00:05:09.343227+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-01",
       "amount": 0,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "Ivan",
+      "submittedAt": "2026-11-01T00:06:45.140032+00:00",
       "subcategory": "TRAYS",
       "trays": 2,
-      "animals": 0,
-      "comments": "Ivan",
-      "submittedAt": "2026-11-01T00:06:45.140032+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-01",
       "amount": 0,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "Fiona",
+      "submittedAt": "2026-11-01T00:07:40.884913+00:00",
       "subcategory": "TRAYS",
       "trays": 4,
-      "animals": 0,
-      "comments": "Fiona",
-      "submittedAt": "2026-11-01T00:07:40.884913+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-01",
       "amount": 48000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-01T00:09:09.294101+00:00",
       "subcategory": "TRAYS",
       "trays": 4,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-01T00:09:09.294101+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-01",
       "amount": 7000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-01T00:09:48.851674+00:00",
       "subcategory": "TRAYS_DAMAGE",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-01T00:09:48.851674+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-03",
       "amount": 480000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-03T03:30:29.252371+00:00",
       "subcategory": "TRAYS",
       "trays": 40,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-03T03:30:29.252371+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-03",
       "amount": 495000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "45trays",
+      "submittedAt": "2026-11-03T03:31:37.843425+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "45trays",
-      "submittedAt": "2026-11-03T03:31:37.843425+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-06",
       "amount": 1200000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-06T02:24:23.520285+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-06T02:24:23.520285+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-06",
       "amount": 480000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-06T02:25:25.064617+00:00",
       "subcategory": "TRAYS",
       "trays": 40,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-06T02:25:25.064617+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-06",
       "amount": 528000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "48trays",
+      "submittedAt": "2026-11-06T02:26:59.047579+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "48trays",
-      "submittedAt": "2026-11-06T02:26:59.047579+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-06",
       "amount": 7000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-06T02:27:44.494997+00:00",
       "subcategory": "TRAYS_DAMAGE",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-06T02:27:44.494997+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-08",
       "amount": 516000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-08T03:47:11.931219+00:00",
       "subcategory": "TRAYS",
       "trays": 43,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-08T03:47:11.931219+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-08",
       "amount": 517000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "47trays",
+      "submittedAt": "2026-11-08T03:48:28.873575+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "47trays",
-      "submittedAt": "2026-11-08T03:48:28.873575+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-09",
       "amount": 564000,
       "payment": "",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-09T02:26:18.595551+00:00",
       "subcategory": "TRAYS",
       "trays": 47,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-09T02:26:18.595551+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-09",
       "amount": 504000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "46trays ",
+      "submittedAt": "2026-11-09T02:27:16.467929+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "46trays ",
-      "submittedAt": "2026-11-09T02:27:16.467929+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-11",
       "amount": 576000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-11T02:42:04.811041+00:00",
       "subcategory": "TRAYS",
       "trays": 48,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-11T02:42:04.811041+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-11",
       "amount": 572000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "52tray ",
+      "submittedAt": "2026-11-11T02:43:12.187867+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "52tray ",
-      "submittedAt": "2026-11-11T02:43:12.187867+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-12",
       "amount": 1200000,
       "payment": "MTN_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-12T13:36:06.658271+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-12T13:36:06.658271+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-13",
       "amount": 552000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-13T08:15:53.782547+00:00",
       "subcategory": "TRAYS",
       "trays": 46,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-13T08:15:53.782547+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-13",
       "amount": 539000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-13T08:16:08.217494+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-13T08:16:08.217494+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-13",
       "amount": 7000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-13T08:16:26.991163+00:00",
       "subcategory": "TRAYS_DAMAGE",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-13T08:16:26.991163+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-15",
       "amount": 504,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-15T03:43:09.332919+00:00",
       "subcategory": "TRAYS",
       "trays": 42,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-15T03:43:09.332919+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-15",
       "amount": 528000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "48trays ",
+      "submittedAt": "2026-11-15T03:44:27.060722+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "48trays ",
-      "submittedAt": "2026-11-15T03:44:27.060722+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-15",
       "amount": 60000,
       "payment": "CASH",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-15T03:45:11.875211+00:00",
       "subcategory": "TRAYS",
       "trays": 5,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-15T03:45:11.875211+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-17",
       "amount": 504000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-17T02:16:31.311110+00:00",
       "subcategory": "TRAYS",
       "trays": 42,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-17T02:16:31.311110+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-17",
       "amount": 528000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-17T02:17:12.163169+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-17T02:17:12.163169+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-19",
       "amount": 1200000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-19T02:21:24.181300+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-19T02:21:24.181300+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-19",
       "amount": 480000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-19T02:22:38.212449+00:00",
       "subcategory": "TRAYS",
       "trays": 40,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-19T02:22:38.212449+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-19",
       "amount": 550000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "50trays ",
+      "submittedAt": "2026-11-19T02:24:10.971029+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "50trays ",
-      "submittedAt": "2026-11-19T02:24:10.971029+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-21",
       "amount": 600000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-21T02:14:30.487577+00:00",
       "subcategory": "TRAYS",
       "trays": 50,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-21T02:14:30.487577+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-21",
       "amount": 440000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-21T02:15:16.914875+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-21T02:15:16.914875+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-23",
       "amount": 550000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-23T12:16:29.033229+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-23T12:16:29.033229+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-23",
       "amount": 480000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-23T12:17:08.056474+00:00",
       "subcategory": "TRAYS",
       "trays": 40,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-23T12:17:08.056474+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-25",
       "amount": 468000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-25T01:21:00.661519+00:00",
       "subcategory": "TRAYS",
       "trays": 38,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-25T01:21:00.661519+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-25",
       "amount": 583000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-25T01:22:08.576570+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-25T01:22:08.576570+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-26",
       "amount": 1200000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-26T03:20:35.312428+00:00",
       "subcategory": "TRAYS",
       "trays": 100,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-26T03:20:35.312428+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-27",
       "amount": 420000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-27T02:53:55.954024+00:00",
       "subcategory": "TRAYS",
       "trays": 35,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-27T02:53:55.954024+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-27",
       "amount": 605000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "55trays",
+      "submittedAt": "2026-11-27T02:54:51.884557+00:00",
       "subcategory": "TRAYS_STARTER",
       "trays": 0,
-      "animals": 0,
-      "comments": "55trays",
-      "submittedAt": "2026-11-27T02:54:51.884557+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-27",
       "amount": 7000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "",
+      "submittedAt": "2026-11-27T02:55:54.645608+00:00",
       "subcategory": "TRAYS_DAMAGE",
       "trays": 0,
-      "animals": 0,
-      "comments": "",
-      "submittedAt": "2026-11-27T02:55:54.645608+00:00"
+      "eggs": null,
+      "animals": 0
     },
     {
       "date": "2026-11-27",
       "amount": 400000,
       "payment": "AIRTEL_MOBILE_MONEY",
       "category": "CHICKEN",
+      "comments": "40bags",
+      "submittedAt": "2026-11-27T02:56:42.699739+00:00",
       "subcategory": "MANURE",
       "trays": 0,
-      "animals": 0,
-      "comments": "40bags",
-      "submittedAt": "2026-11-27T02:56:42.699739+00:00"
+      "eggs": null,
+      "animals": 0
     }
   ],
   "expenseRecords": []

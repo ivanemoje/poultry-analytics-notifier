@@ -20,6 +20,8 @@ View the interactive egg production dashboard at [https://ivanemoje.github.io/po
 2. **Environment Variables**
    You need to set up the following environment variables:
    - `ONA_API_TOKEN`: This token is required to authenticate requests to the Ona API. You can obtain this token from your Ona account.
+   - `ONA_FORM_ID` identifies the egg production form.
+   - `SALES_ONA_FORM_ID` optionally overrides the sales form ID, which defaults to `853534`.
    - `SLACK_BOT_TOKEN`: This token is used to authenticate the Slack bot that will send the report.
    - `SLACK_CHANNEL_ID`: The ID of the Slack channel where the report will be sent.
 
@@ -32,10 +34,10 @@ To run the Poultry Analytics Notifier script manually, execute the following com
 ```
 bash ./scripts/poultry_analytics.sh
 ```
-This will fetch the egg collection data, process it, and output the report to the console.
+This fetches both Ona forms, writes production and sales to `poultry_analytics_data.json`, and prints the combined Slack summary. It also refreshes `poultry_sales_data.json` for existing readers.
 
 ### GitHub Actions Workflow
-The project includes a GitHub Actions workflow defined in `.github/workflows/poultry_analytics.yaml`. This workflow is scheduled to run daily at 05:00 and 22:00 UTC. It will execute the egg report script and send the generated report to the specified Slack channel.
+The GitHub Actions workflow runs daily at 22:00 UTC. It runs the combined analytics script and sends the report to the configured Slack channel.
 
 To trigger the workflow manually, you can use the "Run workflow" option in the GitHub Actions tab of your repository.
 
@@ -51,6 +53,8 @@ Features:
 - Automatic updates from production data
 
 The dashboard updates automatically when new data is pushed to the repository, providing a live view of your poultry analytics.
+
+The Financial tab shows sales from the Ona sales form. The period filter applies to the sales records table. The average tray price uses regular tray sales with a recorded quantity over the last three weeks of sales data. The dashboard uses the existing expense snapshot when the sales form has no expense entries.
 
 The Batches tab shows all five batches. Batch and period filters apply to the records table, which shows trays, loose eggs, broken eggs, recorded deaths, and daily feed in grams per bird. Egg totals include available records for every batch.
 
