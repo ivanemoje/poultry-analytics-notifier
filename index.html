@@ -105,6 +105,8 @@ button{font-family:inherit;}
 }
 .filter-group{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;min-width:0;}
 .filter-label{font-size:.82rem;font-weight:800;color:var(--text2);margin-right:.25rem;}
+.batch-toggle{display:inline-flex;align-items:center;gap:.4rem;min-height:2.75rem;padding:0 .35rem;font-size:.85rem;color:var(--text2);cursor:pointer;}
+.batch-toggle input{width:1rem;height:1rem;accent-color:var(--accent);}
 .period-btn{
   font-size:.85rem;font-weight:700;min-height:2.4rem;
   padding:.35rem .65rem;border-radius:.5rem;
@@ -177,10 +179,11 @@ button{font-family:inherit;}
 @media(min-width:768px){.grid-2{grid-template-columns:1fr 1fr;}}
 .grid-3{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:1.25rem;}
 @media(min-width:768px){.grid-3{grid-template-columns:repeat(3,1fr);}}
-.grid-1-2{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:1.25rem;}
-@media(min-width:1024px){.grid-1-2{grid-template-columns:1fr 2fr;}}
-.grid-2-1{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:1.25rem;}
-@media(min-width:1024px){.grid-2-1{grid-template-columns:2fr 1fr;}}
+.overview-grid{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:.75rem;margin-bottom:1.25rem;}
+@media(min-width:1050px){
+  .overview-grid{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);}
+  .overview-grid .chart-wrap{height:18rem;}
+}
 
 /* CARD */
 .card{
@@ -195,6 +198,8 @@ button{font-family:inherit;}
   border-bottom:1px solid var(--border);
 }
 .card-title{font-size:.95rem;font-weight:800;color:var(--text);}
+.overview-grid .card-header{min-height:3rem;}
+.card-header .kpi-sub{margin:0;}
 .card-body{padding:1rem;}
 .card-body.no-pad{padding:0;}
 
@@ -215,7 +220,6 @@ button{font-family:inherit;}
   padding:.15rem .45rem;border-radius:.35rem;
   text-transform:capitalize;
 }
-.status-active{background:rgba(45,90,39,.2);color:var(--green);border:1px solid var(--green);}
 .status-pending{background:var(--surface2);color:var(--text3);border:1px solid var(--border);}
 .status-laying{background:rgba(90,172,78,.12);color:var(--green);border:1px solid rgba(90,172,78,.25);}
 .status-brooding{background:var(--surface2);color:var(--amber);border:1px solid var(--border);}
@@ -265,6 +269,21 @@ button{font-family:inherit;}
 
 /* CHART CONTAINERS */
 .chart-wrap{position:relative;padding:1rem;height:clamp(14rem,34vw,19rem);}
+.chart-values{border-top:1px solid var(--border);}
+.chart-values summary{min-height:2.75rem;padding:.65rem 1rem;font-size:.83rem;font-weight:800;color:var(--text2);cursor:pointer;}
+.chart-values[open] summary{border-bottom:1px solid var(--border);}
+.chart-values-scroll{max-height:17rem;overflow:auto;scrollbar-gutter:stable;}
+.chart-values thead th{position:sticky;top:0;background:var(--surface);z-index:1;}
+.chart-values .period-table th,.chart-values .period-table td{white-space:nowrap;}
+.collection-table{table-layout:fixed;}
+.collection-table th,.collection-table td{padding:.48rem .7rem;line-height:1.3;font-variant-numeric:tabular-nums;}
+.collection-table thead th{white-space:normal;vertical-align:bottom;}
+.collection-table tbody td{white-space:nowrap;}
+.collection-table tr[aria-current="true"],.collection-table tfoot{background:var(--surface2);font-weight:800;}
+.collection-table tbody tr:last-child>*{border-bottom:0;}
+.collection-table tfoot{border-top:1px solid var(--border);}
+.collection-table .batch-state{display:block;color:var(--text3);font-weight:500;font-size:.72rem;text-transform:capitalize;}
+.collection-table th[scope="row"]{font-weight:700;text-align:left;text-transform:none;}
 
 /* REVENUE TABLE */
 .rev-table{width:100%;border-collapse:collapse;}
@@ -326,6 +345,9 @@ button{font-family:inherit;}
   .card-header,.card-body{padding:.7rem;}
   .chart-wrap{padding:.55rem;}
   .rev-table td,.rev-table th,.period-table td,.period-table th{padding:.5rem;}
+  .collection-table th,.collection-table td{padding:.5rem .25rem;font-size:.73rem;}
+  .collection-table th:first-child,.collection-table td:first-child{padding-left:.6rem;}
+  .collection-table th:last-child,.collection-table td:last-child{padding-right:.6rem;}
 }
 
 /* SUMMARY STAT */
@@ -359,6 +381,7 @@ button{font-family:inherit;}
   <div class="filter-group" role="group" aria-label="Period">
     <span class="filter-label" aria-hidden="true">Period</span>
     <button class="period-btn" data-days="1" aria-pressed="false" aria-label="Latest day">1D</button>
+    <button class="period-btn" data-days="3" aria-pressed="false" aria-label="Last 3 days">3D</button>
     <button class="period-btn" data-days="7" aria-pressed="false" aria-label="Last 7 days">7D</button>
     <button class="period-btn" data-days="14" aria-pressed="false" aria-label="Last 14 days">14D</button>
     <button class="period-btn active" data-days="30" aria-pressed="true" aria-label="Last 30 days">30D</button>
@@ -370,11 +393,12 @@ button{font-family:inherit;}
   <div class="filter-group" role="group" aria-label="Batch">
     <span class="filter-label" aria-hidden="true">Batch</span>
     <button class="period-btn active" data-batch="all" aria-pressed="true">All</button>
-    <button class="period-btn" data-batch="1" aria-label="Batch 1" aria-pressed="false">B1</button>
+    <button class="period-btn hidden" data-batch="1" aria-label="Batch 1" aria-pressed="false">B1</button>
     <button class="period-btn" data-batch="2" aria-label="Batch 2" aria-pressed="false">B2</button>
     <button class="period-btn" data-batch="3" aria-label="Batch 3" aria-pressed="false">B3</button>
     <button class="period-btn" data-batch="4" aria-label="Batch 4" aria-pressed="false">B4</button>
-    <button class="period-btn" data-batch="5" aria-label="Batch 5" aria-pressed="false">B5</button>
+    <button class="period-btn hidden" data-batch="5" aria-label="Batch 5" aria-pressed="false">B5</button>
+    <label class="batch-toggle"><input type="checkbox" id="include-inactive"> Include inactive batches</label>
   </div>
 </div>
 
@@ -391,9 +415,10 @@ button{font-family:inherit;}
   <div class="tab-content active" id="tab-overview">
     <div class="kpi-strip" id="kpi-strip">
       <div class="kpi" style="--kpi-color:var(--green)">
-        <div class="kpi-label">Eggs Collected</div>
+        <div class="kpi-label">Total Eggs Collected</div>
         <div class="kpi-value" id="kpi-eggs">—</div>
         <div class="kpi-sub" id="kpi-eggs-sub">period total</div>
+        <div class="kpi-sub" id="kpi-eggs-entries"></div>
         <div class="kpi-badge hidden" id="kpi-overdue"></div>
       </div>
       <div class="kpi" style="--kpi-color:var(--green)">
@@ -407,9 +432,9 @@ button{font-family:inherit;}
         <div class="kpi-sub" id="kpi-revenue-sub">period total</div>
       </div>
       <div class="kpi" style="--kpi-color:var(--amber)">
-        <div class="kpi-label">P&L (UGX)</div>
+        <div class="kpi-label">Poultry P&L (UGX)</div>
         <div class="kpi-value" id="kpi-pnl">—</div>
-        <div class="kpi-sub" id="kpi-pnl-sub">revenue − recorded expenses</div>
+        <div class="kpi-sub" id="kpi-pnl-sub">revenue − recorded poultry expenses</div>
       </div>
     </div>
 
@@ -436,10 +461,10 @@ button{font-family:inherit;}
       </div>
     </div>
 
-    <div class="grid-2-1">
+    <div class="overview-grid">
       <div class="card">
         <div class="card-header">
-          <span class="card-title">Daily Egg Production</span>
+          <span class="card-title">Daily Collection</span>
           <span class="kpi-sub" id="chart-period-label"></span>
         </div>
         <div class="chart-wrap">
@@ -448,27 +473,33 @@ button{font-family:inherit;}
       </div>
       <div class="card">
         <div class="card-header"><span class="card-title">Period Breakdown</span></div>
-        <div class="card-body">
-          <div class="section-label">Eggs by Period</div>
-          <div id="period-table-wrap"></div>
-          <div class="section-label" style="margin-top:1rem">Latest Entry</div>
-          <div id="latest-entry-wrap"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid-1-2">
-      <div class="card">
-        <div class="card-header"><span class="card-title">🚩 Red Flags</span></div>
-        <div class="flags-list" id="flags-list">
-          <div class="loading">Analysing...</div>
-        </div>
+        <table class="period-table collection-table">
+          <thead><tr><th scope="col">Period</th><th scope="col">Trays</th><th scope="col">Loose eggs</th><th scope="col">Broken eggs</th><th scope="col">Laying %</th></tr></thead>
+          <tbody id="period-table-wrap"></tbody>
+        </table>
       </div>
       <div class="card">
         <div class="card-header"><span class="card-title">Egg Production by Period</span></div>
         <div class="chart-wrap">
           <canvas id="chart-monthly-eggs"></canvas>
         </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Latest Survey</span>
+          <span class="kpi-sub" id="latest-survey-date"></span>
+        </div>
+        <table class="period-table collection-table">
+          <thead><tr><th scope="col">Batch</th><th scope="col">Trays</th><th scope="col">Loose eggs</th><th scope="col">Broken eggs</th><th scope="col">Laying %</th></tr></thead>
+          <tbody id="latest-entry-wrap"></tbody>
+          <tfoot id="latest-entry-total"></tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">🚩 Red Flags</span></div>
+      <div class="flags-list" id="flags-list">
+        <div class="loading">Analysing...</div>
       </div>
     </div>
   </div>
@@ -486,7 +517,7 @@ button{font-family:inherit;}
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><span class="card-title">Eggs by Batch (Period)</span></div>
+        <div class="card-header"><span class="card-title">Total Eggs by Batch</span></div>
         <div class="chart-wrap">
           <canvas id="chart-batch-eggs"></canvas>
         </div>
@@ -494,12 +525,14 @@ button{font-family:inherit;}
     </div>
 
     <div class="card" style="margin-bottom:1.25rem">
-      <div class="card-header"><span class="card-title">Period Table — Eggs by Timeframe</span></div>
+      <div class="card-header"><span class="card-title">Collection by Batch and Period</span></div>
       <div class="card-body no-pad" style="overflow-x:auto">
         <table class="period-table" id="period-detail-table">
           <thead>
             <tr>
               <th>Metric</th>
+              <th>1 Day</th>
+              <th>3 Days</th>
               <th>7 Days</th>
               <th>14 Days</th>
               <th>30 Days</th>
@@ -524,14 +557,14 @@ button{font-family:inherit;}
         <div class="kpi-sub">All time</div>
       </div>
       <div class="kpi" style="--kpi-color:var(--red)">
-        <div class="kpi-label">Recorded Expenses</div>
+        <div class="kpi-label">Recorded Poultry Expenses</div>
         <div class="kpi-value accent-red" id="fin-expenses">—</div>
         <div class="kpi-sub">All time</div>
       </div>
       <div class="kpi" style="--kpi-color:var(--green)">
-        <div class="kpi-label">Net P&L</div>
+        <div class="kpi-label">Poultry Net Income</div>
         <div class="kpi-value" id="fin-pnl">—</div>
-        <div class="kpi-sub">Revenue − recorded expenses</div>
+        <div class="kpi-sub">Revenue − recorded poultry expenses</div>
       </div>
       <div class="kpi" style="--kpi-color:var(--amber)">
         <div class="kpi-label">Avg Price / Tray</div>
@@ -554,7 +587,7 @@ button{font-family:inherit;}
 
     <div class="grid-2">
       <div class="card">
-        <div class="card-header"><span class="card-title">Revenue vs Recorded Expenses</span></div>
+        <div class="card-header"><span class="card-title">Revenue vs Poultry Expenses</span></div>
         <div class="chart-wrap">
           <canvas id="chart-fin-monthly"></canvas>
         </div>
@@ -569,7 +602,7 @@ button{font-family:inherit;}
 
     <div class="grid-2">
       <div class="card">
-        <div class="card-header"><span class="card-title">Expense Categories</span></div>
+        <div class="card-header"><span class="card-title">Poultry Expense Categories</span></div>
         <div class="card-body" id="expense-breakdown"></div>
       </div>
       <div class="card">
@@ -582,11 +615,20 @@ button{font-family:inherit;}
         </div>
       </div>
     </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">Expense Records</span></div>
+      <div class="card-body no-pad" style="overflow:auto;max-height:280px">
+        <table class="rev-table" id="expenses-table">
+          <thead><tr><th scope="col">Date</th><th scope="col">Expense</th><th scope="col">Category</th><th scope="col">Payment</th><th scope="col">Amount (UGX)</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <!-- BATCHES TAB -->
   <div class="tab-content" id="tab-batches">
-    <div class="section-label">All Batches</div>
+    <div class="section-label" id="batch-list-title">Laying Batches</div>
     <div class="batch-grid" id="all-batches-grid"></div>
     <div class="section-label">Batch Records</div>
     <div class="card" style="overflow-x:auto">
@@ -603,8 +645,8 @@ button{font-family:inherit;}
 // ============ DATA ============
 let BATCH_CONFIG = {
   batch1:{name:"Batch 1",dob:"2024-12-05",expectedOfflay:"2026-08-05",status:"offlaid",supplier:"Jeka",initialBirds:620,currentBirds:539},
-  batch2:{name:"Batch 2",dob:"2025-06-15",expectedOfflay:"2027-03-15",status:"active",supplier:"Jayden",initialBirds:1215,currentBirds:1027},
-  batch3:{name:"Batch 3",dob:"2025-12-20",expectedOfflay:"2027-09-11",status:"active",supplier:"Jeka",initialBirds:400,currentBirds:390},
+  batch2:{name:"Batch 2",dob:"2025-06-15",expectedOfflay:"2027-03-15",status:"laying",supplier:"Jayden",initialBirds:1215,currentBirds:1027},
+  batch3:{name:"Batch 3",dob:"2025-12-20",expectedOfflay:"2027-09-11",status:"laying",supplier:"Jeka",initialBirds:400,currentBirds:390},
   batch4:{name:"Batch 4",dob:"2026-04-24",expectedOfflay:"2028-01-24",status:"laying",supplier:"Jeka",initialBirds:1075,currentBirds:1016},
   batch5:{name:"Batch 5",dob:"2026-10-22",expectedOfflay:"2028-04-22",status:"pending",supplier:"Jeka",initialBirds:4000,currentBirds:4000}
 };
@@ -618,13 +660,44 @@ let RAW_EGGS = [{"date":"2025-05-19","submittedAt":"2025-05-20T08:21:06.148102+0
 
 let RAW_SALES = [{"date":"2025-07-08","amount":150000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":0},{"date":"2025-07-08","amount":100000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":0},{"date":"2025-07-08","amount":1035500,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":0},{"date":"2025-07-09","amount":210000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":0},{"date":"2025-07-11","amount":845500,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":89},{"date":"2025-07-22","amount":340000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":0},{"date":"2025-07-22","amount":784100,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":83},{"date":"2025-07-25","amount":350000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":35},{"date":"2025-07-29","amount":836000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":88},{"date":"2025-08-01","amount":1111500,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":117},{"date":"2025-08-08","amount":170000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":17},{"date":"2025-08-11","amount":959500,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":101},{"date":"2025-08-21","amount":240000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":14},{"date":"2025-08-29","amount":969,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":102},{"date":"2025-09-10","amount":150000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":15},{"date":"2025-09-24","amount":200000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":20},{"date":"2026-01-02","amount":2307500,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":248},{"date":"2026-01-03","amount":380000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":40},{"date":"2026-01-05","amount":570000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-01-05","amount":52500,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":5},{"date":"2026-01-05","amount":740000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":74},{"date":"2026-01-08","amount":730000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":73},{"date":"2026-01-10","amount":710000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":71},{"date":"2026-01-12","amount":700000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":70},{"date":"2026-01-19","amount":1200000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":120},{"date":"2026-01-20","amount":660000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-01-22","amount":700000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":70},{"date":"2026-01-24","amount":54000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":5},{"date":"2026-01-25","amount":600000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-01-29","amount":1070000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":107},{"date":"2026-01-30","amount":1320000,"payment":"BANK","category":"CHICKEN","subcategory":"TRAYS","trays":120},{"date":"2026-02-01","amount":750000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":75},{"date":"2026-02-02","amount":130000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":13},{"date":"2026-02-03","amount":500000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-02-05","amount":600000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-02-06","amount":1430000,"payment":"BANK","category":"CHICKEN","subcategory":"TRAYS","trays":130},{"date":"2026-02-07","amount":500000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-02-08","amount":140000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":14},{"date":"2026-02-09","amount":500000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-02-11","amount":500000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-02-12","amount":990000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":90},{"date":"2026-02-13","amount":630000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":63},{"date":"2026-02-15","amount":630000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":63},{"date":"2026-02-17","amount":525000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-02-18","amount":110000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":11},{"date":"2026-02-18","amount":1650000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":150},{"date":"2026-02-22","amount":525000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-02-22","amount":130000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":13},{"date":"2026-02-25","amount":1650000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":150},{"date":"2026-02-26","amount":630000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-02-27","amount":116000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":11},{"date":"2026-02-28","amount":483000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":46},{"date":"2026-03-02","amount":504000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":48},{"date":"2026-03-04","amount":1100000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-03-05","amount":735000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":70},{"date":"2026-03-06","amount":315000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":30},{"date":"2026-03-08","amount":315000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":30},{"date":"2026-03-09","amount":550000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-03-11","amount":1100000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-03-11","amount":550000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-03-13","amount":660000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-03-14","amount":402000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":36},{"date":"2026-03-15","amount":682000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":62},{"date":"2026-03-18","amount":1540000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":140},{"date":"2026-03-20","amount":550000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-03-22","amount":662000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":62},{"date":"2026-03-24","amount":550000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-03-25","amount":1155000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":105},{"date":"2026-03-26","amount":550000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-03-28","amount":550000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-03-29","amount":88000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":8},{"date":"2026-03-30","amount":550000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-04-01","amount":550000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-04-01","amount":1100000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-04-03","amount":660000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-04-05","amount":704000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":64},{"date":"2026-04-07","amount":550000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-04-09","amount":660000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-04-09","amount":1100000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-04-11","amount":550000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-04-13","amount":550000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-04-15","amount":660000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-04-15","amount":121000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":11},{"date":"2026-04-17","amount":660000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-04-17","amount":1100000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-04-19","amount":110000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":10},{"date":"2026-04-19","amount":660000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-04-21","amount":525000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-04-23","amount":856000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":80},{"date":"2026-04-26","amount":1070000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-04-27","amount":1070000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-04-29","amount":856000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":80},{"date":"2026-05-01","amount":856000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":80},{"date":"2026-05-02","amount":66000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":6},{"date":"2026-05-03","amount":856000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":80},{"date":"2026-05-04","amount":315000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":30},{"date":"2026-05-04","amount":11000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":10},{"date":"2026-05-05","amount":735000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":70},{"date":"2026-05-06","amount":420000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":40},{"date":"2026-05-07","amount":703500,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":67},{"date":"2026-05-09","amount":630000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-05-12","amount":630000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-05-13","amount":1070000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-05-14","amount":735000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":70},{"date":"2026-05-14","amount":40000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":4},{"date":"2026-05-16","amount":630000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-05-18","amount":630000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-05-20","amount":630000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-05-21","amount":1070000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-05-21","amount":452000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":44},{"date":"2026-05-22","amount":430000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":40},{"date":"2026-05-24","amount":444000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":40},{"date":"2026-05-25","amount":44000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":4},{"date":"2026-05-26","amount":654000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":63},{"date":"2026-05-27","amount":1070000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-05-28","amount":549,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":53},{"date":"2026-05-29","amount":22000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":2},{"date":"2026-05-30","amount":662000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":64},{"date":"2026-06-01","amount":565000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":55},{"date":"2026-06-03","amount":678000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":66},{"date":"2026-06-03","amount":1070000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-06-05","amount":694000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":68},{"date":"2026-06-05","amount":694000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":68},{"date":"2026-06-06","amount":44000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":4},{"date":"2026-06-07","amount":589,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":58},{"date":"2026-06-09","amount":694000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":68},{"date":"2026-06-10","amount":33000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":3},{"date":"2026-06-11","amount":1070000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-06-11","amount":807000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":79},{"date":"2026-06-11","amount":22000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":2},{"date":"2026-06-13","amount":605000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-06-15","amount":645000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":65},{"date":"2026-06-17","amount":710000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":70},{"date":"2026-06-19","amount":752500,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":75},{"date":"2026-06-22","amount":774000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":76},{"date":"2026-06-23","amount":783000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":77},{"date":"2026-06-24","amount":1070000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-06-25","amount":774000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":76},{"date":"2026-06-27","amount":810000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":80},{"date":"2026-06-29","amount":80,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":810000},{"date":"2026-07-01","amount":1070000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-07-01","amount":810000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":80},{"date":"2026-07-04","amount":810000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":80},{"date":"2026-07-05","amount":810000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":80},{"date":"2026-07-07","amount":880500,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":87},{"date":"2026-07-08","amount":1070000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-07-09","amount":822000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":82},{"date":"2026-07-12","amount":705000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":70},{"date":"2026-07-13","amount":822000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":82},{"date":"2026-07-15","amount":810000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":80},{"date":"2026-07-15","amount":1070000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-07-17","amount":810000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":80},{"date":"2026-07-19","amount":810000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":80},{"date":"2026-07-22","amount":847000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":84},{"date":"2026-07-23","amount":1070000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-07-24","amount":705000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":70},{"date":"2026-07-26","amount":60,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":80},{"date":"2026-07-27","amount":828000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":82},{"date":"2026-07-29","amount":585000,"payment":"AIRTEL_MOBILE_MONEY","category":"","subcategory":"TRAYS","trays":60},{"date":"2026-07-29","amount":1070000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-08-01","amount":705000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":70},{"date":"2026-08-02","amount":750000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":70},{"date":"2026-08-05","amount":750000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":70},{"date":"2026-08-06","amount":1100000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-08-07","amount":800000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":75},{"date":"2026-08-09","amount":810000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":76},{"date":"2026-08-10","amount":77000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":7},{"date":"2026-08-11","amount":520000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-08-13","amount":640000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-08-13","amount":1100000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-08-16","amount":640000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-08-18","amount":640000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-08-20","amount":1100000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-08-20","amount":630000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":61},{"date":"2026-08-23","amount":530000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-08-25","amount":530000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-08-27","amount":1100000,"payment":"","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-08-27","amount":520000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-08-29","amount":530000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-08-31","amount":549000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-02","amount":559500,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":51},{"date":"2026-09-03","amount":1130000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-09-04","amount":541000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-04","amount":60000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":5},{"date":"2026-09-06","amount":559000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-08","amount":559000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-10","amount":1130000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-09-10","amount":559000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-12","amount":562000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-14","amount":571000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-16","amount":564,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-18","amount":1130000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-09-18","amount":48000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-09-18","amount":571000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-20","amount":571000,"payment":"AIRTEL_MOBILE_MONEY","category":"","subcategory":"TRAYS","trays":50},{"date":"2026-09-20","amount":8000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_DAMAGE","trays":0},{"date":"2026-09-20","amount":16000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-09-22","amount":571000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-22","amount":32000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-09-22","amount":25000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":2},{"date":"2026-09-24","amount":1200000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-09-24","amount":163800,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":14},{"date":"2026-09-24","amount":330000,"payment":"","category":"CHICKEN","subcategory":"TRAYS","trays":30},{"date":"2026-09-24","amount":48000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-09-24","amount":8000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_DAMAGE","trays":0},{"date":"2026-09-26","amount":571000,"payment":"","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-26","amount":48000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-09-28","amount":571000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-28","amount":72000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-09-30","amount":581000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-09-30","amount":104,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-09-30","amount":8000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_DAMAGE","trays":0},{"date":"2026-10-01","amount":1200000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-10-02","amount":520600,"payment":"","category":"CHICKEN","subcategory":"TRAYS","trays":45},{"date":"2026-10-02","amount":136000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-04","amount":581000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-10-04","amount":160000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-04","amount":8000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_DAMAGE","trays":0},{"date":"2026-10-06","amount":581000,"payment":"","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-10-06","amount":180000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-08","amount":1200000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-10-08","amount":234000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":20},{"date":"2026-10-08","amount":299000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":26},{"date":"2026-10-08","amount":225000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-10","amount":581000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-10-10","amount":234000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-12","amount":498500,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":53},{"date":"2026-10-12","amount":252000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-14","amount":475500,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":41},{"date":"2026-10-14","amount":279,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-15","amount":1200000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-10-16","amount":479700,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":41},{"date":"2026-10-16","amount":279000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-16","amount":14000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_DAMAGE","trays":0},{"date":"2026-10-18","amount":491400,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":42},{"date":"2026-10-18","amount":297000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-20","amount":468000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":40},{"date":"2026-10-20","amount":270000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-22","amount":1200000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-10-22","amount":468000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":40},{"date":"2026-10-22","amount":332500,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-24","amount":45,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":526500},{"date":"2026-10-24","amount":408500,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-26","amount":468000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":40},{"date":"2026-10-26","amount":370500,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-28","amount":720000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":60},{"date":"2026-10-28","amount":400000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-10-30","amount":1200000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-10-30","amount":480000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":40},{"date":"2026-10-30","amount":506000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-01","amount":552000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":46},{"date":"2026-11-01","amount":484000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-01","amount":0,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":2},{"date":"2026-11-01","amount":0,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":4},{"date":"2026-11-01","amount":48000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":4},{"date":"2026-11-01","amount":7000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_DAMAGE","trays":0},{"date":"2026-11-03","amount":480000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":40},{"date":"2026-11-03","amount":495000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-06","amount":1200000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-11-06","amount":480000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":40},{"date":"2026-11-06","amount":528000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-06","amount":7000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_DAMAGE","trays":0},{"date":"2026-11-08","amount":516000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":43},{"date":"2026-11-08","amount":517000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-09","amount":564000,"payment":"","category":"CHICKEN","subcategory":"TRAYS","trays":47},{"date":"2026-11-09","amount":504000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-11","amount":576000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":48},{"date":"2026-11-11","amount":572000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-12","amount":1200000,"payment":"MTN_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-11-13","amount":552000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":46},{"date":"2026-11-13","amount":539000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-13","amount":7000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_DAMAGE","trays":0},{"date":"2026-11-15","amount":504,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":42},{"date":"2026-11-15","amount":528000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-15","amount":60000,"payment":"CASH","category":"CHICKEN","subcategory":"TRAYS","trays":5},{"date":"2026-11-17","amount":504000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":42},{"date":"2026-11-17","amount":528000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-19","amount":1200000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-11-19","amount":480000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":40},{"date":"2026-11-19","amount":550000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-21","amount":600000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":50},{"date":"2026-11-21","amount":440000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-23","amount":550000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-23","amount":480000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":40},{"date":"2026-11-25","amount":468000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":38},{"date":"2026-11-25","amount":583000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-26","amount":1200000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":100},{"date":"2026-11-27","amount":420000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS","trays":35},{"date":"2026-11-27","amount":605000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_STARTER","trays":0},{"date":"2026-11-27","amount":7000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"TRAYS_DAMAGE","trays":0},{"date":"2026-11-27","amount":400000,"payment":"AIRTEL_MOBILE_MONEY","category":"CHICKEN","subcategory":"MANURE","trays":0}];
 
-let RAW_EXPENSES = [{"date":"2025-08-04","expense":"BROKEN_MAIZE","amount":2500000,"payment":"CASH"},{"date":"2025-08-04","expense":"MAIZE_BRAN","amount":450000,"payment":"CASH"},{"date":"2025-08-04","expense":"COFFEE_HUSKS","amount":144000,"payment":"CASH"},{"date":"2025-08-04","expense":"LIME","amount":100000,"payment":"CASH"},{"date":"2025-09-02","expense":"TRANSPORT","amount":50000,"payment":"CASH"},{"date":"2025-10-09","expense":"CHICKS","amount":500000,"payment":"CASH"},{"date":"2026-01-02","expense":"BROKEN_MAIZE","amount":2500000,"payment":"CASH"},{"date":"2026-01-02","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-01-02","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-01-06","expense":"STARTERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-01-07","expense":"GROWERS_CONCENTRATE","amount":588000,"payment":"CASH"},{"date":"2026-01-12","expense":"LIME","amount":100000,"payment":"CASH"},{"date":"2026-01-17","expense":"VACCINE","amount":210000,"payment":"CASH"},{"date":"2026-01-22","expense":"BROKEN_MAIZE","amount":2500000,"payment":"CASH"},{"date":"2026-01-29","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-01-29","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-01-29","expense":"BROKEN_MAIZE","amount":1200000,"payment":"CASH"},{"date":"2026-01-30","expense":"CALCIUM","amount":85000,"payment":"CASH"},{"date":"2026-01-30","expense":"VITAMINS","amount":165000,"payment":"CASH"},{"date":"2026-02-02","expense":"BROKEN_MAIZE","amount":1500000,"payment":"CASH"},{"date":"2026-02-05","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-02-05","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-02-06","expense":"LAYERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-02-10","expense":"DEWORMER","amount":120000,"payment":"CASH"},{"date":"2026-02-13","expense":"BROKEN_MAIZE","amount":1500000,"payment":"CASH"},{"date":"2026-02-13","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-02-13","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-02-17","expense":"CHARCOAL","amount":150000,"payment":"CASH"},{"date":"2026-02-17","expense":"VET","amount":200000,"payment":"CASH"},{"date":"2026-02-19","expense":"LAYERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-02-21","expense":"BROKEN_MAIZE","amount":2200000,"payment":"CASH"},{"date":"2026-02-25","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-02-25","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-02-27","expense":"DEWORMER","amount":120000,"payment":"CASH"},{"date":"2026-02-28","expense":"TRANSPORT","amount":46025,"payment":"CASH"},{"date":"2026-02-28","expense":"CALCIUM","amount":170000,"payment":"CASH"},{"date":"2026-02-28","expense":"LAYERS_CONCENTRATE","amount":1200000,"payment":"CASH"},{"date":"2026-02-28","expense":"VITAMINS","amount":30000,"payment":"CASH"},{"date":"2026-03-02","expense":"BROKEN_MAIZE","amount":1500000,"payment":"CASH"},{"date":"2026-03-02","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-03-02","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-03-04","expense":"LAYERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-03-05","expense":"LIME","amount":80000,"payment":"CASH"},{"date":"2026-03-06","expense":"TRANSPORT","amount":30000,"payment":"CASH"},{"date":"2026-03-06","expense":"CHARCOAL","amount":150000,"payment":"CASH"},{"date":"2026-03-07","expense":"CALCIUM","amount":85000,"payment":"CASH"},{"date":"2026-03-07","expense":"VITAMINS","amount":60000,"payment":"CASH"},{"date":"2026-03-09","expense":"VACCINE","amount":210000,"payment":"CASH"},{"date":"2026-03-09","expense":"BROKEN_MAIZE","amount":2200000,"payment":"CASH"},{"date":"2026-03-09","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-03-09","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-03-09","expense":"LAYERS_CONCENTRATE","amount":840000,"payment":"CASH"},{"date":"2026-03-11","expense":"DEWORMER","amount":120000,"payment":"CASH"},{"date":"2026-03-11","expense":"VET","amount":200000,"payment":"CASH"},{"date":"2026-03-14","expense":"MAIZE_BRAN","amount":432000,"payment":"CASH"},{"date":"2026-03-14","expense":"COFFEE_HUSKS","amount":108000,"payment":"CASH"},{"date":"2026-03-14","expense":"BROKEN_MAIZE","amount":850000,"payment":"CASH"},{"date":"2026-03-14","expense":"LAYERS_CONCENTRATE","amount":800000,"payment":"CASH"},{"date":"2026-03-14","expense":"CHARCOAL","amount":150000,"payment":"CASH"},{"date":"2026-03-14","expense":"LIME","amount":60000,"payment":"CASH"},{"date":"2026-03-14","expense":"CALCIUM","amount":85000,"payment":"CASH"},{"date":"2026-03-14","expense":"VITAMINS","amount":130000,"payment":"CASH"},{"date":"2026-03-14","expense":"TRANSPORT","amount":50000,"payment":"CASH"}];
+let RAW_EXPENSES = [{"date":"2025-08-04","expense":"BROKEN_MAIZE","amount":2500000,"category":"CHICKEN","payment":"CASH"},{"date":"2025-08-04","expense":"MAIZE_BRAN","amount":450000,"category":"CHICKEN","payment":"CASH"},{"date":"2025-08-04","expense":"COFFEE_HUSKS","amount":144000,"category":"CHICKEN","payment":"CASH"},{"date":"2025-08-04","expense":"LIME","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2025-08-04","expense":"VITAMINS","amount":50000,"category":"CHICKEN","payment":"CASH"},{"date":"2025-08-04","expense":"VACCINE","amount":60000,"category":"CHICKEN","payment":"CASH"},{"date":"2025-08-04","expense":"DEWORMER","amount":45000,"category":"PIGS","payment":"CASH"},{"date":"2025-08-04","expense":"TRANSPORT","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2025-08-11","expense":"VET","amount":160000,"category":"CHICKEN","payment":"CASH"},{"date":"2025-08-11","expense":"VACCINE","amount":16000,"category":"CHICKEN","payment":"CASH"},{"date":"2025-08-11","expense":"VACCINE","amount":5000,"category":"CHICKEN","payment":"CASH"},{"date":"2025-08-11","expense":"VACCINE","amount":175000,"category":"CHICKEN","payment":"CASH"},{"date":"2025-08-11","expense":"TRANSPORT","amount":8000,"category":"CHICKEN","payment":"CASH"},{"date":"2025-08-11","expense":"LAYERS_CONCENTRATE","amount":2520000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2025-10-20","expense":"CHICKS","amount":500000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-01-07","expense":"LIME","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-01-07","expense":"TRANSPORT","amount":120000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-01-07","expense":"CHARCOAL","amount":170000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-01-07","expense":"VITAMINS","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-01-07","expense":"COFFEE_HUSKS","amount":169000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-01-07","expense":"STARTERS_CONCENTRATE","amount":150000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-01-07","expense":"CALCIUM","amount":30000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-01-07","expense":"TRANSPORT","amount":170000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-01-08","expense":"LAYERS_CONCENTRATE","amount":4400000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-01-08","expense":"GROWERS_CONCENTRATE","amount":360000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-01-20","expense":"BROKEN_MAIZE","amount":1800000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-01-20","expense":"MAIZE_BRAN","amount":500000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-01-20","expense":"LIME","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-01-20","expense":"TRANSPORT","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-09","expense":"BROKEN_MAIZE","amount":135000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-09","expense":"MAIZE_BRAN","amount":95000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-09","expense":"GROWERS_CONCENTRATE","amount":200000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-09","expense":"COFFEE_HUSKS","amount":120000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-09","expense":"TRANSPORT","amount":70000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-09","expense":"GROWERS_CONCENTRATE","amount":640000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-09","expense":"GROWERS_CONCENTRATE","amount":300000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-09","expense":"LAYERS_CONCENTRATE","amount":2200000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-02-09","expense":"GROWERS_CONCENTRATE","amount":180000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-02-09","expense":"TRANSPORT","amount":45000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-02-09","expense":"BROKEN_MAIZE","amount":1950000,"category":"PIGS","payment":"MTN_MOBILE_MONEY"},{"date":"2026-02-09","expense":"MAIZE_BRAN","amount":900000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-02-09","expense":"LIME","amount":200000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-02-09","expense":"LIME","amount":150000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-02-09","expense":"VACCINE","amount":18000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-02-09","expense":"BROKEN_MAIZE","amount":135000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-11","expense":"VACCINE","amount":45000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-11","expense":"DEWORMER","amount":25,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-11","expense":"TRANSPORT","amount":5000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-17","expense":"VET","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-17","expense":"VACCINE","amount":40000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-20","expense":"BROKEN_MAIZE","amount":1950000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-02-20","expense":"MAIZE_BRAN","amount":595000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-02-20","expense":"LAYERS_CONCENTRATE","amount":200000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-20","expense":"LAYERS_CONCENTRATE","amount":2200000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-02-20","expense":"LIME","amount":200000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-20","expense":"COFFEE_HUSKS","amount":120000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-20","expense":"TRANSPORT","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-02-21","expense":"CHICKS","amount":800000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-02","expense":"VET","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-02","expense":"VACCINE","amount":80000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-05","expense":"LAYERS_CONCENTRATE","amount":2200000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-03-08","expense":"MAIZE_BRAN","amount":1020000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-03-08","expense":"BROKEN_MAIZE","amount":3645000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-03-08","expense":"LAYERS_CONCENTRATE","amount":200000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-08","expense":"CHARCOAL","amount":850000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-08","expense":"TRANSPORT","amount":120000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-14","expense":"VET","amount":200000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-03-14","expense":"VET","amount":200000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-03-14","expense":"VACCINE","amount":200000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-03-22","expense":"LIME","amount":100000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-03-22","expense":"TRANSPORT","amount":15000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-03-26","expense":"BROKEN_MAIZE","amount":2940000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-03-26","expense":"MAIZE_BRAN","amount":630000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-03-26","expense":"GROWERS_CONCENTRATE","amount":200000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-26","expense":"LIME","amount":175000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-26","expense":"TRANSPORT","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-26","expense":"DISINFECTANT","amount":70000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-26","expense":"PARRAFIN","amount":10000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-26","expense":"BROODER_PAPER","amount":70000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-26","expense":"GLUVOCIT","amount":25000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-03-26","expense":"ANTIBIOTICS","amount":55000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-07","expense":"LAYERS_CONCENTRATE","amount":2100000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-04-07","expense":"COFFEE_HUSKS","amount":140000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-11","expense":"TRANSPORT","amount":20000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-12","expense":"VITAMINS","amount":34500,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-12","expense":"TRANSPORT","amount":5000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-12","expense":"VITAMINS","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-12","expense":"DEWORMER","amount":25000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-15","expense":"PRESTARTERS_CONCENTRATE","amount":1000000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-04-15","expense":"LAYERS_CONCENTRATE","amount":410000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-15","expense":"MAIZE_BRAN","amount":1000000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-15","expense":"BROKEN_MAIZE","amount":2835000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-15","expense":"LIME","amount":200000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-15","expense":"TRANSPORT","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-22","expense":"LAYERS_CONCENTRATE","amount":2100000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-04-27","expense":"COFFEE_HUSKS","amount":140000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-04-27","expense":"TRANSPORT","amount":35000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-05-08","expense":"LAYERS_CONCENTRATE","amount":2200000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-05-10","expense":"VACCINE","amount":52500,"category":"CHICKEN","payment":"CASH"},{"date":"2026-05-11","expense":"CHARCOAL","amount":900000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-05-11","expense":"BROKEN_MAIZE","amount":420000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-05-11","expense":"TRANSPORT","amount":100000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-05-18","expense":"VET","amount":150000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-05-18","expense":"VACCINE","amount":15000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-05-19","expense":"LAYERS_CONCENTRATE","amount":2200000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-05-19","expense":"LAYERS_CONCENTRATE","amount":440000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-05-28","expense":"LIME","amount":200000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-05-28","expense":"COFFEE_HUSKS","amount":130000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-05-28","expense":"TRANSPORT","amount":120000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-05-28","expense":"BROKEN_MAIZE","amount":3750000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-05-28","expense":"MAIZE_BRAN","amount":500000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-06-05","expense":"TRANSPORT","amount":20000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-06-06","expense":"LAYERS_CONCENTRATE","amount":4400000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-06-06","expense":"GROWERS_CONCENTRATE","amount":720000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-06-16","expense":"VACCINE","amount":38000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-06-16","expense":"TRANSPORT","amount":3000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-06-16","expense":"LAYERS_CONCENTRATE","amount":4400000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-06-16","expense":"GROWERS_CONCENTRATE","amount":1440000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-06-17","expense":"LIME","amount":200000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-06-17","expense":"TRANSPORT","amount":120000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-06-17","expense":"BROKEN_MAIZE","amount":4155000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-06-17","expense":"MAIZE_BRAN","amount":720000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-06-26","expense":"VET","amount":150000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-06-26","expense":"VACCINE","amount":45000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-06-26","expense":"VET","amount":150000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-06-26","expense":"VACCINE","amount":15,"category":"CHICKEN","payment":"CASH"},{"date":"2026-06-26","expense":"TRANSPORT","amount":30000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-07-04","expense":"DISINFECTANT","amount":53000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-07-04","expense":"ANTIBIOTICS","amount":36000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-07-04","expense":"TRANSPORT","amount":30000,"category":"CHICKEN","payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-07-08","expense":"LAYERS_CONCENTRATE","amount":3080000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-07-08","expense":"GROWERS_CONCENTRATE","amount":1440000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-07-12","expense":"VACCINE","amount":28500,"category":"CHICKEN","payment":"CASH"},{"date":"2026-07-12","expense":"MAIZE_BRAN","amount":750000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-07-12","expense":"BROKEN_MAIZE","amount":3680000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-07-12","expense":"LIME","amount":200000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-07-12","expense":"COFFEE_HUSKS","amount":65000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-07-12","expense":"TRANSPORT","amount":120000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-07-13","expense":"TRANSPORT","amount":32000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-07-16","expense":"ANTIBIOTICS","amount":36000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-07-16","expense":"TRANSPORT","amount":5000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-07-22","expense":"LAYERS_CONCENTRATE","amount":3080000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-07-22","expense":"GROWERS_CONCENTRATE","amount":1440000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-07-22","expense":"TRANSPORT","amount":30000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-07-31","expense":"TRANSPORT","amount":30000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-07-31","expense":"GROWERS_CONCENTRATE","amount":1440000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-07-31","expense":"LAYERS_CONCENTRATE","amount":2940000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-08-02","expense":"MAIZE_BRAN","amount":630000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-08-02","expense":"BROKEN_MAIZE","amount":3520000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-08-02","expense":"VITAMINS","amount":106000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-08-02","expense":"TRANSPORT","amount":120000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-08-02","expense":"COFFEE_HUSKS","amount":65000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-08-02","expense":"LIME","amount":200000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-08-16","expense":"VET","amount":250000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-08-16","expense":"VACCINE","amount":35000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-08-17","expense":"LAYERS_CONCENTRATE","amount":3080000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-08-25","expense":"TRANSPORT","amount":30000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-08-29","expense":"BROKEN_MAIZE","amount":2560000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-08-29","expense":"MAIZE_BRAN","amount":350000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-08-29","expense":"TRANSPORT","amount":120000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-08-29","expense":"LIME","amount":150000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-09-03","expense":"LAYERS_CONCENTRATE","amount":2640000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-09-03","expense":"GROWERS_CONCENTRATE","amount":720000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-09-09","expense":"TRANSPORT","amount":40000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-09-15","expense":"BROKEN_MAIZE","amount":2900000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-09-15","expense":"MAIZE_BRAN","amount":600000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-09-15","expense":"LIME","amount":150000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-09-15","expense":"VITAMINS","amount":106000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-09-15","expense":"TRANSPORT","amount":120000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-09-17","expense":"LAYERS_CONCENTRATE","amount":2640000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-09-17","expense":"GROWERS_CONCENTRATE","amount":1080000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-09-17","expense":"FUEL","amount":30000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-09-19","expense":"VACCINE","amount":36000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-09-19","expense":"ANTIBIOTICS","amount":60000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-09-28","expense":"FUEL","amount":30000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-08","expense":"LAYERS_CONCENTRATE","amount":4400000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-10-13","expense":"BROKEN_MAIZE","amount":4500000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-10-13","expense":"MAIZE_BRAN","amount":1200000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-13","expense":"LIME","amount":150000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-13","expense":"TRANSPORT","amount":150000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-13","expense":"GROWERS_CONCENTRATE","amount":2210000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-13","expense":"LAYERS_CONCENTRATE","amount":4400000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-10-14","expense":"ANTIBIOTICS","amount":190000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-14","expense":"VACCINE","amount":85000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-14","expense":"TRANSPORT","amount":12000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-28","expense":"BROKEN_MAIZE","amount":2720000,"category":"CHICKEN","payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-10-28","expense":"MAIZE_BRAN","amount":550000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-10-28","expense":"LIME","amount":175000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-28","expense":"TRANSPORT","amount":140000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-28","expense":"BROKEN_MAIZE","amount":0,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-28","expense":"MAIZE_BRAN","amount":0,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-28","expense":"GROWERS_CONCENTRATE","amount":4510000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-10-28","expense":"TRANSPORT","amount":140000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-28","expense":"VACCINE","amount":57500,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-28","expense":"FUEL","amount":30000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-10-28","expense":"TRANSPORT","amount":8000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-11-03","expense":"LAYERS_CONCENTRATE","amount":3300000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-11-11","expense":"VACCINE","amount":34500,"category":"CHICKEN","payment":"CASH"},{"date":"2026-11-11","expense":"TRANSPORT","amount":8000,"category":"CHICKEN","payment":"AIRTEL_MOBILE_MONEY"},{"date":"2026-11-11","expense":"COFFEE_HUSKS","amount":260000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-11-11","expense":"DISINFECTANT","amount":160000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-11-15","expense":"LAYERS_CONCENTRATE","amount":3520000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-11-15","expense":"BROKEN_MAIZE","amount":2720000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-11-15","expense":"MAIZE_BRAN","amount":575000,"category":"CHICKEN","payment":"MTN_MOBILE_MONEY"},{"date":"2026-11-15","expense":"LIME","amount":175000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-11-15","expense":"COFFEE_HUSKS","amount":130000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-11-15","expense":"TRANSPORT","amount":140000,"category":"CHICKEN","payment":"CASH"},{"date":"2026-11-26","expense":"BROKEN_MAIZE","amount":2720000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-11-26","expense":"MAIZE_BRAN","amount":600000,"category":"CHICKEN","payment":"BANK"},{"date":"2026-11-26","expense":"TRANSPORT","amount":140000,"category":"CHICKEN","payment":"CASH"}];
 
 // ============ HELPERS ============
 const formatWholeNumber = new Intl.NumberFormat('en-UG',{maximumFractionDigits:0}).format;
 const fmtN = n => n==null||isNaN(n)?'—':formatWholeNumber(n);
+const fmtUgx = n => n==null?'—':fmtN(n)+' UGX';
 const fmtDate = d => new Date(d).toLocaleDateString('en-UG',{day:'numeric',month:'short',timeZone:'UTC'});
 const fmtMonth = m => {const[y,mo]=m.split('-');return new Date(y,mo-1).toLocaleDateString('en',{month:'short',year:'2-digit'});};
+const farmDateFormatter = new Intl.DateTimeFormat('en-UG',{
+  timeZone:'Africa/Kampala',year:'numeric',month:'numeric',day:'numeric'
+});
+
+function farmCalendarDay(now=new Date()){
+  const parts = Object.fromEntries(farmDateFormatter.formatToParts(now).map(({type,value})=>[type,value]));
+  return new Date(Date.UTC(Number(parts.year),Number(parts.month)-1,Number(parts.day)));
+}
+
+function formatBatchAge(dateOfBirth,today){
+  if(!dateOfBirth) return '—';
+  const birth = new Date(dateOfBirth);
+  if(!Number.isFinite(birth.getTime()) || birth>today) return '—';
+
+  const year = birth.getUTCFullYear();
+  const month = birth.getUTCMonth();
+  const day = birth.getUTCDate();
+  const anniversary = months=>{
+    const targetMonth = month+months;
+    const lastDay = new Date(Date.UTC(year,targetMonth+1,0)).getUTCDate();
+    return Date.UTC(year,targetMonth,Math.min(day,lastDay));
+  };
+  let months = (today.getUTCFullYear()-year)*12+today.getUTCMonth()-month;
+  if(anniversary(months)>today) months--;
+  const days = (today-anniversary(months))/86400000;
+  const parts = [];
+  if(months) parts.push(`${months} month${months===1?'':'s'}`);
+  if(days || !months) parts.push(`${days} day${days===1?'':'s'}`);
+  return parts.join(', ');
+}
 
 function daysBefore(n,anchor=EGGS.at(-1)?.date || new Date().toISOString().slice(0,10)){
   return new Date(Date.parse(anchor)-n*86400000).toISOString().slice(0,10);
@@ -641,34 +714,56 @@ const PRODUCTION_BATCHES = [
   {key:'batch5', prefix:'b5', number:'5', label:'B5', color:'#48a7a3'}
 ];
 const BATCH_METRICS = ['trays','eggs','broken','dead','feedGrams'];
-const LAYING_STATUSES = new Set(['active','laying']);
+const COLLECTION_METRICS = [
+  {key:'trays',label:'Trays',color:'#5aac4e'},
+  {key:'eggs',label:'Loose eggs',color:'#4a89df'},
+  {key:'broken',label:'Broken eggs',color:'#e77750'}
+];
+const REPORT_PERIODS = [[1,'1D'],[3,'3D'],[7,'7D'],[14,'14D'],[30,'30D'],[90,'3M'],[180,'6M'],[365,'1Y'],[9999,'All']];
 
-function activeProductionBatches(){
-  return PRODUCTION_BATCHES.filter(b=>LAYING_STATUSES.has(BATCH_CONFIG[b.key]?.status));
+function isLaying(batch){
+  return BATCH_CONFIG[batch.key]?.status==='laying';
+}
+
+function visibleBatches(){
+  return includeInactive ? PRODUCTION_BATCHES : PRODUCTION_BATCHES.filter(isLaying);
 }
 
 function selectedProductionBatches(){
-  return PRODUCTION_BATCHES.filter(b=>activeBatch==='all'||b.number===activeBatch);
+  return visibleBatches().filter(b=>activeBatch==='all'||b.number===activeBatch);
 }
 
 function batchTotal(r, batch){
   return 30*(r[batch.prefix+'_trays'] ?? 0)+(r[batch.prefix+'_eggs'] ?? 0);
 }
 
-function eggTotal(r, batches=PRODUCTION_BATCHES){
+function eggTotal(r, batches=selectedProductionBatches()){
   return batches.reduce((sum,b)=>sum+batchTotal(r,b),0);
 }
 
-function brokenTotal(r){
-  return PRODUCTION_BATCHES.reduce((sum,b)=>sum+(r[b.prefix+'_broken'] ?? 0),0);
+function collectionCounts(rows,batches){
+  const counts = {trays:null,eggs:null,broken:null};
+  for(const row of rows){
+    for(const batch of batches){
+      for(const {key} of COLLECTION_METRICS){
+        const count = row[batch.prefix+'_'+key];
+        if(count!=null) counts[key] = (counts[key]??0)+count;
+      }
+    }
+  }
+  return counts;
 }
 
-function layingRate(rows, batches=activeProductionBatches()){
+function collectionLabel(counts){
+  return COLLECTION_METRICS.map(({key,label})=>fmtN(counts[key])+' '+label.toLowerCase()).join(' · ');
+}
+
+function layingRate(rows, batches=selectedProductionBatches()){
   let eggs = 0;
   let birds = 0;
   for(const batch of batches){
     const cfg = BATCH_CONFIG[batch.key];
-    if(!LAYING_STATUSES.has(cfg?.status) || !cfg.currentBirds) continue;
+    if(!isLaying(batch) || !cfg.currentBirds) continue;
     for(const row of rows){
       if(row[batch.prefix+'_trays']==null && row[batch.prefix+'_eggs']==null) continue;
       birds += cfg.currentBirds;
@@ -695,18 +790,18 @@ function rebuildData(){
 }
 
 function normalizeBatchConfig(metadata){
-  return Object.fromEntries(Object.entries(metadata || {}).map(([key, batch])=>[
-    key,
-    {
+  return Object.fromEntries(Object.entries(metadata || {}).map(([key, batch])=>{
+    const status = (batch.status || 'unknown').trim().toLowerCase();
+    return [key,{
       name: `Batch ${key.slice(5)}`,
       dob: batch.dateOfBirth || batch.dob || '',
       expectedOfflay: batch.expectedOfflay || '',
-      status: (batch.status || 'unknown').toLowerCase(),
+      status: status==='active'?'laying':status,
       supplier: batch.supplier || '',
       initialBirds: Number(batch.initialBirds || batch.currentBirds || 0),
       currentBirds: Number(batch.currentBirds ?? 0)
-    }
-  ]));
+    }];
+  }));
 }
 
 rebuildData();
@@ -714,13 +809,18 @@ rebuildData();
 // ============ STATE ============
 let activeDays = 30;
 let activeBatch = 'all';
+let includeInactive = false;
 let charts = {};
 
 // ============ FILTER ============
 function filterEggs(days){
-  const cutoff = periodStart(days);
   const batches = selectedProductionBatches();
-  return EGGS.filter(r=>r.date>=cutoff).map(r=>({...r,total:eggTotal(r,batches)}));
+  return productionPeriod(days).map(row=>({...row,total:eggTotal(row,batches)}));
+}
+
+function productionPeriod(days){
+  const cutoff = periodStart(days);
+  return EGGS.filter(row=>row.date>=cutoff);
 }
 function latestFinancialDate(){
   const latestSale = RAW_SALES.at(-1)?.date || '';
@@ -736,12 +836,15 @@ function filterExpenses(days){
   return RAW_EXPENSES.filter(r=>r.date>=cutoff);
 }
 
+function isPoultryExpense(row){
+  return row.category?.trim().toUpperCase()!=='PIGS';
+}
+
 function periodStart(days,anchor){
   return days<9000 ? daysBefore(days-1,anchor) : '';
 }
 
-function chartPeriods(rows){
-  const monthly = activeDays>30;
+function chartPeriods(rows,monthly=activeDays>30){
   const key = row=>monthly?row.date.slice(0,7):row.date;
   const groups = new Map();
   for(const row of rows){
@@ -750,7 +853,7 @@ function chartPeriods(rows){
     groups.get(period).push(row);
   }
   const keys = [...groups.keys()].sort();
-  return {key,keys,groups,labels:keys.map(monthly?fmtMonth:fmtDate)};
+  return {key,keys,groups,labels:keys.map(monthly?fmtMonth:fmtDate),rowLabel:monthly?'Month':'Date'};
 }
 
 function periodTotals(rows,periods,value){
@@ -763,7 +866,7 @@ function periodTotals(rows,periods,value){
 }
 
 // ============ CHART FACTORY ============
-function mkChart(id, type, data, options){
+function mkChart(id, type, data, options, values={}){
   if(charts[id]) charts[id].destroy();
   const ctx = document.getElementById(id);
   if(!ctx) return;
@@ -771,11 +874,19 @@ function mkChart(id, type, data, options){
   const textColor = isDark ? 'rgba(240,236,228,.6)' : 'rgba(26,23,20,.5)';
   const gridColor = isDark ? 'rgba(255,255,255,.05)' : 'rgba(0,0,0,.06)';
   const font = {family:'Nunito, system-ui, sans-serif',size:12};
+  const format = values.format || fmtN;
+  const circular = type==='doughnut'||type==='pie';
   const defaults = {
     locale:'en-UG',
     maintainAspectRatio:false,
-    plugins:{legend:{labels:{color:textColor,font}},tooltip:{titleFont:font,bodyFont:font}},
-    scales:type==='doughnut'||type==='pie'?{}:{
+    interaction:circular?{}:{mode:'index',intersect:false,axis:'x'},
+    plugins:{
+      legend:{position:'top',labels:{color:textColor,font,boxWidth:12,boxHeight:8,padding:10}},
+      tooltip:{titleFont:font,bodyFont:font,callbacks:{
+        label:point=>`${point.dataset.label || point.label}: ${format(point.raw)}`
+      }}
+    },
+    scales:circular?{}:{
       x:{ticks:{color:textColor,font,maxRotation:0},grid:{color:gridColor}},
       y:{ticks:{color:textColor,font},grid:{color:gridColor}}
     }
@@ -787,7 +898,59 @@ function mkChart(id, type, data, options){
     scales[axis] = {...scales[axis],...settings,ticks:{...scales[axis]?.ticks,...settings.ticks}};
   }
   charts[id] = new Chart(ctx,{type,data,options:{...defaults,...options,plugins,scales}});
+  renderChartValues(ctx,data,values);
   return charts[id];
+}
+
+function renderChartValues(canvas,data,{rowLabel='Date',labels=data.labels,format=fmtN,seriesLabel='Value'}){
+  const wrap = canvas.parentElement;
+  let panel = wrap.nextElementSibling;
+  if(!panel?.matches('.chart-values')){
+    panel = document.createElement('details');
+    panel.className = 'chart-values';
+    const summary = document.createElement('summary');
+    summary.textContent = 'View chart values';
+    const scroll = document.createElement('div');
+    scroll.className = 'chart-values-scroll';
+    scroll.tabIndex = 0;
+    scroll.setAttribute('role','region');
+    scroll.setAttribute('aria-label','Chart values');
+    panel.append(summary,scroll);
+    wrap.after(panel);
+  }
+  const scroll = panel.lastElementChild;
+  const update = ()=>{
+    scroll.replaceChildren();
+    if(!panel.open) return;
+    if(!labels.length || !data.datasets.length){
+      const empty = document.createElement('p');
+      empty.className = 'card-body';
+      empty.textContent = 'No chart values for this period';
+      scroll.append(empty);
+      return;
+    }
+    const table = document.createElement('table');
+    table.className = 'period-table';
+    const header = table.createTHead().insertRow();
+    for(const label of [rowLabel,...data.datasets.map(series=>series.label || seriesLabel)]){
+      const cell = document.createElement('th');
+      cell.scope = 'col';
+      cell.textContent = label;
+      header.append(cell);
+    }
+    const body = table.createTBody();
+    labels.forEach((label,index)=>{
+      const row = body.insertRow();
+      const key = document.createElement('th');
+      key.scope = 'row';
+      key.textContent = label;
+      row.append(key);
+      for(const series of data.datasets) row.insertCell().textContent = format(series.data[index]);
+    });
+    scroll.append(table);
+  };
+  panel.ontoggle = update;
+  if(panel.open) update();
 }
 
 // ============ RENDER FUNCTIONS ============
@@ -798,7 +961,8 @@ function renderKPIs(eggs, sales, expenses){
   const pnl = totalRevenue - totalExpenses;
 
   document.getElementById('kpi-eggs').textContent = fmtN(totalEggs);
-  document.getElementById('kpi-eggs-sub').textContent = `${eggs.length} entries`;
+  document.getElementById('kpi-eggs-sub').textContent = collectionLabel(collectionCounts(eggs,selectedProductionBatches()));
+  document.getElementById('kpi-eggs-entries').textContent = `${fmtN(eggs.length)} entries`;
   document.getElementById('kpi-revenue').textContent = fmtN(totalRevenue)+' UGX';
   document.getElementById('kpi-pnl').textContent = (pnl>=0?'+':'')+fmtN(pnl)+' UGX';
   document.getElementById('kpi-pnl').className = 'kpi-value '+(pnl>=0?'accent-green':'accent-red');
@@ -820,8 +984,8 @@ function renderKPIs(eggs, sales, expenses){
 function renderAverages(){
   const now = EGGS.length ? EGGS[EGGS.length-1].date : new Date().toISOString().split('T')[0];
   const get = (days) => {
-    const cutoff = daysBefore(days);
-    const rows = EGGS.filter(r=>r.date>=cutoff&&r.date<=now);
+    const cutoff = days===1?daysBefore(1):periodStart(days);
+    const rows = EGGS.filter(r=>r.date>=cutoff&&(days===1?r.date===cutoff:r.date<=now));
     if(!rows.length) return 0;
     return rows.reduce((s,r)=>s+eggTotal(r),0)/rows.length;
   };
@@ -841,82 +1005,71 @@ function renderAverages(){
 }
 
 function renderDailyChart(eggs){
-  // Group by date (sum duplicates)
-  const byDate = {};
-  eggs.forEach(r=>{byDate[r.date]=(byDate[r.date]||0)+r.total;});
-  const dates = Object.keys(byDate).sort();
-  const vals = dates.map(d=>byDate[d]);
-
-  // Limit to last N points for readability
-  const limit = activeDays<=30?dates.length:Math.min(dates.length,120);
-  const sliceDates = dates.slice(-limit);
-  const sliceVals = vals.slice(-limit);
-
+  const batches = selectedProductionBatches();
+  const periods = chartPeriods(eggs,false);
+  const dates = periods.keys;
+  const counts = dates.map(date=>collectionCounts(periods.groups.get(date),batches));
   document.getElementById('chart-period-label').textContent =
-    sliceDates.length>1 ? sliceDates[0]+' to '+sliceDates.at(-1) : sliceDates[0] || 'No records';
+    dates.length>1 ? dates[0]+' to '+dates.at(-1) : dates[0] || 'No records';
   mkChart('chart-eggs-daily','line',{
-    labels: sliceDates.map(fmtDate),
-    datasets:[{
-      label:'Total Eggs',
-      data:sliceVals,
-      borderColor:'#5aac4e',
-      backgroundColor:'rgba(90,172,78,.1)',
+    labels:periods.labels,
+    datasets:COLLECTION_METRICS.map(({key,label,color})=>({
+      label,
+      data:counts.map(entry=>entry[key]),
+      borderColor:color,
+      backgroundColor:color,
       borderWidth:1.5,
-      pointRadius:sliceDates.length===1?5:sliceDates.length>60?0:2,
-      tension:0.3,
-      fill:true
-    }]
+      pointRadius:dates.length===1?5:dates.length>60?0:2,
+      pointHoverRadius:5,
+      tension:0.3
+    }))
   },{
-    plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:false}}
-  });
+    scales:{y:{beginAtZero:true}}
+  },{labels:dates});
 }
 
 function renderProductionChart(eggs){
   const periods = chartPeriods(eggs);
   mkChart('chart-monthly-eggs','bar',{
     labels:periods.labels,
-    datasets:[{label:'Eggs',data:periodTotals(eggs,periods,row=>row.total),backgroundColor:'rgba(90,172,78,.7)',borderColor:'#5aac4e',borderWidth:1}]
-  },{plugins:{legend:{display:false}}});
+    datasets:[{label:'Total eggs (trays × 30 + loose eggs)',data:periodTotals(eggs,periods,row=>row.total),backgroundColor:'rgba(90,172,78,.7)',borderColor:'#5aac4e',borderWidth:1}]
+  },{},{rowLabel:periods.rowLabel,labels:periods.keys});
+}
+
+function collectionCells(counts){
+  return COLLECTION_METRICS.map(({key})=>`<td>${fmtN(counts[key])}</td>`).join('');
 }
 
 function renderPeriodTable(container){
-  const periods = [7,14,30,90,180,365,9999];
-  const labels = ['7D','14D','30D','3M','6M','1Y','All'];
-  
-  const rows = periods.map((days,i)=>{
-    const cutoff = days<9000?daysBefore(days):'2000-01-01';
-    const rows = EGGS.filter(r=>r.date>=cutoff);
-    if(!rows.length) return {label:labels[i],total:0,avg:0,pct:null};
-    const total = rows.reduce((s,r)=>s+eggTotal(r),0);
-    const avg = total/rows.length;
-    const pct = layingRate(rows);
-    return {label:labels[i],total,avg,pct};
-  });
-
-  container.innerHTML = rows.map(r=>`
-    <div class="stat-row">
-      <span class="stat-label">${r.label}</span>
-      <span class="stat-value">${fmtN(r.total)} <span style="color:var(--text3);font-weight:400;font-size:.65rem">(avg ${fmtN(r.avg)}/day, ${fmtRate(r.pct)})</span></span>
-    </div>`).join('');
+  const batches = selectedProductionBatches();
+  container.innerHTML = REPORT_PERIODS.map(([days,label])=>{
+    const rows = productionPeriod(days);
+    const counts = collectionCounts(rows,batches);
+    return `<tr${days===activeDays?' aria-current="true"':''}>
+      <th scope="row">${label}</th>${collectionCells(counts)}<td>${fmtRate(layingRate(rows,batches))}</td>
+    </tr>`;
+  }).join('');
 }
 
 function renderLatestEntry(container){
   const latest = latestProductionEntry();
-  if(!latest){container.textContent='No data';return;}
-  const batchRows = PRODUCTION_BATCHES.map(batch=>{
+  document.getElementById('latest-survey-date').textContent = latest?.date || '';
+  const footer = document.getElementById('latest-entry-total');
+  if(!latest){
+    container.innerHTML = '<tr><td colspan="5">No survey data</td></tr>';
+    footer.replaceChildren();
+    return;
+  }
+  const batches = selectedProductionBatches();
+  container.innerHTML = batches.map(batch=>{
     const cfg = BATCH_CONFIG[batch.key];
-    const recorded = BATCH_METRICS.some(field=>latest[batch.prefix+'_'+field]!=null);
-    const eggs = recorded ? fmtN(batchTotal(latest,batch))+' eggs' : '—';
+    const counts = collectionCounts([latest],[batch]);
     const pct = layingRate([latest],[batch]);
-    return `<div class="stat-row"><span class="stat-label">${cfg.name} (${cfg.status})</span><span class="stat-value">${eggs}${pct==null?'':` <span style="color:var(--green)">(${fmtRate(pct)})</span>`}</span></div>`;
-  }).join('');
-  const broken = brokenTotal(latest);
-  container.innerHTML = `
-    <div class="stat-row"><span class="stat-label">Date</span><span class="stat-value">${latest.date}</span></div>
-    ${batchRows}
-    <div class="stat-row"><span class="stat-label">Broken</span><span class="stat-value ${broken>5?'val-red':''}">${fmtN(broken)}</span></div>
-    <div class="stat-row"><span class="stat-label">Combined</span><span class="stat-value">${fmtN(eggTotal(latest))} eggs</span></div>`;
+    return `<tr><th scope="row">${cfg.name}<span class="batch-state">${cfg.status}</span></th>${collectionCells(counts)}
+      <td class="${pct==null?'':'val-green'}">${fmtRate(pct)}</td></tr>`;
+  }).join('') || '<tr><td colspan="5">No batches in view</td></tr>';
+  footer.innerHTML = `<tr><th scope="row">Total</th>${collectionCells(collectionCounts([latest],batches))}
+    <td>${fmtRate(layingRate([latest],batches))}</td></tr>`;
 }
 
 function renderFlags(){
@@ -936,16 +1089,17 @@ function renderFlags(){
   if(maxGap>5) flags.push({sev:'amber',msg:`Longest gap: ${maxGap} days (from ${gapStart}). Missing log days could skew totals.`});
   // High broken rate
   const recentEggs = EGGS.filter(r=>r.date>=daysBefore(30));
-  const totalBroken = recentEggs.reduce((s,r)=>s+brokenTotal(r),0);
+  const totalBroken = collectionCounts(recentEggs,selectedProductionBatches()).broken ?? 0;
   const totalEggs30 = recentEggs.reduce((s,r)=>s+eggTotal(r),0);
   if(totalEggs30>0&&(totalBroken/totalEggs30)>0.01) flags.push({sev:'amber',msg:`Broken egg rate: ${((totalBroken/totalEggs30)*100).toFixed(2)}% in last 30 days (${totalBroken} broken).`});
   // Feb expenses surge
-  const febExp = RAW_EXPENSES.filter(r=>r.date.startsWith('2026-02')).reduce((s,r)=>s+r.amount,0);
-  const janExp = RAW_EXPENSES.filter(r=>r.date.startsWith('2026-01')).reduce((s,r)=>s+r.amount,0);
+  const expenses = RAW_EXPENSES.filter(isPoultryExpense);
+  const febExp = expenses.filter(r=>r.date.startsWith('2026-02')).reduce((s,r)=>s+r.amount,0);
+  const janExp = expenses.filter(r=>r.date.startsWith('2026-01')).reduce((s,r)=>s+r.amount,0);
   if(febExp>janExp*1.3) flags.push({sev:'red',msg:`Expenses spiked ${((febExp/janExp-1)*100).toFixed(0)}% in Feb vs Jan (${fmtN(janExp)}→${fmtN(febExp)} UGX).`});
   // March pnl
   const marSales=RAW_SALES.filter(r=>r.date.startsWith('2026-03')).reduce((s,r)=>s+r.amount,0);
-  const marExp=RAW_EXPENSES.filter(r=>r.date.startsWith('2026-03')).reduce((s,r)=>s+r.amount,0);
+  const marExp=expenses.filter(r=>r.date.startsWith('2026-03')).reduce((s,r)=>s+r.amount,0);
   if(marSales<marExp) flags.push({sev:'red',msg:`March is loss-making: ${fmtN(marSales)} revenue vs ${fmtN(marExp)} expenses (${fmtN(marSales-marExp)} UGX).`});
 
   const el = document.getElementById('flags-list');
@@ -956,16 +1110,15 @@ function renderFlags(){
 // ============ PRODUCTION TAB ============
 function renderBatchLayingCards(){
   const el = document.getElementById('batch-laying-cards');
-  const batches = activeProductionBatches();
-  
-  el.innerHTML = batches.map((batch)=>{
+  const latest = latestProductionEntry();
+  el.innerHTML = selectedProductionBatches().map(batch=>{
     const cfg = BATCH_CONFIG[batch.key];
     const recent = EGGS.filter(r=>r.date>=daysBefore(30) && (r[batch.prefix+'_trays']!=null || r[batch.prefix+'_eggs']!=null));
     const periodEggs = recent.reduce((sum,row)=>sum+batchTotal(row,batch),0);
     const avgEggs = recent.length?periodEggs/recent.length:null;
     const layingPct = layingRate(recent,[batch]);
-    const latest = latestProductionEntry();
     const latestPct = latest?layingRate([latest],[batch]):null;
+    const collection = latest?collectionCounts([latest],[batch]):null;
     
     return `<div class="batch-card ${cfg.status}">
       <div class="batch-status status-${cfg.status}">${cfg.status}</div>
@@ -977,6 +1130,7 @@ function renderBatchLayingCards(){
         <div class="bm"><div class="bm-label">30D Avg Eggs</div><div class="bm-value">${fmtN(avgEggs)}</div></div>
         <div class="bm"><div class="bm-label">DOB</div><div class="bm-value">${cfg.dob}</div></div>
       </div>
+      ${collection?`<div class="kpi-sub">${collectionLabel(collection)}</div>`:''}
       <div class="laying-bar"><div class="laying-bar-fill" style="width:${Math.min(100,layingPct)}%;background:${batch.color}"></div></div>
     </div>`;
   }).join('');
@@ -984,9 +1138,11 @@ function renderBatchLayingCards(){
 
 function renderBatchCharts(eggs){
   const periods = chartPeriods(eggs);
+  const batches = selectedProductionBatches();
+  const values = {rowLabel:periods.rowLabel,labels:periods.keys};
   mkChart('chart-batch-laying','line',{
     labels:periods.labels,
-    datasets: activeProductionBatches().map(b=>({
+    datasets: batches.filter(isLaying).map(b=>({
       label:b.label+' Laying%',
       data:periods.keys.map(key=>layingRate(periods.groups.get(key),[b])),
       borderColor:b.color,
@@ -994,26 +1150,32 @@ function renderBatchCharts(eggs){
       pointRadius:periods.keys.length===1?5:0,
       tension:0.3
     }))
-  },{scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}});
+  },{scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}},{...values,format:fmtRate});
 
   mkChart('chart-batch-eggs','bar',{
     labels:periods.labels,
-    datasets: PRODUCTION_BATCHES.map(batch=>({
+    datasets: batches.map(batch=>({
       label:batch.label,data:periodTotals(eggs,periods,row=>batchTotal(row,batch)),backgroundColor:batch.color
     }))
-  },{scales:{x:{stacked:true},y:{stacked:true}}});
+  },{scales:{x:{stacked:true},y:{stacked:true}}},values);
 }
 
 function renderPeriodDetailTable(){
-  const periods=[7,14,30,90,180,365,9999];
-  const labels=['7D','14D','30D','3M','6M','1Y','All'];
-  const batchKeys=PRODUCTION_BATCHES;
+  const periods = REPORT_PERIODS.map(([days])=>productionPeriod(days));
+  const batches = selectedProductionBatches();
+  function metricRows(group,prefix=''){
+    const counts = periods.map(rows=>collectionCounts(rows,group));
+    return COLLECTION_METRICS.map(({key,label})=>({
+      label:prefix+label,
+      vals:counts.map(entry=>fmtN(entry[key]))
+    }));
+  }
   const rows = [
-    {label:'Total eggs (all batches)', vals:periods.map(d=>{const c=d<9999?daysBefore(d):'2000-01-01';return fmtN(EGGS.filter(r=>r.date>=c).reduce((s,r)=>s+eggTotal(r),0));})},
-    ...batchKeys.map(b=>({label:BATCH_CONFIG[b.key].name, vals:periods.map(d=>{const c=d<9999?daysBefore(d):'2000-01-01';return fmtN(EGGS.filter(r=>r.date>=c).reduce((s,r)=>s+batchTotal(r,b),0));})})),
-    {label:'Avg Laying %',vals:periods.map(d=>{const c=d<9999?daysBefore(d):'2000-01-01';return fmtRate(layingRate(EGGS.filter(r=>r.date>=c)));})},
+    ...metricRows(batches),
+    {label:'Laying %',vals:periods.map(rows=>fmtRate(layingRate(rows,batches)))},
+    ...batches.flatMap(batch=>metricRows([batch],BATCH_CONFIG[batch.key].name+' · ')),
   ];
-  document.getElementById('period-table-body').innerHTML = rows.map(r=>`<tr><td>${r.label}</td>${r.vals.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('');
+  document.getElementById('period-table-body').innerHTML = rows.map(row=>`<tr><th scope="row">${row.label}</th>${row.vals.map(value=>`<td>${value}</td>`).join('')}</tr>`).join('');
 }
 
 // ============ FINANCIAL TAB ============
@@ -1035,7 +1197,7 @@ function renderSalesByPeriod(latestSalesDate){
 
 function renderFinancial(sales,expenses){
   const totalRev = RAW_SALES.reduce((s,r)=>s+r.amount,0);
-  const totalExp = RAW_EXPENSES.reduce((s,r)=>s+r.amount,0);
+  const totalExp = RAW_EXPENSES.filter(isPoultryExpense).reduce((s,r)=>s+r.amount,0);
   const pnl = totalRev-totalExp;
   document.getElementById('fin-revenue').textContent = fmtN(totalRev)+' UGX';
   document.getElementById('fin-expenses').textContent = fmtN(totalExp)+' UGX';
@@ -1053,15 +1215,16 @@ function renderFinancial(sales,expenses){
   document.getElementById('fin-price-tray').textContent = recentTrays?fmtN(trayRevenue/recentTrays)+' UGX':'—';
   document.getElementById('fin-price-sub').textContent = 'regular trays sold in last 3 weeks';
 
-  const periods = chartPeriods([...sales,...expenses]);
+  const poultryExpenses = expenses.filter(isPoultryExpense);
+  const periods = chartPeriods([...sales,...poultryExpenses]);
   const amount = row=>row.amount;
   mkChart('chart-fin-monthly','bar',{
     labels:periods.labels,
     datasets:[
       {label:'Revenue',data:periodTotals(sales,periods,amount),backgroundColor:'rgba(74,128,212,.7)'},
-      {label:'Expenses',data:periodTotals(expenses,periods,amount),backgroundColor:'rgba(200,68,10,.7)'},
+      {label:'Poultry expenses',data:periodTotals(poultryExpenses,periods,amount),backgroundColor:'rgba(200,68,10,.7)'},
     ]
-  },{});
+  },{},{rowLabel:periods.rowLabel,labels:periods.keys,format:fmtUgx});
 
   // Payment donut
   const payAmt = Object.create(null);
@@ -1070,11 +1233,11 @@ function renderFinancial(sales,expenses){
   mkChart('chart-payment','doughnut',{
     labels:payLabels,
     datasets:[{data:Object.values(payAmt),backgroundColor:['#5aac4e','#4a80d4','#c4864a','#c8440a','#a57cce','#48a7a3']}]
-  },{plugins:{legend:{position:'bottom'}}});
+  },{},{rowLabel:'Payment method',seriesLabel:'Amount',format:fmtUgx});
 
   // Expense breakdown
   const expCat = Object.create(null);
-  RAW_EXPENSES.forEach(r=>{expCat[r.expense]=(expCat[r.expense]||0)+r.amount;});
+  poultryExpenses.forEach(r=>{expCat[r.expense]=(expCat[r.expense]||0)+r.amount;});
   const maxExp = Math.max(...Object.values(expCat));
   const sorted = Object.entries(expCat).sort((a,b)=>b[1]-a[1]);
   const escapeText = value=>value.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
@@ -1083,23 +1246,30 @@ function renderFinancial(sales,expenses){
       <span class="expense-name">${escapeText(k.toLowerCase().replace(/_/g,' '))}</span>
       <div class="expense-bar-wrap"><div class="expense-bar" style="width:${maxExp>0?(v/maxExp*100).toFixed(0):0}%"></div></div>
       <span class="expense-amt">${fmtN(v)}</span>
-    </div>`).join('');
+    </div>`).join('') || 'No poultry expenses in this period';
 
-  const table = document.getElementById('sales-table').querySelector('tbody');
-  const rows = [...sales].reverse();
+  const label = value=>(value || '—').replace(/_/g,' ');
+  renderTransactions('sales-table',sales,'sales',sale=>[
+    sale.date,label(sale.subcategory || sale.category),label(sale.payment),sale.trays?fmtN(sale.trays):'—',fmtN(sale.amount)
+  ]);
+  renderTransactions('expenses-table',expenses,'expenses',expense=>[
+    expense.date,label(expense.expense),label(expense.category),label(expense.payment),fmtN(expense.amount)
+  ]);
+}
+
+function renderTransactions(tableId,records,kind,cells){
+  const table = document.getElementById(tableId).querySelector('tbody');
   table.replaceChildren();
-  for(const sale of rows){
+  for(const record of [...records].reverse()){
     const row = table.insertRow();
-    const product = (sale.subcategory || sale.category || '—').replace(/_/g,' ');
-    const payment = (sale.payment || '—').replace(/_/g,' ');
-    for(const value of [sale.date,product,payment,sale.trays?fmtN(sale.trays):'—',fmtN(sale.amount)]){
+    for(const value of cells(record)){
       row.insertCell().textContent = value;
     }
   }
-  if(!rows.length){
+  if(!records.length){
     const cell = table.insertRow().insertCell();
     cell.colSpan = 5;
-    cell.textContent = 'No sales in this period';
+    cell.textContent = 'No '+kind+' in this period';
   }
 }
 
@@ -1116,14 +1286,15 @@ function renderBatchRecords(rows){
 }
 
 function renderAllBatches(){
-  const colors = ['var(--green)','var(--blue)','var(--amber)','var(--text3)','var(--text3)'];
   const el = document.getElementById('all-batches-grid');
-  el.innerHTML = Object.entries(BATCH_CONFIG).map(([bk,cfg],i)=>{
-    const dob = new Date(cfg.dob);
-    const ageMonths = Math.floor((new Date()-dob)/2628000000);
+  const today = farmCalendarDay();
+  document.getElementById('batch-list-title').textContent = includeInactive?'All Batches':'Laying Batches';
+  el.innerHTML = visibleBatches().map(batch=>{
+    const cfg = BATCH_CONFIG[batch.key];
+    const age = formatBatchAge(cfg.dob,today);
     const offlay = new Date(cfg.expectedOfflay);
     const daysToOfflay = Math.ceil((offlay-new Date())/86400000);
-    const deaths = EGGS.map(row=>row['b'+bk.slice(5)+'_dead']).filter(value=>value!=null);
+    const deaths = EGGS.map(row=>row[batch.prefix+'_dead']).filter(value=>value!=null);
     const loggedDeaths = deaths.length?deaths.reduce((sum,count)=>sum+count,0):null;
     return `<div class="batch-card ${cfg.status}">
       <div class="batch-status status-${cfg.status}">${cfg.status}</div>
@@ -1131,9 +1302,9 @@ function renderAllBatches(){
       <div class="batch-supplier" style="margin-bottom:1rem">Supplier: ${cfg.supplier}</div>
       <div class="batch-metrics">
         <div class="bm"><div class="bm-label">Date of Birth</div><div class="bm-value" style="font-size:.8rem">${cfg.dob}</div></div>
-        <div class="bm"><div class="bm-label">Age</div><div class="bm-value">${ageMonths}mo</div></div>
+        <div class="bm"><div class="bm-label">Age</div><div class="bm-value">${age}</div></div>
         <div class="bm"><div class="bm-label">Initial Birds</div><div class="bm-value">${fmtN(cfg.initialBirds)}</div></div>
-        <div class="bm"><div class="bm-label">Current Birds</div><div class="bm-value" style="color:${colors[i]}">${fmtN(cfg.currentBirds)}</div></div>
+        <div class="bm"><div class="bm-label">Current Birds</div><div class="bm-value" style="color:${batch.color}">${fmtN(cfg.currentBirds)}</div></div>
         <div class="bm"><div class="bm-label">Recorded deaths</div><div class="bm-value">${fmtN(loggedDeaths)}</div></div>
         <div class="bm"><div class="bm-label">Days to Offlay</div><div class="bm-value ${daysToOfflay<90?'val-red':''}">${cfg.status==='offlaid'?'Offlaid':daysToOfflay<0?'Due':daysToOfflay+'d'}</div></div>
       </div>
@@ -1143,10 +1314,18 @@ function renderAllBatches(){
 
 // ============ MAIN RENDER ============
 function render(){
+  const shown = new Set(visibleBatches().map(batch=>batch.number));
+  if(activeBatch!=='all'&&!shown.has(activeBatch)) activeBatch = 'all';
+  document.querySelectorAll('.period-btn[data-batch]').forEach(button=>{
+    const selected = button.dataset.batch===activeBatch;
+    button.classList.toggle('hidden',button.dataset.batch!=='all'&&!shown.has(button.dataset.batch));
+    button.classList.toggle('active',selected);
+    button.setAttribute('aria-pressed',String(selected));
+  });
   const eggs = filterEggs(activeDays);
   const sales = filterSales(activeDays);
   const expenses = filterExpenses(activeDays);
-  renderKPIs(eggs, sales, expenses);
+  renderKPIs(eggs, sales, expenses.filter(isPoultryExpense));
   renderAverages();
   renderDailyChart(eggs);
   renderPeriodTable(document.getElementById('period-table-wrap'));
@@ -1206,7 +1385,7 @@ async function tryLoadLiveData(){
       RAW_SALES = analytics.financials.salesRecords;
       salesRevenueByPeriod = analytics.financials.recentRevenue || null;
     }
-    if(analytics.financials?.expenseRecords?.length){
+    if(analytics.financials?.expenseSource==='ona' && Array.isArray(analytics.financials.expenseRecords)){
       RAW_EXPENSES = analytics.financials.expenseRecords;
     }
   }
@@ -1236,10 +1415,13 @@ document.querySelectorAll('.period-btn[data-days]').forEach(btn=>{
 });
 document.querySelectorAll('.period-btn[data-batch]').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    selectFilter(btn,'batch');
     activeBatch = btn.dataset.batch;
     render();
   });
+});
+document.getElementById('include-inactive').addEventListener('change',event=>{
+  includeInactive = event.currentTarget.checked;
+  render();
 });
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{

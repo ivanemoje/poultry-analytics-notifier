@@ -32,6 +32,8 @@ def main():
     for name in ("production", "sales"):
         if not isinstance(forms.get(name), list) or not forms[name]:
             sys.exit(f"Ona returned no {name} submission records")
+    if not isinstance(forms.get("expenses"), list):
+        sys.exit("Ona returned an invalid expenses response")
 
     today = datetime.now(timezone.utc).date()
     metadata = json.loads(Path("config/batch_metadata.json").read_text())
@@ -44,7 +46,7 @@ def main():
     archive = destination if destination.exists() else snapshot
     previous = json.loads(archive.read_text()).get("records", []) if archive.exists() else []
     report = build_report(forms["production"], metadata, today, previous)
-    financials = build_financials(forms["sales"])
+    financials = build_financials(forms["sales"], forms["expenses"])
     report["financials"] = financials
     sales_report = legacy_sales_report(financials, today, sales_metadata)
     write_report(output_dir / "poultry_sales_data.json", sales_report)

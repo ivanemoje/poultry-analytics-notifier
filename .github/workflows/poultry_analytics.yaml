@@ -46,6 +46,7 @@ jobs:
           ONA_API_TOKEN: ${{ secrets.ONA_API_TOKEN }}
           ONA_FORM_ID: ${{ secrets.ONA_FORM_ID }}
           SALES_ONA_FORM_ID: ${{ secrets.SALES_ONA_FORM_ID }}
+          EXPENSES_ONA_FORM_ID: ${{ secrets.EXPENSES_ONA_FORM_ID }}
         run: |
           bash ./scripts/poultry_analytics.sh > poultry_analytics.txt
           {

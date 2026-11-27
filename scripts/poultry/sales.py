@@ -23,7 +23,19 @@ def recent_revenue(sales):
     return totals
 
 
-def build_financials(sources):
+def normalize_expense(source):
+    submitted_at = field(source, "_submission_time")
+    return {
+        "date": field(source, "surveydate") or submitted_at[:10],
+        "expense": field(source, "expense") or "EXPENSE",
+        "amount": count(source.get("amount")) or 0,
+        "category": field(source, "category"),
+        "payment": field(source, "paymentmode", "payment"),
+        "submittedAt": submitted_at,
+    }
+
+
+def build_financials(sources, expense_sources=None):
     sales, expenses = [], []
     for source in sources:
         submitted_at = field(source, "_submission_time")
@@ -50,12 +62,19 @@ def build_financials(sources):
                 "animals": count(source.get("numanimals")) or 0,
             })
 
+    if expense_sources is not None:
+        expenses = [normalize_expense(source) for source in expense_sources]
     for entries in (sales, expenses):
         entries.sort(key=lambda row: (row["date"], row["submittedAt"]))
+    total_revenue = sum(row["amount"] for row in sales)
+    poultry_expenses = sum(row["amount"] for row in expenses if row["category"].strip().upper() != "PIGS")
     return {
         "salesRecords": sales,
         "expenseRecords": expenses,
-        "totalRevenue": sum(row["amount"] for row in sales),
+        "expenseSource": "ona" if expense_sources is not None else "sales",
+        "totalRevenue": total_revenue,
+        "totalPoultryExpenses": poultry_expenses,
+        "netPoultryIncome": total_revenue - poultry_expenses,
         "recentRevenue": recent_revenue(sales),
         "latestSale": max(sales, key=lambda row: row["submittedAt"], default=None),
     }

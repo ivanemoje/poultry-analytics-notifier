@@ -10,4 +10,5 @@ fetch_form() {
 
 production=$(fetch_form "$ONA_FORM_ID")
 sales=$(fetch_form "${SALES_ONA_FORM_ID:-853534}")
-printf '{"production":%s,"sales":%s}\n' "$production" "$sales" | python3 scripts/poultry_analytics.py
+expenses=$(fetch_form "${EXPENSES_ONA_FORM_ID:-856758}")
+printf '{"production":%s,"sales":%s,"expenses":%s}\n' "$production" "$sales" "$expenses" | python3 scripts/poultry_analytics.py

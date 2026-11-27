@@ -12,8 +12,12 @@ BATCH_FIELDS = {
     "batch4": ("batchfour", "batchfour", "four"),
     "batch5": ("batchfive", "batchfive", "five"),
 }
-LAYING_STATUSES = {"active", "laying"}
 WINDOWS = {"threeDay": 3, "sevenDay": 7, "thirtyDay": 30}
+
+
+def batch_status(config):
+    status = (config.get("status") or "unknown").strip().lower()
+    return "laying" if status == "active" else status
 
 
 def normalize_record(source):
@@ -63,7 +67,7 @@ def laying_percentage(eggs, birds):
 def production_records(sources, metadata, previous_records):
     records = sorted(map(normalize_record, sources), key=lambda row: (row["date"], row["submittedAt"]))
     # The current form can omit Batch 1 fields from older submissions.
-    if metadata.get("batch1", {}).get("status") == "offlaid":
+    if batch_status(metadata.get("batch1", {})) == "offlaid":
         archive = {row["submittedAt"]: row for row in previous_records if row.get("submittedAt")}
         for row in records:
             saved = archive.get(row["submittedAt"], {})
@@ -77,7 +81,7 @@ def summarize_latest(latest, metadata):
     laying_birds = {
         batch: int(metadata[batch].get("currentBirds") or 0)
         for batch in BATCH_FIELDS
-        if batch in metadata and (metadata[batch].get("status") or "").lower() in LAYING_STATUSES
+        if batch in metadata and batch_status(metadata[batch]) == "laying"
     }
 
     latest_batches = {}
@@ -161,6 +165,6 @@ def build_report(sources, metadata, today, previous_records=()):
         "overallTotals": summarize_totals(production, sum(eggs for _, eggs in dated_totals)),
         "recentTotals": recent,
         "rollingAverages": rolling,
-        "batchStats": metadata,
+        "batchStats": {key: {**config, "status": batch_status(config)} for key, config in metadata.items()},
         "records": records,
     }

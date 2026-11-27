@@ -22,6 +22,7 @@ View the interactive egg production dashboard at [https://ivanemoje.github.io/po
    - `ONA_API_TOKEN`: This token is required to authenticate requests to the Ona API. You can obtain this token from your Ona account.
    - `ONA_FORM_ID` identifies the egg production form.
    - `SALES_ONA_FORM_ID` optionally overrides the sales form ID, which defaults to `853534`.
+   - `EXPENSES_ONA_FORM_ID` optionally overrides the expenses form ID, which defaults to `856758`.
    - `SLACK_BOT_TOKEN`: This token is used to authenticate the Slack bot that will send the report.
    - `SLACK_CHANNEL_ID`: The ID of the Slack channel where the report will be sent.
 
@@ -34,7 +35,7 @@ To run the Poultry Analytics Notifier script manually, execute the following com
 ```
 bash ./scripts/poultry_analytics.sh
 ```
-This fetches both Ona forms, writes `poultry_analytics_data.json` and `poultry_sales_data.json` under the Git-ignored `.local/analytics/` directory, and prints the combined Slack summary. Set `POULTRY_DATA_DIR` to use another output directory.
+This fetches production, sales, and expenses from Ona, writes `poultry_analytics_data.json` and `poultry_sales_data.json` under the Git-ignored `.local/analytics/` directory, and prints the combined Slack summary. Set `POULTRY_DATA_DIR` to use another output directory.
 
 ### GitHub Actions Workflow
 The GitHub Actions workflow runs daily at 22:00 UTC. It runs the combined analytics script and sends the report to the configured Slack channel.
@@ -54,13 +55,13 @@ Features:
 
 GitHub Actions publishes the generated JSON files to the `dashboard-data` branch. The dashboard reads that branch directly, so scheduled data updates leave `main` free of generated commits. The checked-in analytics JSON serves as a fallback while the branch is unavailable. Local browser previews can also read the Git-ignored output from a server on localhost.
 
-The **1D** period shows the latest recorded survey day for production and the latest recorded transaction day for financial graphs.
+The **1D** and **3D** periods end on the latest recorded survey date for production and the latest recorded transaction date for financial graphs.
 
-The Financial tab shows sales from the Ona sales form. The period filter applies to the sales records table. The average tray price uses regular tray sales with a recorded quantity over the last three weeks of sales data. The dashboard uses the existing expense snapshot when the sales form has no expense entries.
+The Financial tab shows sales and expenses from their respective Ona forms. The period filter applies to both records tables and the charts. Pig expenses appear in Expense Records and are excluded from poultry expenses and poultry net income. The average tray price uses regular tray sales with a recorded quantity over the last three weeks of sales data.
 
-The Batches tab shows all five batches. Batch and period filters apply to the records table, which shows trays, loose eggs, broken eggs, recorded deaths, and daily feed in grams per bird. Egg totals include available records for every batch.
+The dashboard shows laying batches by default. **Include inactive batches** reveals other batches and their historical records. The production view shows trays, loose eggs, and broken eggs separately. The Batches tab also shows recorded deaths and daily feed in grams per bird.
 
-Laying percentages use the current bird counts in `config/batch_metadata.json` for batches marked `active` or `laying` with a reported egg or tray count. This applies to historical percentages as well. The combined rate divides eligible eggs by eligible birds.
+Laying percentages use the current bird counts in `config/batch_metadata.json` for batches marked `laying` with a reported egg or tray count. This applies to historical percentages as well. The combined rate divides eligible eggs by eligible birds.
 
 ## Conclusion
 The Poultry notifier project simplifies the process of tracking and reporting egg production data. By automating data fetching and reporting, it allows users to focus on analysis and decision-making. For any issues or contributions, please refer to the project's GitHub repository.

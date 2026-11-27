@@ -92,6 +92,8 @@ def print_summary(report):
             print(f"{label}: `{recent[key]:,} UGX`")
     print(f"Total sales revenue: `{financials['totalRevenue']:,} UGX` "
           f"({len(financials['salesRecords']):,} records)")
+    print(f"Total poultry expenses: `{financials['totalPoultryExpenses']:,} UGX`\n"
+          f"Poultry net income: `{financials['netPoultryIncome']:,} UGX`")
 
     if offlaid:
         print("\n*Offlaid batches*")
