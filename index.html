@@ -268,6 +268,7 @@ button{font-family:inherit;}
 .trend-flat{color:var(--text3);}
 
 /* CHART CONTAINERS */
+.chart-viewport{overflow-x:auto;overscroll-behavior-x:contain;}
 .chart-wrap{position:relative;padding:1rem;height:clamp(14rem,34vw,19rem);}
 .chart-values{border-top:1px solid var(--border);}
 .chart-values summary{min-height:2.75rem;padding:.65rem 1rem;font-size:.83rem;font-weight:800;color:var(--text2);cursor:pointer;}
@@ -275,6 +276,13 @@ button{font-family:inherit;}
 .chart-values-scroll{max-height:17rem;overflow:auto;scrollbar-gutter:stable;}
 .chart-values thead th{position:sticky;top:0;background:var(--surface);z-index:1;}
 .chart-values .period-table th,.chart-values .period-table td{white-space:nowrap;}
+.chart-values .tray-change-cell{white-space:normal;min-width:9rem;}
+.tray-change-note{display:block;color:var(--text3);font-size:.72rem;}
+.tray-fluctuations{display:flex;flex-wrap:wrap;gap:.25rem .85rem;padding:.55rem 1rem;color:var(--text2);font-size:.78rem;border-bottom:1px solid var(--border);}
+.tray-fluctuations strong{font-weight:800;color:var(--text);}
+.tray-fluctuations .rise{color:var(--green);}
+.tray-fluctuations .dip{color:var(--red);}
+.tray-fluctuations .check{color:var(--amber);}
 .collection-table{table-layout:fixed;}
 .collection-table th,.collection-table td{padding:.48rem .7rem;line-height:1.3;font-variant-numeric:tabular-nums;}
 .collection-table thead th{white-space:normal;vertical-align:bottom;}
@@ -467,8 +475,9 @@ button{font-family:inherit;}
           <span class="card-title">Daily Collection</span>
           <span class="kpi-sub" id="chart-period-label"></span>
         </div>
-        <div class="chart-wrap">
-          <canvas id="chart-eggs-daily"></canvas>
+        <div id="tray-fluctuations" class="tray-fluctuations" aria-label="Tray changes"></div>
+        <div class="chart-viewport" role="region" aria-label="Daily collection chart" tabindex="0">
+          <div class="chart-wrap"><canvas id="chart-eggs-daily"></canvas></div>
         </div>
       </div>
       <div class="card">
@@ -480,8 +489,8 @@ button{font-family:inherit;}
       </div>
       <div class="card">
         <div class="card-header"><span class="card-title">Egg Production by Period</span></div>
-        <div class="chart-wrap">
-          <canvas id="chart-monthly-eggs"></canvas>
+        <div class="chart-viewport" role="region" aria-label="Egg production chart" tabindex="0">
+          <div class="chart-wrap"><canvas id="chart-monthly-eggs"></canvas></div>
         </div>
       </div>
       <div class="card">
@@ -512,14 +521,14 @@ button{font-family:inherit;}
     <div class="grid-2">
       <div class="card">
         <div class="card-header"><span class="card-title">Batch Comparison — Laying %</span></div>
-        <div class="chart-wrap">
-          <canvas id="chart-batch-laying"></canvas>
+        <div class="chart-viewport" role="region" aria-label="Batch laying percentage chart" tabindex="0">
+          <div class="chart-wrap"><canvas id="chart-batch-laying"></canvas></div>
         </div>
       </div>
       <div class="card">
         <div class="card-header"><span class="card-title">Total Eggs by Batch</span></div>
-        <div class="chart-wrap">
-          <canvas id="chart-batch-eggs"></canvas>
+        <div class="chart-viewport" role="region" aria-label="Eggs by batch chart" tabindex="0">
+          <div class="chart-wrap"><canvas id="chart-batch-eggs"></canvas></div>
         </div>
       </div>
     </div>
@@ -588,8 +597,8 @@ button{font-family:inherit;}
     <div class="grid-2">
       <div class="card">
         <div class="card-header"><span class="card-title">Revenue vs Poultry Expenses</span></div>
-        <div class="chart-wrap">
-          <canvas id="chart-fin-monthly"></canvas>
+        <div class="chart-viewport" role="region" aria-label="Revenue and poultry expenses chart" tabindex="0">
+          <div class="chart-wrap"><canvas id="chart-fin-monthly"></canvas></div>
         </div>
       </div>
       <div class="card">
@@ -719,6 +728,8 @@ const COLLECTION_METRICS = [
   {key:'eggs',label:'Loose eggs',color:'#4a89df'},
   {key:'broken',label:'Broken eggs',color:'#e77750'}
 ];
+const TRAY_CHANGE_PERCENT = 20;
+const TRAY_MARKER_COLORS = {rise:'#85ca65',dip:'#f36f60',check:'#edb354'};
 const REPORT_PERIODS = [[1,'1D'],[3,'3D'],[7,'7D'],[14,'14D'],[30,'30D'],[90,'3M'],[180,'6M'],[365,'1Y'],[9999,'All']];
 
 function isLaying(batch){
@@ -844,7 +855,7 @@ function periodStart(days,anchor){
   return days<9000 ? daysBefore(days-1,anchor) : '';
 }
 
-function chartPeriods(rows,monthly=activeDays>30){
+function chartPeriods(rows,{monthly=activeDays>30,through}={}){
   const key = row=>monthly?row.date.slice(0,7):row.date;
   const groups = new Map();
   for(const row of rows){
@@ -852,7 +863,10 @@ function chartPeriods(rows,monthly=activeDays>30){
     if(!groups.has(period)) groups.set(period,[]);
     groups.get(period).push(row);
   }
-  const keys = [...groups.keys()].sort();
+  const showCalendarDays = !monthly && activeDays<=30 && through;
+  const keys = showCalendarDays
+    ? Array.from({length:activeDays},(_,index)=>daysBefore(activeDays-1-index,through))
+    : [...groups.keys()].sort();
   return {key,keys,groups,labels:keys.map(monthly?fmtMonth:fmtDate),rowLabel:monthly?'Month':'Date'};
 }
 
@@ -862,7 +876,7 @@ function periodTotals(rows,periods,value){
     const key = periods.key(row);
     totals.set(key,(totals.get(key)||0)+value(row));
   }
-  return periods.keys.map(key=>totals.get(key)||0);
+  return periods.keys.map(key=>totals.get(key) ?? (periods.groups.has(key)?0:null));
 }
 
 // ============ CHART FACTORY ============
@@ -876,23 +890,34 @@ function mkChart(id, type, data, options, values={}){
   const font = {family:'Nunito, system-ui, sans-serif',size:12};
   const format = values.format || fmtN;
   const circular = type==='doughnut'||type==='pie';
+  const showDailyDates = !circular && activeDays<=30;
+  const rotation = showDailyDates && data.labels.length>7 ? 50 : 0;
+  if(!circular){
+    const width = 68+data.labels.length*(rotation?23:46);
+    ctx.parentElement.style.minWidth = showDailyDates && data.labels.length>1 ? width+'px' : '';
+  }
   const defaults = {
     locale:'en-UG',
     maintainAspectRatio:false,
     interaction:circular?{}:{mode:'index',intersect:false,axis:'x'},
     plugins:{
-      legend:{position:'top',labels:{color:textColor,font,boxWidth:12,boxHeight:8,padding:10}},
+      legend:{position:'top',align:showDailyDates?'start':'center',labels:{color:textColor,font,boxWidth:12,boxHeight:8,padding:10}},
       tooltip:{titleFont:font,bodyFont:font,callbacks:{
         label:point=>`${point.dataset.label || point.label}: ${format(point.raw)}`
       }}
     },
     scales:circular?{}:{
-      x:{ticks:{color:textColor,font,maxRotation:0},grid:{color:gridColor}},
+      x:{ticks:{color:textColor,font,autoSkip:!showDailyDates,minRotation:rotation,maxRotation:rotation},grid:{color:gridColor}},
       y:{ticks:{color:textColor,font},grid:{color:gridColor}}
     }
   };
   const plugins = {...defaults.plugins,...options.plugins};
   plugins.legend = {...defaults.plugins.legend,...options.plugins?.legend};
+  const tooltip = options.plugins?.tooltip;
+  plugins.tooltip = {
+    ...defaults.plugins.tooltip,...tooltip,
+    callbacks:{...defaults.plugins.tooltip.callbacks,...tooltip?.callbacks}
+  };
   const scales = {...defaults.scales};
   for(const [axis,settings] of Object.entries(options.scales || {})){
     scales[axis] = {...scales[axis],...settings,ticks:{...scales[axis]?.ticks,...settings.ticks}};
@@ -902,8 +927,8 @@ function mkChart(id, type, data, options, values={}){
   return charts[id];
 }
 
-function renderChartValues(canvas,data,{rowLabel='Date',labels=data.labels,format=fmtN,seriesLabel='Value'}){
-  const wrap = canvas.parentElement;
+function renderChartValues(canvas,data,{rowLabel='Date',labels=data.labels,format=fmtN,seriesLabel='Value',trayChanges}){
+  const wrap = canvas.closest('.chart-viewport') || canvas.parentElement;
   let panel = wrap.nextElementSibling;
   if(!panel?.matches('.chart-values')){
     panel = document.createElement('details');
@@ -932,7 +957,9 @@ function renderChartValues(canvas,data,{rowLabel='Date',labels=data.labels,forma
     const table = document.createElement('table');
     table.className = 'period-table';
     const header = table.createTHead().insertRow();
-    for(const label of [rowLabel,...data.datasets.map(series=>series.label || seriesLabel)]){
+    const headings = [rowLabel,...data.datasets.map(series=>series.label || seriesLabel)];
+    if(trayChanges) headings.push('Tray change');
+    for(const label of headings){
       const cell = document.createElement('th');
       cell.scope = 'col';
       cell.textContent = label;
@@ -946,6 +973,18 @@ function renderChartValues(canvas,data,{rowLabel='Date',labels=data.labels,forma
       key.textContent = label;
       row.append(key);
       for(const series of data.datasets) row.insertCell().textContent = format(series.data[index]);
+      if(trayChanges){
+        const change = trayChanges.get(label);
+        const cell = row.insertCell();
+        cell.className = 'tray-change-cell';
+        cell.textContent = change ? formatTrayChange(change) : '—';
+        if(change?.notes.length){
+          const note = document.createElement('span');
+          note.className = 'tray-change-note';
+          note.textContent = change.notes.join('. ');
+          cell.append(note);
+        }
+      }
     });
     scroll.append(table);
   };
@@ -1004,11 +1043,27 @@ function renderAverages(){
   document.getElementById('avg-alltime-sub').textContent = 'eggs collected ever';
 }
 
-function renderDailyChart(eggs){
+function renderDailyChart(eggs,trayChanges){
   const batches = selectedProductionBatches();
-  const periods = chartPeriods(eggs,false);
+  const periods = chartPeriods(eggs,{monthly:false,through:EGGS.at(-1)?.date});
   const dates = periods.keys;
-  const counts = dates.map(date=>collectionCounts(periods.groups.get(date),batches));
+  const counts = dates.map(date=>collectionCounts(periods.groups.get(date) || [],batches));
+  const pointRadius = dates.length===1?5:dates.length>60?0:2;
+  const markers = dates.map(date=>{
+    const change = trayChanges.get(date);
+    if(!change?.significant) return null;
+    if(change.notes.length) return 'check';
+    return change.delta>0?'rise':'dip';
+  });
+  const changes = [...trayChanges.values()].filter(change=>change.significant);
+  const rises = changes.filter(change=>change.delta>0).length;
+  const dips = changes.length-rises;
+  const checks = changes.filter(change=>change.notes.length).length;
+  document.getElementById('tray-fluctuations').innerHTML =
+    `<strong>Large tray changes</strong>
+      <span class="rise">▲ ${fmtN(rises)} ${rises===1?'rise':'rises'}</span>
+      <span class="dip">▼ ${fmtN(dips)} ${dips===1?'dip':'dips'}</span>
+      ${checks?`<span class="check">◆ ${fmtN(checks)} to check</span>`:''}`;
   document.getElementById('chart-period-label').textContent =
     dates.length>1 ? dates[0]+' to '+dates.at(-1) : dates[0] || 'No records';
   mkChart('chart-eggs-daily','line',{
@@ -1019,17 +1074,28 @@ function renderDailyChart(eggs){
       borderColor:color,
       backgroundColor:color,
       borderWidth:1.5,
-      pointRadius:dates.length===1?5:dates.length>60?0:2,
+      pointRadius,
       pointHoverRadius:5,
-      tension:0.3
+      tension:0,
+      ...(key==='trays' && {
+        pointRadius:markers.map(marker=>marker?5:pointRadius),
+        pointStyle:markers.map(marker=>marker==='check'?'rectRot':marker?'triangle':'circle'),
+        pointRotation:markers.map(marker=>marker==='dip'?180:0),
+        pointBackgroundColor:markers.map(marker=>TRAY_MARKER_COLORS[marker] || color),
+        pointBorderColor:markers.map(marker=>TRAY_MARKER_COLORS[marker] || color)
+      })
     }))
   },{
+    plugins:{tooltip:{callbacks:{afterBody:points=>{
+      const change = trayChanges.get(dates[points[0]?.dataIndex]);
+      return change ? [formatTrayChange(change),...change.notes] : [];
+    }}}},
     scales:{y:{beginAtZero:true}}
-  },{labels:dates});
+  },{labels:dates,trayChanges});
 }
 
 function renderProductionChart(eggs){
-  const periods = chartPeriods(eggs);
+  const periods = chartPeriods(eggs,{through:EGGS.at(-1)?.date});
   mkChart('chart-monthly-eggs','bar',{
     labels:periods.labels,
     datasets:[{label:'Total eggs (trays × 30 + loose eggs)',data:periodTotals(eggs,periods,row=>row.total),backgroundColor:'rgba(90,172,78,.7)',borderColor:'#5aac4e',borderWidth:1}]
@@ -1072,13 +1138,59 @@ function renderLatestEntry(container){
     <td>${fmtRate(layingRate([latest],batches))}</td></tr>`;
 }
 
-function renderFlags(){
+function trayChangesForPeriod(rows,batches,cutoff){
+  const periods = chartPeriods(rows,{monthly:false});
+  const changes = new Map();
+  let previous = null;
+  for(const date of periods.keys){
+    const entries = periods.groups.get(date);
+    const trays = collectionCounts(entries,batches).trays;
+    if(trays==null) continue;
+
+    const reported = batches.filter(batch=>entries.some(row=>row[batch.prefix+'_trays']!=null));
+    const submissions = entries.filter(row=>reported.some(batch=>row[batch.prefix+'_trays']!=null)).length;
+    const current = {date,trays,submissions,coverage:reported.map(batch=>batch.key).join(',')};
+    if(previous && date>=cutoff){
+      const delta = trays-previous.trays;
+      const percent = previous.trays>0 ? 100*delta/previous.trays : null;
+      const notes = [previous,current].filter(day=>day.submissions>1)
+        .map(day=>`${flagDate(day.date)} has ${fmtN(day.submissions)} submissions`);
+      if(previous.coverage!==current.coverage) notes.push('Different batches reported on these dates');
+      changes.set(date,{
+        previous,current,delta,percent,notes,
+        significant:percent==null ? delta>0 : Math.abs(percent)>=TRAY_CHANGE_PERCENT
+      });
+    }
+    previous = current;
+  }
+  return changes;
+}
+
+function flagDate(date){
+  return fmtDate(date)+' '+date.slice(0,4);
+}
+
+function formatTrayChange({previous,delta,percent}){
+  const sign = delta>0?'+':'';
+  const relative = percent==null ? (delta?' (from zero)':'') : ` (${sign}${percent.toFixed(1)}%)`;
+  return `${sign}${fmtN(delta)} trays${relative} vs ${flagDate(previous.date)}`;
+}
+
+function renderFlags(trayChanges){
   const flags = [];
   // Check last entry date
   const latest = EGGS[EGGS.length-1];
   if(latest){
     const diff = Math.floor((new Date()-new Date(latest.date))/86400000);
     if(diff>1) flags.push({sev:'red',msg:`Last entry was ${diff} days ago (${latest.date}) — data may be stale.`});
+  }
+  for(const {previous,current,delta,percent,notes,significant} of [...trayChanges.values()].reverse()){
+    if(!significant || delta>=0) continue;
+    flags.push({
+      sev:notes.length?'amber':'red',
+      msg:`Tray dip: ${fmtN(previous.trays)} on ${flagDate(previous.date)} to ${fmtN(current.trays)} on ${flagDate(current.date)} (${Math.floor(-percent)}% down).`
+        + (notes.length?' '+notes.join('. ')+'.':'')
+    });
   }
   // Check for gaps
   let prevDate = null, maxGap=0, gapStart='';
@@ -1137,14 +1249,14 @@ function renderBatchLayingCards(){
 }
 
 function renderBatchCharts(eggs){
-  const periods = chartPeriods(eggs);
+  const periods = chartPeriods(eggs,{through:EGGS.at(-1)?.date});
   const batches = selectedProductionBatches();
   const values = {rowLabel:periods.rowLabel,labels:periods.keys};
   mkChart('chart-batch-laying','line',{
     labels:periods.labels,
     datasets: batches.filter(isLaying).map(b=>({
       label:b.label+' Laying%',
-      data:periods.keys.map(key=>layingRate(periods.groups.get(key),[b])),
+      data:periods.keys.map(key=>layingRate(periods.groups.get(key) || [],[b])),
       borderColor:b.color,
       borderWidth:1.5,
       pointRadius:periods.keys.length===1?5:0,
@@ -1216,7 +1328,7 @@ function renderFinancial(sales,expenses){
   document.getElementById('fin-price-sub').textContent = 'regular trays sold in last 3 weeks';
 
   const poultryExpenses = expenses.filter(isPoultryExpense);
-  const periods = chartPeriods([...sales,...poultryExpenses]);
+  const periods = chartPeriods([...sales,...poultryExpenses],{through:latestFinancialDate()});
   const amount = row=>row.amount;
   mkChart('chart-fin-monthly','bar',{
     labels:periods.labels,
@@ -1325,12 +1437,13 @@ function render(){
   const eggs = filterEggs(activeDays);
   const sales = filterSales(activeDays);
   const expenses = filterExpenses(activeDays);
+  const trayChanges = trayChangesForPeriod(EGGS,selectedProductionBatches(),periodStart(activeDays));
   renderKPIs(eggs, sales, expenses.filter(isPoultryExpense));
   renderAverages();
-  renderDailyChart(eggs);
+  renderDailyChart(eggs,trayChanges);
   renderPeriodTable(document.getElementById('period-table-wrap'));
   renderLatestEntry(document.getElementById('latest-entry-wrap'));
-  renderFlags();
+  renderFlags(trayChanges);
   renderProductionChart(eggs);
   
   // Production
