@@ -133,7 +133,7 @@
       "expectedOfflayLatest": "2027-06-15",
       "dailyconsumptionkgs": 0.15,
       "supplier": "jayden",
-      "status": "active",
+      "status": "laying",
       "initialBirds": 1215,
       "currentBirds": 1027
     },
@@ -144,7 +144,7 @@
       "expectedOfflayLatest": "2027-12-20",
       "dailyconsumptionkgs": 0.1,
       "supplier": "jeka",
-      "status": "active",
+      "status": "laying",
       "initialBirds": 400,
       "currentBirds": 390
     },
@@ -20318,8 +20318,1692 @@
         "animals": 0
       }
     ],
-    "expenseRecords": [],
+    "expenseRecords": [
+      {
+        "date": "2025-08-04",
+        "expense": "BROKEN_MAIZE",
+        "amount": 2500000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2025-08-04T12:35:55.928449+00:00"
+      },
+      {
+        "date": "2025-08-04",
+        "expense": "MAIZE_BRAN",
+        "amount": 450000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2025-08-04T12:38:17.551159+00:00"
+      },
+      {
+        "date": "2025-08-04",
+        "expense": "COFFEE_HUSKS",
+        "amount": 144000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2025-08-04T12:39:56.242323+00:00"
+      },
+      {
+        "date": "2025-08-04",
+        "expense": "LIME",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2025-08-04T12:42:49.700273+00:00"
+      },
+      {
+        "date": "2025-08-04",
+        "expense": "VITAMINS",
+        "amount": 50000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2025-08-04T12:43:58.441905+00:00"
+      },
+      {
+        "date": "2025-08-04",
+        "expense": "VACCINE",
+        "amount": 60000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2025-08-04T12:45:28.252776+00:00"
+      },
+      {
+        "date": "2025-08-04",
+        "expense": "DEWORMER",
+        "amount": 45000,
+        "category": "PIGS",
+        "payment": "CASH",
+        "submittedAt": "2025-08-04T12:47:19.154141+00:00"
+      },
+      {
+        "date": "2025-08-04",
+        "expense": "TRANSPORT",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2025-08-04T12:49:16.881235+00:00"
+      },
+      {
+        "date": "2025-08-11",
+        "expense": "VET",
+        "amount": 160000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2025-08-11T12:45:29.192678+00:00"
+      },
+      {
+        "date": "2025-08-11",
+        "expense": "VACCINE",
+        "amount": 16000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2025-08-11T19:47:11.304226+00:00"
+      },
+      {
+        "date": "2025-08-11",
+        "expense": "VACCINE",
+        "amount": 5000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2025-08-11T19:49:23.831841+00:00"
+      },
+      {
+        "date": "2025-08-11",
+        "expense": "VACCINE",
+        "amount": 175000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2025-08-11T19:50:53.970078+00:00"
+      },
+      {
+        "date": "2025-08-11",
+        "expense": "TRANSPORT",
+        "amount": 8000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2025-08-11T19:52:05.474511+00:00"
+      },
+      {
+        "date": "2025-08-11",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 2520000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2025-08-11T20:01:10.262177+00:00"
+      },
+      {
+        "date": "2025-10-20",
+        "expense": "CHICKS",
+        "amount": 500000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-14T09:05:10.487176+00:00"
+      },
+      {
+        "date": "2026-01-07",
+        "expense": "LIME",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-01-07T19:33:15.463991+00:00"
+      },
+      {
+        "date": "2026-01-07",
+        "expense": "TRANSPORT",
+        "amount": 120000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-01-07T19:33:15.970207+00:00"
+      },
+      {
+        "date": "2026-01-07",
+        "expense": "CHARCOAL",
+        "amount": 170000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-01-07T19:33:16.515178+00:00"
+      },
+      {
+        "date": "2026-01-07",
+        "expense": "VITAMINS",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-01-07T19:33:16.939939+00:00"
+      },
+      {
+        "date": "2026-01-07",
+        "expense": "COFFEE_HUSKS",
+        "amount": 169000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-01-07T19:33:17.429336+00:00"
+      },
+      {
+        "date": "2026-01-07",
+        "expense": "STARTERS_CONCENTRATE",
+        "amount": 150000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-01-07T19:33:17.820533+00:00"
+      },
+      {
+        "date": "2026-01-07",
+        "expense": "CALCIUM",
+        "amount": 30000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-01-07T19:33:18.266454+00:00"
+      },
+      {
+        "date": "2026-01-07",
+        "expense": "TRANSPORT",
+        "amount": 170000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-01-07T19:33:18.701160+00:00"
+      },
+      {
+        "date": "2026-01-08",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 4400000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-01-07T23:16:30.318843+00:00"
+      },
+      {
+        "date": "2026-01-08",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 360000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-01-07T23:16:30.988423+00:00"
+      },
+      {
+        "date": "2026-01-20",
+        "expense": "BROKEN_MAIZE",
+        "amount": 1800000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-01-20T19:11:07.000042+00:00"
+      },
+      {
+        "date": "2026-01-20",
+        "expense": "MAIZE_BRAN",
+        "amount": 500000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-01-20T19:11:08.643971+00:00"
+      },
+      {
+        "date": "2026-01-20",
+        "expense": "LIME",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-01-20T19:11:09.612298+00:00"
+      },
+      {
+        "date": "2026-01-20",
+        "expense": "TRANSPORT",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-01-20T19:11:12.204411+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "BROKEN_MAIZE",
+        "amount": 135000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-09T13:43:43.923158+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "MAIZE_BRAN",
+        "amount": 95000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-09T13:43:44.417701+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-09T13:43:44.862780+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "COFFEE_HUSKS",
+        "amount": 120000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-09T13:43:45.319781+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "TRANSPORT",
+        "amount": 70000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-09T13:43:45.769974+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 640000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-09T13:43:46.231043+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 300000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-09T13:43:46.707329+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 2200000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-02-09T13:46:35.598739+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 180000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-02-09T13:49:34.304010+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "TRANSPORT",
+        "amount": 45000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-02-09T13:49:34.726959+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "BROKEN_MAIZE",
+        "amount": 1950000,
+        "category": "PIGS",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-02-09T13:56:06.255705+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "MAIZE_BRAN",
+        "amount": 900000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-02-09T13:56:06.726211+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "LIME",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-02-09T13:58:48.580130+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "LIME",
+        "amount": 150000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-02-09T14:01:39.126814+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "VACCINE",
+        "amount": 18000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-02-09T14:03:32.723165+00:00"
+      },
+      {
+        "date": "2026-02-09",
+        "expense": "BROKEN_MAIZE",
+        "amount": 135000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-07T19:35:23.796604+00:00"
+      },
+      {
+        "date": "2026-02-11",
+        "expense": "VACCINE",
+        "amount": 45000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-11T20:55:07.185729+00:00"
+      },
+      {
+        "date": "2026-02-11",
+        "expense": "DEWORMER",
+        "amount": 25,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-11T20:55:08.636370+00:00"
+      },
+      {
+        "date": "2026-02-11",
+        "expense": "TRANSPORT",
+        "amount": 5000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-11T20:55:09.098563+00:00"
+      },
+      {
+        "date": "2026-02-17",
+        "expense": "VET",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-17T20:33:28.637181+00:00"
+      },
+      {
+        "date": "2026-02-17",
+        "expense": "VACCINE",
+        "amount": 40000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-17T20:33:29.459286+00:00"
+      },
+      {
+        "date": "2026-02-20",
+        "expense": "BROKEN_MAIZE",
+        "amount": 1950000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-02-20T20:12:42.658507+00:00"
+      },
+      {
+        "date": "2026-02-20",
+        "expense": "MAIZE_BRAN",
+        "amount": 595000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-02-20T20:12:43.165257+00:00"
+      },
+      {
+        "date": "2026-02-20",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-20T20:12:43.907527+00:00"
+      },
+      {
+        "date": "2026-02-20",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 2200000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-02-20T20:13:57.447370+00:00"
+      },
+      {
+        "date": "2026-02-20",
+        "expense": "LIME",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-20T20:15:15.538063+00:00"
+      },
+      {
+        "date": "2026-02-20",
+        "expense": "COFFEE_HUSKS",
+        "amount": 120000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-20T20:16:42.774207+00:00"
+      },
+      {
+        "date": "2026-02-20",
+        "expense": "TRANSPORT",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-02-20T20:18:52.125452+00:00"
+      },
+      {
+        "date": "2026-02-21",
+        "expense": "CHICKS",
+        "amount": 800000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-14T09:06:08.571473+00:00"
+      },
+      {
+        "date": "2026-03-02",
+        "expense": "VET",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-02T14:36:41.029664+00:00"
+      },
+      {
+        "date": "2026-03-02",
+        "expense": "VACCINE",
+        "amount": 80000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-02T19:54:40.797682+00:00"
+      },
+      {
+        "date": "2026-03-05",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 2200000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-03-05T20:34:27.689456+00:00"
+      },
+      {
+        "date": "2026-03-08",
+        "expense": "MAIZE_BRAN",
+        "amount": 1020000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-03-08T19:37:23.742232+00:00"
+      },
+      {
+        "date": "2026-03-08",
+        "expense": "BROKEN_MAIZE",
+        "amount": 3645000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-03-08T19:39:08.168560+00:00"
+      },
+      {
+        "date": "2026-03-08",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-08T19:41:37.114756+00:00"
+      },
+      {
+        "date": "2026-03-08",
+        "expense": "CHARCOAL",
+        "amount": 850000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-08T19:43:17.551951+00:00"
+      },
+      {
+        "date": "2026-03-08",
+        "expense": "TRANSPORT",
+        "amount": 120000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-08T19:44:12.126642+00:00"
+      },
+      {
+        "date": "2026-03-14",
+        "expense": "VET",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-03-15T03:43:50.017181+00:00"
+      },
+      {
+        "date": "2026-03-14",
+        "expense": "VET",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-03-15T03:43:50.579285+00:00"
+      },
+      {
+        "date": "2026-03-14",
+        "expense": "VACCINE",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-05-21T11:42:57.428981+00:00"
+      },
+      {
+        "date": "2026-03-22",
+        "expense": "LIME",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-03-22T19:50:38.678611+00:00"
+      },
+      {
+        "date": "2026-03-22",
+        "expense": "TRANSPORT",
+        "amount": 15000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-03-22T19:51:52.514169+00:00"
+      },
+      {
+        "date": "2026-03-26",
+        "expense": "BROKEN_MAIZE",
+        "amount": 2940000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-03-26T14:30:11.409603+00:00"
+      },
+      {
+        "date": "2026-03-26",
+        "expense": "MAIZE_BRAN",
+        "amount": 630000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-03-26T14:31:31.790892+00:00"
+      },
+      {
+        "date": "2026-03-26",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-26T14:34:07.223080+00:00"
+      },
+      {
+        "date": "2026-03-26",
+        "expense": "LIME",
+        "amount": 175000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-26T14:35:52.222842+00:00"
+      },
+      {
+        "date": "2026-03-26",
+        "expense": "TRANSPORT",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-26T14:36:52.470736+00:00"
+      },
+      {
+        "date": "2026-03-26",
+        "expense": "DISINFECTANT",
+        "amount": 70000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-26T14:38:10.263055+00:00"
+      },
+      {
+        "date": "2026-03-26",
+        "expense": "PARRAFIN",
+        "amount": 10000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-26T14:40:00.767006+00:00"
+      },
+      {
+        "date": "2026-03-26",
+        "expense": "BROODER_PAPER",
+        "amount": 70000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-26T14:41:20.509766+00:00"
+      },
+      {
+        "date": "2026-03-26",
+        "expense": "GLUVOCIT",
+        "amount": 25000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-26T14:42:31.138181+00:00"
+      },
+      {
+        "date": "2026-03-26",
+        "expense": "ANTIBIOTICS",
+        "amount": 55000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-03-26T14:44:04.906698+00:00"
+      },
+      {
+        "date": "2026-04-07",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 2100000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-04-07T19:38:15.564408+00:00"
+      },
+      {
+        "date": "2026-04-07",
+        "expense": "COFFEE_HUSKS",
+        "amount": 140000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-07T19:38:16.600012+00:00"
+      },
+      {
+        "date": "2026-04-11",
+        "expense": "TRANSPORT",
+        "amount": 20000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-11T20:25:30.260709+00:00"
+      },
+      {
+        "date": "2026-04-12",
+        "expense": "VITAMINS",
+        "amount": 34500,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-12T14:13:57.711678+00:00"
+      },
+      {
+        "date": "2026-04-12",
+        "expense": "TRANSPORT",
+        "amount": 5000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-12T14:14:40.909017+00:00"
+      },
+      {
+        "date": "2026-04-12",
+        "expense": "VITAMINS",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-12T14:15:42.009663+00:00"
+      },
+      {
+        "date": "2026-04-12",
+        "expense": "DEWORMER",
+        "amount": 25000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-12T14:16:50.459625+00:00"
+      },
+      {
+        "date": "2026-04-15",
+        "expense": "PRESTARTERS_CONCENTRATE",
+        "amount": 1000000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-04-15T18:25:38.908934+00:00"
+      },
+      {
+        "date": "2026-04-15",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 410000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-15T18:29:10.434176+00:00"
+      },
+      {
+        "date": "2026-04-15",
+        "expense": "MAIZE_BRAN",
+        "amount": 1000000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-15T18:37:28.144599+00:00"
+      },
+      {
+        "date": "2026-04-15",
+        "expense": "BROKEN_MAIZE",
+        "amount": 2835000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-15T18:39:53.318991+00:00"
+      },
+      {
+        "date": "2026-04-15",
+        "expense": "LIME",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-15T18:41:29.566619+00:00"
+      },
+      {
+        "date": "2026-04-15",
+        "expense": "TRANSPORT",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-15T18:43:10.623729+00:00"
+      },
+      {
+        "date": "2026-04-22",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 2100000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-04-22T20:34:03.737234+00:00"
+      },
+      {
+        "date": "2026-04-27",
+        "expense": "COFFEE_HUSKS",
+        "amount": 140000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-27T16:49:57.321068+00:00"
+      },
+      {
+        "date": "2026-04-27",
+        "expense": "TRANSPORT",
+        "amount": 35000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-04-27T16:55:35.157874+00:00"
+      },
+      {
+        "date": "2026-05-08",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 2200000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-05-08T05:52:48.378476+00:00"
+      },
+      {
+        "date": "2026-05-10",
+        "expense": "VACCINE",
+        "amount": 52500,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-05-10T08:39:00.184417+00:00"
+      },
+      {
+        "date": "2026-05-11",
+        "expense": "CHARCOAL",
+        "amount": 900000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-05-11T19:18:36.411604+00:00"
+      },
+      {
+        "date": "2026-05-11",
+        "expense": "BROKEN_MAIZE",
+        "amount": 420000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-05-11T19:18:45.897736+00:00"
+      },
+      {
+        "date": "2026-05-11",
+        "expense": "TRANSPORT",
+        "amount": 100000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-05-11T19:19:05.639533+00:00"
+      },
+      {
+        "date": "2026-05-18",
+        "expense": "VET",
+        "amount": 150000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-05-18T07:00:39.593921+00:00"
+      },
+      {
+        "date": "2026-05-18",
+        "expense": "VACCINE",
+        "amount": 15000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-05-18T07:00:40.109249+00:00"
+      },
+      {
+        "date": "2026-05-19",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 2200000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-05-19T19:35:35.703459+00:00"
+      },
+      {
+        "date": "2026-05-19",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 440000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-05-19T19:35:36.222334+00:00"
+      },
+      {
+        "date": "2026-05-28",
+        "expense": "LIME",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-05-28T19:34:17.915898+00:00"
+      },
+      {
+        "date": "2026-05-28",
+        "expense": "COFFEE_HUSKS",
+        "amount": 130000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-05-28T19:34:18.637552+00:00"
+      },
+      {
+        "date": "2026-05-28",
+        "expense": "TRANSPORT",
+        "amount": 120000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-05-28T19:34:19.657404+00:00"
+      },
+      {
+        "date": "2026-05-28",
+        "expense": "BROKEN_MAIZE",
+        "amount": 3750000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-05-28T19:36:16.229160+00:00"
+      },
+      {
+        "date": "2026-05-28",
+        "expense": "MAIZE_BRAN",
+        "amount": 500000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-05-28T19:38:29.573835+00:00"
+      },
+      {
+        "date": "2026-06-05",
+        "expense": "TRANSPORT",
+        "amount": 20000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-06-05T13:23:25.567340+00:00"
+      },
+      {
+        "date": "2026-06-06",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 4400000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-06-06T18:56:45.314272+00:00"
+      },
+      {
+        "date": "2026-06-06",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 720000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-06-06T18:56:45.826422+00:00"
+      },
+      {
+        "date": "2026-06-16",
+        "expense": "VACCINE",
+        "amount": 38000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-06-16T19:10:04.237950+00:00"
+      },
+      {
+        "date": "2026-06-16",
+        "expense": "TRANSPORT",
+        "amount": 3000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-06-16T19:10:47.132517+00:00"
+      },
+      {
+        "date": "2026-06-16",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 4400000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-06-16T19:11:41.089531+00:00"
+      },
+      {
+        "date": "2026-06-16",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 1440000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-06-16T19:12:46.493186+00:00"
+      },
+      {
+        "date": "2026-06-17",
+        "expense": "LIME",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-06-17T19:04:35.886541+00:00"
+      },
+      {
+        "date": "2026-06-17",
+        "expense": "TRANSPORT",
+        "amount": 120000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-06-17T19:04:36.513612+00:00"
+      },
+      {
+        "date": "2026-06-17",
+        "expense": "BROKEN_MAIZE",
+        "amount": 4155000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-06-17T19:04:37.318193+00:00"
+      },
+      {
+        "date": "2026-06-17",
+        "expense": "MAIZE_BRAN",
+        "amount": 720000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-06-17T19:04:38.776202+00:00"
+      },
+      {
+        "date": "2026-06-26",
+        "expense": "VET",
+        "amount": 150000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-06-26T07:29:08.339719+00:00"
+      },
+      {
+        "date": "2026-06-26",
+        "expense": "VACCINE",
+        "amount": 45000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-06-26T07:30:32.014773+00:00"
+      },
+      {
+        "date": "2026-06-26",
+        "expense": "VET",
+        "amount": 150000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-06-26T07:31:31.733812+00:00"
+      },
+      {
+        "date": "2026-06-26",
+        "expense": "VACCINE",
+        "amount": 15,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-06-26T07:32:43.048844+00:00"
+      },
+      {
+        "date": "2026-06-26",
+        "expense": "TRANSPORT",
+        "amount": 30000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-06-26T07:34:17.557229+00:00"
+      },
+      {
+        "date": "2026-07-04",
+        "expense": "DISINFECTANT",
+        "amount": 53000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-07-04T19:29:29.140848+00:00"
+      },
+      {
+        "date": "2026-07-04",
+        "expense": "ANTIBIOTICS",
+        "amount": 36000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-07-04T19:31:08.736574+00:00"
+      },
+      {
+        "date": "2026-07-04",
+        "expense": "TRANSPORT",
+        "amount": 30000,
+        "category": "CHICKEN",
+        "payment": "AIRTEL_MOBILE_MONEY",
+        "submittedAt": "2026-07-04T19:31:30.137191+00:00"
+      },
+      {
+        "date": "2026-07-08",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 3080000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-07-08T06:04:23.933004+00:00"
+      },
+      {
+        "date": "2026-07-08",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 1440000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-07-08T06:05:55.734259+00:00"
+      },
+      {
+        "date": "2026-07-12",
+        "expense": "VACCINE",
+        "amount": 28500,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-07-12T12:48:00.991646+00:00"
+      },
+      {
+        "date": "2026-07-12",
+        "expense": "MAIZE_BRAN",
+        "amount": 750000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-07-12T12:51:24.655911+00:00"
+      },
+      {
+        "date": "2026-07-12",
+        "expense": "BROKEN_MAIZE",
+        "amount": 3680000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-07-12T12:51:48.002669+00:00"
+      },
+      {
+        "date": "2026-07-12",
+        "expense": "LIME",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-07-12T12:53:01.160895+00:00"
+      },
+      {
+        "date": "2026-07-12",
+        "expense": "COFFEE_HUSKS",
+        "amount": 65000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-07-12T12:54:52.019904+00:00"
+      },
+      {
+        "date": "2026-07-12",
+        "expense": "TRANSPORT",
+        "amount": 120000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-07-12T12:56:05.700647+00:00"
+      },
+      {
+        "date": "2026-07-13",
+        "expense": "TRANSPORT",
+        "amount": 32000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-07-13T18:32:38.386381+00:00"
+      },
+      {
+        "date": "2026-07-16",
+        "expense": "ANTIBIOTICS",
+        "amount": 36000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-07-16T03:23:50.737421+00:00"
+      },
+      {
+        "date": "2026-07-16",
+        "expense": "TRANSPORT",
+        "amount": 5000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-07-16T03:24:27.409968+00:00"
+      },
+      {
+        "date": "2026-07-22",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 3080000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-07-22T05:24:20.667439+00:00"
+      },
+      {
+        "date": "2026-07-22",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 1440000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-07-22T05:25:56.174910+00:00"
+      },
+      {
+        "date": "2026-07-22",
+        "expense": "TRANSPORT",
+        "amount": 30000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-07-22T05:27:01.628353+00:00"
+      },
+      {
+        "date": "2026-07-31",
+        "expense": "TRANSPORT",
+        "amount": 30000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-07-31T07:49:02.703034+00:00"
+      },
+      {
+        "date": "2026-07-31",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 1440000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-07-31T18:13:10.514923+00:00"
+      },
+      {
+        "date": "2026-07-31",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 2940000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-07-31T18:17:34.705744+00:00"
+      },
+      {
+        "date": "2026-08-02",
+        "expense": "MAIZE_BRAN",
+        "amount": 630000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-08-02T18:26:29.363205+00:00"
+      },
+      {
+        "date": "2026-08-02",
+        "expense": "BROKEN_MAIZE",
+        "amount": 3520000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-08-02T18:27:57.269961+00:00"
+      },
+      {
+        "date": "2026-08-02",
+        "expense": "VITAMINS",
+        "amount": 106000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-08-02T18:29:02.452266+00:00"
+      },
+      {
+        "date": "2026-08-02",
+        "expense": "TRANSPORT",
+        "amount": 120000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-08-02T18:29:56.770872+00:00"
+      },
+      {
+        "date": "2026-08-02",
+        "expense": "COFFEE_HUSKS",
+        "amount": 65000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-08-02T18:31:03.417915+00:00"
+      },
+      {
+        "date": "2026-08-02",
+        "expense": "LIME",
+        "amount": 200000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-08-02T18:31:54.279592+00:00"
+      },
+      {
+        "date": "2026-08-16",
+        "expense": "VET",
+        "amount": 250000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-08-16T16:59:21.539977+00:00"
+      },
+      {
+        "date": "2026-08-16",
+        "expense": "VACCINE",
+        "amount": 35000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-08-16T17:00:21.165947+00:00"
+      },
+      {
+        "date": "2026-08-17",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 3080000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-08-17T03:12:08.470271+00:00"
+      },
+      {
+        "date": "2026-08-25",
+        "expense": "TRANSPORT",
+        "amount": 30000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-08-25T02:39:07.940766+00:00"
+      },
+      {
+        "date": "2026-08-29",
+        "expense": "BROKEN_MAIZE",
+        "amount": 2560000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-08-28T23:51:39.935625+00:00"
+      },
+      {
+        "date": "2026-08-29",
+        "expense": "MAIZE_BRAN",
+        "amount": 350000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-08-28T23:52:08.739672+00:00"
+      },
+      {
+        "date": "2026-08-29",
+        "expense": "TRANSPORT",
+        "amount": 120000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-08-28T23:52:33.093450+00:00"
+      },
+      {
+        "date": "2026-08-29",
+        "expense": "LIME",
+        "amount": 150000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-08-28T23:53:05.307327+00:00"
+      },
+      {
+        "date": "2026-09-03",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 2640000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-09-03T01:20:36.348079+00:00"
+      },
+      {
+        "date": "2026-09-03",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 720000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-09-03T01:22:17.684919+00:00"
+      },
+      {
+        "date": "2026-09-09",
+        "expense": "TRANSPORT",
+        "amount": 40000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-09-09T03:32:44.210751+00:00"
+      },
+      {
+        "date": "2026-09-15",
+        "expense": "BROKEN_MAIZE",
+        "amount": 2900000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-09-15T01:28:51.031545+00:00"
+      },
+      {
+        "date": "2026-09-15",
+        "expense": "MAIZE_BRAN",
+        "amount": 600000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-09-15T01:29:55.613135+00:00"
+      },
+      {
+        "date": "2026-09-15",
+        "expense": "LIME",
+        "amount": 150000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-09-15T01:30:58.322306+00:00"
+      },
+      {
+        "date": "2026-09-15",
+        "expense": "VITAMINS",
+        "amount": 106000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-09-15T01:32:30.097305+00:00"
+      },
+      {
+        "date": "2026-09-15",
+        "expense": "TRANSPORT",
+        "amount": 120000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-09-15T01:35:44.245764+00:00"
+      },
+      {
+        "date": "2026-09-17",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 2640000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-09-17T04:30:29.291891+00:00"
+      },
+      {
+        "date": "2026-09-17",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 1080000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-09-17T04:32:01.126676+00:00"
+      },
+      {
+        "date": "2026-09-17",
+        "expense": "FUEL",
+        "amount": 30000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-09-17T04:33:50.286501+00:00"
+      },
+      {
+        "date": "2026-09-19",
+        "expense": "VACCINE",
+        "amount": 36000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-09-19T02:34:48.553426+00:00"
+      },
+      {
+        "date": "2026-09-19",
+        "expense": "ANTIBIOTICS",
+        "amount": 60000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-09-19T02:36:13.156092+00:00"
+      },
+      {
+        "date": "2026-09-28",
+        "expense": "FUEL",
+        "amount": 30000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-09-28T03:10:01.105005+00:00"
+      },
+      {
+        "date": "2026-10-08",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 4400000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-10-08T00:45:38.124666+00:00"
+      },
+      {
+        "date": "2026-10-13",
+        "expense": "BROKEN_MAIZE",
+        "amount": 4500000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-10-13T08:02:31.322189+00:00"
+      },
+      {
+        "date": "2026-10-13",
+        "expense": "MAIZE_BRAN",
+        "amount": 1200000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-13T08:03:58.248713+00:00"
+      },
+      {
+        "date": "2026-10-13",
+        "expense": "LIME",
+        "amount": 150000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-13T08:05:58.899696+00:00"
+      },
+      {
+        "date": "2026-10-13",
+        "expense": "TRANSPORT",
+        "amount": 150000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-13T08:08:48.142733+00:00"
+      },
+      {
+        "date": "2026-10-13",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 2210000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-13T08:13:54.609791+00:00"
+      },
+      {
+        "date": "2026-10-13",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 4400000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-10-13T08:15:50.319751+00:00"
+      },
+      {
+        "date": "2026-10-14",
+        "expense": "ANTIBIOTICS",
+        "amount": 190000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-14T01:56:32.077504+00:00"
+      },
+      {
+        "date": "2026-10-14",
+        "expense": "VACCINE",
+        "amount": 85000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-14T01:58:28.585409+00:00"
+      },
+      {
+        "date": "2026-10-14",
+        "expense": "TRANSPORT",
+        "amount": 12000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-14T01:59:47.350501+00:00"
+      },
+      {
+        "date": "2026-10-28",
+        "expense": "BROKEN_MAIZE",
+        "amount": 2720000,
+        "category": "CHICKEN",
+        "payment": "AIRTEL_MOBILE_MONEY",
+        "submittedAt": "2026-10-28T03:12:06.802606+00:00"
+      },
+      {
+        "date": "2026-10-28",
+        "expense": "MAIZE_BRAN",
+        "amount": 550000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-10-28T03:13:20.864072+00:00"
+      },
+      {
+        "date": "2026-10-28",
+        "expense": "LIME",
+        "amount": 175000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-28T03:14:51.527964+00:00"
+      },
+      {
+        "date": "2026-10-28",
+        "expense": "TRANSPORT",
+        "amount": 140000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-28T03:15:51.789019+00:00"
+      },
+      {
+        "date": "2026-10-28",
+        "expense": "BROKEN_MAIZE",
+        "amount": 0,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-28T03:19:36.283644+00:00"
+      },
+      {
+        "date": "2026-10-28",
+        "expense": "MAIZE_BRAN",
+        "amount": 0,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-28T03:20:51.612165+00:00"
+      },
+      {
+        "date": "2026-10-28",
+        "expense": "GROWERS_CONCENTRATE",
+        "amount": 4510000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-10-28T03:23:20.797592+00:00"
+      },
+      {
+        "date": "2026-10-28",
+        "expense": "TRANSPORT",
+        "amount": 140000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-28T03:24:29.785935+00:00"
+      },
+      {
+        "date": "2026-10-28",
+        "expense": "VACCINE",
+        "amount": 57500,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-28T03:26:27.769181+00:00"
+      },
+      {
+        "date": "2026-10-28",
+        "expense": "FUEL",
+        "amount": 30000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-28T03:27:41.016471+00:00"
+      },
+      {
+        "date": "2026-10-28",
+        "expense": "TRANSPORT",
+        "amount": 8000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-10-28T03:28:40.216355+00:00"
+      },
+      {
+        "date": "2026-11-03",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 3300000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-11-03T03:41:07.346829+00:00"
+      },
+      {
+        "date": "2026-11-11",
+        "expense": "VACCINE",
+        "amount": 34500,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-11-11T08:14:40.934447+00:00"
+      },
+      {
+        "date": "2026-11-11",
+        "expense": "TRANSPORT",
+        "amount": 8000,
+        "category": "CHICKEN",
+        "payment": "AIRTEL_MOBILE_MONEY",
+        "submittedAt": "2026-11-11T08:15:34.668254+00:00"
+      },
+      {
+        "date": "2026-11-11",
+        "expense": "COFFEE_HUSKS",
+        "amount": 260000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-11-11T08:16:20.041267+00:00"
+      },
+      {
+        "date": "2026-11-11",
+        "expense": "DISINFECTANT",
+        "amount": 160000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-11-11T08:17:25.006818+00:00"
+      },
+      {
+        "date": "2026-11-15",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 3520000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-11-15T03:50:19.899038+00:00"
+      },
+      {
+        "date": "2026-11-15",
+        "expense": "BROKEN_MAIZE",
+        "amount": 2720000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-11-15T03:51:52.528211+00:00"
+      },
+      {
+        "date": "2026-11-15",
+        "expense": "MAIZE_BRAN",
+        "amount": 575000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-11-15T03:53:01.475322+00:00"
+      },
+      {
+        "date": "2026-11-15",
+        "expense": "LIME",
+        "amount": 175000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-11-15T03:54:47.712997+00:00"
+      },
+      {
+        "date": "2026-11-15",
+        "expense": "COFFEE_HUSKS",
+        "amount": 130000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-11-15T03:56:00.859633+00:00"
+      },
+      {
+        "date": "2026-11-15",
+        "expense": "TRANSPORT",
+        "amount": 140000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-11-15T03:57:53.940670+00:00"
+      },
+      {
+        "date": "2026-11-26",
+        "expense": "BROKEN_MAIZE",
+        "amount": 2720000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-11-26T03:24:22.887784+00:00"
+      },
+      {
+        "date": "2026-11-26",
+        "expense": "MAIZE_BRAN",
+        "amount": 600000,
+        "category": "CHICKEN",
+        "payment": "BANK",
+        "submittedAt": "2026-11-26T03:27:01.495870+00:00"
+      },
+      {
+        "date": "2026-11-26",
+        "expense": "TRANSPORT",
+        "amount": 140000,
+        "category": "CHICKEN",
+        "payment": "CASH",
+        "submittedAt": "2026-11-26T03:32:41.927383+00:00"
+      }
+    ],
+    "expenseSource": "ona",
     "totalRevenue": 166796843,
+    "totalPoultryExpenses": 159011540,
+    "netPoultryIncome": 7785303,
     "recentRevenue": {
       "throughDate": "2026-11-27",
       "last7Days": 5753000,
