@@ -8,8 +8,13 @@ on:
     - cron: '0 22 * * *'  # Runs daily at 22:00 UTC
   workflow_dispatch:
 
+concurrency:
+  group: poultry-dashboard-data
+  cancel-in-progress: false
+
 jobs:
   egg-report:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -22,6 +27,20 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Prepare dashboard data workspace
+        run: |
+          POULTRY_DATA_DIR="$RUNNER_TEMP/poultry-dashboard-data"
+          echo "POULTRY_DATA_DIR=$POULTRY_DATA_DIR" >> "$GITHUB_ENV"
+          if git ls-remote --exit-code origin refs/heads/dashboard-data; then
+            git fetch --depth=1 origin refs/heads/dashboard-data
+            git worktree add --detach "$POULTRY_DATA_DIR" FETCH_HEAD
+          else
+            status=$?
+            if [ "$status" -ne 2 ]; then exit "$status"; fi
+            git worktree add --detach "$POULTRY_DATA_DIR" HEAD
+            git -C "$POULTRY_DATA_DIR" switch --orphan dashboard-data
+          fi
+
       - name: Run Poultry Analytics Script
         env:
           ONA_API_TOKEN: ${{ secrets.ONA_API_TOKEN }}
@@ -29,9 +48,23 @@ jobs:
           SALES_ONA_FORM_ID: ${{ secrets.SALES_ONA_FORM_ID }}
         run: |
           bash ./scripts/poultry_analytics.sh > poultry_analytics.txt
-          echo "POULTRY_ANALYTICS<<EOF" >> $GITHUB_ENV
-          cat poultry_analytics.txt >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          {
+            echo "POULTRY_ANALYTICS<<EOF"
+            cat poultry_analytics.txt
+            echo "EOF"
+          } >> "$GITHUB_ENV"
+
+      - name: Publish dashboard data
+        run: |
+          cd "$POULTRY_DATA_DIR"
+          git add poultry_analytics_data.json poultry_sales_data.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -m 'Refresh poultry dashboard data'
+          git push origin HEAD:refs/heads/dashboard-data
 
       - name: Send to Slack
         uses: slackapi/slack-github-action@v2.0.0
@@ -45,9 +78,3 @@ jobs:
                 text:
                   type: "mrkdwn"
                   text: ${{ toJSON(env.POULTRY_ANALYTICS) }}
-
-      - name: Save Data File and Commit
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Automated: Update poultry analytics and sales data"
-          file_pattern: "*.json"

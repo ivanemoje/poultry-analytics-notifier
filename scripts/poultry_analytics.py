@@ -1,6 +1,7 @@
 """Read Ona responses from stdin and publish the poultry analytics reports."""
 
 import json
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -36,13 +37,17 @@ def main():
     metadata = json.loads(Path("config/batch_metadata.json").read_text())
     sales_metadata_file = Path("config/batch_sales_metadata.json")
     sales_metadata = json.loads(sales_metadata_file.read_text()) if sales_metadata_file.exists() else {}
-    destination = Path("poultry_analytics_data.json")
-    previous = json.loads(destination.read_text()).get("records", []) if destination.exists() else []
+    output_dir = Path(os.environ.get("POULTRY_DATA_DIR") or ".local/analytics")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    snapshot = Path("poultry_analytics_data.json")
+    destination = output_dir / snapshot.name
+    archive = destination if destination.exists() else snapshot
+    previous = json.loads(archive.read_text()).get("records", []) if archive.exists() else []
     report = build_report(forms["production"], metadata, today, previous)
     financials = build_financials(forms["sales"])
     report["financials"] = financials
     sales_report = legacy_sales_report(financials, today, sales_metadata)
-    write_report(Path("poultry_sales_data.json"), sales_report)
+    write_report(output_dir / "poultry_sales_data.json", sales_report)
     write_report(destination, report)
     print_summary(report)
 

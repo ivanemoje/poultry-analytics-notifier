@@ -34,7 +34,7 @@ To run the Poultry Analytics Notifier script manually, execute the following com
 ```
 bash ./scripts/poultry_analytics.sh
 ```
-This fetches both Ona forms, writes production and sales to `poultry_analytics_data.json`, and prints the combined Slack summary. It also refreshes `poultry_sales_data.json` for existing readers.
+This fetches both Ona forms, writes `poultry_analytics_data.json` and `poultry_sales_data.json` under the Git-ignored `.local/analytics/` directory, and prints the combined Slack summary. Set `POULTRY_DATA_DIR` to use another output directory.
 
 ### GitHub Actions Workflow
 The GitHub Actions workflow runs daily at 22:00 UTC. It runs the combined analytics script and sends the report to the configured Slack channel.
@@ -52,7 +52,9 @@ Features:
 - Mobile-responsive design
 - Automatic updates from production data
 
-The dashboard updates automatically when new data is pushed to the repository, providing a live view of your poultry analytics.
+GitHub Actions publishes the generated JSON files to the `dashboard-data` branch. The dashboard reads that branch directly, so scheduled data updates leave `main` free of generated commits. The checked-in analytics JSON serves as a fallback while the branch is unavailable. Local browser previews can also read the Git-ignored output from a server on localhost.
+
+The **1D** period shows the latest recorded survey day for production and the latest recorded transaction day for financial graphs.
 
 The Financial tab shows sales from the Ona sales form. The period filter applies to the sales records table. The average tray price uses regular tray sales with a recorded quantity over the last three weeks of sales data. The dashboard uses the existing expense snapshot when the sales form has no expense entries.
 

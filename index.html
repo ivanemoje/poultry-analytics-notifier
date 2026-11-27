@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kayanja Farm Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 :root {
@@ -15,7 +16,7 @@
   --border: #d8d2c5;
   --text: #1a1714;
   --text2: #6b6358;
-  --text3: #9c9186;
+  --text3: #73695d;
   --accent: #2d5a27;
   --accent2: #c8440a;
   --accent3: #1a3a6e;
@@ -24,8 +25,7 @@
   --red: #c8440a;
   --blue: #1a3a6e;
   --amber: #7a4f1d;
-  --font-body: 'Sora', sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  --font-body: 'Nunito', system-ui, sans-serif;
 }
 .dark {
   --bg: #0f0e0c;
@@ -34,7 +34,7 @@
   --border: #2a2720;
   --text: #f0ece4;
   --text2: #a09890;
-  --text3: #6a6258;
+  --text3: #a79b8e;
   --accent: #5aac4e;
   --accent2: #f26535;
   --accent3: #4a80d4;
@@ -48,6 +48,7 @@
 html{font-size:16px;}
 body{
   font-family:var(--font-body);
+  line-height:1.45;
   background:var(--bg);
   color:var(--text);
   min-height:100vh;
@@ -55,6 +56,8 @@ body{
 }
 a{color:var(--accent);text-decoration:none;}
 a:hover{text-decoration:underline;}
+button{font-family:inherit;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:-3px;}
 
 /* TOPBAR */
 .topbar{
@@ -66,16 +69,16 @@ a:hover{text-decoration:underline;}
 }
 .topbar-left{display:flex;align-items:center;gap:.75rem;}
 .farm-logo{
-  width:2rem;height:2rem;border-radius:.25rem;
+  width:2.5rem;height:2.5rem;border-radius:.6rem;
   background:var(--green);
   display:flex;align-items:center;justify-content:center;
   font-size:1rem;
 }
-.farm-name{font-weight:700;font-size:.95rem;letter-spacing:-.01em;}
-.farm-sub{font-size:.7rem;color:var(--text3);font-family:var(--font-mono);}
+.farm-name{font-weight:700;font-size:1.15rem;line-height:1.2;}
+.farm-sub{font-size:.8rem;color:var(--text3);}
 .topbar-right{display:flex;align-items:center;gap:.5rem;}
 .btn-icon{
-  width:2rem;height:2rem;border-radius:.25rem;
+  width:2.5rem;height:2.5rem;border-radius:.6rem;
   border:1px solid var(--border);
   background:transparent;cursor:pointer;color:var(--text);
   display:flex;align-items:center;justify-content:center;font-size:.85rem;
@@ -83,8 +86,9 @@ a:hover{text-decoration:underline;}
 }
 .btn-icon:hover{background:var(--surface2);}
 .btn-link{
-  font-size:.75rem;font-family:var(--font-mono);
-  padding:.35rem .6rem;border-radius:.25rem;
+  font-size:.85rem;font-weight:700;white-space:nowrap;
+  display:inline-flex;align-items:center;min-height:2.5rem;
+  padding:.35rem .65rem;border-radius:.6rem;
   border:1px solid var(--border);background:transparent;
   color:var(--text2);cursor:pointer;text-decoration:none;
   transition:background .15s,color .15s;
@@ -93,16 +97,17 @@ a:hover{text-decoration:underline;}
 
 /* PERIOD FILTER */
 .period-bar{
-  display:flex;align-items:center;gap:.35rem;
+  display:flex;align-items:center;gap:.55rem 1.25rem;
   padding:.75rem 1.5rem;
   background:var(--surface);
   border-bottom:1px solid var(--border);
-  overflow-x:auto;
   flex-wrap:wrap;
 }
+.filter-group{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;min-width:0;}
+.filter-label{font-size:.82rem;font-weight:800;color:var(--text2);margin-right:.25rem;}
 .period-btn{
-  font-family:var(--font-mono);font-size:.7rem;
-  padding:.3rem .65rem;border-radius:.2rem;
+  font-size:.85rem;font-weight:700;min-height:2.4rem;
+  padding:.35rem .65rem;border-radius:.5rem;
   border:1px solid var(--border);background:transparent;
   color:var(--text2);cursor:pointer;white-space:nowrap;
   transition:all .15s;
@@ -111,7 +116,7 @@ a:hover{text-decoration:underline;}
 .period-btn.active{
   background:var(--text);color:var(--bg);border-color:var(--text);
 }
-.period-sep{color:var(--border);font-size:.8rem;}
+
 
 /* TABS */
 .tabs{
@@ -121,7 +126,7 @@ a:hover{text-decoration:underline;}
   overflow-x:auto;
 }
 .tab-btn{
-  font-size:.78rem;font-weight:600;letter-spacing:.03em;
+  font-size:.95rem;font-weight:700;
   padding:.7rem 1.25rem;border:none;background:none;
   color:var(--text3);cursor:pointer;white-space:nowrap;
   border-bottom:2px solid transparent;
@@ -136,18 +141,17 @@ a:hover{text-decoration:underline;}
 /* KPI STRIP */
 .kpi-strip{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:.75rem;
   margin-bottom:1.25rem;
 }
-@media(min-width:640px){.kpi-strip{grid-template-columns:repeat(4,1fr);}}
-@media(min-width:1024px){.kpi-strip{grid-template-columns:repeat(4,1fr);}}
+@media(min-width:640px){.kpi-strip{grid-template-columns:repeat(4,minmax(0,1fr));}}
 
 .kpi{
   background:var(--surface);
   border:1px solid var(--border);
   padding:1rem;
-  border-radius:.3rem;
+  border-radius:.75rem;
   position:relative;
   overflow:hidden;
 }
@@ -155,15 +159,15 @@ a:hover{text-decoration:underline;}
   content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
   background:var(--kpi-color,var(--green));
 }
-.kpi-label{font-size:.65rem;font-family:var(--font-mono);color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.5rem;}
-.kpi-value{font-size:1.6rem;font-weight:700;letter-spacing:-.03em;line-height:1;color:var(--text);}
+.kpi-label{font-size:.83rem;font-weight:800;color:var(--text2);margin-bottom:.4rem;}
+.kpi-value{font-size:clamp(1.1rem,3.2vw,1.8rem);font-weight:800;line-height:1.15;color:var(--text);overflow-wrap:anywhere;font-variant-numeric:tabular-nums;}
 .kpi-value.accent-green{color:var(--green);}
 .kpi-value.accent-red{color:var(--red);}
 .kpi-value.accent-blue{color:var(--blue);}
-.kpi-sub{font-size:.65rem;color:var(--text3);margin-top:.4rem;font-family:var(--font-mono);}
+.kpi-sub{font-size:.78rem;color:var(--text3);margin-top:.4rem;}
 .kpi-badge{
   position:absolute;top:.6rem;right:.6rem;
-  font-size:.55rem;font-family:var(--font-mono);
+  font-size:.55rem;
   padding:.15rem .35rem;border-radius:.15rem;
   background:rgba(200,68,10,.15);color:var(--red);border:1px solid var(--red);
 }
@@ -182,45 +186,45 @@ a:hover{text-decoration:underline;}
 .card{
   background:var(--surface);
   border:1px solid var(--border);
-  border-radius:.3rem;
+  border-radius:.75rem;
   overflow:hidden;
 }
 .card-header{
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.25rem .65rem;
   padding:.75rem 1rem;
   border-bottom:1px solid var(--border);
 }
-.card-title{font-size:.72rem;font-family:var(--font-mono);color:var(--text3);text-transform:uppercase;letter-spacing:.07em;}
+.card-title{font-size:.95rem;font-weight:800;color:var(--text);}
 .card-body{padding:1rem;}
 .card-body.no-pad{padding:0;}
 
 /* BATCH CARDS */
 .batch-grid{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:1.25rem;}
-@media(min-width:640px){.batch-grid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:640px){.batch-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(min-width:1024px){.batch-grid{grid-template-columns:repeat(3,1fr);}}
 
 .batch-card{
   background:var(--surface);border:1px solid var(--border);
-  border-radius:.3rem;padding:1rem;
+  border-radius:.75rem;padding:1rem;
   position:relative;
 }
 .batch-card.pending,.batch-card.offlaid{opacity:.6;}
 .batch-status{
   position:absolute;top:.7rem;right:.7rem;
-  font-size:.6rem;font-family:var(--font-mono);
-  padding:.15rem .4rem;border-radius:.15rem;
-  text-transform:uppercase;letter-spacing:.05em;
+  font-size:.72rem;font-weight:800;
+  padding:.15rem .45rem;border-radius:.35rem;
+  text-transform:capitalize;
 }
 .status-active{background:rgba(45,90,39,.2);color:var(--green);border:1px solid var(--green);}
 .status-pending{background:var(--surface2);color:var(--text3);border:1px solid var(--border);}
 .status-laying{background:rgba(90,172,78,.12);color:var(--green);border:1px solid rgba(90,172,78,.25);}
 .status-brooding{background:var(--surface2);color:var(--amber);border:1px solid var(--border);}
 .status-offlaid{background:var(--surface2);color:var(--text3);border:1px solid var(--border);}
-.batch-name{font-weight:700;font-size:.85rem;margin-bottom:.15rem;}
-.batch-supplier{font-size:.65rem;color:var(--text3);font-family:var(--font-mono);margin-bottom:.75rem;}
+.batch-name{font-weight:800;font-size:1rem;margin-bottom:.15rem;}
+.batch-supplier{font-size:.8rem;color:var(--text3);margin-bottom:.75rem;}
 .batch-metrics{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
 .bm{border-bottom:1px solid var(--border);padding-bottom:.4rem;}
-.bm-label{font-size:.6rem;color:var(--text3);font-family:var(--font-mono);margin-bottom:.15rem;}
+.bm-label{font-size:.78rem;color:var(--text3);margin-bottom:.15rem;}
 .bm-value{font-size:.95rem;font-weight:600;}
 .laying-bar{height:.2rem;background:var(--surface2);border-radius:99px;margin-top:.5rem;}
 .laying-bar-fill{height:100%;border-radius:99px;background:var(--green);transition:width .5s;}
@@ -228,14 +232,13 @@ a:hover{text-decoration:underline;}
 /* PERIOD TABLE */
 .period-table{width:100%;border-collapse:collapse;}
 .period-table th{
-  font-size:.62rem;font-family:var(--font-mono);color:var(--text3);
-  text-transform:uppercase;letter-spacing:.06em;
+  font-size:.78rem;color:var(--text2);white-space:nowrap;
   padding:.5rem .75rem;text-align:right;border-bottom:1px solid var(--border);
 }
 .period-table th:first-child{text-align:left;}
 .period-table td{
   font-size:.78rem;padding:.55rem .75rem;text-align:right;
-  border-bottom:1px solid var(--border);font-family:var(--font-mono);
+  border-bottom:1px solid var(--border);
 }
 .period-table td:first-child{text-align:left;font-family:var(--font-body);font-weight:600;font-size:.78rem;}
 .period-table tr:last-child td{border-bottom:none;}
@@ -245,31 +248,30 @@ a:hover{text-decoration:underline;}
 
 /* AVG ROW CARDS */
 .avg-strip{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;
   margin-bottom:1.25rem;
 }
-@media(min-width:640px){.avg-strip{grid-template-columns:repeat(4,1fr);}}
+@media(min-width:640px){.avg-strip{grid-template-columns:repeat(4,minmax(0,1fr));}}
 .avg-card{
   background:var(--surface);border:1px solid var(--border);
-  border-radius:.3rem;padding:.75rem;
+  border-radius:.75rem;padding:.75rem;
 }
-.avg-label{font-size:.6rem;font-family:var(--font-mono);color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem;}
+.avg-label{font-size:.82rem;font-weight:800;color:var(--text2);margin-bottom:.35rem;}
 .avg-value{font-size:1.25rem;font-weight:700;letter-spacing:-.02em;}
-.avg-trend{font-size:.65rem;font-family:var(--font-mono);margin-top:.3rem;}
+.avg-trend{font-size:.78rem;margin-top:.3rem;}
 .trend-up{color:var(--green);}
 .trend-down{color:var(--red);}
 .trend-flat{color:var(--text3);}
 
 /* CHART CONTAINERS */
-.chart-wrap{position:relative;padding:1rem;}
-.chart-wrap canvas{max-height:260px;}
+.chart-wrap{position:relative;padding:1rem;height:clamp(14rem,34vw,19rem);}
 
 /* REVENUE TABLE */
 .rev-table{width:100%;border-collapse:collapse;}
 .rev-table th{text-align:left;padding:.5rem .75rem;color:var(--text2);font-size:.72rem;white-space:nowrap;}
 .rev-table th:last-child{text-align:right;}
 .rev-table td{padding:.5rem .75rem;border-bottom:1px solid var(--border);font-size:.78rem;}
-.rev-table td:last-child{text-align:right;font-family:var(--font-mono);}
+.rev-table td:last-child{text-align:right;}
 .rev-table tr:last-child td{border:none;}
 
 /* FLAGS */
@@ -285,8 +287,7 @@ a:hover{text-decoration:underline;}
 
 /* SECTION DIVIDER */
 .section-label{
-  font-size:.65rem;font-family:var(--font-mono);color:var(--text3);
-  text-transform:uppercase;letter-spacing:.1em;
+  font-size:.9rem;font-weight:800;color:var(--text2);
   margin-bottom:.6rem;margin-top:.25rem;
   display:flex;align-items:center;gap:.5rem;
 }
@@ -301,7 +302,7 @@ a:hover{text-decoration:underline;}
 .expense-name{font-size:.75rem;flex:1;text-transform:capitalize;}
 .expense-bar-wrap{flex:2;height:.25rem;background:var(--surface2);border-radius:99px;overflow:hidden;}
 .expense-bar{height:100%;border-radius:99px;background:var(--blue);}
-.expense-amt{font-size:.7rem;font-family:var(--font-mono);color:var(--text2);min-width:5rem;text-align:right;}
+.expense-amt{font-size:.7rem;color:var(--text2);min-width:5rem;text-align:right;}
 
 /* TABS CONTENT */
 .tab-content{display:none;}
@@ -313,19 +314,28 @@ a:hover{text-decoration:underline;}
 /* RESPONSIVE */
 @media(max-width:480px){
   .main{padding:.75rem;}
-  .topbar{padding:.75rem;}
-  .period-bar{padding:.5rem .75rem;}
-  .kpi-value{font-size:1.3rem;}
+  .topbar{position:static;flex-wrap:wrap;gap:.5rem;padding:.75rem;}
+  .topbar-right{gap:.25rem;}
+  .btn-link,.btn-icon{min-height:2.75rem;}
+  .period-bar{padding:.65rem .75rem;}
+  .filter-group{flex-basis:100%;}
+  .filter-label{flex-basis:3rem;}
+  .period-btn{min-height:2.75rem;min-width:2.75rem;padding:.35rem;}
+  .tab-btn{flex:1;padding:.55rem .35rem;min-height:2.75rem;font-size:.87rem;}
+  .kpi{padding:.7rem;}
+  .card-header,.card-body{padding:.7rem;}
+  .chart-wrap{padding:.55rem;}
+  .rev-table td,.rev-table th,.period-table td,.period-table th{padding:.5rem;}
 }
 
 /* SUMMARY STAT */
-.stat-row{display:flex;justify-content:space-between;align-items:center;padding:.45rem 0;border-bottom:1px solid var(--border);font-size:.78rem;}
+.stat-row{display:flex;justify-content:space-between;align-items:center;gap:.5rem;padding:.45rem 0;border-bottom:1px solid var(--border);font-size:.78rem;}
 .stat-row:last-child{border:none;}
 .stat-label{color:var(--text2);}
-.stat-value{font-family:var(--font-mono);font-weight:600;}
+.stat-value{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;}
 
 /* LOADING */
-.loading{padding:3rem;text-align:center;color:var(--text3);font-family:var(--font-mono);font-size:.8rem;}
+.loading{padding:3rem;text-align:center;color:var(--text3);font-size:.8rem;}
 </style>
 </head>
 <body>
@@ -341,27 +351,31 @@ a:hover{text-decoration:underline;}
   <div class="topbar-right">
     <a class="btn-link" href="https://enketo.ona.io/x/UY8hb56i" target="_blank">+ Eggs</a>
     <a class="btn-link" href="https://enketo.ona.io/x/79JK2boY" target="_blank">+ Sales</a>
-    <button class="btn-icon" id="theme-toggle" title="Toggle theme">☀</button>
+    <button class="btn-icon" id="theme-toggle" title="Toggle theme" aria-label="Toggle color theme">☀</button>
   </div>
 </div>
 
 <div class="period-bar">
-  <span style="font-size:.65rem;font-family:'DM Mono',monospace;color:var(--text3);margin-right:.25rem;">PERIOD</span>
-  <button class="period-btn" data-days="7">7D</button>
-  <button class="period-btn" data-days="14">14D</button>
-  <button class="period-btn active" data-days="30">30D</button>
-  <button class="period-btn" data-days="90">3M</button>
-  <button class="period-btn" data-days="180">6M</button>
-  <button class="period-btn" data-days="365">1Y</button>
-  <button class="period-btn" data-days="9999">ALL</button>
-  <span class="period-sep">|</span>
-  <span style="font-size:.65rem;font-family:'DM Mono',monospace;color:var(--text3);margin-right:.25rem;">BATCH</span>
-  <button class="period-btn active" data-batch="all">ALL</button>
-  <button class="period-btn" data-batch="1">B1</button>
-  <button class="period-btn" data-batch="2">B2</button>
-  <button class="period-btn" data-batch="3">B3</button>
-  <button class="period-btn" data-batch="4">B4</button>
-  <button class="period-btn" data-batch="5">B5</button>
+  <div class="filter-group" role="group" aria-label="Period">
+    <span class="filter-label" aria-hidden="true">Period</span>
+    <button class="period-btn" data-days="1" aria-pressed="false" aria-label="Latest day">1D</button>
+    <button class="period-btn" data-days="7" aria-pressed="false" aria-label="Last 7 days">7D</button>
+    <button class="period-btn" data-days="14" aria-pressed="false" aria-label="Last 14 days">14D</button>
+    <button class="period-btn active" data-days="30" aria-pressed="true" aria-label="Last 30 days">30D</button>
+    <button class="period-btn" data-days="90" aria-pressed="false" aria-label="Last 90 days">3M</button>
+    <button class="period-btn" data-days="180" aria-pressed="false" aria-label="Last 180 days">6M</button>
+    <button class="period-btn" data-days="365" aria-pressed="false" aria-label="Last 365 days">1Y</button>
+    <button class="period-btn" data-days="9999" aria-pressed="false" aria-label="All dates">All</button>
+  </div>
+  <div class="filter-group" role="group" aria-label="Batch">
+    <span class="filter-label" aria-hidden="true">Batch</span>
+    <button class="period-btn active" data-batch="all" aria-pressed="true">All</button>
+    <button class="period-btn" data-batch="1" aria-label="Batch 1" aria-pressed="false">B1</button>
+    <button class="period-btn" data-batch="2" aria-label="Batch 2" aria-pressed="false">B2</button>
+    <button class="period-btn" data-batch="3" aria-label="Batch 3" aria-pressed="false">B3</button>
+    <button class="period-btn" data-batch="4" aria-label="Batch 4" aria-pressed="false">B4</button>
+    <button class="period-btn" data-batch="5" aria-label="Batch 5" aria-pressed="false">B5</button>
+  </div>
 </div>
 
 <div class="tabs">
@@ -426,7 +440,7 @@ a:hover{text-decoration:underline;}
       <div class="card">
         <div class="card-header">
           <span class="card-title">Daily Egg Production</span>
-          <span style="font-size:.65rem;font-family:'DM Mono',monospace;color:var(--text3)" id="chart-period-label"></span>
+          <span class="kpi-sub" id="chart-period-label"></span>
         </div>
         <div class="chart-wrap">
           <canvas id="chart-eggs-daily"></canvas>
@@ -451,7 +465,7 @@ a:hover{text-decoration:underline;}
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><span class="card-title">Monthly Performance</span></div>
+        <div class="card-header"><span class="card-title">Egg Production by Period</span></div>
         <div class="chart-wrap">
           <canvas id="chart-monthly-eggs"></canvas>
         </div>
@@ -540,7 +554,7 @@ a:hover{text-decoration:underline;}
 
     <div class="grid-2">
       <div class="card">
-        <div class="card-header"><span class="card-title">Monthly Revenue vs Expenses</span></div>
+        <div class="card-header"><span class="card-title">Revenue vs Recorded Expenses</span></div>
         <div class="chart-wrap">
           <canvas id="chart-fin-monthly"></canvas>
         </div>
@@ -548,7 +562,7 @@ a:hover{text-decoration:underline;}
       <div class="card">
         <div class="card-header"><span class="card-title">Payment Breakdown</span></div>
         <div class="chart-wrap" style="display:flex;align-items:center;justify-content:center">
-          <canvas id="chart-payment" style="max-height:220px;max-width:220px"></canvas>
+          <canvas id="chart-payment" ></canvas>
         </div>
       </div>
     </div>
@@ -595,9 +609,9 @@ let BATCH_CONFIG = {
   batch5:{name:"Batch 5",dob:"2026-10-22",expectedOfflay:"2028-04-22",status:"pending",supplier:"Jeka",initialBirds:4000,currentBirds:4000}
 };
 
-const JSON_BASE = './';
-const JSON_ANALYTICS = JSON_BASE + 'poultry_analytics_data.json';
-const JSON_BATCH_METADATA = JSON_BASE + 'config/batch_metadata.json';
+const ANALYTICS_FILE = 'poultry_analytics_data.json';
+const LIVE_ANALYTICS = 'https://raw.githubusercontent.com/ivanemoje/poultry-analytics-notifier/dashboard-data/'+ANALYTICS_FILE;
+const JSON_BATCH_METADATA = './config/batch_metadata.json';
 
 // Embedded CSV data (from uploaded files)
 let RAW_EGGS = [{"date":"2025-05-19","submittedAt":"2025-05-20T08:21:06.148102+00:00","b1_trays":18,"b1_eggs":8,"b1_broken":0},{"date":"2025-05-20","submittedAt":"2025-05-21T09:48:16.453767+00:00","b1_trays":18,"b1_eggs":6,"b1_broken":0},{"date":"2025-05-21","submittedAt":"2025-05-22T12:44:50.489548+00:00","b1_trays":18,"b1_eggs":7,"b1_broken":0},{"date":"2025-05-22","submittedAt":"2025-05-22T19:01:22.730101+00:00","b1_trays":18,"b1_eggs":4,"b1_broken":0},{"date":"2025-05-22","submittedAt":"2025-06-15T15:14:03.009121+00:00","b1_trays":18,"b1_eggs":7,"b1_broken":0},{"date":"2025-05-23","submittedAt":"2025-05-23T15:57:07.342435+00:00","b1_trays":18,"b1_eggs":5,"b1_broken":0},{"date":"2025-05-24","submittedAt":"2025-05-24T15:01:37.582701+00:00","b1_trays":16,"b1_eggs":0,"b1_broken":0},{"date":"2025-05-25","submittedAt":"2025-05-25T19:20:51.792490+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-05-26","submittedAt":"2025-05-26T18:45:07.593259+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-05-27","submittedAt":"2025-05-27T14:57:19.671934+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-05-28","submittedAt":"2025-05-28T19:57:45.162930+00:00","b1_trays":18,"b1_eggs":2,"b1_broken":0},{"date":"2025-05-29","submittedAt":"2025-05-29T18:01:08.925589+00:00","b1_trays":18,"b1_eggs":3,"b1_broken":0},{"date":"2025-05-30","submittedAt":"2025-05-31T03:27:27.319673+00:00","b1_trays":18,"b1_eggs":4,"b1_broken":0},{"date":"2025-05-31","submittedAt":"2025-05-31T19:06:56.582890+00:00","b1_trays":15,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-01","submittedAt":"2025-06-01T19:28:15.969460+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-02","submittedAt":"2025-06-02T17:49:07.812155+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-03","submittedAt":"2025-06-03T18:41:32.707788+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-04","submittedAt":"2025-06-04T19:30:44.066350+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-05","submittedAt":"2025-06-05T19:40:16.822991+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-06","submittedAt":"2025-06-07T06:12:32.539296+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-07","submittedAt":"2025-06-13T19:08:41.884284+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-07","submittedAt":"2025-06-15T15:12:17.275750+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-08","submittedAt":"2025-06-13T19:08:42.504462+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-08","submittedAt":"2025-06-15T15:13:53.642855+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-09","submittedAt":"2025-06-13T19:08:42.979312+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-09","submittedAt":"2025-06-15T15:16:15.856371+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-10","submittedAt":"2025-06-13T19:08:43.442464+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-10","submittedAt":"2025-06-15T15:18:50.356350+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-11","submittedAt":"2025-06-13T19:08:43.896509+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-11","submittedAt":"2025-06-15T15:20:33.130142+00:00","b1_trays":18,"b1_eggs":7,"b1_broken":0},{"date":"2025-06-12","submittedAt":"2025-06-13T19:08:44.383459+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-12","submittedAt":"2025-06-15T15:23:12.682309+00:00","b1_trays":18,"b1_eggs":6,"b1_broken":0},{"date":"2025-06-13","submittedAt":"2025-06-13T19:08:44.764208+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-06-13","submittedAt":"2025-06-15T15:24:51.715988+00:00","b1_trays":18,"b1_eggs":7,"b1_broken":0},{"date":"2025-06-14","submittedAt":"2025-06-15T15:32:37.872026+00:00","b1_trays":18,"b1_eggs":6,"b1_broken":0},{"date":"2025-06-14","submittedAt":"2025-06-15T15:58:42.782827+00:00","b1_trays":18,"b1_eggs":6,"b1_broken":7},{"date":"2025-06-14","submittedAt":"2026-05-21T11:42:57.054960+00:00","b1_trays":18,"b1_eggs":6,"b1_broken":0},{"date":"2025-06-15","submittedAt":"2025-06-15T17:18:09.772952+00:00","b1_trays":18,"b1_eggs":15,"b1_broken":1},{"date":"2025-06-16","submittedAt":"2025-06-16T18:07:02.902545+00:00","b1_trays":18,"b1_eggs":13,"b1_broken":3},{"date":"2025-06-17","submittedAt":"2025-06-17T16:42:14.882807+00:00","b1_trays":18,"b1_eggs":11,"b1_broken":4},{"date":"2025-06-18","submittedAt":"2025-06-18T18:31:42.894196+00:00","b1_trays":18,"b1_eggs":8,"b1_broken":5},{"date":"2025-06-19","submittedAt":"2025-06-19T18:32:41.290055+00:00","b1_trays":18,"b1_eggs":7,"b1_broken":4},{"date":"2025-06-20","submittedAt":"2025-06-20T17:09:08.281554+00:00","b1_trays":18,"b1_eggs":14,"b1_broken":1},{"date":"2025-06-21","submittedAt":"2025-06-21T17:44:02.890992+00:00","b1_trays":18,"b1_eggs":6,"b1_broken":4},{"date":"2025-06-22","submittedAt":"2025-06-22T15:48:29.617851+00:00","b1_trays":18,"b1_eggs":19,"b1_broken":0},{"date":"2025-06-23","submittedAt":"2025-06-23T18:57:01.829007+00:00","b1_trays":18,"b1_eggs":12,"b1_broken":3},{"date":"2025-06-24","submittedAt":"2025-06-24T16:07:22.871857+00:00","b1_trays":18,"b1_eggs":10,"b1_broken":5},{"date":"2025-06-25","submittedAt":"2025-06-25T16:49:43.203499+00:00","b1_trays":18,"b1_eggs":13,"b1_broken":2},{"date":"2025-06-26","submittedAt":"2025-06-26T19:00:21.048187+00:00","b1_trays":18,"b1_eggs":13,"b1_broken":0},{"date":"2025-06-27","submittedAt":"2025-06-27T18:15:50.504207+00:00","b1_trays":18,"b1_eggs":22,"b1_broken":2},{"date":"2025-06-28","submittedAt":"2025-06-28T19:44:01.589086+00:00","b1_trays":18,"b1_eggs":10,"b1_broken":0},{"date":"2025-06-29","submittedAt":"2025-06-29T17:30:33.287424+00:00","b1_trays":18,"b1_eggs":9,"b1_broken":2},{"date":"2025-06-30","submittedAt":"2025-06-30T18:23:03.253461+00:00","b1_trays":18,"b1_eggs":10,"b1_broken":1},{"date":"2025-07-01","submittedAt":"2025-07-01T19:25:44.370113+00:00","b1_trays":18,"b1_eggs":6,"b1_broken":1},{"date":"2025-07-02","submittedAt":"2025-07-02T19:13:44.178233+00:00","b1_trays":18,"b1_eggs":4,"b1_broken":1},{"date":"2025-07-03","submittedAt":"2025-07-03T19:34:27.300967+00:00","b1_trays":18,"b1_eggs":5,"b1_broken":1},{"date":"2025-07-04","submittedAt":"2025-07-04T19:27:53.575802+00:00","b1_trays":18,"b1_eggs":5,"b1_broken":1},{"date":"2025-07-05","submittedAt":"2025-07-05T20:50:41.116262+00:00","b1_trays":18,"b1_eggs":10,"b1_broken":0},{"date":"2025-07-06","submittedAt":"2025-07-06T19:01:21.687531+00:00","b1_trays":18,"b1_eggs":10,"b1_broken":0},{"date":"2025-07-07","submittedAt":"2025-07-07T20:28:06.855283+00:00","b1_trays":18,"b1_eggs":8,"b1_broken":1},{"date":"2025-07-08","submittedAt":"2025-07-08T18:37:24.222860+00:00","b1_trays":18,"b1_eggs":3,"b1_broken":0},{"date":"2025-07-09","submittedAt":"2025-07-09T19:05:22.608992+00:00","b1_trays":18,"b1_eggs":11,"b1_broken":0},{"date":"2025-07-10","submittedAt":"2025-07-10T19:07:21.521253+00:00","b1_trays":18,"b1_eggs":4,"b1_broken":1},{"date":"2025-07-11","submittedAt":"2025-07-11T20:00:51.139327+00:00","b1_trays":18,"b1_eggs":3,"b1_broken":1},{"date":"2025-07-12","submittedAt":"2025-07-12T19:45:05.235134+00:00","b1_trays":18,"b1_eggs":6,"b1_broken":0},{"date":"2025-07-13","submittedAt":"2025-07-13T19:39:43.525511+00:00","b1_trays":18,"b1_eggs":5,"b1_broken":0},{"date":"2025-07-14","submittedAt":"2025-07-14T19:21:51.839577+00:00","b1_trays":18,"b1_eggs":8,"b1_broken":0},{"date":"2025-07-15","submittedAt":"2025-07-15T19:58:25.120896+00:00","b1_trays":18,"b1_eggs":8,"b1_broken":1},{"date":"2025-07-16","submittedAt":"2025-07-16T19:27:08.219782+00:00","b1_trays":18,"b1_eggs":4,"b1_broken":1},{"date":"2025-07-17","submittedAt":"2025-07-17T19:00:14.993598+00:00","b1_trays":18,"b1_eggs":4,"b1_broken":0},{"date":"2025-07-18","submittedAt":"2025-07-18T18:28:01.461749+00:00","b1_trays":18,"b1_eggs":5,"b1_broken":0},{"date":"2025-07-19","submittedAt":"2025-07-19T19:48:37.847610+00:00","b1_trays":18,"b1_eggs":4,"b1_broken":0},{"date":"2025-07-20","submittedAt":"2025-07-20T19:22:57.164358+00:00","b1_trays":18,"b1_eggs":2,"b1_broken":2},{"date":"2025-07-21","submittedAt":"2025-07-21T19:16:50.143953+00:00","b1_trays":18,"b1_eggs":3,"b1_broken":1},{"date":"2025-07-22","submittedAt":"2025-07-22T19:42:02.141122+00:00","b1_trays":18,"b1_eggs":4,"b1_broken":0},{"date":"2025-07-23","submittedAt":"2025-07-23T19:03:11.163809+00:00","b1_trays":17,"b1_eggs":24,"b1_broken":0},{"date":"2025-07-24","submittedAt":"2025-07-24T18:18:41.425180+00:00","b1_trays":17,"b1_eggs":25,"b1_broken":0},{"date":"2025-07-25","submittedAt":"2025-07-25T19:32:31.155569+00:00","b1_trays":17,"b1_eggs":20,"b1_broken":1},{"date":"2025-07-26","submittedAt":"2025-07-26T18:01:39.865159+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-07-27","submittedAt":"2025-07-27T18:16:51.044924+00:00","b1_trays":17,"b1_eggs":23,"b1_broken":0},{"date":"2025-07-29","submittedAt":"2025-07-29T02:31:49.199830+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-07-29","submittedAt":"2025-07-29T16:24:18.534287+00:00","b1_trays":18,"b1_eggs":4,"b1_broken":0},{"date":"2025-07-30","submittedAt":"2025-07-30T15:58:44.819395+00:00","b1_trays":18,"b1_eggs":7,"b1_broken":1},{"date":"2025-07-31","submittedAt":"2025-07-31T19:33:35.074723+00:00","b1_trays":18,"b1_eggs":2,"b1_broken":1},{"date":"2025-08-01","submittedAt":"2025-08-01T17:02:07.085486+00:00","b1_trays":18,"b1_eggs":6,"b1_broken":0},{"date":"2025-08-02","submittedAt":"2025-08-02T19:25:19.143280+00:00","b1_trays":18,"b1_eggs":2,"b1_broken":0},{"date":"2025-08-03","submittedAt":"2025-08-03T19:45:21.558591+00:00","b1_trays":17,"b1_eggs":26,"b1_broken":1},{"date":"2025-08-04","submittedAt":"2025-08-04T19:01:22.182494+00:00","b1_trays":18,"b1_eggs":1,"b1_broken":0},{"date":"2025-08-05","submittedAt":"2025-08-05T19:15:39.180322+00:00","b1_trays":17,"b1_eggs":28,"b1_broken":0},{"date":"2025-08-06","submittedAt":"2025-08-06T20:23:36.919445+00:00","b1_trays":17,"b1_eggs":23,"b1_broken":0},{"date":"2025-08-07","submittedAt":"2025-08-07T19:22:17.934927+00:00","b1_trays":18,"b1_eggs":3,"b1_broken":0},{"date":"2025-08-08","submittedAt":"2025-08-08T18:59:53.345319+00:00","b1_trays":18,"b1_eggs":5,"b1_broken":2},{"date":"2025-08-09","submittedAt":"2025-08-09T19:33:05.399750+00:00","b1_trays":17,"b1_eggs":27,"b1_broken":1},{"date":"2025-08-10","submittedAt":"2025-08-10T20:00:58.339465+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-08-11","submittedAt":"2025-08-11T20:03:32.527256+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-08-12","submittedAt":"2025-08-12T19:01:45.001913+00:00","b1_trays":18,"b1_eggs":2,"b1_broken":0},{"date":"2025-08-13","submittedAt":"2025-08-13T19:36:24.510885+00:00","b1_trays":17,"b1_eggs":24,"b1_broken":0},{"date":"2025-08-14","submittedAt":"2025-08-14T18:49:13.895632+00:00","b1_trays":18,"b1_eggs":3,"b1_broken":0},{"date":"2025-08-16","submittedAt":"2025-08-16T03:23:05.637898+00:00","b1_trays":18,"b1_eggs":4,"b1_broken":2},{"date":"2025-08-16","submittedAt":"2025-08-16T20:28:42.298339+00:00","b1_trays":17,"b1_eggs":25,"b1_broken":0},{"date":"2025-08-17","submittedAt":"2025-08-17T20:01:06.399517+00:00","b1_trays":17,"b1_eggs":26,"b1_broken":2},{"date":"2025-08-18","submittedAt":"2025-08-18T18:36:09.460738+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-08-19","submittedAt":"2025-08-19T19:20:29.638115+00:00","b1_trays":18,"b1_eggs":0,"b1_broken":0},{"date":"2025-08-21","submittedAt":"2025-08-21T01:00:42.549595+00:00","b1_trays":17,"b1_eggs":26,"b1_broken":2},{"date":"2025-08-21","submittedAt":"2025-08-21T19:34:41.913706+00:00","b1_trays":17,"b1_eggs":24,"b1_broken":2},{"date":"2025-08-22","submittedAt":"2025-08-22T19:53:59.258817+00:00","b1_trays":17,"b1_eggs":28,"b1_broken":1},{"date":"2025-08-23","submittedAt":"2025-08-23T20:07:13.813740+00:00","b1_trays":17,"b1_eggs":15,"b1_broken":1},{"date":"2025-08-25","submittedAt":"2025-08-25T02:56:26.295375+00:00","b1_trays":17,"b1_eggs":22,"b1_broken":1},{"date":"2025-08-25","submittedAt":"2025-08-25T19:53:24.523314+00:00","b1_trays":17,"b1_eggs":15,"b1_broken":0},{"date":"2025-08-27","submittedAt":"2025-08-27T20:52:35.773894+00:00","b1_trays":17,"b1_eggs":0,"b1_broken":0},{"date":"2025-08-28","submittedAt":"2025-08-28T20:15:25.589850+00:00","b1_trays":17,"b1_eggs":0,"b1_broken":0},{"date":"2025-08-31","submittedAt":"2025-08-31T02:16:56.662721+00:00","b1_trays":16,"b1_eggs":15,"b1_broken":0},{"date":"2025-08-31","submittedAt":"2025-08-31T19:53:37.273381+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":0},{"date":"2025-09-02","submittedAt":"2025-09-02T01:46:03.764313+00:00","b1_trays":11,"b1_eggs":3,"b1_broken":0},{"date":"2025-09-02","submittedAt":"2025-09-02T19:57:16.105708+00:00","b1_trays":10,"b1_eggs":7,"b1_broken":0},{"date":"2025-09-03","submittedAt":"2025-09-03T19:32:42.221490+00:00","b1_trays":10,"b1_eggs":7,"b1_broken":1},{"date":"2025-09-04","submittedAt":"2025-09-04T19:56:06.276790+00:00","b1_trays":8,"b1_eggs":22,"b1_broken":0},{"date":"2025-09-05","submittedAt":"2025-09-05T20:17:05.282103+00:00","b1_trays":10,"b1_eggs":6,"b1_broken":3},{"date":"2025-09-06","submittedAt":"2025-09-06T19:13:20.622259+00:00","b1_trays":11,"b1_eggs":19,"b1_broken":0},{"date":"2025-09-07","submittedAt":"2025-09-07T18:41:07.875126+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":0},{"date":"2025-09-08","submittedAt":"2025-09-08T20:03:23.895982+00:00","b1_trays":14,"b1_eggs":2,"b1_broken":0},{"date":"2025-09-09","submittedAt":"2025-09-09T19:17:04.727457+00:00","b1_trays":15,"b1_eggs":5,"b1_broken":1},{"date":"2025-09-10","submittedAt":"2025-09-10T18:08:58.275898+00:00","b1_trays":16,"b1_eggs":5,"b1_broken":1},{"date":"2025-09-12","submittedAt":"2025-09-12T02:16:58.832735+00:00","b1_trays":16,"b1_eggs":15,"b1_broken":2},{"date":"2025-09-12","submittedAt":"2025-09-12T18:23:02.729931+00:00","b1_trays":17,"b1_eggs":2,"b1_broken":1},{"date":"2025-09-13","submittedAt":"2025-09-13T18:27:49.292214+00:00","b1_trays":17,"b1_eggs":6,"b1_broken":0},{"date":"2025-09-14","submittedAt":"2025-09-14T18:56:07.069121+00:00","b1_trays":17,"b1_eggs":14,"b1_broken":1},{"date":"2025-09-15","submittedAt":"2025-09-15T18:16:23.190653+00:00","b1_trays":17,"b1_eggs":24,"b1_broken":1},{"date":"2025-09-16","submittedAt":"2025-09-16T18:52:51.738142+00:00","b1_trays":17,"b1_eggs":20,"b1_broken":0},{"date":"2025-09-17","submittedAt":"2025-09-17T19:52:15.931872+00:00","b1_trays":17,"b1_eggs":7,"b1_broken":1},{"date":"2025-09-18","submittedAt":"2025-09-18T19:16:33.629992+00:00","b1_trays":17,"b1_eggs":20,"b1_broken":0},{"date":"2025-09-19","submittedAt":"2025-09-19T20:30:33.843932+00:00","b1_trays":17,"b1_eggs":15,"b1_broken":1},{"date":"2025-09-20","submittedAt":"2025-09-20T20:16:58.359429+00:00","b1_trays":17,"b1_eggs":16,"b1_broken":0},{"date":"2025-09-22","submittedAt":"2025-09-22T02:13:03.665552+00:00","b1_trays":17,"b1_eggs":20,"b1_broken":1},{"date":"2025-09-22","submittedAt":"2025-09-22T19:08:19.073865+00:00","b1_trays":17,"b1_eggs":22,"b1_broken":0},{"date":"2025-09-24","submittedAt":"2025-09-24T18:51:10.467699+00:00","b1_trays":17,"b1_eggs":7,"b1_broken":1},{"date":"2025-09-25","submittedAt":"2025-09-25T19:28:56.809864+00:00","b1_trays":16,"b1_eggs":22,"b1_broken":2},{"date":"2025-09-27","submittedAt":"2025-09-27T02:09:53.708076+00:00","b1_trays":17,"b1_eggs":5,"b1_broken":2},{"date":"2025-09-27","submittedAt":"2025-09-27T19:23:48.825151+00:00","b1_trays":16,"b1_eggs":29,"b1_broken":1},{"date":"2025-09-28","submittedAt":"2025-09-28T20:06:23.410802+00:00","b1_trays":17,"b1_eggs":10,"b1_broken":1},{"date":"2025-09-30","submittedAt":"2025-09-30T01:37:15.336600+00:00","b1_trays":17,"b1_eggs":7,"b1_broken":0},{"date":"2025-09-30","submittedAt":"2025-09-30T19:23:33.595104+00:00","b1_trays":17,"b1_eggs":0,"b1_broken":0},{"date":"2025-10-02","submittedAt":"2025-10-02T19:04:03.856943+00:00","b1_trays":17,"b1_eggs":2,"b1_broken":1},{"date":"2025-10-04","submittedAt":"2025-10-04T19:21:16.931820+00:00","b1_trays":16,"b1_eggs":25,"b1_broken":1},{"date":"2025-10-05","submittedAt":"2025-10-05T18:49:12.915258+00:00","b1_trays":16,"b1_eggs":20,"b1_broken":0},{"date":"2025-10-07","submittedAt":"2025-10-07T01:56:30.369907+00:00","b1_trays":17,"b1_eggs":0,"b1_broken":0},{"date":"2025-10-10","submittedAt":"2025-10-10T02:07:32.817064+00:00","b1_trays":16,"b1_eggs":15,"b1_broken":1},{"date":"2025-10-10","submittedAt":"2025-10-10T18:23:11.212597+00:00","b1_trays":16,"b1_eggs":26,"b1_broken":1},{"date":"2025-10-11","submittedAt":"2025-10-11T19:02:26.102962+00:00","b1_trays":16,"b1_eggs":20,"b1_broken":1},{"date":"2025-10-20","submittedAt":"2025-10-20T17:58:55.687238+00:00","b1_trays":16,"b1_eggs":25,"b1_broken":1},{"date":"2025-10-21","submittedAt":"2025-10-21T18:47:09.184343+00:00","b1_trays":16,"b1_eggs":10,"b1_broken":1},{"date":"2025-10-22","submittedAt":"2025-10-22T19:04:11.260415+00:00","b1_trays":16,"b1_eggs":21,"b1_broken":0},{"date":"2025-10-23","submittedAt":"2025-10-23T18:36:31.362007+00:00","b1_trays":16,"b1_eggs":16,"b1_broken":1},{"date":"2025-10-26","submittedAt":"2025-10-26T16:12:32.956460+00:00","b1_trays":16,"b1_eggs":21,"b1_broken":1},{"date":"2025-10-27","submittedAt":"2025-10-27T19:12:20.911360+00:00","b1_trays":16,"b1_eggs":20,"b1_broken":1},{"date":"2025-10-28","submittedAt":"2025-10-28T18:52:21.790524+00:00","b1_trays":16,"b1_eggs":21,"b1_broken":0},{"date":"2025-10-29","submittedAt":"2025-10-29T20:01:12.992021+00:00","b1_trays":16,"b1_eggs":18,"b1_broken":1},{"date":"2025-10-30","submittedAt":"2025-10-30T19:19:24.965451+00:00","b1_trays":16,"b1_eggs":20,"b1_broken":0},{"date":"2025-10-31","submittedAt":"2025-10-31T20:10:44.508550+00:00","b1_trays":16,"b1_eggs":18,"b1_broken":0},{"date":"2025-11-01","submittedAt":"2025-11-01T20:00:22.570016+00:00","b1_trays":16,"b1_eggs":25,"b1_broken":0},{"date":"2025-11-02","submittedAt":"2025-11-02T19:53:12.405909+00:00","b1_trays":16,"b1_eggs":17,"b1_broken":1,"b2_trays":3,"b2_eggs":4,"b2_broken":0},{"date":"2025-11-03","submittedAt":"2025-11-03T06:12:42.255335+00:00","b1_trays":16,"b1_eggs":21,"b1_broken":1,"b2_trays":0,"b2_eggs":18,"b2_broken":0},{"date":"2025-11-03","submittedAt":"2025-11-03T06:13:25.397043+00:00","b1_trays":16,"b1_eggs":20,"b1_broken":0,"b2_trays":0,"b2_eggs":24,"b2_broken":0},{"date":"2025-11-03","submittedAt":"2025-11-03T06:13:55.841556+00:00","b1_trays":16,"b1_eggs":24,"b1_broken":1,"b2_trays":1,"b2_eggs":0,"b2_broken":0},{"date":"2025-11-03","submittedAt":"2025-11-03T06:14:20.433460+00:00","b1_trays":16,"b1_eggs":18,"b1_broken":1,"b2_trays":1,"b2_eggs":8,"b2_broken":0},{"date":"2025-11-03","submittedAt":"2025-11-03T06:14:36.625540+00:00","b1_trays":16,"b1_eggs":20,"b1_broken":0,"b2_trays":1,"b2_eggs":18,"b2_broken":0},{"date":"2025-11-03","submittedAt":"2025-11-03T06:14:55.582680+00:00","b1_trays":16,"b1_eggs":18,"b1_broken":0,"b2_trays":2,"b2_eggs":0,"b2_broken":0},{"date":"2025-11-03","submittedAt":"2025-11-03T06:15:18.858131+00:00","b1_trays":16,"b1_eggs":25,"b1_broken":0,"b2_trays":2,"b2_eggs":4,"b2_broken":0},{"date":"2025-11-03","submittedAt":"2025-11-03T06:16:18.757505+00:00","b1_trays":16,"b1_eggs":21,"b1_broken":1,"b2_trays":0,"b2_eggs":18,"b2_broken":0},{"date":"2025-11-03","submittedAt":"2025-11-03T20:48:35.700104+00:00","b1_trays":16,"b1_eggs":12,"b1_broken":0,"b2_trays":3,"b2_eggs":0,"b2_broken":0},{"date":"2025-11-04","submittedAt":"2025-11-04T15:18:41.520221+00:00","b1_trays":16,"b1_eggs":20,"b1_broken":2,"b2_trays":3,"b2_eggs":8,"b2_broken":0},{"date":"2025-11-05","submittedAt":"2025-11-05T19:13:47.315637+00:00","b1_trays":16,"b1_eggs":16,"b1_broken":1,"b2_trays":4,"b2_eggs":6,"b2_broken":4},{"date":"2025-11-07","submittedAt":"2025-11-07T03:34:34.527508+00:00","b1_trays":16,"b1_eggs":13,"b1_broken":1,"b2_trays":4,"b2_eggs":12,"b2_broken":1},{"date":"2025-11-08","submittedAt":"2025-11-08T02:42:42.330840+00:00","b1_trays":16,"b1_eggs":20,"b1_broken":0,"b2_trays":5,"b2_eggs":4,"b2_broken":0},{"date":"2025-11-08","submittedAt":"2025-11-08T18:49:55.850825+00:00","b1_trays":16,"b1_eggs":20,"b1_broken":2,"b2_trays":5,"b2_eggs":8,"b2_broken":0},{"date":"2025-11-09","submittedAt":"2025-11-09T14:38:57.037272+00:00","b1_trays":16,"b1_eggs":23,"b1_broken":0,"b2_trays":6,"b2_eggs":0,"b2_broken":0},{"date":"2025-11-10","submittedAt":"2025-11-10T20:05:44.647496+00:00","b1_trays":16,"b1_eggs":18,"b1_broken":1,"b2_trays":7,"b2_eggs":0,"b2_broken":0},{"date":"2025-11-11","submittedAt":"2025-11-11T19:25:39.290667+00:00","b1_trays":16,"b1_eggs":20,"b1_broken":0,"b2_trays":7,"b2_eggs":10,"b2_broken":0},{"date":"2025-11-12","submittedAt":"2025-11-12T18:08:08.202810+00:00","b1_trays":16,"b1_eggs":15,"b1_broken":1,"b2_trays":8,"b2_eggs":4,"b2_broken":1},{"date":"2025-11-13","submittedAt":"2025-11-13T18:24:38.928678+00:00","b1_trays":16,"b1_eggs":0,"b1_broken":1,"b2_trays":9,"b2_eggs":4,"b2_broken":2},{"date":"2025-11-14","submittedAt":"2025-11-14T19:33:28.819954+00:00","b1_trays":16,"b1_eggs":13,"b1_broken":0,"b2_trays":10,"b2_eggs":1,"b2_broken":0},{"date":"2025-11-16","submittedAt":"2025-11-16T06:00:08.483102+00:00","b1_trays":16,"b1_eggs":15,"b1_broken":0,"b2_trays":11,"b2_eggs":4,"b2_broken":0},{"date":"2025-11-17","submittedAt":"2025-11-17T05:09:35.457217+00:00","b1_trays":16,"b1_eggs":10,"b1_broken":0,"b2_trays":12,"b2_eggs":27,"b2_broken":0},{"date":"2025-11-18","submittedAt":"2025-11-18T19:07:15.135026+00:00","b1_trays":16,"b1_eggs":18,"b1_broken":0,"b2_trays":13,"b2_eggs":8,"b2_broken":2},{"date":"2025-11-19","submittedAt":"2025-11-19T18:31:39.048546+00:00","b1_trays":16,"b1_eggs":10,"b1_broken":1,"b2_trays":14,"b2_eggs":12,"b2_broken":0},{"date":"2025-11-20","submittedAt":"2025-11-20T18:50:37.893577+00:00","b1_trays":16,"b1_eggs":10,"b1_broken":0,"b2_trays":14,"b2_eggs":27,"b2_broken":0},{"date":"2025-11-21","submittedAt":"2025-11-21T19:49:04.924018+00:00","b1_trays":16,"b1_eggs":13,"b1_broken":0,"b2_trays":15,"b2_eggs":10,"b2_broken":2},{"date":"2025-11-23","submittedAt":"2025-11-23T03:17:39.734034+00:00","b1_trays":16,"b1_eggs":13,"b1_broken":0,"b2_trays":17,"b2_eggs":0,"b2_broken":2},{"date":"2025-11-24","submittedAt":"2025-11-24T18:36:57.064614+00:00","b1_trays":16,"b1_eggs":14,"b1_broken":0,"b2_trays":19,"b2_eggs":0,"b2_broken":2},{"date":"2025-11-25","submittedAt":"2025-11-25T18:32:08.432795+00:00","b1_trays":15,"b1_eggs":28,"b1_broken":0,"b2_trays":20,"b2_eggs":2,"b2_broken":2},{"date":"2025-11-27","submittedAt":"2025-11-27T03:01:25.111749+00:00","b1_trays":16,"b1_eggs":0,"b1_broken":0,"b2_trays":21,"b2_eggs":3,"b2_broken":0},{"date":"2025-11-27","submittedAt":"2025-11-27T14:32:39.375200+00:00","b1_trays":16,"b1_eggs":6,"b1_broken":0,"b2_trays":22,"b2_eggs":4,"b2_broken":0},{"date":"2025-11-28","submittedAt":"2025-11-28T20:00:08.233746+00:00","b1_trays":16,"b1_eggs":4,"b1_broken":2,"b2_trays":23,"b2_eggs":0,"b2_broken":2},{"date":"2025-11-29","submittedAt":"2025-11-29T19:36:14.614495+00:00","b1_trays":16,"b1_eggs":10,"b1_broken":0,"b2_trays":23,"b2_eggs":26,"b2_broken":2},{"date":"2025-12-01","submittedAt":"2025-12-01T19:50:58.985057+00:00","b1_trays":16,"b1_eggs":6,"b1_broken":0,"b2_trays":25,"b2_eggs":0,"b2_broken":0},{"date":"2025-12-03","submittedAt":"2025-12-03T05:52:38.755110+00:00","b1_trays":15,"b1_eggs":19,"b1_broken":2,"b2_trays":26,"b2_eggs":4,"b2_broken":0},{"date":"2025-12-05","submittedAt":"2025-12-05T06:54:18.863475+00:00","b1_trays":15,"b1_eggs":6,"b1_broken":2,"b2_trays":28,"b2_eggs":2,"b2_broken":0},{"date":"2025-12-05","submittedAt":"2025-12-05T15:58:21.846255+00:00","b1_trays":16,"b1_eggs":11,"b1_broken":2,"b2_trays":28,"b2_eggs":0,"b2_broken":2},{"date":"2025-12-07","submittedAt":"2025-12-07T03:44:38.428535+00:00","b1_trays":15,"b1_eggs":14,"b1_broken":1,"b2_trays":28,"b2_eggs":1,"b2_broken":3},{"date":"2025-12-07","submittedAt":"2025-12-07T19:10:32.109597+00:00","b1_trays":16,"b1_eggs":1,"b1_broken":0,"b2_trays":29,"b2_eggs":7,"b2_broken":0},{"date":"2025-12-13","submittedAt":"2025-12-13T16:20:52.770792+00:00","b1_trays":16,"b1_eggs":0,"b1_broken":0,"b2_trays":31,"b2_eggs":5,"b2_broken":2},{"date":"2025-12-14","submittedAt":"2025-12-14T14:44:25.215252+00:00","b1_trays":16,"b1_eggs":8,"b1_broken":1,"b2_trays":31,"b2_eggs":12,"b2_broken":2},{"date":"2025-12-17","submittedAt":"2025-12-17T20:45:50.121518+00:00","b1_trays":16,"b1_eggs":8,"b1_broken":1,"b2_trays":31,"b2_eggs":12,"b2_broken":2},{"date":"2025-12-17","submittedAt":"2025-12-17T20:45:50.934637+00:00","b1_trays":16,"b1_eggs":13,"b1_broken":0,"b2_trays":31,"b2_eggs":14,"b2_broken":3},{"date":"2025-12-17","submittedAt":"2025-12-17T20:45:51.671728+00:00","b1_trays":16,"b1_eggs":15,"b1_broken":0,"b2_trays":31,"b2_eggs":12,"b2_broken":0},{"date":"2025-12-17","submittedAt":"2025-12-17T20:45:52.524002+00:00","b1_trays":15,"b1_eggs":10,"b1_broken":0,"b2_trays":31,"b2_eggs":23,"b2_broken":3},{"date":"2025-12-18","submittedAt":"2025-12-18T20:39:33.658223+00:00","b1_trays":15,"b1_eggs":0,"b1_broken":1,"b2_trays":31,"b2_eggs":4,"b2_broken":2},{"date":"2025-12-19","submittedAt":"2025-12-19T20:32:41.138302+00:00","b1_trays":15,"b1_eggs":0,"b1_broken":0,"b2_trays":32,"b2_eggs":5,"b2_broken":0},{"date":"2025-12-21","submittedAt":"2025-12-21T19:45:53.515189+00:00","b1_trays":16,"b1_eggs":4,"b1_broken":0,"b2_trays":31,"b2_eggs":22,"b2_broken":0},{"date":"2025-12-21","submittedAt":"2025-12-21T19:47:03.602415+00:00","b1_trays":15,"b1_eggs":10,"b1_broken":0,"b2_trays":31,"b2_eggs":26,"b2_broken":0},{"date":"2025-12-23","submittedAt":"2025-12-23T20:45:04.000757+00:00","b1_trays":15,"b1_eggs":21,"b1_broken":0,"b2_trays":31,"b2_eggs":5,"b2_broken":0},{"date":"2025-12-23","submittedAt":"2025-12-23T20:46:24.535470+00:00","b1_trays":15,"b1_eggs":10,"b1_broken":0,"b2_trays":30,"b2_eggs":18,"b2_broken":0},{"date":"2025-12-24","submittedAt":"2025-12-24T15:19:59.820183+00:00","b1_trays":16,"b1_eggs":0,"b1_broken":0,"b2_trays":31,"b2_eggs":22,"b2_broken":2},{"date":"2025-12-25","submittedAt":"2025-12-25T18:51:36.105734+00:00","b1_trays":15,"b1_eggs":9,"b1_broken":2,"b2_trays":32,"b2_eggs":10,"b2_broken":1},{"date":"2025-12-26","submittedAt":"2025-12-26T15:22:11.173519+00:00","b1_trays":15,"b1_eggs":14,"b1_broken":1,"b2_trays":31,"b2_eggs":24,"b2_broken":2},{"date":"2025-12-28","submittedAt":"2025-12-29T20:24:36.061750+00:00","b1_trays":15,"b1_eggs":0,"b1_broken":0,"b2_trays":31,"b2_eggs":5,"b2_broken":0},{"date":"2025-12-28","submittedAt":"2025-12-29T20:24:36.603523+00:00","b1_trays":15,"b1_eggs":2,"b1_broken":1,"b2_trays":30,"b2_eggs":3,"b2_broken":3},{"date":"2025-12-29","submittedAt":"2025-12-29T20:24:37.262982+00:00","b1_trays":14,"b1_eggs":28,"b1_broken":2,"b2_trays":30,"b2_eggs":2,"b2_broken":2},{"date":"2025-12-31","submittedAt":"2025-12-31T19:20:00.689062+00:00","b1_trays":14,"b1_eggs":23,"b1_broken":0,"b2_trays":31,"b2_eggs":15,"b2_broken":0},{"date":"2025-12-31","submittedAt":"2025-12-31T19:20:03.405304+00:00","b1_trays":13,"b1_eggs":16,"b1_broken":2,"b2_trays":30,"b2_eggs":4,"b2_broken":2},{"date":"2026-01-01","submittedAt":"2026-01-01T20:20:11.159094+00:00","b1_trays":15,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":0,"b2_broken":0},{"date":"2026-01-02","submittedAt":"2026-01-02T20:48:51.266397+00:00","b1_trays":14,"b1_eggs":16,"b1_broken":0,"b2_trays":29,"b2_eggs":0,"b2_broken":0},{"date":"2026-01-03","submittedAt":"2026-01-03T19:29:25.929974+00:00","b1_trays":14,"b1_eggs":5,"b1_broken":2,"b2_trays":30,"b2_eggs":21,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-05","submittedAt":"2026-01-04T21:57:37.603331+00:00","b1_trays":14,"b1_eggs":15,"b1_broken":2,"b2_trays":30,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-05","submittedAt":"2026-01-05T20:20:22.716145+00:00","b1_trays":14,"b1_eggs":17,"b1_broken":1,"b2_trays":31,"b2_eggs":0,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-06","submittedAt":"2026-01-06T20:45:07.937650+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":13,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-07","submittedAt":"2026-01-07T19:36:15.476042+00:00","b1_trays":13,"b1_eggs":3,"b1_broken":0,"b2_trays":29,"b2_eggs":19,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-08","submittedAt":"2026-01-08T19:12:28.638374+00:00","b1_trays":14,"b1_eggs":6,"b1_broken":1,"b2_trays":29,"b2_eggs":2,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-09","submittedAt":"2026-01-09T19:24:56.743972+00:00","b1_trays":14,"b1_eggs":10,"b1_broken":0,"b2_trays":29,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-10","submittedAt":"2026-01-10T20:47:00.509507+00:00","b1_trays":14,"b1_eggs":20,"b1_broken":2,"b2_trays":29,"b2_eggs":1,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-12","submittedAt":"2026-01-12T19:10:26.241513+00:00","b1_trays":14,"b1_eggs":11,"b1_broken":2,"b2_trays":18,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-12","submittedAt":"2026-01-12T19:10:34.881990+00:00","b1_trays":13,"b1_eggs":22,"b1_broken":1,"b2_trays":28,"b2_eggs":0,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-19","submittedAt":"2026-01-19T15:43:08.091315+00:00","b1_trays":14,"b1_eggs":15,"b1_broken":0,"b2_trays":28,"b2_eggs":20,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-19","submittedAt":"2026-01-19T15:43:08.756459+00:00","b1_trays":15,"b1_eggs":1,"b1_broken":2,"b2_trays":29,"b2_eggs":6,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-20","submittedAt":"2026-01-20T19:00:34.540094+00:00","b1_trays":15,"b1_eggs":11,"b1_broken":2,"b2_trays":29,"b2_eggs":22,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-21","submittedAt":"2026-01-21T20:53:59.244794+00:00","b1_trays":14,"b1_eggs":13,"b1_broken":1,"b2_trays":29,"b2_eggs":3,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-22","submittedAt":"2026-01-22T20:13:09.453811+00:00","b1_trays":14,"b1_eggs":18,"b1_broken":1,"b2_trays":29,"b2_eggs":10,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-23","submittedAt":"2026-01-23T19:58:28.353722+00:00","b1_trays":14,"b1_eggs":27,"b1_broken":2,"b2_trays":29,"b2_eggs":20,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-24","submittedAt":"2026-01-24T19:52:35.671199+00:00","b1_trays":15,"b1_eggs":10,"b1_broken":2,"b2_trays":30,"b2_eggs":12,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-25","submittedAt":"2026-01-25T20:46:56.375438+00:00","b1_trays":15,"b1_eggs":9,"b1_broken":2,"b2_trays":31,"b2_eggs":13,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-26","submittedAt":"2026-01-26T19:55:30.545592+00:00","b1_trays":15,"b1_eggs":4,"b1_broken":1,"b2_trays":31,"b2_eggs":14,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-28","submittedAt":"2026-01-28T19:47:05.212483+00:00","b1_trays":14,"b1_eggs":24,"b1_broken":2,"b2_trays":31,"b2_eggs":12,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-29","submittedAt":"2026-01-29T20:09:55.996298+00:00","b1_trays":14,"b1_eggs":19,"b1_broken":1,"b2_trays":31,"b2_eggs":0,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-30","submittedAt":"2026-01-30T20:11:11.700963+00:00","b1_trays":14,"b1_eggs":19,"b1_broken":2,"b2_trays":31,"b2_eggs":1,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-01-31","submittedAt":"2026-01-31T20:19:55.641914+00:00","b1_trays":14,"b1_eggs":14,"b1_broken":0,"b2_trays":30,"b2_eggs":7,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-01","submittedAt":"2026-02-01T20:12:02.304458+00:00","b1_trays":14,"b1_eggs":17,"b1_broken":2,"b2_trays":30,"b2_eggs":28,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-02","submittedAt":"2026-02-02T20:12:19.693463+00:00","b1_trays":14,"b1_eggs":24,"b1_broken":2,"b2_trays":30,"b2_eggs":3,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-03","submittedAt":"2026-02-03T20:22:43.032728+00:00","b1_trays":15,"b1_eggs":9,"b1_broken":2,"b2_trays":30,"b2_eggs":1,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-04","submittedAt":"2026-02-04T20:48:07.550738+00:00","b1_trays":14,"b1_eggs":1,"b1_broken":1,"b2_trays":30,"b2_eggs":13,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-05","submittedAt":"2026-02-05T19:38:57.301741+00:00","b1_trays":14,"b1_eggs":1,"b1_broken":2,"b2_trays":29,"b2_eggs":10,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-06","submittedAt":"2026-02-06T19:52:01.940855+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":1,"b2_trays":29,"b2_eggs":24,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-07","submittedAt":"2026-02-07T20:27:27.542758+00:00","b1_trays":14,"b1_eggs":7,"b1_broken":1,"b2_trays":30,"b2_eggs":0,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-08","submittedAt":"2026-02-08T19:47:44.954220+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":2,"b2_trays":29,"b2_eggs":4,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-09","submittedAt":"2026-02-09T20:22:13.371182+00:00","b1_trays":14,"b1_eggs":19,"b1_broken":0,"b2_trays":30,"b2_eggs":21,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-10","submittedAt":"2026-02-10T19:13:10.309347+00:00","b1_trays":14,"b1_eggs":7,"b1_broken":1,"b2_trays":30,"b2_eggs":8,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-11","submittedAt":"2026-02-11T20:37:09.982188+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":1,"b2_trays":29,"b2_eggs":19,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-12","submittedAt":"2026-02-12T20:16:08.998304+00:00","b1_trays":14,"b1_eggs":17,"b1_broken":2,"b2_trays":29,"b2_eggs":28,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-13","submittedAt":"2026-02-13T19:42:11.172187+00:00","b1_trays":14,"b1_eggs":3,"b1_broken":0,"b2_trays":29,"b2_eggs":11,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-14","submittedAt":"2026-02-14T19:49:59.855340+00:00","b1_trays":14,"b1_eggs":6,"b1_broken":1,"b2_trays":29,"b2_eggs":28,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-15","submittedAt":"2026-02-15T20:08:42.171135+00:00","b1_trays":14,"b1_eggs":9,"b1_broken":1,"b2_trays":30,"b2_eggs":1,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-16","submittedAt":"2026-02-16T18:58:47.019761+00:00","b1_trays":14,"b1_eggs":1,"b1_broken":0,"b2_trays":30,"b2_eggs":0,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-17","submittedAt":"2026-02-17T20:29:56.072859+00:00","b1_trays":14,"b1_eggs":7,"b1_broken":1,"b2_trays":29,"b2_eggs":6,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-18","submittedAt":"2026-02-18T20:21:32.607854+00:00","b1_trays":14,"b1_eggs":10,"b1_broken":2,"b2_trays":30,"b2_eggs":6,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-19","submittedAt":"2026-02-19T19:55:50.478089+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":2,"b2_trays":29,"b2_eggs":2,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-20","submittedAt":"2026-02-20T20:05:27.279229+00:00","b1_trays":14,"b1_eggs":1,"b1_broken":1,"b2_trays":30,"b2_eggs":1,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-21","submittedAt":"2026-02-21T19:47:53.958326+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":2,"b2_trays":29,"b2_eggs":21,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-22","submittedAt":"2026-02-22T20:02:05.956261+00:00","b1_trays":14,"b1_eggs":2,"b1_broken":1,"b2_trays":30,"b2_eggs":0,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-24","submittedAt":"2026-02-24T19:13:04.378567+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":17,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-24","submittedAt":"2026-02-24T19:15:15.612068+00:00","b1_trays":14,"b1_eggs":16,"b1_broken":1,"b2_trays":30,"b2_eggs":12,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-25","submittedAt":"2026-02-25T20:11:54.467507+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":2,"b2_trays":31,"b2_eggs":17,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-26","submittedAt":"2026-02-26T20:11:57.041392+00:00","b1_trays":14,"b1_eggs":6,"b1_broken":2,"b2_trays":31,"b2_eggs":25,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-27","submittedAt":"2026-02-27T20:01:33.018370+00:00","b1_trays":13,"b1_eggs":26,"b1_broken":0,"b2_trays":30,"b2_eggs":15,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-02-28","submittedAt":"2026-02-28T19:27:22.269248+00:00","b1_trays":13,"b1_eggs":17,"b1_broken":2,"b2_trays":31,"b2_eggs":9,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-01","submittedAt":"2026-03-01T19:55:28.945523+00:00","b1_trays":13,"b1_eggs":24,"b1_broken":1,"b2_trays":29,"b2_eggs":0,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-02","submittedAt":"2026-03-02T19:53:28.677885+00:00","b1_trays":14,"b1_eggs":12,"b1_broken":1,"b2_trays":29,"b2_eggs":5,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-03","submittedAt":"2026-03-03T20:09:52.408331+00:00","b1_trays":14,"b1_eggs":1,"b1_broken":1,"b2_trays":29,"b2_eggs":13,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-04","submittedAt":"2026-03-04T20:21:27.439360+00:00","b1_trays":14,"b1_eggs":9,"b1_broken":1,"b2_trays":29,"b2_eggs":5,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-05","submittedAt":"2026-03-05T20:31:47.934362+00:00","b1_trays":13,"b1_eggs":6,"b1_broken":1,"b2_trays":20,"b2_eggs":14,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-06","submittedAt":"2026-03-06T19:50:03.244504+00:00","b1_trays":14,"b1_eggs":11,"b1_broken":1,"b2_trays":29,"b2_eggs":10,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-08","submittedAt":"2026-03-08T19:35:29.039111+00:00","b1_trays":14,"b1_eggs":3,"b1_broken":0,"b2_trays":29,"b2_eggs":24,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-08","submittedAt":"2026-03-08T19:45:59.549672+00:00","b1_trays":14,"b1_eggs":15,"b1_broken":1,"b2_trays":30,"b2_eggs":11,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-09","submittedAt":"2026-03-09T20:08:23.013099+00:00","b1_trays":14,"b1_eggs":16,"b1_broken":1,"b2_trays":29,"b2_eggs":23,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-10","submittedAt":"2026-03-10T19:58:32.399228+00:00","b1_trays":14,"b1_eggs":15,"b1_broken":1,"b2_trays":29,"b2_eggs":28,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-11","submittedAt":"2026-03-11T20:18:00.674104+00:00","b1_trays":14,"b1_eggs":19,"b1_broken":1,"b2_trays":29,"b2_eggs":11,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-12","submittedAt":"2026-03-12T19:53:29.838559+00:00","b1_trays":14,"b1_eggs":12,"b1_broken":1,"b2_trays":29,"b2_eggs":10,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-13","submittedAt":"2026-03-13T20:34:11.706848+00:00","b1_trays":14,"b1_eggs":11,"b1_broken":1,"b2_trays":29,"b2_eggs":26,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-14","submittedAt":"2026-03-14T20:39:45.258011+00:00","b1_trays":14,"b1_eggs":10,"b1_broken":1,"b2_trays":29,"b2_eggs":26,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-15","submittedAt":"2026-03-15T20:22:21.772461+00:00","b1_trays":13,"b1_eggs":17,"b1_broken":1,"b2_trays":29,"b2_eggs":21,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-16","submittedAt":"2026-03-16T20:47:30.638950+00:00","b1_trays":14,"b1_eggs":1,"b1_broken":2,"b2_trays":28,"b2_eggs":21,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-17","submittedAt":"2026-03-17T19:49:55.080273+00:00","b1_trays":13,"b1_eggs":28,"b1_broken":1,"b2_trays":26,"b2_eggs":6,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-18","submittedAt":"2026-03-18T20:07:00.506965+00:00","b1_trays":14,"b1_eggs":4,"b1_broken":1,"b2_trays":28,"b2_eggs":19,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-19","submittedAt":"2026-03-19T19:43:10.451884+00:00","b1_trays":13,"b1_eggs":23,"b1_broken":2,"b2_trays":29,"b2_eggs":4,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-20","submittedAt":"2026-03-20T19:35:18.375490+00:00","b1_trays":14,"b1_eggs":2,"b1_broken":2,"b2_trays":28,"b2_eggs":11,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-21","submittedAt":"2026-03-21T19:32:07.731634+00:00","b1_trays":13,"b1_eggs":29,"b1_broken":1,"b2_trays":29,"b2_eggs":8,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-22","submittedAt":"2026-03-22T19:20:23.935670+00:00","b1_trays":14,"b1_eggs":5,"b1_broken":2,"b2_trays":29,"b2_eggs":6,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-23","submittedAt":"2026-03-23T20:02:28.238698+00:00","b1_trays":14,"b1_eggs":2,"b1_broken":1,"b2_trays":28,"b2_eggs":22,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-24","submittedAt":"2026-03-24T20:27:09.735378+00:00","b1_trays":14,"b1_eggs":2,"b1_broken":2,"b2_trays":29,"b2_eggs":5,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-25","submittedAt":"2026-03-25T19:44:33.848653+00:00","b1_trays":13,"b1_eggs":26,"b1_broken":1,"b2_trays":28,"b2_eggs":24,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-26","submittedAt":"2026-03-26T19:39:03.525874+00:00","b1_trays":14,"b1_eggs":2,"b1_broken":2,"b2_trays":28,"b2_eggs":24,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-27","submittedAt":"2026-03-27T19:58:59.331928+00:00","b1_trays":14,"b1_eggs":4,"b1_broken":1,"b2_trays":29,"b2_eggs":20,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-28","submittedAt":"2026-03-28T20:30:34.759956+00:00","b1_trays":14,"b1_eggs":3,"b1_broken":1,"b2_trays":29,"b2_eggs":12,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-29","submittedAt":"2026-03-29T20:06:02.543425+00:00","b1_trays":14,"b1_eggs":15,"b1_broken":2,"b2_trays":29,"b2_eggs":16,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-30","submittedAt":"2026-03-30T19:45:57.207528+00:00","b1_trays":13,"b1_eggs":12,"b1_broken":2,"b2_trays":28,"b2_eggs":2,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-03-31","submittedAt":"2026-03-31T19:08:01.954706+00:00","b1_trays":14,"b1_eggs":9,"b1_broken":1,"b2_trays":29,"b2_eggs":15,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-01","submittedAt":"2026-04-01T19:52:30.746900+00:00","b1_trays":14,"b1_eggs":5,"b1_broken":1,"b2_trays":29,"b2_eggs":25,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-02","submittedAt":"2026-04-02T20:31:55.845394+00:00","b1_trays":14,"b1_eggs":5,"b1_broken":2,"b2_trays":30,"b2_eggs":0,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-03","submittedAt":"2026-04-03T19:29:10.621864+00:00","b1_trays":14,"b1_eggs":1,"b1_broken":1,"b2_trays":30,"b2_eggs":8,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-04","submittedAt":"2026-04-04T19:28:51.185697+00:00","b1_trays":14,"b1_eggs":15,"b1_broken":1,"b2_trays":30,"b2_eggs":9,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-05","submittedAt":"2026-04-05T20:20:05.180565+00:00","b1_trays":14,"b1_eggs":5,"b1_broken":2,"b2_trays":30,"b2_eggs":12,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-06","submittedAt":"2026-04-06T20:10:36.669912+00:00","b1_trays":14,"b1_eggs":10,"b1_broken":1,"b2_trays":30,"b2_eggs":11,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-07","submittedAt":"2026-04-07T19:45:27.660612+00:00","b1_trays":13,"b1_eggs":13,"b1_broken":1,"b2_trays":30,"b2_eggs":2,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-08","submittedAt":"2026-04-08T19:44:12.410814+00:00","b1_trays":14,"b1_eggs":2,"b1_broken":1,"b2_trays":30,"b2_eggs":1,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-09","submittedAt":"2026-04-09T20:18:52.512073+00:00","b1_trays":13,"b1_eggs":26,"b1_broken":1,"b2_trays":28,"b2_eggs":25,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-10","submittedAt":"2026-04-10T20:32:27.375942+00:00","b1_trays":14,"b1_eggs":10,"b1_broken":1,"b2_trays":28,"b2_eggs":4,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-11","submittedAt":"2026-04-11T20:19:34.442742+00:00","b1_trays":13,"b1_eggs":14,"b1_broken":1,"b2_trays":29,"b2_eggs":10,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-12","submittedAt":"2026-04-12T19:45:05.907254+00:00","b1_trays":14,"b1_eggs":3,"b1_broken":1,"b2_trays":30,"b2_eggs":0,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-13","submittedAt":"2026-04-13T19:50:50.905767+00:00","b1_trays":13,"b1_eggs":3,"b1_broken":0,"b2_trays":29,"b2_eggs":9,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-14","submittedAt":"2026-04-14T19:59:47.521297+00:00","b1_trays":13,"b1_eggs":21,"b1_broken":1,"b2_trays":27,"b2_eggs":23,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-15","submittedAt":"2026-04-15T19:20:34.980159+00:00","b1_trays":13,"b1_eggs":22,"b1_broken":2,"b2_trays":29,"b2_eggs":10,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-16","submittedAt":"2026-04-16T19:50:49.510853+00:00","b1_trays":12,"b1_eggs":22,"b1_broken":1,"b2_trays":28,"b2_eggs":20,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-17","submittedAt":"2026-04-17T20:33:30.854923+00:00","b1_trays":13,"b1_eggs":1,"b1_broken":1,"b2_trays":28,"b2_eggs":1,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-19","submittedAt":"2026-04-18T21:12:46.585593+00:00","b1_trays":13,"b1_eggs":10,"b1_broken":1,"b2_trays":29,"b2_eggs":2,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-19","submittedAt":"2026-04-19T19:53:40.825350+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":1,"b2_trays":28,"b2_eggs":10,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-21","submittedAt":"2026-04-21T02:11:11.267698+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":12,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-21","submittedAt":"2026-04-21T19:39:36.115351+00:00","b1_trays":12,"b1_eggs":9,"b1_broken":1,"b2_trays":28,"b2_eggs":28,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-22","submittedAt":"2026-04-22T20:34:02.820386+00:00","b1_trays":13,"b1_eggs":25,"b1_broken":1,"b2_trays":29,"b2_eggs":2,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-23","submittedAt":"2026-04-23T20:19:49.285755+00:00","b1_trays":13,"b1_eggs":13,"b1_broken":1,"b2_trays":29,"b2_eggs":3,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-24","submittedAt":"2026-04-24T20:54:22.092197+00:00","b1_trays":14,"b1_eggs":3,"b1_broken":1,"b2_trays":29,"b2_eggs":0,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-25","submittedAt":"2026-04-25T20:41:28.172607+00:00","b1_trays":14,"b1_eggs":1,"b1_broken":2,"b2_trays":29,"b2_eggs":2,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-26","submittedAt":"2026-04-26T20:40:01.262998+00:00","b1_trays":13,"b1_eggs":7,"b1_broken":1,"b2_trays":29,"b2_eggs":5,"b2_broken":3,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-27","submittedAt":"2026-04-27T20:02:20.306878+00:00","b1_trays":13,"b1_eggs":17,"b1_broken":1,"b2_trays":30,"b2_eggs":1,"b2_broken":1,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-28","submittedAt":"2026-04-28T19:52:50.686970+00:00","b1_trays":13,"b1_eggs":2,"b1_broken":1,"b2_trays":30,"b2_eggs":21,"b2_broken":0,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-29","submittedAt":"2026-04-29T19:09:24.001593+00:00","b1_trays":13,"b1_eggs":23,"b1_broken":0,"b2_trays":29,"b2_eggs":26,"b2_broken":2,"b3_trays":0,"b3_eggs":0,"b3_broken":0},{"date":"2026-04-30","submittedAt":"2026-04-30T19:14:04.461154+00:00","b1_trays":14,"b1_eggs":6,"b1_broken":1,"b2_trays":29,"b2_eggs":14,"b2_broken":2,"b3_trays":0,"b3_eggs":3,"b3_broken":0},{"date":"2026-05-01","submittedAt":"2026-05-01T19:17:47.259742+00:00","b1_trays":13,"b1_eggs":21,"b1_broken":1,"b2_trays":29,"b2_eggs":16,"b2_broken":2,"b3_trays":0,"b3_eggs":1,"b3_broken":0},{"date":"2026-05-02","submittedAt":"2026-05-02T20:14:59.995494+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":1,"b2_trays":29,"b2_eggs":3,"b2_broken":2,"b3_trays":0,"b3_eggs":5,"b3_broken":0},{"date":"2026-05-03","submittedAt":"2026-05-03T19:36:18.986850+00:00","b1_trays":13,"b1_eggs":26,"b1_broken":2,"b2_trays":29,"b2_eggs":14,"b2_broken":3,"b3_trays":0,"b3_eggs":3,"b3_broken":0},{"date":"2026-05-04","submittedAt":"2026-05-04T19:52:51.335153+00:00","b1_trays":14,"b1_eggs":4,"b1_broken":2,"b2_trays":29,"b2_eggs":19,"b2_broken":2,"b3_trays":0,"b3_eggs":2,"b3_broken":0},{"date":"2026-05-05","submittedAt":"2026-05-05T19:21:44.618353+00:00","b1_trays":13,"b1_eggs":22,"b1_broken":2,"b2_trays":29,"b2_eggs":3,"b2_broken":1,"b3_trays":0,"b3_eggs":3,"b3_broken":0},{"date":"2026-05-06","submittedAt":"2026-05-06T20:00:07.937073+00:00","b1_trays":14,"b1_eggs":2,"b1_broken":1,"b2_trays":29,"b2_eggs":20,"b2_broken":2,"b3_trays":0,"b3_eggs":6,"b3_broken":0},{"date":"2026-05-07","submittedAt":"2026-05-07T19:19:18.368041+00:00","b1_trays":13,"b1_eggs":22,"b1_broken":1,"b2_trays":29,"b2_eggs":0,"b2_broken":1,"b3_trays":0,"b3_eggs":4,"b3_broken":0},{"date":"2026-05-08","submittedAt":"2026-05-08T19:36:21.323699+00:00","b1_trays":13,"b1_eggs":20,"b1_broken":1,"b2_trays":29,"b2_eggs":27,"b2_broken":2,"b3_trays":0,"b3_eggs":10,"b3_broken":0},{"date":"2026-05-10","submittedAt":"2026-05-09T23:32:11.998163+00:00","b1_trays":13,"b1_eggs":26,"b1_broken":2,"b2_trays":29,"b2_eggs":11,"b2_broken":2,"b3_trays":0,"b3_eggs":8,"b3_broken":0},{"date":"2026-05-10","submittedAt":"2026-05-10T19:32:41.014271+00:00","b1_trays":13,"b1_eggs":21,"b1_broken":1,"b2_trays":30,"b2_eggs":0,"b2_broken":1,"b3_trays":0,"b3_eggs":9,"b3_broken":0},{"date":"2026-05-11","submittedAt":"2026-05-11T19:15:15.146303+00:00","b1_trays":13,"b1_eggs":18,"b1_broken":2,"b2_trays":28,"b2_eggs":23,"b2_broken":1,"b3_trays":0,"b3_eggs":9,"b3_broken":2},{"date":"2026-05-12","submittedAt":"2026-05-12T19:59:50.631343+00:00","b1_trays":13,"b1_eggs":3,"b1_broken":1,"b2_trays":29,"b2_eggs":4,"b2_broken":2,"b3_trays":0,"b3_eggs":12,"b3_broken":0},{"date":"2026-05-13","submittedAt":"2026-05-13T20:00:23.887443+00:00","b1_trays":13,"b1_eggs":28,"b1_broken":2,"b2_trays":28,"b2_eggs":29,"b2_broken":1,"b3_trays":0,"b3_eggs":9,"b3_broken":1},{"date":"2026-05-14","submittedAt":"2026-05-14T19:11:45.519408+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":1,"b2_trays":29,"b2_eggs":26,"b2_broken":2,"b3_trays":0,"b3_eggs":13,"b3_broken":2},{"date":"2026-05-15","submittedAt":"2026-05-15T19:01:20.261649+00:00","b1_trays":13,"b1_eggs":16,"b1_broken":1,"b2_trays":30,"b2_eggs":5,"b2_broken":2,"b3_trays":0,"b3_eggs":15,"b3_broken":1},{"date":"2026-05-16","submittedAt":"2026-05-16T20:25:53.832608+00:00","b1_trays":13,"b1_eggs":18,"b1_broken":1,"b2_trays":29,"b2_eggs":20,"b2_broken":2,"b3_trays":0,"b3_eggs":12,"b3_broken":2},{"date":"2026-05-17","submittedAt":"2026-05-17T19:14:25.059839+00:00","b1_trays":14,"b1_eggs":1,"b1_broken":0,"b2_trays":30,"b2_eggs":15,"b2_broken":2,"b3_trays":0,"b3_eggs":14,"b3_broken":1},{"date":"2026-05-18","submittedAt":"2026-05-18T19:39:11.414757+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":1,"b2_trays":30,"b2_eggs":7,"b2_broken":3,"b3_trays":0,"b3_eggs":21,"b3_broken":1},{"date":"2026-05-19","submittedAt":"2026-05-19T19:35:37.021460+00:00","b1_trays":14,"b1_eggs":10,"b1_broken":1,"b2_trays":30,"b2_eggs":5,"b2_broken":2,"b3_trays":0,"b3_eggs":21,"b3_broken":1},{"date":"2026-05-20","submittedAt":"2026-05-20T19:40:27.246356+00:00","b1_trays":14,"b1_eggs":11,"b1_broken":1,"b2_trays":30,"b2_eggs":15,"b2_broken":2,"b3_trays":0,"b3_eggs":24,"b3_broken":1},{"date":"2026-05-21","submittedAt":"2026-05-21T22:49:09.756101+00:00","b1_trays":14,"b1_eggs":2,"b1_broken":1,"b2_trays":30,"b2_eggs":8,"b2_broken":2,"b3_trays":0,"b3_eggs":28,"b3_broken":2},{"date":"2026-05-22","submittedAt":"2026-05-22T20:12:58.345751+00:00","b1_trays":14,"b1_eggs":7,"b1_broken":1,"b2_trays":30,"b2_eggs":13,"b2_broken":2,"b3_trays":1,"b3_eggs":3,"b3_broken":1},{"date":"2026-05-23","submittedAt":"2026-05-23T19:37:03.301486+00:00","b1_trays":13,"b1_eggs":22,"b1_broken":1,"b2_trays":30,"b2_eggs":26,"b2_broken":1,"b3_trays":1,"b3_eggs":4,"b3_broken":2},{"date":"2026-05-24","submittedAt":"2026-05-24T20:07:31.459203+00:00","b1_trays":14,"b1_eggs":27,"b1_broken":1,"b2_trays":30,"b2_eggs":27,"b2_broken":2,"b3_trays":1,"b3_eggs":11,"b3_broken":1},{"date":"2026-05-25","submittedAt":"2026-05-25T20:06:51.363290+00:00","b1_trays":14,"b1_eggs":27,"b1_broken":2,"b2_trays":30,"b2_eggs":26,"b2_broken":1,"b3_trays":1,"b3_eggs":13,"b3_broken":1},{"date":"2026-05-26","submittedAt":"2026-05-26T20:22:55.403988+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":1,"b2_trays":30,"b2_eggs":25,"b2_broken":2,"b3_trays":1,"b3_eggs":21,"b3_broken":1},{"date":"2026-05-27","submittedAt":"2026-05-27T19:42:31.559487+00:00","b1_trays":14,"b1_eggs":3,"b1_broken":1,"b2_trays":30,"b2_eggs":24,"b2_broken":1,"b3_trays":2,"b3_eggs":4,"b3_broken":1},{"date":"2026-05-28","submittedAt":"2026-05-28T19:59:49.065902+00:00","b1_trays":14,"b1_eggs":6,"b1_broken":1,"b2_trays":31,"b2_eggs":10,"b2_broken":2,"b3_trays":2,"b3_eggs":1,"b3_broken":0},{"date":"2026-05-29","submittedAt":"2026-05-29T20:16:51.567087+00:00","b1_trays":13,"b1_eggs":19,"b1_broken":1,"b2_trays":30,"b2_eggs":2,"b2_broken":1,"b3_trays":2,"b3_eggs":8,"b3_broken":2},{"date":"2026-05-30","submittedAt":"2026-05-30T20:15:49.906419+00:00","b1_trays":13,"b1_eggs":18,"b1_broken":1,"b2_trays":30,"b2_eggs":16,"b2_broken":2,"b3_trays":2,"b3_eggs":16,"b3_broken":0},{"date":"2026-05-31","submittedAt":"2026-05-31T19:43:33.686251+00:00","b1_trays":13,"b1_eggs":14,"b1_broken":1,"b2_trays":29,"b2_eggs":26,"b2_broken":2,"b3_trays":2,"b3_eggs":15,"b3_broken":0},{"date":"2026-06-01","submittedAt":"2026-06-01T19:33:44.519085+00:00","b1_trays":13,"b1_eggs":21,"b1_broken":1,"b2_trays":30,"b2_eggs":7,"b2_broken":2,"b3_trays":3,"b3_eggs":1,"b3_broken":0},{"date":"2026-06-02","submittedAt":"2026-06-02T20:13:47.241193+00:00","b1_trays":13,"b1_eggs":5,"b1_broken":1,"b2_trays":30,"b2_eggs":0,"b2_broken":2,"b3_trays":3,"b3_eggs":1,"b3_broken":0},{"date":"2026-06-03","submittedAt":"2026-06-03T20:26:08.152754+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":1,"b2_trays":31,"b2_eggs":5,"b2_broken":2,"b3_trays":3,"b3_eggs":15,"b3_broken":1},{"date":"2026-06-04","submittedAt":"2026-06-04T19:18:43.467685+00:00","b1_trays":13,"b1_eggs":9,"b1_broken":1,"b2_trays":30,"b2_eggs":0,"b2_broken":1,"b3_trays":2,"b3_eggs":24,"b3_broken":2},{"date":"2026-06-05","submittedAt":"2026-06-05T20:07:13.236085+00:00","b1_trays":13,"b1_eggs":5,"b1_broken":1,"b2_trays":30,"b2_eggs":15,"b2_broken":2,"b3_trays":4,"b3_eggs":0,"b3_broken":1},{"date":"2026-06-06","submittedAt":"2026-06-06T19:31:18.943562+00:00","b1_trays":13,"b1_eggs":9,"b1_broken":1,"b2_trays":30,"b2_eggs":13,"b2_broken":2,"b3_trays":4,"b3_eggs":3,"b3_broken":0},{"date":"2026-06-07","submittedAt":"2026-06-07T20:25:05.502325+00:00","b1_trays":14,"b1_eggs":5,"b1_broken":1,"b2_trays":30,"b2_eggs":6,"b2_broken":2,"b3_trays":4,"b3_eggs":1,"b3_broken":1},{"date":"2026-06-08","submittedAt":"2026-06-08T19:57:48.665120+00:00","b1_trays":13,"b1_eggs":9,"b1_broken":1,"b2_trays":30,"b2_eggs":12,"b2_broken":1,"b3_trays":4,"b3_eggs":11,"b3_broken":2},{"date":"2026-06-09","submittedAt":"2026-06-09T19:56:05.598206+00:00","b1_trays":13,"b1_eggs":24,"b1_broken":1,"b2_trays":31,"b2_eggs":5,"b2_broken":2,"b3_trays":4,"b3_eggs":19,"b3_broken":0},{"date":"2026-06-10","submittedAt":"2026-06-10T19:34:28.339369+00:00","b1_trays":13,"b1_eggs":13,"b1_broken":1,"b2_trays":31,"b2_eggs":0,"b2_broken":2,"b3_trays":4,"b3_eggs":19,"b3_broken":1},{"date":"2026-06-11","submittedAt":"2026-06-11T19:43:01.883885+00:00","b1_trays":14,"b1_eggs":7,"b1_broken":1,"b2_trays":30,"b2_eggs":22,"b2_broken":2,"b3_trays":5,"b3_eggs":8,"b3_broken":1},{"date":"2026-06-12","submittedAt":"2026-06-12T19:47:35.886094+00:00","b1_trays":13,"b1_eggs":23,"b1_broken":1,"b2_trays":30,"b2_eggs":0,"b2_broken":1,"b3_trays":5,"b3_eggs":15,"b3_broken":2},{"date":"2026-06-13","submittedAt":"2026-06-13T19:44:31.465651+00:00","b1_trays":13,"b1_eggs":21,"b1_broken":1,"b2_trays":30,"b2_eggs":9,"b2_broken":2,"b3_trays":6,"b3_eggs":6,"b3_broken":0},{"date":"2026-06-14","submittedAt":"2026-06-14T19:19:14.335133+00:00","b1_trays":13,"b1_eggs":18,"b1_broken":1,"b2_trays":29,"b2_eggs":25,"b2_broken":2,"b3_trays":5,"b3_eggs":24,"b3_broken":1},{"date":"2026-06-15","submittedAt":"2026-06-15T19:21:33.033147+00:00","b1_trays":13,"b1_eggs":7,"b1_broken":1,"b2_trays":30,"b2_eggs":6,"b2_broken":2,"b3_trays":6,"b3_eggs":24,"b3_broken":1},{"date":"2026-06-16","submittedAt":"2026-06-16T19:14:57.095705+00:00","b1_trays":13,"b1_eggs":25,"b1_broken":1,"b2_trays":29,"b2_eggs":26,"b2_broken":2,"b3_trays":6,"b3_eggs":18,"b3_broken":1},{"date":"2026-06-17","submittedAt":"2026-06-17T19:14:27.960467+00:00","b1_trays":14,"b1_eggs":0,"b1_broken":1,"b2_trays":30,"b2_eggs":9,"b2_broken":2,"b3_trays":7,"b3_eggs":10,"b3_broken":0},{"date":"2026-06-18","submittedAt":"2026-06-18T19:14:22.697578+00:00","b1_trays":13,"b1_eggs":27,"b1_broken":2,"b2_trays":30,"b2_eggs":6,"b2_broken":1,"b3_trays":6,"b3_eggs":24,"b3_broken":2},{"date":"2026-06-19","submittedAt":"2026-06-19T19:07:34.138312+00:00","b1_trays":13,"b1_eggs":29,"b1_broken":1,"b2_trays":30,"b2_eggs":16,"b2_broken":2,"b3_trays":7,"b3_eggs":19,"b3_broken":1},{"date":"2026-06-20","submittedAt":"2026-06-20T20:21:50.583263+00:00","b1_trays":13,"b1_eggs":1,"b1_broken":2,"b2_trays":30,"b2_eggs":3,"b2_broken":3,"b3_trays":8,"b3_eggs":7,"b3_broken":2},{"date":"2026-06-21","submittedAt":"2026-06-21T19:17:35.747219+00:00","b1_trays":13,"b1_eggs":22,"b1_broken":0,"b2_trays":30,"b2_eggs":3,"b2_broken":4,"b3_trays":8,"b3_eggs":19,"b3_broken":1},{"date":"2026-06-22","submittedAt":"2026-06-22T19:34:29.930910+00:00","b1_trays":13,"b1_eggs":6,"b1_broken":2,"b2_trays":30,"b2_eggs":18,"b2_broken":3,"b3_trays":8,"b3_eggs":3,"b3_broken":1},{"date":"2026-06-23","submittedAt":"2026-06-23T19:13:56.919852+00:00","b1_trays":14,"b1_eggs":5,"b1_broken":1,"b2_trays":30,"b2_eggs":17,"b2_broken":3,"b3_trays":8,"b3_eggs":25,"b3_broken":1},{"date":"2026-06-24","submittedAt":"2026-06-24T19:50:49.987167+00:00","b1_trays":13,"b1_eggs":8,"b1_broken":1,"b2_trays":30,"b2_eggs":7,"b2_broken":1,"b3_trays":8,"b3_eggs":22,"b3_broken":3},{"date":"2026-06-25","submittedAt":"2026-06-25T20:00:19.221767+00:00","b1_trays":14,"b1_eggs":1,"b1_broken":1,"b2_trays":30,"b2_eggs":8,"b2_broken":2,"b3_trays":9,"b3_eggs":1,"b3_broken":6},{"date":"2026-06-26","submittedAt":"2026-06-26T18:58:25.328361+00:00","b1_trays":13,"b1_eggs":11,"b1_broken":1,"b2_trays":30,"b2_eggs":24,"b2_broken":1,"b3_trays":9,"b3_eggs":7,"b3_broken":2},{"date":"2026-06-27","submittedAt":"2026-06-27T19:03:15.445240+00:00","b1_trays":13,"b1_eggs":8,"b1_broken":0,"b2_trays":30,"b2_eggs":18,"b2_broken":2,"b3_trays":9,"b3_eggs":29,"b3_broken":2},{"date":"2026-06-28","submittedAt":"2026-06-28T19:18:55.230557+00:00","b1_trays":13,"b1_eggs":22,"b1_broken":1,"b2_trays":30,"b2_eggs":21,"b2_broken":1,"b3_trays":9,"b3_eggs":23,"b3_broken":2},{"date":"2026-06-29","submittedAt":"2026-06-29T19:14:16.406426+00:00","b1_trays":13,"b1_eggs":24,"b1_broken":0,"b2_trays":30,"b2_eggs":8,"b2_broken":3,"b3_trays":10,"b3_eggs":6,"b3_broken":2},{"date":"2026-06-30","submittedAt":"2026-06-30T20:06:18.872581+00:00","b1_trays":13,"b1_eggs":6,"b1_broken":1,"b2_trays":30,"b2_eggs":11,"b2_broken":2,"b3_trays":9,"b3_eggs":26,"b3_broken":2},{"date":"2026-07-01","submittedAt":"2026-07-01T20:05:12.864062+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":1,"b2_trays":30,"b2_eggs":10,"b2_broken":0,"b3_trays":10,"b3_eggs":21,"b3_broken":0},{"date":"2026-07-02","submittedAt":"2026-07-02T19:04:39.135403+00:00","b1_trays":13,"b1_eggs":9,"b1_broken":2,"b2_trays":29,"b2_eggs":3,"b2_broken":2,"b3_trays":10,"b3_eggs":12,"b3_broken":1},{"date":"2026-07-04","submittedAt":"2026-07-04T02:03:52.474007+00:00","b1_trays":13,"b1_eggs":1,"b1_broken":0,"b2_trays":30,"b2_eggs":0,"b2_broken":2,"b3_trays":10,"b3_eggs":25,"b3_broken":0},{"date":"2026-07-04","submittedAt":"2026-07-04T19:29:29.653686+00:00","b1_trays":13,"b1_eggs":9,"b1_broken":2,"b2_trays":30,"b2_eggs":0,"b2_broken":1,"b3_trays":10,"b3_eggs":15,"b3_broken":2},{"date":"2026-07-05","submittedAt":"2026-07-05T20:09:10.926186+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":30,"b2_eggs":0,"b2_broken":2,"b3_trays":11,"b3_eggs":0,"b3_broken":0},{"date":"2026-07-06","submittedAt":"2026-07-06T19:19:46.206549+00:00","b1_trays":13,"b1_eggs":5,"b1_broken":0,"b2_trays":30,"b2_eggs":23,"b2_broken":0,"b3_trays":10,"b3_eggs":18,"b3_broken":1},{"date":"2026-07-07","submittedAt":"2026-07-07T19:31:30.167648+00:00","b1_trays":13,"b1_eggs":5,"b1_broken":0,"b2_trays":30,"b2_eggs":18,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":8,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-09","submittedAt":"2026-07-09T02:44:55.874812+00:00","b1_trays":13,"b1_eggs":3,"b1_broken":0,"b2_trays":30,"b2_eggs":14,"b2_broken":1,"b2_dead":0,"b3_trays":10,"b3_eggs":21,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-09","submittedAt":"2026-07-09T19:38:00.602976+00:00","b1_trays":12,"b1_eggs":0,"b1_broken":0,"b2_trays":30,"b2_eggs":9,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":5,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-11","submittedAt":"2026-07-11T03:25:46.270478+00:00","b1_trays":12,"b1_eggs":19,"b1_broken":0,"b2_trays":29,"b2_eggs":28,"b2_broken":0,"b2_dead":0,"b3_trays":10,"b3_eggs":25,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-11","submittedAt":"2026-07-11T20:13:41.240278+00:00","b1_trays":13,"b1_eggs":1,"b1_broken":0,"b2_trays":30,"b2_eggs":1,"b2_broken":1,"b2_dead":0,"b3_trays":10,"b3_eggs":28,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-12","submittedAt":"2026-07-12T19:27:26.592603+00:00","b1_trays":13,"b1_eggs":16,"b1_broken":0,"b2_trays":29,"b2_eggs":5,"b2_broken":1,"b2_dead":0,"b3_trays":10,"b3_eggs":14,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-13","submittedAt":"2026-07-13T19:15:57.151807+00:00","b1_trays":13,"b1_eggs":6,"b1_broken":0,"b2_trays":29,"b2_eggs":16,"b2_broken":1,"b2_dead":0,"b3_trays":9,"b3_eggs":26,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-15","submittedAt":"2026-07-15T04:57:20.965255+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":17,"b2_broken":1,"b2_dead":0,"b3_trays":9,"b3_eggs":24,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-16","submittedAt":"2026-07-16T03:23:25.993790+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":30,"b2_eggs":0,"b2_broken":0,"b2_dead":0,"b3_trays":10,"b3_eggs":5,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-17","submittedAt":"2026-07-17T03:21:50.820839+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":27,"b2_broken":0,"b2_dead":0,"b3_trays":10,"b3_eggs":0,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-17","submittedAt":"2026-07-17T19:38:24.800459+00:00","b1_trays":13,"b1_eggs":6,"b1_broken":1,"b2_trays":30,"b2_eggs":5,"b2_broken":1,"b2_dead":0,"b3_trays":10,"b3_eggs":1,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-19","submittedAt":"2026-07-19T03:25:47.820194+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":19,"b2_broken":0,"b2_dead":0,"b3_trays":10,"b3_eggs":0,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-19","submittedAt":"2026-07-19T20:01:57.023164+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":30,"b2_eggs":6,"b2_broken":2,"b2_dead":0,"b3_trays":10,"b3_eggs":0,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-21","submittedAt":"2026-07-21T03:30:06.667237+00:00","b1_trays":13,"b1_eggs":2,"b1_broken":0,"b2_trays":29,"b2_eggs":5,"b2_broken":0,"b2_dead":0,"b3_trays":10,"b3_eggs":5,"b3_broken":2,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-22","submittedAt":"2026-07-22T03:55:32.955251+00:00","b1_trays":13,"b1_eggs":6,"b1_broken":1,"b2_trays":29,"b2_eggs":15,"b2_broken":2,"b2_dead":1,"b3_trays":10,"b3_eggs":6,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-23","submittedAt":"2026-07-23T02:23:09.307683+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":7,"b2_broken":1,"b2_dead":0,"b3_trays":10,"b3_eggs":19,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-24","submittedAt":"2026-07-24T03:17:26.318604+00:00","b1_trays":13,"b1_eggs":3,"b1_broken":1,"b2_trays":30,"b2_eggs":16,"b2_broken":2,"b2_dead":0,"b3_trays":10,"b3_eggs":14,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-25","submittedAt":"2026-07-25T03:01:05.782862+00:00","b1_trays":13,"b1_eggs":8,"b1_broken":0,"b2_trays":30,"b2_eggs":1,"b2_broken":0,"b2_dead":0,"b3_trays":10,"b3_eggs":4,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-26","submittedAt":"2026-07-26T01:29:32.927382+00:00","b1_trays":13,"b1_eggs":4,"b1_broken":1,"b2_trays":29,"b2_eggs":22,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":1,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-27","submittedAt":"2026-07-27T03:27:08.979600+00:00","b1_trays":13,"b1_eggs":9,"b1_broken":0,"b2_trays":30,"b2_eggs":12,"b2_broken":0,"b2_dead":0,"b3_trays":11,"b3_eggs":9,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-28","submittedAt":"2026-07-28T00:38:42.501807+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":1,"b2_trays":29,"b2_eggs":12,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":1,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-29","submittedAt":"2026-07-29T01:05:12.905473+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":9,"b2_broken":0,"b2_dead":0,"b3_trays":11,"b3_eggs":2,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-30","submittedAt":"2026-07-30T03:34:46.427860+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":1,"b2_trays":29,"b2_eggs":21,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":18,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-07-31","submittedAt":"2026-07-31T01:31:06.430089+00:00","b1_trays":13,"b1_eggs":0,"b1_broken":0,"b2_trays":29,"b2_eggs":1,"b2_broken":0,"b2_dead":0,"b3_trays":10,"b3_eggs":29,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-01","submittedAt":"2026-08-01T02:12:10.706113+00:00","b1_trays":12,"b1_eggs":5,"b1_broken":1,"b2_trays":29,"b2_eggs":0,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":3,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-02","submittedAt":"2026-08-02T03:54:22.985591+00:00","b1_trays":12,"b1_eggs":10,"b1_broken":1,"b2_trays":30,"b2_eggs":9,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":9,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-03","submittedAt":"2026-08-03T00:15:56.251968+00:00","b1_trays":12,"b1_eggs":0,"b1_broken":1,"b2_trays":29,"b2_eggs":5,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":3,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-04","submittedAt":"2026-08-04T02:31:22.260245+00:00","b1_trays":12,"b1_eggs":12,"b1_broken":1,"b2_trays":29,"b2_eggs":1,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":6,"b3_broken":2,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-05","submittedAt":"2026-08-05T03:54:59.377881+00:00","b1_trays":12,"b1_eggs":10,"b1_broken":1,"b2_trays":29,"b2_eggs":6,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":23,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-06","submittedAt":"2026-08-06T05:27:56.770525+00:00","b1_trays":12,"b1_eggs":10,"b1_broken":0,"b2_trays":29,"b2_eggs":0,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":21,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-07","submittedAt":"2026-08-06T23:57:40.651435+00:00","b1_trays":12,"b1_eggs":12,"b1_broken":1,"b2_trays":29,"b2_eggs":1,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":10,"b3_broken":2,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-08","submittedAt":"2026-08-08T00:40:43.693795+00:00","b1_trays":12,"b1_eggs":13,"b1_broken":0,"b2_trays":29,"b2_eggs":5,"b2_broken":0,"b2_dead":0,"b3_trays":11,"b3_eggs":15,"b3_broken":2,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-09","submittedAt":"2026-08-09T02:42:09.461898+00:00","b1_trays":12,"b1_eggs":10,"b1_broken":1,"b2_trays":29,"b2_eggs":2,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":18,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-10","submittedAt":"2026-08-10T00:08:41.181530+00:00","b1_trays":6,"b1_eggs":0,"b1_broken":2,"b2_trays":30,"b2_eggs":3,"b2_broken":0,"b2_dead":0,"b3_trays":12,"b3_eggs":0,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-11","submittedAt":"2026-08-11T02:15:36.729664+00:00","b2_trays":29,"b2_eggs":12,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":18,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-12","submittedAt":"2026-08-12T02:37:44.931555+00:00","b2_trays":29,"b2_eggs":0,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":29,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-13","submittedAt":"2026-08-12T23:29:22.846648+00:00","b2_trays":28,"b2_eggs":3,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":16,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-14","submittedAt":"2026-08-14T02:31:02.109190+00:00","b2_trays":29,"b2_eggs":2,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":17,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-16","submittedAt":"2026-08-16T01:14:41.969307+00:00","b2_trays":28,"b2_eggs":15,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":14,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-16","submittedAt":"2026-08-16T01:17:57.041006+00:00","b2_trays":20,"b2_eggs":15,"b2_broken":2,"b2_dead":0,"b3_trays":10,"b3_eggs":14,"b3_broken":2,"b3_dead":10,"b4_trays":14,"b4_eggs":2,"b4_broken":0,"b4_dead":0},{"date":"2026-08-17","submittedAt":"2026-08-17T03:22:10.226794+00:00","b2_trays":29,"b2_eggs":18,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":14,"b3_broken":2,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-19","submittedAt":"2026-08-19T02:47:51.652155+00:00","b2_trays":28,"b2_eggs":23,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":10,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-20","submittedAt":"2026-08-19T23:58:24.065009+00:00","b2_trays":28,"b2_eggs":1,"b2_broken":2,"b2_dead":0,"b3_trays":10,"b3_eggs":12,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-21","submittedAt":"2026-08-21T02:25:58.474969+00:00","b2_trays":28,"b2_eggs":18,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":17,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-21","submittedAt":"2026-08-22T01:57:52.199287+00:00","b2_trays":28,"b2_eggs":20,"b2_broken":2,"b2_dead":1,"b3_trays":11,"b3_eggs":10,"b3_broken":1,"b3_dead":3,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-23","submittedAt":"2026-08-22T23:47:56.560853+00:00","b2_trays":29,"b2_eggs":18,"b2_broken":2,"b2_dead":0,"b3_trays":0,"b3_eggs":14,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-24","submittedAt":"2026-08-24T03:17:00.891803+00:00","b2_trays":29,"b2_eggs":137,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":13,"b3_broken":2,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-25","submittedAt":"2026-08-25T02:37:01.075683+00:00","b2_trays":29,"b2_eggs":9,"b2_broken":3,"b2_dead":0,"b3_trays":11,"b3_eggs":18,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-26","submittedAt":"2026-08-26T01:59:21.733001+00:00","b2_trays":29,"b2_eggs":13,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":14,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-27","submittedAt":"2026-08-27T00:10:53.846210+00:00","b2_trays":29,"b2_eggs":2,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":18,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-28","submittedAt":"2026-08-27T22:59:22.906503+00:00","b2_trays":29,"b2_eggs":8,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":11,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-29","submittedAt":"2026-08-28T23:50:20.668415+00:00","b2_trays":29,"b2_eggs":23,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":14,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-30","submittedAt":"2026-08-30T01:37:21.645748+00:00","b2_trays":29,"b2_eggs":0,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":21,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-08-31","submittedAt":"2026-08-31T01:47:22.031207+00:00","b2_trays":29,"b2_eggs":19,"b2_broken":3,"b2_dead":0,"b3_trays":11,"b3_eggs":14,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-09-01","submittedAt":"2026-08-31T23:43:26.752869+00:00","b2_trays":29,"b2_eggs":14,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":13,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-09-02","submittedAt":"2026-09-02T01:19:33.395385+00:00","b2_trays":28,"b2_eggs":9,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":3,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-09-03","submittedAt":"2026-09-03T01:14:41.411607+00:00","b2_trays":28,"b2_eggs":7,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":5,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-09-04","submittedAt":"2026-09-04T00:48:03.141649+00:00","b2_trays":28,"b2_eggs":20,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":18,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-09-05","submittedAt":"2026-09-05T01:44:34.914534+00:00","b2_trays":27,"b2_eggs":18,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":24,"b3_broken":2,"b3_dead":0,"b4_trays":0,"b4_eggs":1,"b4_broken":0,"b4_dead":0},{"date":"2026-09-06","submittedAt":"2026-09-06T02:06:24.343762+00:00","b2_trays":28,"b2_eggs":19,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":16,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":4,"b4_broken":0,"b4_dead":0},{"date":"2026-09-07","submittedAt":"2026-09-07T02:13:48.771594+00:00","b2_trays":28,"b2_eggs":17,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":1,"b3_broken":2,"b3_dead":0,"b4_trays":0,"b4_eggs":0,"b4_broken":0,"b4_dead":0},{"date":"2026-09-08","submittedAt":"2026-09-08T05:06:50.378037+00:00","b2_trays":28,"b2_eggs":21,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":9,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":7,"b4_broken":0,"b4_dead":0},{"date":"2026-09-09","submittedAt":"2026-09-09T01:41:39.203593+00:00","b2_trays":28,"b2_eggs":5,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":10,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":6,"b4_broken":1,"b4_dead":0},{"date":"2026-09-10","submittedAt":"2026-09-10T02:20:45.592460+00:00","b2_trays":28,"b2_eggs":2,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":3,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":6,"b4_broken":1,"b4_dead":0},{"date":"2026-09-11","submittedAt":"2026-09-11T02:19:06.468256+00:00","b2_trays":29,"b2_eggs":4,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":9,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":8,"b4_broken":0,"b4_dead":0},{"date":"2026-09-12","submittedAt":"2026-09-12T01:19:16.050029+00:00","b2_trays":29,"b2_eggs":4,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":6,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":11,"b4_broken":0,"b4_dead":0},{"date":"2026-09-13","submittedAt":"2026-09-13T01:44:01.230229+00:00","b2_trays":28,"b2_eggs":27,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":12,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":16,"b4_broken":1,"b4_dead":0},{"date":"2026-09-14","submittedAt":"2026-09-14T02:59:29.578722+00:00","b2_trays":28,"b2_eggs":25,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":13,"b3_broken":1,"b3_dead":0,"b4_trays":0,"b4_eggs":22,"b4_broken":2,"b4_dead":0},{"date":"2026-09-15","submittedAt":"2026-09-15T01:25:34.133896+00:00","b2_trays":28,"b2_eggs":28,"b2_broken":1,"b2_dead":0,"b3_trays":11,"b3_eggs":2,"b3_broken":0,"b3_dead":0,"b4_trays":0,"b4_eggs":12,"b4_broken":0,"b4_dead":0},{"date":"2026-09-16","submittedAt":"2026-09-16T02:37:05.283056+00:00","b2_trays":29,"b2_eggs":4,"b2_broken":2,"b2_dead":0,"b3_trays":11,"b3_eggs":22,"b3_broken":1,"b3_dead":0,"b4_trays":1,"b4_eggs":6,"b4_broken":3,"b4_dead":0},{"date":"2026-09-17","submittedAt":"2026-09-17T04:28:55.668978+00:00","b2_trays":28,"b2_eggs":16,"b2_broken":0,"b2_dead":1,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":19,"b3_broken":2,"b3_dead":0,"b3_feedGrams":40,"b4_trays":0,"b4_eggs":27,"b4_broken":0,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-09-18","submittedAt":"2026-09-18T03:25:21.585745+00:00","b2_trays":28,"b2_eggs":29,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":23,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":1,"b4_eggs":21,"b4_broken":0,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-09-19","submittedAt":"2026-09-19T02:33:12.658161+00:00","b2_trays":29,"b2_eggs":0,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":9,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":1,"b4_eggs":9,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-09-20","submittedAt":"2026-09-20T03:06:11.898412+00:00","b2_trays":28,"b2_eggs":15,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":15,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":1,"b4_eggs":24,"b4_broken":1,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-09-21","submittedAt":"2026-09-21T02:17:19.773394+00:00","b2_trays":28,"b2_eggs":29,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":15,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":2,"b4_eggs":3,"b4_broken":0,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-09-22","submittedAt":"2026-09-22T01:32:39.306920+00:00","b2_trays":28,"b2_eggs":13,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":21,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":2,"b4_eggs":12,"b4_broken":0,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-09-23","submittedAt":"2026-09-23T02:17:27.186117+00:00","b2_trays":28,"b2_eggs":24,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":21,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":3,"b4_eggs":16,"b4_broken":0,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-09-24","submittedAt":"2026-09-24T01:10:08.307058+00:00","b2_trays":28,"b2_eggs":6,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":12,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":3,"b4_eggs":2,"b4_broken":0,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-09-25","submittedAt":"2026-09-25T02:29:45.523725+00:00","b2_trays":28,"b2_eggs":13,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":20,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":4,"b4_eggs":0,"b4_broken":0,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-09-26","submittedAt":"2026-09-26T01:00:24.883767+00:00","b2_trays":28,"b2_eggs":2,"b2_broken":1,"b2_dead":1,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":4,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":4,"b4_eggs":10,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":4,"b5_feedGrams":25},{"date":"2026-09-27","submittedAt":"2026-09-26T23:21:52.911597+00:00","b2_trays":28,"b2_eggs":10,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":5,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":5,"b4_eggs":0,"b4_broken":1,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":50},{"date":"2026-09-28","submittedAt":"2026-09-27T22:21:51.437307+00:00","b2_trays":28,"b2_eggs":13,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":3,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":5,"b4_eggs":22,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-09-29","submittedAt":"2026-09-29T02:34:30.331566+00:00","b2_trays":28,"b2_eggs":17,"b2_broken":0,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":24,"b3_broken":2,"b3_dead":0,"b3_feedGrams":40,"b4_trays":7,"b4_eggs":18,"b4_broken":1,"b4_dead":0,"b4_feedGrams":0,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-09-30","submittedAt":"2026-09-29T23:49:26.687728+00:00","b2_trays":28,"b2_eggs":0,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":12,"b3_eggs":1,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":8,"b4_eggs":23,"b4_broken":2,"b4_dead":3,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-10-01","submittedAt":"2026-09-30T23:12:56.428129+00:00","b2_trays":28,"b2_eggs":10,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":9,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":8,"b4_eggs":6,"b4_broken":2,"b4_dead":3,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-10-02","submittedAt":"2026-10-01T23:03:01.895600+00:00","b2_trays":29,"b2_eggs":4,"b2_broken":0,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":20,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":10,"b4_eggs":2,"b4_broken":1,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-10-03","submittedAt":"2026-10-02T22:29:08.887393+00:00","b2_trays":28,"b2_eggs":8,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":11,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":10,"b4_eggs":9,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-10-04","submittedAt":"2026-10-04T00:47:33.909884+00:00","b2_trays":28,"b2_eggs":2,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":7,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":10,"b4_eggs":3,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-10-05","submittedAt":"2026-10-05T02:03:02.557058+00:00","b2_trays":28,"b2_eggs":0,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":29,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":9,"b4_eggs":29,"b4_broken":0,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-10-06","submittedAt":"2026-10-05T22:15:43.422688+00:00","b2_trays":28,"b2_eggs":17,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":11,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":12,"b4_eggs":9,"b4_broken":1,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-10-07","submittedAt":"2026-10-06T22:26:05.574197+00:00","b2_trays":27,"b2_eggs":13,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":0,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":12,"b4_eggs":28,"b4_broken":0,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-10-08","submittedAt":"2026-10-08T00:38:27.462406+00:00","b2_trays":28,"b2_eggs":0,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":3,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":12,"b4_eggs":16,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":0},{"date":"2026-10-09","submittedAt":"2026-10-09T00:25:20.873827+00:00","b2_trays":28,"b2_eggs":6,"b2_broken":0,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":6,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":13,"b4_eggs":21,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":100},{"date":"2026-10-10","submittedAt":"2026-10-10T03:12:09.409087+00:00","b2_trays":27,"b2_eggs":17,"b2_broken":2,"b2_dead":1,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":28,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":13,"b4_eggs":12,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":100},{"date":"2026-10-11","submittedAt":"2026-10-11T02:02:26.428119+00:00","b2_trays":27,"b2_eggs":17,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":26,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":15,"b4_eggs":9,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":100},{"date":"2026-10-12","submittedAt":"2026-10-12T02:08:52.450983+00:00","b2_trays":27,"b2_eggs":15,"b2_broken":1,"b2_dead":4,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":29,"b3_broken":2,"b3_dead":0,"b3_feedGrams":40,"b4_trays":15,"b4_eggs":12,"b4_broken":1,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":100},{"date":"2026-10-13","submittedAt":"2026-10-13T01:26:41.152096+00:00","b2_trays":28,"b2_eggs":1,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":10,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":16,"b4_eggs":12,"b4_broken":1,"b4_dead":0,"b4_feedGrams":0,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":100},{"date":"2026-10-14","submittedAt":"2026-10-14T01:52:41.188166+00:00","b2_trays":27,"b2_eggs":20,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":21,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":16,"b4_eggs":3,"b4_broken":1,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":132},{"date":"2026-10-15","submittedAt":"2026-10-14T23:50:55.778229+00:00","b2_trays":28,"b2_eggs":0,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":2,"b3_broken":2,"b3_dead":0,"b3_feedGrams":40,"b4_trays":14,"b4_eggs":27,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":100},{"date":"2026-10-16","submittedAt":"2026-10-16T02:21:21.567353+00:00","b2_trays":27,"b2_eggs":15,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":1,"b3_broken":2,"b3_dead":0,"b3_feedGrams":40,"b4_trays":17,"b4_eggs":9,"b4_broken":3,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":100},{"date":"2026-10-17","submittedAt":"2026-10-17T01:47:44.162888+00:00","b2_trays":27,"b2_eggs":28,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":8,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":16,"b4_eggs":24,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":130},{"date":"2026-10-18","submittedAt":"2026-10-18T01:35:11.945183+00:00","b2_trays":27,"b2_eggs":8,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":9,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":17,"b4_eggs":0,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":130},{"date":"2026-10-19","submittedAt":"2026-10-19T02:07:41.077241+00:00","b2_trays":28,"b2_eggs":4,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":7,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":15,"b4_eggs":20,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":130},{"date":"2026-10-20","submittedAt":"2026-10-20T03:28:38.038973+00:00","b2_trays":27,"b2_eggs":1,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":2,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":15,"b4_eggs":6,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":130},{"date":"2026-10-22","submittedAt":"2026-10-22T03:26:08.277609+00:00","b2_trays":27,"b2_eggs":2,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":28,"b3_broken":2,"b3_dead":0,"b3_feedGrams":40,"b4_trays":18,"b4_eggs":27,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":130},{"date":"2026-10-22","submittedAt":"2026-10-22T03:33:22.180617+00:00","b2_trays":28,"b2_eggs":1,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":2,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":19,"b4_eggs":13,"b4_broken":3,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":130},{"date":"2026-10-23","submittedAt":"2026-10-23T03:19:42.803971+00:00","b2_trays":28,"b2_eggs":6,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":9,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":20,"b4_eggs":3,"b4_broken":1,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":1,"b5_feedGrams":130},{"date":"2026-10-24","submittedAt":"2026-10-24T03:07:18.480021+00:00","b2_trays":27,"b2_eggs":0,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":1,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":18,"b4_eggs":19,"b4_broken":1,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":140},{"date":"2026-10-25","submittedAt":"2026-10-25T02:59:36.806201+00:00","b2_trays":26,"b2_eggs":25,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":7,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":20,"b4_eggs":18,"b4_broken":1,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":140},{"date":"2026-10-26","submittedAt":"2026-10-26T03:18:17.972140+00:00","b2_trays":28,"b2_eggs":24,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":3,"b3_broken":2,"b3_dead":0,"b3_feedGrams":40,"b4_trays":21,"b4_eggs":0,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":145},{"date":"2026-10-27","submittedAt":"2026-10-27T03:24:15.812173+00:00","b2_trays":27,"b2_eggs":4,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":0,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":21,"b4_eggs":27,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":150},{"date":"2026-10-28","submittedAt":"2026-10-28T03:05:46.184459+00:00","b2_trays":27,"b2_eggs":2,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":0,"b3_broken":2,"b3_dead":0,"b3_feedGrams":40,"b4_trays":21,"b4_eggs":5,"b4_broken":0,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":150},{"date":"2026-10-30","submittedAt":"2026-10-30T02:16:18.712616+00:00","b2_trays":27,"b2_eggs":10,"b2_broken":0,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":0,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":22,"b4_eggs":5,"b4_broken":3,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":150},{"date":"2026-10-30","submittedAt":"2026-10-30T02:22:49.221509+00:00","b2_trays":25,"b2_eggs":24,"b2_broken":0,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":28,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":22,"b4_eggs":8,"b4_broken":2,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":150},{"date":"2026-11-01","submittedAt":"2026-10-31T23:58:06.644909+00:00","b2_trays":27,"b2_eggs":0,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":25,"b3_broken":1,"b3_dead":0,"b3_feedGrams":40,"b4_trays":22,"b4_eggs":5,"b4_broken":1,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":150},{"date":"2026-11-02","submittedAt":"2026-11-02T04:05:15.340288+00:00","b2_trays":26,"b2_eggs":18,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":2,"b3_broken":0,"b3_dead":0,"b3_feedGrams":40,"b4_trays":23,"b4_eggs":19,"b4_broken":1,"b4_dead":0,"b4_feedGrams":90,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":150},{"date":"2026-11-03","submittedAt":"2026-11-03T03:29:41.897873+00:00","b2_trays":26,"b2_eggs":3,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":18,"b3_broken":1,"b3_dead":0,"b3_feedGrams":10,"b4_trays":25,"b4_eggs":22,"b4_broken":1,"b4_dead":0,"b4_feedGrams":10,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-04","submittedAt":"2026-11-04T04:46:45.222991+00:00","b2_trays":26,"b2_eggs":21,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":15,"b3_broken":2,"b3_dead":0,"b3_feedGrams":10,"b4_trays":24,"b4_eggs":15,"b4_broken":2,"b4_dead":0,"b4_feedGrams":10,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-06","submittedAt":"2026-11-06T02:23:21.101373+00:00","b2_trays":26,"b2_eggs":0,"b2_broken":0,"b2_dead":0,"b2_feedGrams":120,"b3_trays":11,"b3_eggs":0,"b3_broken":0,"b3_dead":0,"b3_feedGrams":10,"b4_trays":23,"b4_eggs":22,"b4_broken":1,"b4_dead":0,"b4_feedGrams":10,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-06","submittedAt":"2026-11-06T02:31:52.566962+00:00","b2_trays":25,"b2_eggs":14,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":19,"b3_broken":2,"b3_dead":0,"b3_feedGrams":100,"b4_trays":23,"b4_eggs":0,"b4_broken":3,"b4_dead":0,"b4_feedGrams":100,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-08","submittedAt":"2026-11-08T03:46:11.173966+00:00","b2_trays":25,"b2_eggs":8,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":11,"b3_broken":2,"b3_dead":0,"b3_feedGrams":100,"b4_trays":22,"b4_eggs":10,"b4_broken":1,"b4_dead":0,"b4_feedGrams":0,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-08","submittedAt":"2026-11-08T03:51:04.409560+00:00","b2_trays":25,"b2_eggs":19,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":7,"b3_broken":1,"b3_dead":0,"b3_feedGrams":100,"b4_trays":24,"b4_eggs":15,"b4_broken":0,"b4_dead":0,"b4_feedGrams":100,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-09","submittedAt":"2026-11-09T02:25:31.254067+00:00","b2_trays":25,"b2_eggs":25,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":7,"b3_broken":0,"b3_dead":0,"b3_feedGrams":100,"b4_trays":26,"b4_eggs":28,"b4_broken":1,"b4_dead":0,"b4_feedGrams":100,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-11","submittedAt":"2026-11-11T02:37:36.445368+00:00","b2_trays":26,"b2_eggs":14,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":16,"b3_broken":1,"b3_dead":0,"b3_feedGrams":100,"b4_trays":24,"b4_eggs":19,"b4_broken":2,"b4_dead":0,"b4_feedGrams":100,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-11","submittedAt":"2026-11-11T02:40:58.431910+00:00","b2_trays":25,"b2_eggs":26,"b2_broken":0,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":16,"b3_broken":1,"b3_dead":0,"b3_feedGrams":100,"b4_trays":24,"b4_eggs":19,"b4_broken":2,"b4_dead":0,"b4_feedGrams":100,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-12","submittedAt":"2026-11-12T13:36:29.315495+00:00","b2_trays":25,"b2_eggs":20,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":17,"b3_broken":2,"b3_dead":0,"b3_feedGrams":100,"b4_trays":24,"b4_eggs":0,"b4_broken":1,"b4_dead":0,"b4_feedGrams":100,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-13","submittedAt":"2026-11-13T04:21:16.080458+00:00","b2_trays":25,"b2_eggs":28,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":10,"b3_broken":0,"b3_dead":0,"b3_feedGrams":100,"b4_trays":24,"b4_eggs":15,"b4_broken":0,"b4_dead":0,"b4_feedGrams":100,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-15","submittedAt":"2026-11-15T03:39:01.337553+00:00","b2_trays":25,"b2_eggs":4,"b2_broken":0,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":20,"b3_broken":0,"b3_dead":0,"b3_feedGrams":100,"b4_trays":24,"b4_eggs":3,"b4_broken":0,"b4_dead":0,"b4_feedGrams":105,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-15","submittedAt":"2026-11-15T03:42:06.938125+00:00","b2_trays":24,"b2_eggs":15,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":12,"b3_broken":0,"b3_dead":0,"b3_feedGrams":100,"b4_trays":24,"b4_eggs":5,"b4_broken":2,"b4_dead":0,"b4_feedGrams":105,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":35},{"date":"2026-11-17","submittedAt":"2026-11-17T02:10:25.524368+00:00","b2_trays":24,"b2_eggs":5,"b2_broken":0,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":3,"b3_broken":0,"b3_dead":0,"b3_feedGrams":100,"b4_trays":24,"b4_eggs":4,"b4_broken":3,"b4_dead":0,"b4_feedGrams":100,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":40},{"date":"2026-11-17","submittedAt":"2026-11-17T02:13:47.697081+00:00","b2_trays":24,"b2_eggs":4,"b2_broken":0,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":10,"b3_broken":3,"b3_dead":0,"b3_feedGrams":100,"b4_trays":25,"b4_eggs":10,"b4_broken":2,"b4_dead":0,"b4_feedGrams":100,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":40},{"date":"2026-11-18","submittedAt":"2026-11-18T11:25:58.102862+00:00","b2_trays":24,"b2_eggs":19,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":10,"b3_broken":1,"b3_dead":0,"b3_feedGrams":110,"b4_trays":24,"b4_eggs":19,"b4_broken":1,"b4_dead":0,"b4_feedGrams":105,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":50},{"date":"2026-11-19","submittedAt":"2026-11-19T02:20:06.181463+00:00","b2_trays":25,"b2_eggs":0,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":14,"b3_broken":2,"b3_dead":0,"b3_feedGrams":100,"b4_trays":25,"b4_eggs":9,"b4_broken":2,"b4_dead":0,"b4_feedGrams":110,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":40},{"date":"2026-11-21","submittedAt":"2026-11-21T02:06:35.109296+00:00","b2_trays":25,"b2_eggs":3,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":0,"b3_broken":2,"b3_dead":0,"b3_feedGrams":110,"b4_trays":25,"b4_eggs":15,"b4_broken":1,"b4_dead":0,"b4_feedGrams":110,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":50},{"date":"2026-11-21","submittedAt":"2026-11-21T02:12:49.536995+00:00","b2_trays":22,"b2_eggs":0,"b2_broken":0,"b2_dead":0,"b2_feedGrams":120,"b3_trays":9,"b3_eggs":0,"b3_broken":0,"b3_dead":0,"b3_feedGrams":110,"b4_trays":25,"b4_eggs":0,"b4_broken":1,"b4_dead":0,"b4_feedGrams":110,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":50},{"date":"2026-11-22","submittedAt":"2026-11-22T02:30:27.582974+00:00","b2_trays":24,"b2_eggs":9,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":9,"b3_eggs":16,"b3_broken":1,"b3_dead":0,"b3_feedGrams":110,"b4_trays":25,"b4_eggs":22,"b4_broken":0,"b4_dead":0,"b4_feedGrams":110,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":50},{"date":"2026-11-23","submittedAt":"2026-11-23T12:16:53.349925+00:00","b2_trays":22,"b2_eggs":24,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":9,"b3_eggs":3,"b3_broken":2,"b3_dead":0,"b3_feedGrams":110,"b4_trays":26,"b4_eggs":17,"b4_broken":2,"b4_dead":0,"b4_feedGrams":110,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":50},{"date":"2026-11-25","submittedAt":"2026-11-25T01:15:32.555496+00:00","b2_trays":22,"b2_eggs":19,"b2_broken":2,"b2_dead":0,"b2_feedGrams":120,"b3_trays":9,"b3_eggs":26,"b3_broken":0,"b3_dead":0,"b3_feedGrams":110,"b4_trays":26,"b4_eggs":3,"b4_broken":0,"b4_dead":0,"b4_feedGrams":110,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":50},{"date":"2026-11-25","submittedAt":"2026-11-25T01:18:23.022130+00:00","b2_trays":23,"b2_eggs":25,"b2_broken":0,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":7,"b3_broken":0,"b3_dead":0,"b3_feedGrams":110,"b4_trays":27,"b4_eggs":20,"b4_broken":2,"b4_dead":0,"b4_feedGrams":110,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":50},{"date":"2026-11-26","submittedAt":"2026-11-26T03:19:16.311837+00:00","b2_trays":23,"b2_eggs":25,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":0,"b3_broken":2,"b3_dead":0,"b3_feedGrams":110,"b4_trays":27,"b4_eggs":18,"b4_broken":0,"b4_dead":0,"b4_feedGrams":110,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":50},{"date":"2026-11-27","submittedAt":"2026-11-27T02:51:39.404341+00:00","b2_trays":25,"b2_eggs":0,"b2_broken":1,"b2_dead":0,"b2_feedGrams":120,"b3_trays":10,"b3_eggs":10,"b3_broken":0,"b3_dead":0,"b3_feedGrams":110,"b4_trays":27,"b4_eggs":16,"b4_broken":1,"b4_dead":0,"b4_feedGrams":110,"b5_trays":0,"b5_eggs":0,"b5_broken":0,"b5_dead":0,"b5_feedGrams":50}];
@@ -609,7 +623,7 @@ let RAW_EXPENSES = [{"date":"2025-08-04","expense":"BROKEN_MAIZE","amount":25000
 // ============ HELPERS ============
 const formatWholeNumber = new Intl.NumberFormat('en-UG',{maximumFractionDigits:0}).format;
 const fmtN = n => n==null||isNaN(n)?'—':formatWholeNumber(n);
-const fmtDate = d => new Date(d).toLocaleDateString('en-UG',{day:'numeric',month:'short'});
+const fmtDate = d => new Date(d).toLocaleDateString('en-UG',{day:'numeric',month:'short',timeZone:'UTC'});
 const fmtMonth = m => {const[y,mo]=m.split('-');return new Date(y,mo-1).toLocaleDateString('en',{month:'short',year:'2-digit'});};
 
 function daysBefore(n,anchor=EGGS.at(-1)?.date || new Date().toISOString().slice(0,10)){
@@ -704,17 +718,48 @@ let charts = {};
 
 // ============ FILTER ============
 function filterEggs(days){
-  const cutoff = days<9000 ? daysBefore(days) : '2000-01-01';
+  const cutoff = periodStart(days);
   const batches = selectedProductionBatches();
   return EGGS.filter(r=>r.date>=cutoff).map(r=>({...r,total:eggTotal(r,batches)}));
 }
+function latestFinancialDate(){
+  const latestSale = RAW_SALES.at(-1)?.date || '';
+  const latestExpense = RAW_EXPENSES.at(-1)?.date || '';
+  return (latestSale>latestExpense?latestSale:latestExpense) || undefined;
+}
 function filterSales(days){
-  const cutoff = days<9000 ? daysBefore(days,RAW_SALES.at(-1)?.date) : '2000-01-01';
+  const cutoff = periodStart(days,latestFinancialDate());
   return RAW_SALES.filter(r=>r.date>=cutoff);
 }
 function filterExpenses(days){
-  const cutoff = days<9000 ? daysBefore(days,RAW_SALES.at(-1)?.date) : '2000-01-01';
+  const cutoff = periodStart(days,latestFinancialDate());
   return RAW_EXPENSES.filter(r=>r.date>=cutoff);
+}
+
+function periodStart(days,anchor){
+  return days<9000 ? daysBefore(days-1,anchor) : '';
+}
+
+function chartPeriods(rows){
+  const monthly = activeDays>30;
+  const key = row=>monthly?row.date.slice(0,7):row.date;
+  const groups = new Map();
+  for(const row of rows){
+    const period = key(row);
+    if(!groups.has(period)) groups.set(period,[]);
+    groups.get(period).push(row);
+  }
+  const keys = [...groups.keys()].sort();
+  return {key,keys,groups,labels:keys.map(monthly?fmtMonth:fmtDate)};
+}
+
+function periodTotals(rows,periods,value){
+  const totals = new Map();
+  for(const row of rows){
+    const key = periods.key(row);
+    totals.set(key,(totals.get(key)||0)+value(row));
+  }
+  return periods.keys.map(key=>totals.get(key)||0);
 }
 
 // ============ CHART FACTORY ============
@@ -725,15 +770,23 @@ function mkChart(id, type, data, options){
   const isDark = document.documentElement.classList.contains('dark');
   const textColor = isDark ? 'rgba(240,236,228,.6)' : 'rgba(26,23,20,.5)';
   const gridColor = isDark ? 'rgba(255,255,255,.05)' : 'rgba(0,0,0,.06)';
+  const font = {family:'Nunito, system-ui, sans-serif',size:12};
   const defaults = {
     locale:'en-UG',
-    plugins:{legend:{labels:{color:textColor,font:{family:'DM Mono',size:11}}},tooltip:{titleFont:{family:'DM Mono',size:11},bodyFont:{family:'DM Mono',size:11}}},
+    maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:textColor,font}},tooltip:{titleFont:font,bodyFont:font}},
     scales:type==='doughnut'||type==='pie'?{}:{
-      x:{ticks:{color:textColor,font:{family:'DM Mono',size:10}},grid:{color:gridColor}},
-      y:{ticks:{color:textColor,font:{family:'DM Mono',size:10}},grid:{color:gridColor}}
+      x:{ticks:{color:textColor,font,maxRotation:0},grid:{color:gridColor}},
+      y:{ticks:{color:textColor,font},grid:{color:gridColor}}
     }
   };
-  charts[id] = new Chart(ctx,{type,data,options:{...defaults,...options,plugins:{...defaults.plugins,...(options.plugins||{})}}});
+  const plugins = {...defaults.plugins,...options.plugins};
+  plugins.legend = {...defaults.plugins.legend,...options.plugins?.legend};
+  const scales = {...defaults.scales};
+  for(const [axis,settings] of Object.entries(options.scales || {})){
+    scales[axis] = {...scales[axis],...settings,ticks:{...scales[axis]?.ticks,...settings.ticks}};
+  }
+  charts[id] = new Chart(ctx,{type,data,options:{...defaults,...options,plugins,scales}});
   return charts[id];
 }
 
@@ -799,9 +852,8 @@ function renderDailyChart(eggs){
   const sliceDates = dates.slice(-limit);
   const sliceVals = vals.slice(-limit);
 
-  document.getElementById('chart-period-label').textContent = sliceDates.length ? sliceDates[0]+'→'+sliceDates[sliceDates.length-1] : 'No records';
-
-  const isDark = document.documentElement.classList.contains('dark');
+  document.getElementById('chart-period-label').textContent =
+    sliceDates.length>1 ? sliceDates[0]+' to '+sliceDates.at(-1) : sliceDates[0] || 'No records';
   mkChart('chart-eggs-daily','line',{
     labels: sliceDates.map(fmtDate),
     datasets:[{
@@ -810,7 +862,7 @@ function renderDailyChart(eggs){
       borderColor:'#5aac4e',
       backgroundColor:'rgba(90,172,78,.1)',
       borderWidth:1.5,
-      pointRadius:sliceDates.length>60?0:2,
+      pointRadius:sliceDates.length===1?5:sliceDates.length>60?0:2,
       tension:0.3,
       fill:true
     }]
@@ -820,13 +872,11 @@ function renderDailyChart(eggs){
   });
 }
 
-function renderMonthlyChart(){
-  const months = [...new Set(EGGS.map(r=>r.date.substr(0,7)))].sort();
-  const byMonth = {};
-  EGGS.forEach(r=>{const m=r.date.substr(0,7);byMonth[m]=(byMonth[m]||0)+eggTotal(r);});
+function renderProductionChart(eggs){
+  const periods = chartPeriods(eggs);
   mkChart('chart-monthly-eggs','bar',{
-    labels:months.map(fmtMonth),
-    datasets:[{label:'Eggs',data:months.map(m=>byMonth[m]||0),backgroundColor:'rgba(90,172,78,.7)',borderColor:'#5aac4e',borderWidth:1}]
+    labels:periods.labels,
+    datasets:[{label:'Eggs',data:periodTotals(eggs,periods,row=>row.total),backgroundColor:'rgba(90,172,78,.7)',borderColor:'#5aac4e',borderWidth:1}]
   },{plugins:{legend:{display:false}}});
 }
 
@@ -932,32 +982,25 @@ function renderBatchLayingCards(){
   }).join('');
 }
 
-function renderBatchCharts(){
-  const recent30 = EGGS.filter(r=>r.date>=daysBefore(30));
-  const dates30 = [...new Set(recent30.map(r=>r.date))].sort();
-  
-  // Batch laying % over time
+function renderBatchCharts(eggs){
+  const periods = chartPeriods(eggs);
   mkChart('chart-batch-laying','line',{
-    labels:dates30.map(fmtDate),
+    labels:periods.labels,
     datasets: activeProductionBatches().map(b=>({
       label:b.label+' Laying%',
-      data:dates30.map(d=>layingRate(recent30.filter(r=>r.date===d),[b])),
+      data:periods.keys.map(key=>layingRate(periods.groups.get(key),[b])),
       borderColor:b.color,
       borderWidth:1.5,
-      pointRadius:0,
+      pointRadius:periods.keys.length===1?5:0,
       tension:0.3
     }))
   },{scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}});
 
-  // Eggs by batch (stacked bar, monthly)
-  const months = [...new Set(EGGS.map(r=>r.date.substr(0,7)))].sort();
   mkChart('chart-batch-eggs','bar',{
-    labels:months.map(fmtMonth),
-    datasets: PRODUCTION_BATCHES.map(b=>{
-      const byMonth = {};
-      EGGS.forEach(r=>{const m=r.date.substr(0,7);byMonth[m]=(byMonth[m]||0)+batchTotal(r,b);});
-      return {label:b.label,data:months.map(m=>byMonth[m]||0),backgroundColor:b.color.replace(')',',.7)').replace('rgb','rgba')};
-    })
+    labels:periods.labels,
+    datasets: PRODUCTION_BATCHES.map(batch=>({
+      label:batch.label,data:periodTotals(eggs,periods,row=>batchTotal(row,batch)),backgroundColor:batch.color
+    }))
   },{scales:{x:{stacked:true},y:{stacked:true}}});
 }
 
@@ -990,7 +1033,7 @@ function renderSalesByPeriod(latestSalesDate){
   }
 }
 
-function renderFinancial(){
+function renderFinancial(sales,expenses){
   const totalRev = RAW_SALES.reduce((s,r)=>s+r.amount,0);
   const totalExp = RAW_EXPENSES.reduce((s,r)=>s+r.amount,0);
   const pnl = totalRev-totalExp;
@@ -1010,22 +1053,19 @@ function renderFinancial(){
   document.getElementById('fin-price-tray').textContent = recentTrays?fmtN(trayRevenue/recentTrays)+' UGX':'—';
   document.getElementById('fin-price-sub').textContent = 'regular trays sold in last 3 weeks';
 
-  // Monthly chart
-  const months = [...new Set([...RAW_SALES.map(r=>r.date.substr(0,7)),...RAW_EXPENSES.map(r=>r.date.substr(0,7))])].sort();
-  const mRev={},mExp={};
-  RAW_SALES.forEach(r=>{const m=r.date.substr(0,7);mRev[m]=(mRev[m]||0)+r.amount;});
-  RAW_EXPENSES.forEach(r=>{const m=r.date.substr(0,7);mExp[m]=(mExp[m]||0)+r.amount;});
+  const periods = chartPeriods([...sales,...expenses]);
+  const amount = row=>row.amount;
   mkChart('chart-fin-monthly','bar',{
-    labels:months.map(fmtMonth),
+    labels:periods.labels,
     datasets:[
-      {label:'Revenue',data:months.map(m=>mRev[m]||0),backgroundColor:'rgba(74,128,212,.7)'},
-      {label:'Expenses',data:months.map(m=>mExp[m]||0),backgroundColor:'rgba(200,68,10,.7)'},
+      {label:'Revenue',data:periodTotals(sales,periods,amount),backgroundColor:'rgba(74,128,212,.7)'},
+      {label:'Expenses',data:periodTotals(expenses,periods,amount),backgroundColor:'rgba(200,68,10,.7)'},
     ]
   },{});
 
   // Payment donut
   const payAmt = Object.create(null);
-  RAW_SALES.forEach(r=>{const mode=r.payment||'Unspecified';payAmt[mode]=(payAmt[mode]||0)+r.amount;});
+  sales.forEach(r=>{const mode=r.payment||'Unspecified';payAmt[mode]=(payAmt[mode]||0)+r.amount;});
   const payLabels = Object.keys(payAmt).map(k=>k.replace(/_/g,' '));
   mkChart('chart-payment','doughnut',{
     labels:payLabels,
@@ -1046,7 +1086,7 @@ function renderFinancial(){
     </div>`).join('');
 
   const table = document.getElementById('sales-table').querySelector('tbody');
-  const rows = filterSales(activeDays).reverse();
+  const rows = [...sales].reverse();
   table.replaceChildren();
   for(const sale of rows){
     const row = table.insertRow();
@@ -1112,15 +1152,15 @@ function render(){
   renderPeriodTable(document.getElementById('period-table-wrap'));
   renderLatestEntry(document.getElementById('latest-entry-wrap'));
   renderFlags();
-  renderMonthlyChart();
+  renderProductionChart(eggs);
   
   // Production
   renderBatchLayingCards();
-  renderBatchCharts();
+  renderBatchCharts(eggs);
   renderPeriodDetailTable();
   
   // Financial
-  renderFinancial();
+  renderFinancial(sales, expenses);
   
   // Batches
   renderAllBatches();
@@ -1130,54 +1170,73 @@ function render(){
 }
 
 // ============ LIVE DATA ============
-async function tryLoadLiveData(){
-  if(location.protocol === 'file:') return;
+async function fetchJson(url){
   try{
-    const [analyticsRes, batchRes] = await Promise.all([
-      fetch(JSON_ANALYTICS+'?t='+Date.now(),{cache:'no-cache'}).catch(()=>null),
-      fetch(JSON_BATCH_METADATA+'?t='+Date.now(),{cache:'no-cache'}).catch(()=>null)
-    ]);
+    const response = await fetch(url,{cache:'no-cache'});
+    return response.ok ? await response.json() : null;
+  }catch{
+    return null;
+  }
+}
 
-    if(analyticsRes?.ok){
-      const analytics = await analyticsRes.json();
-      lastReportDate = analytics.reportDate || lastReportDate;
-      if(Array.isArray(analytics.records) && analytics.records.length){
-        RAW_EGGS = analytics.records;
-      }
-      if(analytics.batchStats){
-        BATCH_CONFIG = {...BATCH_CONFIG,...normalizeBatchConfig(analytics.batchStats)};
-      }
-      if(Array.isArray(analytics.financials?.salesRecords)){
-        RAW_SALES = analytics.financials.salesRecords;
-        salesRevenueByPeriod = analytics.financials.recentRevenue || null;
-      }
-      if(analytics.financials?.expenseRecords?.length){
-        RAW_EXPENSES = analytics.financials.expenseRecords;
-      }
+async function loadAnalytics(){
+  if(['localhost','127.0.0.1','[::1]'].includes(location.hostname)){
+    const local = await fetchJson('./.local/analytics/'+ANALYTICS_FILE);
+    if(local) return local;
+  }
+  const live = await fetchJson(LIVE_ANALYTICS);
+  if(live || location.protocol==='file:') return live;
+  return fetchJson('./'+ANALYTICS_FILE);
+}
+
+async function tryLoadLiveData(){
+  const [analytics, batchMetadata] = await Promise.all([
+    loadAnalytics(),
+    location.protocol==='file:'?null:fetchJson(JSON_BATCH_METADATA)
+  ]);
+  if(analytics){
+    lastReportDate = analytics.reportDate || lastReportDate;
+    if(Array.isArray(analytics.records) && analytics.records.length){
+      RAW_EGGS = analytics.records;
     }
-    if(batchRes?.ok){
-      BATCH_CONFIG = {...BATCH_CONFIG,...normalizeBatchConfig(await batchRes.json())};
+    if(analytics.batchStats){
+      BATCH_CONFIG = {...BATCH_CONFIG,...normalizeBatchConfig(analytics.batchStats)};
     }
+    if(Array.isArray(analytics.financials?.salesRecords)){
+      RAW_SALES = analytics.financials.salesRecords;
+      salesRevenueByPeriod = analytics.financials.recentRevenue || null;
+    }
+    if(analytics.financials?.expenseRecords?.length){
+      RAW_EXPENSES = analytics.financials.expenseRecords;
+    }
+  }
+  if(batchMetadata){
+    BATCH_CONFIG = {...BATCH_CONFIG,...normalizeBatchConfig(batchMetadata)};
+  }
+  if(analytics || batchMetadata){
     rebuildData();
     render();
-  }catch(e){
-    document.getElementById('last-refreshed').textContent = 'Using embedded fallback';
   }
 }
 
 // ============ EVENT LISTENERS ============
+function selectFilter(button,attribute){
+  document.querySelectorAll('.period-btn[data-'+attribute+']').forEach(option=>{
+    const selected = option===button;
+    option.classList.toggle('active',selected);
+    option.setAttribute('aria-pressed',String(selected));
+  });
+}
 document.querySelectorAll('.period-btn[data-days]').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    document.querySelectorAll('.period-btn[data-days]').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
+    selectFilter(btn,'days');
     activeDays = parseInt(btn.dataset.days);
     render();
   });
 });
 document.querySelectorAll('.period-btn[data-batch]').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    document.querySelectorAll('.period-btn[data-batch]').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
+    selectFilter(btn,'batch');
     activeBatch = btn.dataset.batch;
     render();
   });
