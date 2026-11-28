@@ -432,7 +432,7 @@ button{font-family:inherit;}
       <div class="kpi" style="--kpi-color:var(--green)">
         <div class="kpi-label">Laying %</div>
         <div class="kpi-value accent-green" id="kpi-laying">—</div>
-        <div class="kpi-sub" id="kpi-laying-sub">latest entry</div>
+        <div class="kpi-sub" id="kpi-laying-sub"></div>
       </div>
       <div class="kpi" style="--kpi-color:var(--blue)">
         <div class="kpi-label">Revenue (UGX)</div>
@@ -559,16 +559,15 @@ button{font-family:inherit;}
 
   <!-- FINANCIAL TAB -->
   <div class="tab-content" id="tab-financial">
+    <div class="section-label" id="fin-period-range"></div>
     <div class="kpi-strip">
       <div class="kpi" style="--kpi-color:var(--blue)">
         <div class="kpi-label">Total Revenue</div>
         <div class="kpi-value accent-blue" id="fin-revenue">—</div>
-        <div class="kpi-sub">All time</div>
       </div>
       <div class="kpi" style="--kpi-color:var(--red)">
         <div class="kpi-label">Recorded Poultry Expenses</div>
         <div class="kpi-value accent-red" id="fin-expenses">—</div>
-        <div class="kpi-sub">All time</div>
       </div>
       <div class="kpi" style="--kpi-color:var(--green)">
         <div class="kpi-label">Poultry Net Income</div>
@@ -578,13 +577,13 @@ button{font-family:inherit;}
       <div class="kpi" style="--kpi-color:var(--amber)">
         <div class="kpi-label">Avg Price / Tray</div>
         <div class="kpi-value" id="fin-price-tray">—</div>
-        <div class="kpi-sub" id="fin-price-sub">recent weeks</div>
+        <div class="kpi-sub">Regular tray sales with a recorded quantity</div>
       </div>
     </div>
 
     <div class="card" style="margin-bottom:1rem">
       <div class="card-header">
-        <span class="card-title">Sales by Period</span>
+        <span class="card-title">Rolling Sales Totals</span>
         <span class="kpi-sub" id="fin-sales-through"></span>
       </div>
       <div class="card-body">
@@ -833,6 +832,14 @@ function productionPeriod(days){
   const cutoff = periodStart(days);
   return EGGS.filter(row=>row.date>=cutoff);
 }
+
+function productionPeriodLabel(){
+  const through = EGGS.at(-1)?.date;
+  if(!through) return 'No survey data';
+  const from = periodStart(activeDays,through);
+  return from===through ? through : from ? from+' to '+through : 'All surveys through '+through;
+}
+
 function latestFinancialDate(){
   const latestSale = RAW_SALES.at(-1)?.date || '';
   const latestExpense = RAW_EXPENSES.at(-1)?.date || '';
@@ -1006,18 +1013,14 @@ function renderKPIs(eggs, sales, expenses){
   document.getElementById('kpi-pnl').textContent = (pnl>=0?'+':'')+fmtN(pnl)+' UGX';
   document.getElementById('kpi-pnl').className = 'kpi-value '+(pnl>=0?'accent-green':'accent-red');
 
-  const latest = latestProductionEntry();
-  if(latest){
-    const pct = layingRate([latest],selectedProductionBatches());
-    document.getElementById('kpi-laying').textContent = fmtRate(pct);
-    document.getElementById('kpi-laying-sub').textContent = 'Survey: '+latest.date;
+  document.getElementById('kpi-laying').textContent = fmtRate(layingRate(eggs));
+  document.getElementById('kpi-laying-sub').textContent = productionPeriodLabel();
 
-    // Overdue check
-    const badge = document.getElementById('kpi-overdue');
-    const diffDays = Math.floor((new Date()-new Date(latest.date))/(86400000));
-    if(diffDays>1){badge.textContent=diffDays+'d overdue';badge.classList.remove('hidden');}
-    else{badge.classList.add('hidden');}
-  }
+  const latest = latestProductionEntry();
+  const badge = document.getElementById('kpi-overdue');
+  const diffDays = latest ? Math.floor((new Date()-new Date(latest.date))/86400000) : 0;
+  badge.classList.toggle('hidden',diffDays<=1);
+  if(diffDays>1) badge.textContent = diffDays+'d overdue';
 }
 
 function renderAverages(){
@@ -1220,17 +1223,15 @@ function renderFlags(trayChanges){
 }
 
 // ============ PRODUCTION TAB ============
-function renderBatchLayingCards(){
+function renderBatchLayingCards(eggs,period){
   const el = document.getElementById('batch-laying-cards');
-  const latest = latestProductionEntry();
   el.innerHTML = selectedProductionBatches().map(batch=>{
     const cfg = BATCH_CONFIG[batch.key];
-    const recent = EGGS.filter(r=>r.date>=daysBefore(30) && (r[batch.prefix+'_trays']!=null || r[batch.prefix+'_eggs']!=null));
-    const periodEggs = recent.reduce((sum,row)=>sum+batchTotal(row,batch),0);
-    const avgEggs = recent.length?periodEggs/recent.length:null;
-    const layingPct = layingRate(recent,[batch]);
-    const latestPct = latest?layingRate([latest],[batch]):null;
-    const collection = latest?collectionCounts([latest],[batch]):null;
+    const reported = eggs.filter(row=>row[batch.prefix+'_trays']!=null || row[batch.prefix+'_eggs']!=null);
+    const periodEggs = reported.reduce((sum,row)=>sum+batchTotal(row,batch),0);
+    const avgEggs = reported.length?periodEggs/reported.length:null;
+    const layingPct = layingRate(reported,[batch]);
+    const collection = collectionCounts(eggs,[batch]);
     
     return `<div class="batch-card ${cfg.status}">
       <div class="batch-status status-${cfg.status}">${cfg.status}</div>
@@ -1238,12 +1239,12 @@ function renderBatchLayingCards(){
       <div class="batch-supplier">Supplier: ${cfg.supplier}</div>
       <div class="batch-metrics">
         <div class="bm"><div class="bm-label">Birds</div><div class="bm-value">${fmtN(cfg.currentBirds)} / ${fmtN(cfg.initialBirds)}</div></div>
-        <div class="bm"><div class="bm-label">Laying % (latest)</div><div class="bm-value" style="color:${batch.color}">${fmtRate(latestPct)}</div></div>
-        <div class="bm"><div class="bm-label">30D Avg Eggs</div><div class="bm-value">${fmtN(avgEggs)}</div></div>
+        <div class="bm"><div class="bm-label">Laying % (${period})</div><div class="bm-value" style="color:${batch.color}">${fmtRate(layingPct)}</div></div>
+        <div class="bm"><div class="bm-label">Avg eggs per entry</div><div class="bm-value">${fmtN(avgEggs)}</div></div>
         <div class="bm"><div class="bm-label">DOB</div><div class="bm-value">${cfg.dob}</div></div>
       </div>
-      ${collection?`<div class="kpi-sub">${collectionLabel(collection)}</div>`:''}
-      <div class="laying-bar"><div class="laying-bar-fill" style="width:${Math.min(100,layingPct)}%;background:${batch.color}"></div></div>
+      <div class="kpi-sub">${collectionLabel(collection)}</div>
+      ${layingPct==null?'':`<div class="laying-bar"><div class="laying-bar-fill" style="width:${Math.min(100,layingPct)}%;background:${batch.color}"></div></div>`}
     </div>`;
   }).join('');
 }
@@ -1308,27 +1309,28 @@ function renderSalesByPeriod(latestSalesDate){
 }
 
 function renderFinancial(sales,expenses){
-  const totalRev = RAW_SALES.reduce((s,r)=>s+r.amount,0);
-  const totalExp = RAW_EXPENSES.filter(isPoultryExpense).reduce((s,r)=>s+r.amount,0);
+  const through = latestFinancialDate();
+  const from = through && periodStart(activeDays,through);
+  document.getElementById('fin-period-range').textContent = through
+    ? (from===through ? through : from ? from+' to '+through : 'All recorded transactions through '+through)
+    : 'No financial records';
+
+  const poultryExpenses = expenses.filter(isPoultryExpense);
+  const totalRev = sales.reduce((s,r)=>s+r.amount,0);
+  const totalExp = poultryExpenses.reduce((s,r)=>s+r.amount,0);
   const pnl = totalRev-totalExp;
   document.getElementById('fin-revenue').textContent = fmtN(totalRev)+' UGX';
   document.getElementById('fin-expenses').textContent = fmtN(totalExp)+' UGX';
   document.getElementById('fin-pnl').textContent = (pnl>=0?'+':'')+fmtN(pnl)+' UGX';
   document.getElementById('fin-pnl').className = 'kpi-value '+(pnl>=0?'accent-green':'accent-red');
 
-  const latestSalesDate = RAW_SALES.at(-1)?.date;
-  renderSalesByPeriod(latestSalesDate);
-  const cutoff = latestSalesDate
-    ? daysBefore(20,latestSalesDate)
-    : '';
-  const traySales = RAW_SALES.filter(r=>r.date>=cutoff && r.subcategory==='TRAYS' && r.trays>0);
-  const recentTrays = traySales.reduce((sum,row)=>sum+row.trays,0);
+  renderSalesByPeriod(RAW_SALES.at(-1)?.date);
+  const traySales = sales.filter(r=>r.subcategory==='TRAYS' && r.trays>0);
+  const traysSold = traySales.reduce((sum,row)=>sum+row.trays,0);
   const trayRevenue = traySales.reduce((sum,row)=>sum+row.amount,0);
-  document.getElementById('fin-price-tray').textContent = recentTrays?fmtN(trayRevenue/recentTrays)+' UGX':'—';
-  document.getElementById('fin-price-sub').textContent = 'regular trays sold in last 3 weeks';
+  document.getElementById('fin-price-tray').textContent = traysSold?fmtUgx(trayRevenue/traysSold):'—';
 
-  const poultryExpenses = expenses.filter(isPoultryExpense);
-  const periods = chartPeriods([...sales,...poultryExpenses],{through:latestFinancialDate()});
+  const periods = chartPeriods([...sales,...poultryExpenses],{through});
   const amount = row=>row.amount;
   mkChart('chart-fin-monthly','bar',{
     labels:periods.labels,
@@ -1397,7 +1399,7 @@ function renderBatchRecords(rows){
     entries.join('') || '<tr><td colspan="7">No batch records for this period</td></tr>';
 }
 
-function renderAllBatches(){
+function renderAllBatches(eggs,period){
   const el = document.getElementById('all-batches-grid');
   const today = farmCalendarDay();
   document.getElementById('batch-list-title').textContent = includeInactive?'All Batches':'Laying Batches';
@@ -1406,7 +1408,7 @@ function renderAllBatches(){
     const age = formatBatchAge(cfg.dob,today);
     const offlay = new Date(cfg.expectedOfflay);
     const daysToOfflay = Math.ceil((offlay-new Date())/86400000);
-    const deaths = EGGS.map(row=>row[batch.prefix+'_dead']).filter(value=>value!=null);
+    const deaths = eggs.map(row=>row[batch.prefix+'_dead']).filter(value=>value!=null);
     const loggedDeaths = deaths.length?deaths.reduce((sum,count)=>sum+count,0):null;
     return `<div class="batch-card ${cfg.status}">
       <div class="batch-status status-${cfg.status}">${cfg.status}</div>
@@ -1417,7 +1419,7 @@ function renderAllBatches(){
         <div class="bm"><div class="bm-label">Age</div><div class="bm-value">${age}</div></div>
         <div class="bm"><div class="bm-label">Initial Birds</div><div class="bm-value">${fmtN(cfg.initialBirds)}</div></div>
         <div class="bm"><div class="bm-label">Current Birds</div><div class="bm-value" style="color:${batch.color}">${fmtN(cfg.currentBirds)}</div></div>
-        <div class="bm"><div class="bm-label">Recorded deaths</div><div class="bm-value">${fmtN(loggedDeaths)}</div></div>
+        <div class="bm"><div class="bm-label">Recorded deaths (${period})</div><div class="bm-value">${fmtN(loggedDeaths)}</div></div>
         <div class="bm"><div class="bm-label">Days to Offlay</div><div class="bm-value ${daysToOfflay<90?'val-red':''}">${cfg.status==='offlaid'?'Offlaid':daysToOfflay<0?'Due':daysToOfflay+'d'}</div></div>
       </div>
     </div>`;
@@ -1435,6 +1437,7 @@ function render(){
     button.setAttribute('aria-pressed',String(selected));
   });
   const eggs = filterEggs(activeDays);
+  const period = REPORT_PERIODS.find(([days])=>days===activeDays)[1];
   const sales = filterSales(activeDays);
   const expenses = filterExpenses(activeDays);
   const trayChanges = trayChangesForPeriod(EGGS,selectedProductionBatches(),periodStart(activeDays));
@@ -1447,7 +1450,7 @@ function render(){
   renderProductionChart(eggs);
   
   // Production
-  renderBatchLayingCards();
+  renderBatchLayingCards(eggs,period);
   renderBatchCharts(eggs);
   renderPeriodDetailTable();
   
@@ -1455,7 +1458,7 @@ function render(){
   renderFinancial(sales, expenses);
   
   // Batches
-  renderAllBatches();
+  renderAllBatches(eggs,period);
   renderBatchRecords(eggs);
 
   document.getElementById('last-refreshed').textContent = lastReportDate || new Date().toISOString().split('T')[0];
