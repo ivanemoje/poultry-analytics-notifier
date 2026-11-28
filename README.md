@@ -59,11 +59,13 @@ Production periods end on the latest recorded survey date. Financial periods end
 
 The Financial tab shows sales and expenses from their respective Ona forms. The selected period applies to the financial totals, charts, records, and average tray price. The average tray price uses regular tray sales with a recorded quantity. The 7-, 30-, and 90-day rolling sales totals are measured through the latest recorded sale date. Pig expenses appear in Expense Records and are excluded from poultry expenses and poultry net income.
 
-The dashboard shows laying batches by default. **Include inactive batches** reveals other batches and their historical records. The production view shows trays, loose eggs, and broken eggs separately. The Batches tab also shows recorded deaths and daily feed in grams per bird.
+The dashboard shows laying batches by default. **Include inactive batches** reveals other batches and their historical records. Where production reports show trays and loose eggs, each group of 30 loose eggs adds one tray and only the remainder is shown as loose eggs. Broken eggs are counted separately. The Batches tab also shows recorded deaths and daily feed in grams per bird.
 
 The Overview and Production cards show the laying percentage for the selected period and batch. For each submission with a tray or loose egg count, the calculation includes those eggs and the configured current bird count for that laying batch. The percentage divides the resulting egg total by the sum of those bird counts across reporting submissions. Historical rates also use the current counts in `config/batch_metadata.json`.
 
 Record newly observed deaths in the batch's death field on the daily Ona production form, using the survey date when they were counted. Enter zero when the batch was checked and no birds died. Correct an existing submission in Ona if its count was wrong. The next scheduled sync imports the entries automatically. On the Batches tab, choose a period to see its recorded deaths or choose **All** for the full history. Current Birds comes from the configured headcount. Automatically adjusting it would require a verified count and count date for each batch so that only subsequent deaths are deducted.
+
+Headcount checks appear under Data Flags and on the affected batch cards. They compare the change from the initial to the current headcount with deaths reported across all available surveys, regardless of the selected period. Reconcile discrepancies against the flock records, including sales, transfers, and count corrections.
 
 ## Conclusion
 The Poultry notifier project simplifies the process of tracking and reporting egg production data. By automating data fetching and reporting, it allows users to focus on analysis and decision-making. For any issues or contributions, please refer to the project's GitHub repository.

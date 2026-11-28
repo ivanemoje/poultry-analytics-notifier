@@ -637,6 +637,7 @@ button{font-family:inherit;}
   <!-- BATCHES TAB -->
   <div class="tab-content" id="tab-batches">
     <div class="section-label" id="batch-list-title">Laying Batches</div>
+    <div class="kpi-sub" id="batch-period-range"></div>
     <div class="batch-grid" id="all-batches-grid"></div>
     <div class="section-label">Batch Records</div>
     <div class="card" style="overflow-x:auto">
@@ -722,6 +723,7 @@ const PRODUCTION_BATCHES = [
   {key:'batch5', prefix:'b5', number:'5', label:'B5', color:'#48a7a3'}
 ];
 const BATCH_METRICS = ['trays','eggs','broken','dead','feedGrams'];
+const EGGS_PER_TRAY = 30;
 const COLLECTION_METRICS = [
   {key:'trays',label:'Trays',color:'#5aac4e'},
   {key:'eggs',label:'Loose eggs',color:'#4a89df'},
@@ -744,7 +746,20 @@ function selectedProductionBatches(){
 }
 
 function batchTotal(r, batch){
-  return 30*(r[batch.prefix+'_trays'] ?? 0)+(r[batch.prefix+'_eggs'] ?? 0);
+  return EGGS_PER_TRAY*(r[batch.prefix+'_trays'] ?? 0)+(r[batch.prefix+'_eggs'] ?? 0);
+}
+
+function reportsEggs(row,batch){
+  return row[batch.prefix+'_trays']!=null || row[batch.prefix+'_eggs']!=null;
+}
+
+function packLooseEggs(counts){
+  if((counts.eggs ?? 0)<EGGS_PER_TRAY) return counts;
+  return {
+    ...counts,
+    trays:(counts.trays ?? 0)+Math.floor(counts.eggs/EGGS_PER_TRAY),
+    eggs:counts.eggs%EGGS_PER_TRAY
+  };
 }
 
 function eggTotal(r, batches=selectedProductionBatches()){
@@ -761,7 +776,7 @@ function collectionCounts(rows,batches){
       }
     }
   }
-  return counts;
+  return packLooseEggs(counts);
 }
 
 function collectionLabel(counts){
@@ -775,7 +790,7 @@ function layingRate(rows, batches=selectedProductionBatches()){
     const cfg = BATCH_CONFIG[batch.key];
     if(!isLaying(batch) || !cfg.currentBirds) continue;
     for(const row of rows){
-      if(row[batch.prefix+'_trays']==null && row[batch.prefix+'_eggs']==null) continue;
+      if(!reportsEggs(row,batch)) continue;
       birds += cfg.currentBirds;
       eggs += batchTotal(row,batch);
     }
@@ -808,8 +823,8 @@ function normalizeBatchConfig(metadata){
       expectedOfflay: batch.expectedOfflay || '',
       status: status==='active'?'laying':status,
       supplier: batch.supplier || '',
-      initialBirds: Number(batch.initialBirds || batch.currentBirds || 0),
-      currentBirds: Number(batch.currentBirds ?? 0)
+      initialBirds: batch.initialBirds==null || batch.initialBirds==='' ? null : Number(batch.initialBirds),
+      currentBirds: batch.currentBirds==null || batch.currentBirds==='' ? null : Number(batch.currentBirds)
     }];
   }));
 }
@@ -1150,8 +1165,8 @@ function trayChangesForPeriod(rows,batches,cutoff){
     const trays = collectionCounts(entries,batches).trays;
     if(trays==null) continue;
 
-    const reported = batches.filter(batch=>entries.some(row=>row[batch.prefix+'_trays']!=null));
-    const submissions = entries.filter(row=>reported.some(batch=>row[batch.prefix+'_trays']!=null)).length;
+    const reported = batches.filter(batch=>entries.some(row=>reportsEggs(row,batch)));
+    const submissions = entries.filter(row=>reported.some(batch=>reportsEggs(row,batch))).length;
     const current = {date,trays,submissions,coverage:reported.map(batch=>batch.key).join(',')};
     if(previous && date>=cutoff){
       const delta = trays-previous.trays;
@@ -1179,8 +1194,40 @@ function formatTrayChange({previous,delta,percent}){
   return `${sign}${fmtN(delta)} trays${relative} vs ${flagDate(previous.date)}`;
 }
 
-function renderFlags(trayChanges){
-  const flags = [];
+function reportedDeaths(rows,batch){
+  const field = batch.prefix+'_dead';
+  const dates = new Set();
+  let total = 0;
+  for(const row of rows){
+    if(row[field]==null) continue;
+    dates.add(row.date);
+    total += row[field];
+  }
+  return {total:dates.size ? total : null,days:dates.size};
+}
+
+function headcountFlag(batch){
+  const {initialBirds,currentBirds,status} = BATCH_CONFIG[batch.key];
+  if(![initialBirds,currentBirds].every(count=>Number.isSafeInteger(count) && count>=0)){
+    return 'Check the initial and current headcounts in batch metadata.';
+  }
+  const {total:deaths} = reportedDeaths(EGGS,batch);
+  const drop = initialBirds-currentBirds;
+  const difference = drop-(deaths ?? 0);
+  if(difference===0) return '';
+
+  const headcount = `Headcount ${fmtN(initialBirds)} → ${fmtN(currentBirds)}.`;
+  const mortality = deaths==null ? 'No survey death counts recorded.' : `${fmtN(deaths)} deaths recorded across all surveys.`;
+  const gap = drop<0 ? `Headcount rose by ${fmtN(-drop)}.`
+    : difference>0 ? `${fmtN(difference)} fewer birds to reconcile.`
+    : `${fmtN(-difference)} more deaths than the headcount drop.`;
+  const offlay = status==='offlaid' ? ' Check offlay records as well.' : '';
+  return `${headcount} ${mortality} ${gap}${offlay}`;
+}
+
+function renderFlags(trayChanges,headcountFlags){
+  const flags = [...headcountFlags].filter(([batch])=>activeBatch==='all'||batch.number===activeBatch)
+    .map(([batch,msg])=>({sev:'amber',msg:`<strong>${batch.label} headcount check</strong> · ${msg}`}));
   // Check last entry date
   const latest = EGGS[EGGS.length-1];
   if(latest){
@@ -1227,7 +1274,7 @@ function renderBatchLayingCards(eggs,period){
   const el = document.getElementById('batch-laying-cards');
   el.innerHTML = selectedProductionBatches().map(batch=>{
     const cfg = BATCH_CONFIG[batch.key];
-    const reported = eggs.filter(row=>row[batch.prefix+'_trays']!=null || row[batch.prefix+'_eggs']!=null);
+    const reported = eggs.filter(row=>reportsEggs(row,batch));
     const periodEggs = reported.reduce((sum,row)=>sum+batchTotal(row,batch),0);
     const avgEggs = reported.length?periodEggs/reported.length:null;
     const layingPct = layingRate(reported,[batch]);
@@ -1391,25 +1438,31 @@ function renderTransactions(tableId,records,kind,cells){
 function renderBatchRecords(rows){
   const batches = selectedProductionBatches();
   const entries = [...rows].reverse().flatMap(row=>batches.flatMap(batch=>{
-    const counts = BATCH_METRICS.map(field=>row[batch.prefix+'_'+field]);
-    if(counts.every(value=>value==null)) return [];
-    return `<tr><td>${row.date}</td><td>${batch.label}</td>${counts.map(value=>`<td>${fmtN(value)}</td>`).join('')}</tr>`;
+    const recorded = BATCH_METRICS.map(field=>row[batch.prefix+'_'+field]);
+    if(recorded.every(value=>value==null)) return [];
+    const [trays,eggs,...otherCounts] = recorded;
+    const packed = packLooseEggs({trays,eggs});
+    const cells = [packed.trays,packed.eggs,...otherCounts].map(value=>`<td>${fmtN(value)}</td>`).join('');
+    return `<tr><td>${row.date}</td><td>${batch.label}</td>${cells}</tr>`;
   }));
   document.getElementById('batch-records').innerHTML =
     entries.join('') || '<tr><td colspan="7">No batch records for this period</td></tr>';
 }
 
-function renderAllBatches(eggs,period){
+function renderAllBatches(eggs,period,headcountFlags){
   const el = document.getElementById('all-batches-grid');
   const today = farmCalendarDay();
   document.getElementById('batch-list-title').textContent = includeInactive?'All Batches':'Laying Batches';
+  document.getElementById('batch-period-range').textContent = productionPeriodLabel();
   el.innerHTML = visibleBatches().map(batch=>{
     const cfg = BATCH_CONFIG[batch.key];
     const age = formatBatchAge(cfg.dob,today);
     const offlay = new Date(cfg.expectedOfflay);
     const daysToOfflay = Math.ceil((offlay-new Date())/86400000);
-    const deaths = eggs.map(row=>row[batch.prefix+'_dead']).filter(value=>value!=null);
-    const loggedDeaths = deaths.length?deaths.reduce((sum,count)=>sum+count,0):null;
+    const {total:loggedDeaths,days:reportedDays} = reportedDeaths(eggs,batch);
+    const coverageDays = activeDays===9999 ? reportedDays : activeDays;
+    const coverage = coverageDays===reportedDays ? fmtN(reportedDays) : fmtN(reportedDays)+' of '+fmtN(coverageDays);
+    const headcount = headcountFlags.get(batch);
     return `<div class="batch-card ${cfg.status}">
       <div class="batch-status status-${cfg.status}">${cfg.status}</div>
       <div class="batch-name">${cfg.name}</div>
@@ -1419,9 +1472,14 @@ function renderAllBatches(eggs,period){
         <div class="bm"><div class="bm-label">Age</div><div class="bm-value">${age}</div></div>
         <div class="bm"><div class="bm-label">Initial Birds</div><div class="bm-value">${fmtN(cfg.initialBirds)}</div></div>
         <div class="bm"><div class="bm-label">Current Birds</div><div class="bm-value" style="color:${batch.color}">${fmtN(cfg.currentBirds)}</div></div>
-        <div class="bm"><div class="bm-label">Recorded deaths (${period})</div><div class="bm-value">${fmtN(loggedDeaths)}</div></div>
+        <div class="bm">
+          <div class="bm-label">Deaths reported (${period})</div>
+          <div class="bm-value">${reportedDays ? fmtN(loggedDeaths) : '—'}</div>
+          <div class="kpi-sub">${reportedDays ? coverage+(coverageDays===1 ? ' day' : ' days')+' with counts' : 'No death counts recorded'}</div>
+        </div>
         <div class="bm"><div class="bm-label">Days to Offlay</div><div class="bm-value ${daysToOfflay<90?'val-red':''}">${cfg.status==='offlaid'?'Offlaid':daysToOfflay<0?'Due':daysToOfflay+'d'}</div></div>
       </div>
+      ${headcount ? `<div class="flag-item"><div class="flag-dot amber" aria-hidden="true"></div><div><strong>Headcount check</strong> · ${headcount}</div></div>` : ''}
     </div>`;
   }).join('');
 }
@@ -1441,12 +1499,13 @@ function render(){
   const sales = filterSales(activeDays);
   const expenses = filterExpenses(activeDays);
   const trayChanges = trayChangesForPeriod(EGGS,selectedProductionBatches(),periodStart(activeDays));
+  const headcountFlags = new Map(PRODUCTION_BATCHES.map(batch=>[batch,headcountFlag(batch)]).filter(([,msg])=>msg));
   renderKPIs(eggs, sales, expenses.filter(isPoultryExpense));
   renderAverages();
   renderDailyChart(eggs,trayChanges);
   renderPeriodTable(document.getElementById('period-table-wrap'));
   renderLatestEntry(document.getElementById('latest-entry-wrap'));
-  renderFlags(trayChanges);
+  renderFlags(trayChanges,headcountFlags);
   renderProductionChart(eggs);
   
   // Production
@@ -1458,7 +1517,7 @@ function render(){
   renderFinancial(sales, expenses);
   
   // Batches
-  renderAllBatches(eggs,period);
+  renderAllBatches(eggs,period,headcountFlags);
   renderBatchRecords(eggs);
 
   document.getElementById('last-refreshed').textContent = lastReportDate || new Date().toISOString().split('T')[0];

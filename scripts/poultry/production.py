@@ -4,6 +4,8 @@ from datetime import timedelta
 
 from .ona import count, farm_time
 
+EGGS_PER_TRAY = 30
+
 # The Ona form uses different suffixes for egg, mortality and feed fields.
 BATCH_FIELDS = {
     "batch1": ("", "", ""),
@@ -47,7 +49,15 @@ def batch_counts(record, batch):
 
 
 def eggs_in(counts):
-    return 30 * (counts["trays"] or 0) + (counts["eggs"] or 0)
+    return EGGS_PER_TRAY * (counts["trays"] or 0) + (counts["eggs"] or 0)
+
+
+def pack_loose_eggs(counts):
+    loose = counts["eggs"] or 0
+    if loose < EGGS_PER_TRAY:
+        return counts
+    trays, remainder = divmod(loose, EGGS_PER_TRAY)
+    return {**counts, "trays": (counts["trays"] or 0) + trays, "eggs": remainder}
 
 
 def previous_batch_eggs(records, batch, survey_date):
@@ -90,7 +100,7 @@ def summarize_latest(latest, metadata):
         total = eggs_in(counts)
         reported = counts["trays"] is not None or counts["eggs"] is not None
         latest_batches[batch] = {
-            **counts,
+            **pack_loose_eggs(counts),
             "totalEggs": total,
             "layingPercentage": laying_percentage(total, laying_birds.get(batch)) if reported else None,
         }
@@ -114,11 +124,11 @@ def summarize_totals(production, total):
     totals = {}
     for batch in BATCH_FIELDS:
         all_counts = [batch_counts(row, batch) for row in production]
-        totals[batch] = {
+        totals[batch] = pack_loose_eggs({
             field: sum(row[field] or 0 for row in all_counts)
             for field in ("trays", "eggs", "broken", "dead")
-        }
-    trays, remainder = divmod(total, 30)
+        })
+    trays, remainder = divmod(total, EGGS_PER_TRAY)
     totals["combined"] = {
         "totalEggsAllRecords": total,
         "totalTraysCalculated": trays,
