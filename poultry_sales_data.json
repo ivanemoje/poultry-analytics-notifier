@@ -1,5 +1,5 @@
 {
-  "reportDate": "2026-11-27",
+  "reportDate": "2026-11-28",
   "latestEntry": {
     "surveyDate": "2026-11-27",
     "latestsales": {
@@ -5204,6 +5204,14 @@
       "category": "CHICKEN",
       "payment": "CASH",
       "submittedAt": "2026-11-26T03:32:41.927383+00:00"
+    },
+    {
+      "date": "2026-11-27",
+      "expense": "LAYERS_CONCENTRATE",
+      "amount": 3520000,
+      "category": "CHICKEN",
+      "payment": "MTN_MOBILE_MONEY",
+      "submittedAt": "2026-11-27T19:19:45.835492+00:00"
     }
   ]
 }

@@ -1,42 +1,42 @@
 {
-  "reportDate": "2026-11-27",
+  "reportDate": "2026-11-28",
   "latestEntry": {
-    "surveyDate": "2026-11-27",
+    "surveyDate": "2026-11-28",
     "batch1": {
-      "trays": 0,
-      "eggs": 0,
-      "broken": 0,
+      "trays": null,
+      "eggs": null,
+      "broken": null,
       "dead": null,
       "feedGrams": null,
       "totalEggs": 0,
       "layingPercentage": null
     },
     "batch2": {
-      "trays": 25,
-      "eggs": 0,
-      "broken": 1,
+      "trays": 23,
+      "eggs": 17,
+      "broken": 2,
       "dead": 0,
       "feedGrams": 120,
-      "totalEggs": 750,
-      "layingPercentage": "73.0"
+      "totalEggs": 707,
+      "layingPercentage": "68.8"
     },
     "batch3": {
       "trays": 10,
-      "eggs": 10,
+      "eggs": 0,
       "broken": 0,
       "dead": 0,
       "feedGrams": 110,
-      "totalEggs": 310,
-      "layingPercentage": "79.5"
+      "totalEggs": 300,
+      "layingPercentage": "76.9"
     },
     "batch4": {
       "trays": 27,
-      "eggs": 16,
-      "broken": 1,
+      "eggs": 20,
+      "broken": 0,
       "dead": 0,
       "feedGrams": 110,
-      "totalEggs": 826,
-      "layingPercentage": "81.3"
+      "totalEggs": 830,
+      "layingPercentage": "81.7"
     },
     "batch5": {
       "trays": 0,
@@ -48,10 +48,10 @@
       "layingPercentage": null
     },
     "combined": {
-      "totalEggsEntry": 1886,
-      "layingPercentageDaily": "77.5"
+      "totalEggsEntry": 1837,
+      "layingPercentageDaily": "75.5"
     },
-    "submittedAt": "2026-11-27 05:51"
+    "submittedAt": "2026-11-28 04:57"
   },
   "overallTotals": {
     "batch1": {
@@ -61,21 +61,21 @@
       "dead": 1
     },
     "batch2": {
-      "trays": 10287,
-      "eggs": 4333,
-      "broken": 523,
+      "trays": 10354,
+      "eggs": 4393,
+      "broken": 528,
       "dead": 9
     },
     "batch3": {
-      "trays": 1742,
-      "eggs": 2479,
-      "broken": 183,
+      "trays": 1770,
+      "eggs": 2508,
+      "broken": 186,
       "dead": 13
     },
     "batch4": {
-      "trays": 1190,
-      "eggs": 1020,
-      "broken": 101,
+      "trays": 1269,
+      "eggs": 1060,
+      "broken": 103,
       "dead": 6
     },
     "batch5": {
@@ -85,30 +85,30 @@
       "dead": 5
     },
     "combined": {
-      "totalEggsAllRecords": 605564,
-      "totalTraysCalculated": 20185,
-      "remainingEggs": 14
+      "totalEggsAllRecords": 610913,
+      "totalTraysCalculated": 20363,
+      "remainingEggs": 23
     }
   },
   "recentTotals": {
-    "sevenDay": 14378,
-    "thirtyDay": 52367
+    "sevenDay": 16229,
+    "thirtyDay": 57716
   },
   "rollingAverages": {
     "yesterday": {
-      "average": 1843,
+      "average": 1799,
       "trend": "✅"
     },
     "threeDay": {
-      "average": 1834,
+      "average": 1815,
       "trend": "✅"
     },
     "sevenDay": {
-      "average": 1797,
+      "average": 1803,
       "trend": "✅"
     },
     "thirtyDay": {
-      "average": 1805,
+      "average": 1803,
       "trend": "✅"
     }
   },
@@ -16821,6 +16821,96 @@
       "b5_broken": 0,
       "b5_dead": 0,
       "b5_feedGrams": 50
+    },
+    {
+      "date": "2026-11-27",
+      "submittedAt": "2026-11-27T19:18:49.337406+00:00",
+      "category": "chicken",
+      "b1_trays": null,
+      "b1_eggs": null,
+      "b1_broken": null,
+      "b1_dead": null,
+      "b1_feedGrams": null,
+      "b2_trays": 22,
+      "b2_eggs": 19,
+      "b2_broken": 2,
+      "b2_dead": 0,
+      "b2_feedGrams": 120,
+      "b3_trays": 9,
+      "b3_eggs": 26,
+      "b3_broken": 0,
+      "b3_dead": 0,
+      "b3_feedGrams": 110,
+      "b4_trays": 26,
+      "b4_eggs": 3,
+      "b4_broken": 0,
+      "b4_dead": 0,
+      "b4_feedGrams": 110,
+      "b5_trays": 0,
+      "b5_eggs": 0,
+      "b5_broken": 0,
+      "b5_dead": 0,
+      "b5_feedGrams": 50
+    },
+    {
+      "date": "2026-11-27",
+      "submittedAt": "2026-11-27T19:19:11.539904+00:00",
+      "category": "chicken",
+      "b1_trays": null,
+      "b1_eggs": null,
+      "b1_broken": null,
+      "b1_dead": null,
+      "b1_feedGrams": null,
+      "b2_trays": 22,
+      "b2_eggs": 24,
+      "b2_broken": 1,
+      "b2_dead": 0,
+      "b2_feedGrams": 120,
+      "b3_trays": 9,
+      "b3_eggs": 3,
+      "b3_broken": 3,
+      "b3_dead": 0,
+      "b3_feedGrams": 110,
+      "b4_trays": 26,
+      "b4_eggs": 17,
+      "b4_broken": 2,
+      "b4_dead": 0,
+      "b4_feedGrams": 110,
+      "b5_trays": 0,
+      "b5_eggs": 0,
+      "b5_broken": 0,
+      "b5_dead": 0,
+      "b5_feedGrams": 50
+    },
+    {
+      "date": "2026-11-28",
+      "submittedAt": "2026-11-28T01:57:11.876555+00:00",
+      "category": "chicken",
+      "b1_trays": null,
+      "b1_eggs": null,
+      "b1_broken": null,
+      "b1_dead": null,
+      "b1_feedGrams": null,
+      "b2_trays": 23,
+      "b2_eggs": 17,
+      "b2_broken": 2,
+      "b2_dead": 0,
+      "b2_feedGrams": 120,
+      "b3_trays": 10,
+      "b3_eggs": 0,
+      "b3_broken": 0,
+      "b3_dead": 0,
+      "b3_feedGrams": 110,
+      "b4_trays": 27,
+      "b4_eggs": 20,
+      "b4_broken": 0,
+      "b4_dead": 0,
+      "b4_feedGrams": 110,
+      "b5_trays": 0,
+      "b5_eggs": 0,
+      "b5_broken": 0,
+      "b5_dead": 0,
+      "b5_feedGrams": 50
     }
   ],
   "financials": {
@@ -21998,12 +22088,20 @@
         "category": "CHICKEN",
         "payment": "CASH",
         "submittedAt": "2026-11-26T03:32:41.927383+00:00"
+      },
+      {
+        "date": "2026-11-27",
+        "expense": "LAYERS_CONCENTRATE",
+        "amount": 3520000,
+        "category": "CHICKEN",
+        "payment": "MTN_MOBILE_MONEY",
+        "submittedAt": "2026-11-27T19:19:45.835492+00:00"
       }
     ],
     "expenseSource": "ona",
     "totalRevenue": 166796843,
-    "totalPoultryExpenses": 159011540,
-    "netPoultryIncome": 7785303,
+    "totalPoultryExpenses": 162531540,
+    "netPoultryIncome": 4265303,
     "recentRevenue": {
       "throughDate": "2026-11-27",
       "last7Days": 5753000,
