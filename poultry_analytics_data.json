@@ -55,26 +55,26 @@
   },
   "overallTotals": {
     "batch1": {
-      "trays": 6558,
-      "eggs": 4422,
+      "trays": 6705,
+      "eggs": 12,
       "broken": 361,
       "dead": 1
     },
     "batch2": {
-      "trays": 10354,
-      "eggs": 4393,
+      "trays": 10500,
+      "eggs": 13,
       "broken": 528,
       "dead": 9
     },
     "batch3": {
-      "trays": 1770,
-      "eggs": 2508,
+      "trays": 1853,
+      "eggs": 18,
       "broken": 186,
       "dead": 13
     },
     "batch4": {
-      "trays": 1269,
-      "eggs": 1060,
+      "trays": 1304,
+      "eggs": 10,
       "broken": 103,
       "dead": 6
     },
